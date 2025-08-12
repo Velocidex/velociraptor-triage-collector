@@ -1,9 +1,3 @@
----
-title: "Preservation Artifacts"
-date: 2024-04-01
-weight: 10
----
-
 # Velociraptor Triage Artifacts
 
 This repository contains the compiler used to assemble and manage a

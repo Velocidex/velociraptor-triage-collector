@@ -29,8 +29,8 @@ jobs:
 
       - name: Prepare
         run: |
-          make kape_files
-          mkdir docs/artifacts
+          make compile
+          mkdir docs/static/artifacts
           cp output/*.zip docs/static/artifacts/
 
       - name: Build
