@@ -29,7 +29,7 @@ jobs:
 
       - name: Prepare
         run: |
-          make kape_files
+          make compile
           mkdir docs/artifacts
           cp output/*.zip docs/static/artifacts/
 
