@@ -100,5 +100,9 @@ The target specifies a list of rules; Each rule can specify either a
 `Glob` expression to indicate which files to capture, or the name of
 another target reference.
 
-You can view the targets used in this artifact [here]({{< ref
-"docs/rules/" >}}).
+## Triage Collection Artifacts
+
+You can view the artifacts managed by this project on the sidebar to
+the left:
+
+* [Windows.KapeFiles.Targets]({{< ref "docs/Windows.KapeFiles.Targets/rules/" >}}) is the original glob based Windows file collector.

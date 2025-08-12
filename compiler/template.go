@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"regexp"
 	"sort"
 	"strings"
@@ -27,6 +28,7 @@ type TargetCSV struct {
 
 type ArtifactContent struct {
 	Time        string
+	Commit      string
 	Rules       []*RuleCSV
 	TargetFiles []*TargetCSV
 }
@@ -94,9 +96,18 @@ func calculateTemplate(template_str string, params *ArtifactContent) (string, er
 	return string(b.Bytes()), nil
 }
 
+func (self *Compiler) GetCommit() string {
+	out, err := exec.Command("git", "rev-parse", "--short", "HEAD").Output()
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(out))
+}
+
 func (self *Compiler) GetArtifact() (string, error) {
 	params := &ArtifactContent{
-		Time: time.Now().UTC().Format(time.RFC3339),
+		Time:   time.Now().UTC().Format(time.RFC3339),
+		Commit: self.GetCommit(),
 	}
 
 	for _, target_file_any := range self.targets.Values() {

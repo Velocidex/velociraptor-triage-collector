@@ -1,5 +1,5 @@
 ---
-title: Velociraptor Triage Artifacts
+title: Triage Artifacts
 date: 2025-08-10T00:14:44+10:00
 ---
 
