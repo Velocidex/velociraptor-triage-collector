@@ -1,0 +1,14 @@
+<url-free> docs/content/_index.md
+Velociraptor
+Github
+Goto
+KapeFiles
+IOCs
+YAML
+br
+endppoint
+href
+triaging
+VQL
+Velociraptor's
+evidentiary
