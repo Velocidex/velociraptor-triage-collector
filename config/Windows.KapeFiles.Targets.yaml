@@ -1,0 +1,26 @@
+Name: Windows.KapeFiles.Target
+Description: |
+  This artifact compiles the rules emitted by the KapeFile project.
+
+TargetDirectories:
+  - KapeFiles/Targets/
+
+ArtifactTemplate: templates/Windows.KapeFiles.Targets.yaml
+
+RegExToGlob:
+  "*.+\\.(db|db-wal|db-shm)": "*.{db,db-wal,db-shm}"
+  "*.+\\.(3gp|aa|aac|act|aiff|alac|amr|ape|au|awb|dss|dvf|flac|gsm|iklax|ivs|m4a|m4b|m4p|mmf|mp3|mpc|msv|nmf|ogg|oga|mogg|opus|ra|rm|raw|rf64|sln|tta|voc|vox|wav|wma|wv|webm)": "*.{3gp,aa,aac,act,aiff,alac,amr,ape,au,awb,dss,dvf,flac,gsm,iklax,ivs,m4a,m4b,m4p,mmf,mp3,mpc,msv,nmf,ogg,oga,mogg,opus,ra,rm,raw,rf64,sln,tta,voc,vox,wav,wma,wv,webm}"
+  "*.+\\.(xls|xlsx|csv|tsv|xlt|xlm|xlsm|xltx|xltm|xlsb|xla|xlam|xll|xlw|ods|fodp|qpw)": "*.{xls,xlsx,csv,tsv,xlt,xlm,xlsm,xltx,xltm,xlsb,xla,xlam,xll,xlw,ods,fodp,qpw}"
+  "*.+\\.(pdf|xps|oxps)": "*.{pdf,xps,oxps}"
+  "*.+\\.(ai|bmp|bpg|cdr|cpc|eps|exr|flif|gif|heif|ilbm|ima|jp2|j2k|jpf|jpm|jpg2|j2c|jpc|jpx|mj2jpeg|jpg|jxl|kra|ora|pcx|pgf|pgm|png|pnm|ppm|psb|psd|psp|svg|tga|tiff|webp|xaml|xcf)": "*.{ai,bmp,bpg,cdr,cpc,eps,exr,flif,gif,heif,ilbm,ima,jp2,j2k,jpf,jpm,jpg2,j2c,jpc,jpx,mj2jpeg,jpg,jxl,kra,ora,pcx,pgf,pgm,png,pnm,ppm,psb,psd,psp,svg,tga,tiff,webp,xaml,xcf}"
+  "*.+\\.(db*|sqlite*|)": "*.{db,sqlite}*)"
+  "*.+\\.(3g2|3gp|amv|asf|avi|drc|flv|f4v|f4p|f4a|f4b|gif|gifv|m4v|mkv|mov|qt|mp4|m4p|mpg|mpeg|m2v|mp2|mpe|mpv|mts|m2ts|ts|mxf|nsv|ogv|ogg|rm|rmvb|roq|svi|viv|vob|webm|wmv|yuv)": "*.{3g2,3gp,amv,asf,avi,drc,flv,f4v,f4p,f4a,f4b,gif,gifv,m4v,mkv,mov,qt,mp4,m4p,mpg,mpeg,m2v,mp2,mpe,mpv,mts,m2ts,ts,mxf,nsv,ogv,ogg,rm,rmvb,roq,svi,viv,vob,webm,wmv,yuv}"
+  "*.+\\.(doc|docx|docm|dotx|dotm|docb|dot|wbk|odt|fodt|rtf|wp*|tmd)": "*.{doc,docx,docm,dotx,dotm,docb,dot,wbk,odt,fodt,rtf,wp*,tmd}"
+  ".*\\.(jpg|mp4|pdf|webp)": "*.{jpg,mp4,pdf,webp}"
+  "*.\\b[a-zA-Z0-9_-]{8}\\b.compiled": "*.compiled"
+
+Output:
+  - output/Windows.KapeFiles.Targets.zip
+  - output/Windows.KapeFiles.Targets.yaml
+StateFile: docs/content/docs/rules/Windows.KapeFiles.Targets.json
+PathSep: "\\"
