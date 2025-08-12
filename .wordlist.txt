@@ -12,3 +12,13 @@ triaging
 VQL
 Velociraptor's
 evidentiary
+
+VSS
+accessor
+checkboxes
+filesystem
+li
+ol
+ul
+prepend
+prepended
