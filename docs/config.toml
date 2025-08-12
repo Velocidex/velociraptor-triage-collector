@@ -1,6 +1,6 @@
 baseURL = 'http://triage.velocidex.com/'
 languageCode = 'en-us'
-title = 'Velociraptor Triage Artifacts'
+title = 'Triage Artifacts'
 
 [module]
 [[module.imports]]

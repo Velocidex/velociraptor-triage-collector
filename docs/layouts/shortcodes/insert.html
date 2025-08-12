@@ -1,0 +1,4 @@
+{{- $file := .Get 0 }}
+{{ $FullPath := printf "%s/%s" .Page.File.Dir $file }}
+{{- readFile $FullPath -}}
+<script>hljs.highlightAll();</script>

@@ -22,5 +22,8 @@ RegExToGlob:
 Output:
   - output/Windows.KapeFiles.Targets.zip
   - output/Windows.KapeFiles.Targets.yaml
-StateFile: docs/content/docs/rules/Windows.KapeFiles.Targets.json
+  - docs/content/docs/Windows.KapeFiles.Targets/Windows.KapeFiles.Targets.yaml
+  - docs/content/docs/Windows.KapeFiles.Targets/Windows.KapeFiles.Targets.zip
+
+StateFile: docs/content/docs/Windows.KapeFiles.Targets/rules/Windows.KapeFiles.Targets.json
 PathSep: "\\"
