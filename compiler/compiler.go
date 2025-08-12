@@ -189,6 +189,7 @@ func (self *Compiler) Run() error {
 		defer fd.Close()
 
 		if strings.HasSuffix(output, ".zip") {
+			self.logger.Printf("Generating Zip artifact pack into %v", output)
 			zip := zip.NewWriter(fd)
 			defer zip.Close()
 
@@ -197,10 +198,11 @@ func (self *Compiler) Run() error {
 				return err
 			}
 			out_fd.Write([]byte(artifact))
-			return nil
-		}
+		} else {
 
-		fd.Write([]byte(artifact))
+			self.logger.Printf("Generating YAML artifact pack into %v", output)
+			fd.Write([]byte(artifact))
+		}
 	}
 
 	if self.config_obj.StateFile != "" {
