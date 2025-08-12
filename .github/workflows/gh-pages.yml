@@ -30,7 +30,7 @@ jobs:
       - name: Prepare
         run: |
           make compile
-          mkdir docs/artifacts
+          mkdir docs/static/artifacts
           cp output/*.zip docs/static/artifacts/
 
       - name: Build
