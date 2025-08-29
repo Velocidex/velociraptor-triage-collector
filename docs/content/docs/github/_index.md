@@ -4,6 +4,7 @@ type: redirect
 redirect: https://github.com/Velocidex/velociraptor-triage-collector
 layout: single
 IconClass: fa-brands fa-github
+weight: 30
 ---
 
 Goto [Github](https://github.com/Velocidex/velociraptor-triage-collector)

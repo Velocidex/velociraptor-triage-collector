@@ -1,0 +1,15 @@
+name: Linux.Triage.UAC.yaml
+Description: |
+  This artifact is built from the UAC project.
+
+TargetDirectories:
+  - uac/artifacts
+
+ArtifactTemplate: templates/Linux.Triage.UAC.yaml
+
+Output:
+  - output/Linux.Triage.UAC.yaml
+
+PathSep: /
+Transformer: uac
+TargetReges: ".yaml$"

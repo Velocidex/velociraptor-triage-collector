@@ -13,11 +13,13 @@ import (
 	"strings"
 
 	"github.com/Velocidex/ordereddict"
+	"github.com/Velocidex/velociraptor-triage-collector/api"
+	"github.com/Velocidex/velociraptor-triage-collector/converters"
 	"github.com/Velocidex/yaml/v2"
 )
 
 type Compiler struct {
-	config_obj Config
+	config_obj api.Config
 	targets    *ordereddict.Dict // map[string]*TargetFile
 
 	template string
@@ -26,7 +28,10 @@ type Compiler struct {
 }
 
 // Load the targets from the directory recursively.
-func (self *Compiler) LoadDirectory(compile_dir string, filter *regexp.Regexp) error {
+func (self *Compiler) LoadDirectory(
+	compile_dir string,
+	filter *regexp.Regexp,
+	transformer api.Transformer) error {
 	self.logger.Printf("Loading targets from directory %v", compile_dir)
 
 	err := filepath.WalkDir(compile_dir,
@@ -46,8 +51,14 @@ func (self *Compiler) LoadDirectory(compile_dir string, filter *regexp.Regexp) e
 				return err
 			}
 
+			transformed, err := transformer(path, data)
+			if err != nil {
+				self.logger.Printf("Failed to load %v: %v", path, err)
+				return err
+			}
+
 			// Allow each file to contain multiple rules.
-			err = self.LoadRule(data, path)
+			err = self.LoadRule(transformed, path)
 			if err != nil {
 				fmt.Printf("Rule %v: %v\n", err, data)
 				return err
@@ -62,7 +73,7 @@ func (self *Compiler) LoadDirectory(compile_dir string, filter *regexp.Regexp) e
 func (self *Compiler) LoadRule(data []byte, path string) error {
 	self.logger.Printf("Loading target %v", path)
 
-	target_file := &TargetFile{}
+	target_file := &api.TargetFile{}
 	err := yaml.UnmarshalStrict(data, target_file)
 	if err != nil {
 		return err
@@ -72,11 +83,13 @@ func (self *Compiler) LoadRule(data []byte, path string) error {
 		target_file.Name = strings.Split(filepath.Base(path), ".")[0]
 	}
 
-	self.targets.Set(target_file.Name, target_file)
+	if len(target_file.Rules) > 0 {
+		self.targets.Set(target_file.Name, target_file)
+	}
 	return nil
 }
 
-func (self *Compiler) clearLagcyTargetFile(tf *TargetFile) {
+func (self *Compiler) clearLagcyTargetFile(tf *api.TargetFile) {
 	// Support legacy KapeFiles descriptors. We rename the field
 	// to Rules.
 	tf.Rules = append(tf.Rules, tf.Targets...)
@@ -92,7 +105,7 @@ func (self *Compiler) validate() error {
 	}
 
 	for _, t_file := range self.targets.Values() {
-		tf := t_file.(*TargetFile)
+		tf := t_file.(*api.TargetFile)
 		self.clearLagcyTargetFile(tf)
 
 		for _, t := range tf.Rules {
@@ -149,9 +162,20 @@ func (self *Compiler) loadConfig(path string) error {
 		return err
 	}
 
+	var transformer api.Transformer
+
+	switch self.config_obj.Transformer {
+	case "":
+		transformer = func(filename string, in []byte) ([]byte, error) {
+			return in, nil
+		}
+	case "uac":
+		transformer = converters.UACConvert
+	}
+
 	// Load the targets
 	for _, target_dir := range self.config_obj.TargetDirectories {
-		err = self.LoadDirectory(target_dir, filter)
+		err = self.LoadDirectory(target_dir, filter, transformer)
 		if err != nil {
 			return err
 		}

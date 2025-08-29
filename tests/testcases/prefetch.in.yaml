@@ -1,0 +1,21 @@
+Queries:
+  - LET _ <= import(artifact="Windows.Triage.Targets")
+
+  # The prefetch target should contain two rules with the same name
+  # but different globs.
+  - SELECT get(item=Lookup, field="Prefetch") FROM scope()
+
+  # The EvidenceOfExecution target has only Ref rules - without globs.
+  - SELECT * FROM FilterTable(
+       Required="EvidenceOfExecution")
+
+  # Expanding the EvidenceOfExecution target should give all the glob rules.
+  - SELECT * FROM Expand(FilteredTable=FilterTable(
+       Required="EvidenceOfExecution"))
+
+  # The artifact itself should include two glob rules for prefetch
+  # when selecting a high level rule.
+  - |
+    SELECT *
+    FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", _KapeTriage=TRUE)
+    WHERE Glob =~ "prefetch"

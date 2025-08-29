@@ -1,0 +1,140 @@
+Query: LET _ <= import(artifact="Windows.Triage.Targets")
+Output: []
+
+# The prefetch target should contain two rules with the same name
+# but different globs.
+Query: SELECT get(item=Lookup, field="Prefetch") FROM scope()
+Output: [
+ {
+  "get(item=Lookup, field=\"Prefetch\")": {
+   "Target": "Prefetch",
+   "Rules": [
+    {
+     "Rule": "Prefetch",
+     "Glob": "Windows\\prefetch\\*.pf",
+     "Ref": ""
+    },
+    {
+     "Rule": "Prefetch",
+     "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
+     "Ref": ""
+    }
+   ]
+  }
+ }
+]
+
+# The EvidenceOfExecution target has only Ref rules - without globs.
+Query: SELECT * FROM FilterTable( Required="EvidenceOfExecution")
+Output: [
+ {
+  "Target": "EvidenceOfExecution",
+  "Rule": "Amcache",
+  "Glob": "",
+  "Ref": "Amcache"
+ },
+ {
+  "Target": "EvidenceOfExecution",
+  "Rule": "AppCompatPCA",
+  "Glob": "",
+  "Ref": "AppCompatPCA"
+ },
+ {
+  "Target": "EvidenceOfExecution",
+  "Rule": "Prefetch",
+  "Glob": "",
+  "Ref": "Prefetch"
+ },
+ {
+  "Target": "EvidenceOfExecution",
+  "Rule": "RecentFileCache",
+  "Glob": "",
+  "Ref": "RecentFileCache"
+ },
+ {
+  "Target": "EvidenceOfExecution",
+  "Rule": "Syscache",
+  "Glob": "",
+  "Ref": "Syscache"
+ }
+]
+
+# Expanding the EvidenceOfExecution target should give all the glob rules.
+Query: SELECT * FROM Expand(FilteredTable=FilterTable( Required="EvidenceOfExecution"))
+Output: [
+ {
+  "Target": "Amcache",
+  "Rule": "Amcache",
+  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\Amcache.hve"
+ },
+ {
+  "Target": "Amcache",
+  "Rule": "Amcache",
+  "Glob": "Windows\\AppCompat\\Programs\\Amcache.hve"
+ },
+ {
+  "Target": "Amcache",
+  "Rule": "Amcache_transaction_files",
+  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\Amcache.hve.LOG*"
+ },
+ {
+  "Target": "Amcache",
+  "Rule": "Amcache_transaction_files",
+  "Glob": "Windows\\AppCompat\\Programs\\Amcache.hve.LOG*"
+ },
+ {
+  "Target": "AppCompatPCA",
+  "Rule": "AppCompat_PCA_Folder",
+  "Glob": "Windows\\appcompat\\pca\\*"
+ },
+ {
+  "Target": "Prefetch",
+  "Rule": "Prefetch",
+  "Glob": "Windows\\prefetch\\*.pf"
+ },
+ {
+  "Target": "Prefetch",
+  "Rule": "Prefetch",
+  "Glob": "Windows.old\\Windows\\prefetch\\*.pf"
+ },
+ {
+  "Target": "RecentFileCache",
+  "Rule": "RecentFileCache",
+  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\RecentFileCache.bcf"
+ },
+ {
+  "Target": "RecentFileCache",
+  "Rule": "RecentFileCache",
+  "Glob": "Windows\\AppCompat\\Programs\\RecentFileCache.bcf"
+ },
+ {
+  "Target": "Syscache",
+  "Rule": "Syscache",
+  "Glob": "System Volume Information\\Syscache.hve"
+ },
+ {
+  "Target": "Syscache",
+  "Rule": "Syscache_transaction_files",
+  "Glob": "System Volume Information\\Syscache.hve.LOG*"
+ }
+]
+
+# The artifact itself should include two glob rules for prefetch
+# when selecting a high level rule.
+Query: SELECT *
+FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", _KapeTriage=TRUE)
+WHERE Glob =~ "prefetch"
+
+Output: [
+ {
+  "Rule": "Prefetch/Prefetch",
+  "Glob": "Windows\\prefetch\\*.pf",
+  "_Source": "Windows.Triage.Targets/SearchGlobs"
+ },
+ {
+  "Rule": "Prefetch/Prefetch",
+  "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
+  "_Source": "Windows.Triage.Targets/SearchGlobs"
+ }
+]
+

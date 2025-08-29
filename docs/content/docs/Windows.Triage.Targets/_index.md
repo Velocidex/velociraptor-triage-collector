@@ -1,17 +1,17 @@
 ---
-title: "Windows.KapeFiles.Targets"
+title: "Windows.Triage.Targets"
 date: 2025-08-11
-weight: 10
+weight: 20
 bookToc: false
 IconClass: fa-solid fa-desktop
 ---
 
-# Windows.KapeFiles.Targets
+# Windows.Triage.Targets
 
 This artifact is built automatically from the
 [KapeFiles](https://github.com/EricZimmerman/KapeFiles) project.
 
-You can [download the artifact](Windows.KapeFiles.Targets.zip) for manual import into Velociraptor.
+You can [download the artifact](Windows.Triage.Targets.zip) for manual import into Velociraptor.
 
 The description below explains how to use this artifact in practice.
 
@@ -84,7 +84,7 @@ The most useful `meta-targets` are the `SANS_Triage`, `KapeTriage`
 <div style="max-height: 500px; overflow-y: auto; ">
 <pre >
 <code style="margin-top: -40px;font-size: medium;" class="language-yaml">
-{{< insert "./Windows.KapeFiles.Targets.yaml" >}}
+{{< insert "./Windows.Triage.Targets.yaml" >}}
 </code>
 </pre>
 </div>
