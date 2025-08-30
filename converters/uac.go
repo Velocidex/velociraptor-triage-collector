@@ -131,8 +131,7 @@ func UACConvert(
 		}
 
 		result.Rules = append(result.Rules, &api.TargetRule{
-			Name: strings.TrimSpace(
-				strings.TrimPrefix(artifact.Description, result.Description)),
+			Name: sanitize(strings.TrimPrefix(artifact.Description, result.Description)),
 			Glob: makeGlob(config, artifact),
 		})
 	}
@@ -187,4 +186,13 @@ func makeGlob(
 	base_path = slashRegex.ReplaceAllString(base_path, "/")
 
 	return base_path
+}
+
+var (
+	sanitizeRegex = regexp.MustCompile("[^a-zA-Z0-9]+")
+)
+
+func sanitize(in string) string {
+	return strings.TrimSuffix(
+		strings.TrimPrefix(sanitizeRegex.ReplaceAllString(in, "_"), "_"), "_")
 }

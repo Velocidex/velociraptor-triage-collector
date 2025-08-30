@@ -60,12 +60,37 @@ Output: [
 ]
 
 # Expanding the EvidenceOfExecution target should give all the glob rules.
-Query: SELECT * FROM Expand(FilteredTable=FilterTable( Required="EvidenceOfExecution"))
+Query: SELECT * FROM Expand(FilteredTable=FilterTable( Required="EvidenceOfExecution")) ORDER BY Glob
 Output: [
+ {
+  "Target": "Syscache",
+  "Rule": "Syscache",
+  "Glob": "System Volume Information\\Syscache.hve"
+ },
+ {
+  "Target": "Syscache",
+  "Rule": "Syscache_transaction_files",
+  "Glob": "System Volume Information\\Syscache.hve.LOG*"
+ },
  {
   "Target": "Amcache",
   "Rule": "Amcache",
   "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\Amcache.hve"
+ },
+ {
+  "Target": "Amcache",
+  "Rule": "Amcache_transaction_files",
+  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\Amcache.hve.LOG*"
+ },
+ {
+  "Target": "RecentFileCache",
+  "Rule": "RecentFileCache",
+  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\RecentFileCache.bcf"
+ },
+ {
+  "Target": "Prefetch",
+  "Rule": "Prefetch",
+  "Glob": "Windows.old\\Windows\\prefetch\\*.pf"
  },
  {
   "Target": "Amcache",
@@ -75,12 +100,12 @@ Output: [
  {
   "Target": "Amcache",
   "Rule": "Amcache_transaction_files",
-  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\Amcache.hve.LOG*"
+  "Glob": "Windows\\AppCompat\\Programs\\Amcache.hve.LOG*"
  },
  {
-  "Target": "Amcache",
-  "Rule": "Amcache_transaction_files",
-  "Glob": "Windows\\AppCompat\\Programs\\Amcache.hve.LOG*"
+  "Target": "RecentFileCache",
+  "Rule": "RecentFileCache",
+  "Glob": "Windows\\AppCompat\\Programs\\RecentFileCache.bcf"
  },
  {
   "Target": "AppCompatPCA",
@@ -91,31 +116,6 @@ Output: [
   "Target": "Prefetch",
   "Rule": "Prefetch",
   "Glob": "Windows\\prefetch\\*.pf"
- },
- {
-  "Target": "Prefetch",
-  "Rule": "Prefetch",
-  "Glob": "Windows.old\\Windows\\prefetch\\*.pf"
- },
- {
-  "Target": "RecentFileCache",
-  "Rule": "RecentFileCache",
-  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\RecentFileCache.bcf"
- },
- {
-  "Target": "RecentFileCache",
-  "Rule": "RecentFileCache",
-  "Glob": "Windows\\AppCompat\\Programs\\RecentFileCache.bcf"
- },
- {
-  "Target": "Syscache",
-  "Rule": "Syscache",
-  "Glob": "System Volume Information\\Syscache.hve"
- },
- {
-  "Target": "Syscache",
-  "Rule": "Syscache_transaction_files",
-  "Glob": "System Volume Information\\Syscache.hve.LOG*"
  }
 ]
 
