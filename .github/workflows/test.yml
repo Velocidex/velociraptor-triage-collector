@@ -28,10 +28,6 @@ jobs:
         fileName: "velociraptor-v0.74.5-linux-amd64-musl"
         out-file-path: tests
 
-    - name: Run tests
-      run: |
-        make test
-
     - name: Build Artifacts
       run: |
         make compile
@@ -42,6 +38,10 @@ jobs:
         chmod +x ./tests/velociraptor
         ls -l ./output/
         ./tests/velociraptor artifacts verify --builtin -v ./output/*.yaml
+
+    - name: Run tests
+      run: |
+        make test
 
     - uses: actions/upload-artifact@v4
       if: always()
