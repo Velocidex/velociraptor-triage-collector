@@ -1,0 +1,25 @@
+Name: Linux.Triage.UAC
+Description: |
+  This artifact is built from the UAC project.
+
+TargetDirectories:
+  - uac/artifacts
+
+ArtifactTemplate: templates/Linux.Triage.UAC.yaml
+RegExToGlob:
+  "%user_home%": "/home/*"
+  "%temp_directory%": "/tmp/"
+Output:
+  - output/Linux.Triage.UAC.yaml
+
+# The following are invalid yaml upstream and do not load correctly.
+SkipFiles:
+  - spotlight.yaml
+  - package_owns_file.yaml
+  - strings_running_processes.yaml
+  - sudo_lectured.yaml
+  - virt-top.yaml
+
+PathSep: /
+Transformer: uac
+TargetRegex: ".yaml$"

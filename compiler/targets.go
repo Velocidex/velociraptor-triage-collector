@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/Velocidex/velociraptor-triage-collector/api"
 )
 
 var (
@@ -42,7 +44,7 @@ func (self *Compiler) remove_fluff(glob string) string {
 }
 
 // Clears all the lagacy fields from KapeFile format.
-func (self *Compiler) clearLegacyRule(t *TargetRule) {
+func (self *Compiler) clearLegacyRule(t *api.TargetRule) {
 	t.Path = ""
 	t.FileMask = ""
 	t.Recursive = false
@@ -51,7 +53,8 @@ func (self *Compiler) clearLegacyRule(t *TargetRule) {
 }
 
 // Parse the target and ensure it is valid.
-func (self *Compiler) ValidateRule(t *TargetRule, target_file *TargetFile) (err error) {
+func (self *Compiler) ValidateRule(
+	t *api.TargetRule, target_file *api.TargetFile) (err error) {
 	// Handle old KapeFile style rule definitions.
 	if t.Glob == "" && t.Path != "" {
 		// When we are done clean up all the lagacy fields.

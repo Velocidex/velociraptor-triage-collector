@@ -10,6 +10,8 @@ import (
 	"strings"
 	"text/template"
 	"time"
+
+	"github.com/Velocidex/velociraptor-triage-collector/api"
 )
 
 type RuleCSV struct {
@@ -111,7 +113,7 @@ func (self *Compiler) GetArtifact() (string, error) {
 	}
 
 	for _, target_file_any := range self.targets.Values() {
-		target_file := target_file_any.(*TargetFile)
+		target_file := target_file_any.(*api.TargetFile)
 		params.TargetFiles = append(params.TargetFiles,
 			&TargetCSV{
 				Name:        sanitize(target_file.Name),
@@ -152,5 +154,6 @@ var (
 )
 
 func sanitize(in string) string {
-	return sanitizeRegex.ReplaceAllString(in, "_")
+	return strings.TrimPrefix(
+		strings.TrimSuffix(sanitizeRegex.ReplaceAllString(in, "_"), "_"), "_")
 }

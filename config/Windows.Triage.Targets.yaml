@@ -1,11 +1,11 @@
-Name: Windows.KapeFiles.Target
+Name: Windows.Triage.Targets
 Description: |
   This artifact compiles the rules emitted by the KapeFile project.
 
 TargetDirectories:
   - KapeFiles/Targets/
 
-ArtifactTemplate: templates/Windows.KapeFiles.Targets.yaml
+ArtifactTemplate: templates/Windows.Triage.Targets.yaml
 
 RegExToGlob:
   "*.+\\.(db|db-wal|db-shm)": "*.{db,db-wal,db-shm}"
@@ -20,10 +20,10 @@ RegExToGlob:
   "*.\\b[a-zA-Z0-9_-]{8}\\b.compiled": "*.compiled"
 
 Output:
-  - output/Windows.KapeFiles.Targets.zip
-  - output/Windows.KapeFiles.Targets.yaml
-  - docs/content/docs/Windows.KapeFiles.Targets/Windows.KapeFiles.Targets.yaml
-  - docs/content/docs/Windows.KapeFiles.Targets/Windows.KapeFiles.Targets.zip
+  - output/Windows.Triage.Targets.zip
+  - output/Windows.Triage.Targets.yaml
+  - docs/content/docs/Windows.Triage.Targets/Windows.Triage.Targets.yaml
+  - docs/content/docs/Windows.Triage.Targets/Windows.Triage.Targets.zip
 
-StateFile: docs/content/docs/Windows.KapeFiles.Targets/rules/Windows.KapeFiles.Targets.json
+StateFile: docs/content/docs/Windows.Triage.Targets/rules/Windows.Triage.Targets.json
 PathSep: "\\"

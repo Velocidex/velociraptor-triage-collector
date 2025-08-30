@@ -1,4 +1,4 @@
-package compiler
+package api
 
 // Describe a collection target.
 //
@@ -81,4 +81,11 @@ type Config struct {
 
 	// Can be / or \\
 	PathSep string `json:"PathSep,omitempty"`
+
+	Transformer string `json:"Transformer,omitempty"`
+
+	SkipFiles []string `json:"SkipFiles"`
 }
+
+type Transformer func(
+	config *Config, filename string, in []byte) ([]byte, error)

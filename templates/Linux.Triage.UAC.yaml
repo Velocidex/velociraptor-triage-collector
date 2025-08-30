@@ -1,61 +1,12 @@
-name: Windows.KapeFiles.Target
+name: Linux.Triage.UAC
 description: |
-  Kape is a popular bulk collector tool for triaging a system
-  quickly. While KAPE itself is not an opensource tool, the logic it
-  uses to decide which files to collect is encoded in YAML files
-  hosted on the KapeFiles project
-  (https://github.com/EricZimmerman/KapeFiles) and released under an
-  MIT license.
-
-  This artifact is automatically generated from these YAML files,
-  contributed and maintained by the community. This artifact only
-  encapsulates the KAPE "Targets" - basically a bunch of glob
-  expressions used for collecting files on the endpoint. We do not
-  do any post processing of these files - we just collect them.
-
-  We recommend that timeouts and upload limits be used
-  conservatively with this artifact because we can upload really
-  vast quantities of data very quickly.
-
   NOTE:
     This artifact was built from [The Velociraptor Triage
     Repository](https://triage.velocidex.com/docs/)
 
   Commit {{ .Commit }} on {{ .Time }}
 
-reference:
-  - https://www.kroll.com/en/insights/publications/cyber/kroll-artifact-parser-extractor-kape
-  - https://github.com/EricZimmerman/KapeFiles
-
 parameters:
-  - name: Devices
-    type: json_array
-    description: |
-      Name of the drive letter to search. You can add multiple drives
-      separated with a comma.
-    default: '["C:"]'
-
-  - name: DropVerySlowRules
-    type: bool
-    default: Y
-    description: |
-      Some rules are very slow due to a recursive search at the higher
-      levels (For example a glob such as `C:\**\*.ini` ). These rules
-      cause the collection to be very slow as the entire filesystem
-      must be searched.
-
-      By default we drop these rules but you can enable them if you
-      like. This will cause the collection to be a lot slower.
-
-  - name: VSS_MAX_AGE_DAYS
-    type: int
-    default: 0
-    description: |
-      If larger than zero we analyze VSS within this many days
-      ago. (e.g 7 will analyze all VSS within the last week).  Note
-      that when using VSS analysis we have to use the ntfs accessor
-      for everything which will be much slower.
-
   - name: MaxFileSize
     type: int
     default: 18446744073709551615
@@ -77,11 +28,7 @@ parameters:
 
 export: |
   LET VQL_MATERIALIZE_ROW_LIMIT <= 10000
-  LET NTFS_CACHE_TIME <= 100000
-  LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
-
-  LET SlowGlobRegex <= if(condition=DropVerySlowRules,
-     then="^\\*\\*", else="RunSlowFileGlobs!!!")
+  LET S = scope()
 
   -- Group the targets for faster searching.
   LET TargetTable <= SELECT Target,
@@ -144,25 +91,16 @@ sources:
         AND log(message="Collecting target %v: %v", args=[Target, Rule], dedup=-1)
      })
     })
-    GROUP BY Rule
+    GROUP BY Rule, Glob
 
     SELECT * FROM Collections
 
 - name: All Matches Metadata
   query: |
     LET GlobLookup <= memoize(query=Collections, key="Glob")
-    LET NTFSGlobs = SELECT * FROM Collections
-       WHERE Glob =~ "[:$]" AND NOT Glob =~ "\\$Recycle.Bin"
-    LET AutoGlobs = SELECT * FROM Collections
-       WHERE Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]"
-
     LET _ <= if(condition=MaxFileSize > 0,
                 then=log(message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
                          args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
-
-    LET PreferredAccessor <= if(
-       condition=VSS_MAX_AGE_DAYS > 0,
-       then="ntfs_vss", else="auto")
 
     LET AllResults <= SELECT OSPath AS SourceFile,
                              Size,
@@ -182,11 +120,9 @@ sources:
         FROM glob(globs=NTFSGlobs.Glob, accessor="ntfs", root=Device)
       }, b={
         SELECT *,
-               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
-               PreferredAccessor AS Accessor
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule
         FROM glob(globs=AutoGlobs.Glob,
-                  accessor=PreferredAccessor,
-                  root=Device)
+                  accessor="auto")
       })
     })
     WHERE NOT IsDir

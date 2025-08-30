@@ -1,3 +1,6 @@
 [submodule "KapeFiles"]
 	path = KapeFiles
 	url = https://github.com/EricZimmerman/KapeFiles
+[submodule "uac"]
+	path = uac
+	url = https://github.com/tclahr/uac.git
