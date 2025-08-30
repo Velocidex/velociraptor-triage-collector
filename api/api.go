@@ -83,6 +83,9 @@ type Config struct {
 	PathSep string `json:"PathSep,omitempty"`
 
 	Transformer string `json:"Transformer,omitempty"`
+
+	SkipFiles []string `json:"SkipFiles"`
 }
 
-type Transformer func(filename string, in []byte) ([]byte, error)
+type Transformer func(
+	config *Config, filename string, in []byte) ([]byte, error)

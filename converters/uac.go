@@ -2,6 +2,7 @@
 package converters
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -61,7 +62,8 @@ type UACRuleFile struct {
 	Modifier        bool   `json:"modifier"`
 }
 
-func UACConvertFile(filename string) (string, error) {
+func UACConvertFile(
+	config *api.Config, filename string) (string, error) {
 	fd, err := os.Open(filename)
 	if err != nil {
 		return "", err
@@ -73,7 +75,7 @@ func UACConvertFile(filename string) (string, error) {
 		return "", err
 	}
 
-	res, err := UACConvert(filename, data)
+	res, err := UACConvert(config, filename, data)
 	if err != nil {
 		return "", err
 	}
@@ -110,7 +112,8 @@ func getDescription(rules *UACRuleFile) string {
 	return strings.TrimSpace(description)
 }
 
-func UACConvert(filename string, in []byte) ([]byte, error) {
+func UACConvert(
+	config *api.Config, filename string, in []byte) ([]byte, error) {
 	rules := &UACRuleFile{}
 	err := yaml.UnmarshalStrict(in, rules)
 	if err != nil {
@@ -128,8 +131,9 @@ func UACConvert(filename string, in []byte) ([]byte, error) {
 		}
 
 		result.Rules = append(result.Rules, &api.TargetRule{
-			Comment: artifact.Description,
-			Glob:    makeGlob(artifact),
+			Name: strings.TrimSpace(
+				strings.TrimPrefix(artifact.Description, result.Description)),
+			Glob: makeGlob(config, artifact),
 		})
 	}
 
@@ -144,14 +148,29 @@ func makeTarget(filename string) string {
 
 // Quote regex
 var (
-	quoteRegex = regexp.MustCompile(`"([^/"]+?)"`)
+	quoteRegex     = regexp.MustCompile(`"([^/"]+?)"`)
+	expansionRegex = regexp.MustCompile(`%([^/%]+?)%`)
+	slashRegex     = regexp.MustCompile("/+")
 )
 
-func makeGlob(artifact UACArtifact) string {
+func makeGlob(
+	config *api.Config,
+	artifact UACArtifact) string {
 	base_path := artifact.Path
 
 	// Remove useless quotes
 	base_path = quoteRegex.ReplaceAllString(base_path, "$1")
+
+	// Replace expansions
+	base_path = expansionRegex.ReplaceAllStringFunc(
+		base_path, func(in string) string {
+			glob, pres := config.RegExToGlob[in]
+			if pres {
+				return glob
+			}
+			fmt.Printf("No glob substitution for expansion %v\n", in)
+			return in
+		})
 
 	if len(artifact.PathPattern) > 1 {
 		base_path += "/{" + strings.Join(artifact.PathPattern, ",") + "}"
@@ -164,6 +183,8 @@ func makeGlob(artifact UACArtifact) string {
 	} else if len(artifact.FileType) > 0 {
 		base_path += "/*"
 	}
+
+	base_path = slashRegex.ReplaceAllString(base_path, "/")
 
 	return base_path
 }

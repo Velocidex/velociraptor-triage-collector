@@ -19,7 +19,7 @@ import (
 )
 
 type Compiler struct {
-	config_obj api.Config
+	config_obj *api.Config
 	targets    *ordereddict.Dict // map[string]*TargetFile
 
 	template string
@@ -34,9 +34,20 @@ func (self *Compiler) LoadDirectory(
 	transformer api.Transformer) error {
 	self.logger.Printf("Loading targets from directory %v", compile_dir)
 
+	skip_lookup := make(map[string]bool)
+	for _, name := range self.config_obj.SkipFiles {
+		skip_lookup[name] = true
+	}
+
+	fmt.Printf("Skipping %v\n", self.config_obj)
+
 	err := filepath.WalkDir(compile_dir,
 		func(path string, d fs.DirEntry, err error) error {
 			if !filter.MatchString(path) {
+				return nil
+			}
+
+			if skip_lookup[d.Name()] {
 				return nil
 			}
 
@@ -51,7 +62,7 @@ func (self *Compiler) LoadDirectory(
 				return err
 			}
 
-			transformed, err := transformer(path, data)
+			transformed, err := transformer(self.config_obj, path, data)
 			if err != nil {
 				self.logger.Printf("Failed to load %v: %v", path, err)
 				return err
@@ -134,23 +145,36 @@ func (self *Compiler) SaveState(path string) error {
 	return err
 }
 
-func (self *Compiler) loadConfig(path string) error {
-	self.logger.Printf("Loading config from %v", path)
+func LoadConfig(path string) (*api.Config, error) {
+	config_obj := &api.Config{}
+
 	fd, err := os.Open(path)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer fd.Close()
 
 	data, err := ioutil.ReadAll(fd)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	err = yaml.Unmarshal(data, &self.config_obj)
+	err = yaml.UnmarshalStrict(data, &config_obj)
+	if err != nil {
+		return nil, err
+	}
+
+	return config_obj, nil
+}
+
+func (self *Compiler) loadConfig(path string) error {
+	self.logger.Printf("Loading config from %v", path)
+
+	config_obj, err := LoadConfig(path)
 	if err != nil {
 		return err
 	}
+	self.config_obj = config_obj
 
 	target_regex := self.config_obj.TargetRegex
 	if target_regex == "" {
@@ -166,7 +190,8 @@ func (self *Compiler) loadConfig(path string) error {
 
 	switch self.config_obj.Transformer {
 	case "":
-		transformer = func(filename string, in []byte) ([]byte, error) {
+		transformer = func(
+			config *api.Config, filename string, in []byte) ([]byte, error) {
 			return in, nil
 		}
 	case "uac":
@@ -182,13 +207,13 @@ func (self *Compiler) loadConfig(path string) error {
 	}
 
 	// Load the template
-	fd, err = os.Open(self.config_obj.ArtifactTemplate)
+	fd, err := os.Open(self.config_obj.ArtifactTemplate)
 	if err != nil {
 		return err
 	}
 	defer fd.Close()
 
-	data, err = ioutil.ReadAll(fd)
+	data, err := ioutil.ReadAll(fd)
 	if err != nil {
 		return err
 	}

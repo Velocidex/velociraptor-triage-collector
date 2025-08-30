@@ -154,5 +154,6 @@ var (
 )
 
 func sanitize(in string) string {
-	return sanitizeRegex.ReplaceAllString(in, "_")
+	return strings.TrimPrefix(
+		strings.TrimSuffix(sanitizeRegex.ReplaceAllString(in, "_"), "_"), "_")
 }
