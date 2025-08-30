@@ -12,6 +12,7 @@ Queries:
   # Expanding the EvidenceOfExecution target should give all the glob rules.
   - SELECT * FROM Expand(FilteredTable=FilterTable(
        Required="EvidenceOfExecution"))
+    ORDER BY Glob
 
   # The artifact itself should include two glob rules for prefetch
   # when selecting a high level rule.

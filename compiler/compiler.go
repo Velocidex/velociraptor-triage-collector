@@ -39,8 +39,6 @@ func (self *Compiler) LoadDirectory(
 		skip_lookup[name] = true
 	}
 
-	fmt.Printf("Skipping %v\n", self.config_obj)
-
 	err := filepath.WalkDir(compile_dir,
 		func(path string, d fs.DirEntry, err error) error {
 			if !filter.MatchString(path) {
@@ -94,7 +92,7 @@ func (self *Compiler) LoadRule(data []byte, path string) error {
 		target_file.Name = strings.Split(filepath.Base(path), ".")[0]
 	}
 
-	if len(target_file.Rules) > 0 {
+	if len(target_file.Rules) > 0 || len(target_file.Targets) > 0 {
 		self.targets.Set(target_file.Name, target_file)
 	}
 	return nil

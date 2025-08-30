@@ -1,7 +1,7 @@
 all:
 	go build -o velotriage ./cmd/
 
-compile: kapefiles
+compile: kapefiles uac
 
 kapefiles: config/Windows.Triage.Targets.yaml
 	go run ./cmd compile -v --config config/Windows.Triage.Targets.yaml

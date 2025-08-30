@@ -11,6 +11,11 @@ RegExToGlob:
   "%temp_directory%": "/tmp/"
 Output:
   - output/Linux.Triage.UAC.yaml
+  - output/Linux.Triage.UAC.zip
+  - docs/content/docs/Linux.Triage.UAC/Linux.Triage.UAC.yaml
+  - docs/content/docs/Linux.Triage.UAC/Linux.Triage.UAC.zip
+
+StateFile: docs/content/docs/Linux.Triage.UAC/rules/Linux.Triage.UAC.json
 
 # The following are invalid yaml upstream and do not load correctly.
 SkipFiles:

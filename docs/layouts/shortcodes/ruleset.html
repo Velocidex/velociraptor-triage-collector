@@ -81,18 +81,33 @@ function addRow(key, value, indent) {
 function buildDescript(item, all_data, indent) {
     let next_indent = indent + " ";
 
-    let data = indent + addRow("Name", item.Name, indent) +
-        indent + addRow("Description", item.Description, indent) +
-        indent + addRow("Author", item.Author, indent) +
-        indent + addRow("Rules", "", indent);
+    let data = "";
+
+    if (item.Name) {
+        data += indent + addRow("Name", item.Name, indent);
+    }
+
+    if(item.Description) {
+        data += indent + addRow("Description", item.Description, indent);
+    }
+
+    if (item.Author) {
+        data += indent + addRow("Author", item.Author, indent)
+    }
+
+    data += indent + addRow("Rules", "", indent);
 
     for(let i=0; i<item.Rules.length; i++) {
         let t = item.Rules[i];
-        data += indent + addRow("Name", t.Name, next_indent);
+        if (t.Name) {
+            data += indent + addRow("Name", t.Name, next_indent);
+        }
         if(t.Comment) {
             data += indent + addRow("Comment", t.Comment, next_indent);
         }
-        data += indent + addRow("Category", t.Category, next_indent);
+        if(t.Category) {
+            data += indent + addRow("Category", t.Category, next_indent);
+        }
 
         if(t.Glob) {
             data += indent + addRow("Glob", t.Glob, next_indent);
