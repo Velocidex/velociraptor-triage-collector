@@ -12563,5 +12563,26 @@
      "Glob": "System Volume Information\\**"
     }
    ]
+  },
+  "_Live": {
+   "Name": "_Live",
+   "Description": "Collect live artifacts",
+   "Rules": [
+    {
+     "Name": "ProcessListing",
+     "Ref": "PsList"
+    }
+   ]
+  },
+  "PsList": {
+   "Name": "PsList",
+   "Description": "Collect all currently running binaries.",
+   "Rules": [
+    {
+     "Name": "From Pslist",
+     "Comment": "Uses PSList to get all running binaries.",
+     "VQL": "SELECT * FROM foreach(row={\n  SELECT *, Name AS ProcName\n  FROM pslist()\n  WHERE Exe\n}, query={\n  SELECT *,\n         \"auto\" AS Accessor,\n         dict(Name=ProcName,\n              CreateTime=CreateTime,\n              OwnerSid=OwnerSid,\n              CommandLine=CommandLine) AS Data\n  FROM stat(filename=Exe)\n})\n"
+    }
+   ]
   }
  }

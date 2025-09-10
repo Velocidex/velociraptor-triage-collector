@@ -69,7 +69,8 @@ func (self *Compiler) LoadDirectory(
 			// Allow each file to contain multiple rules.
 			err = self.LoadRule(transformed, path)
 			if err != nil {
-				fmt.Printf("Rule %v: %v\n", err, data)
+				fmt.Printf("Rule %v: %v: %v\n", path,
+					err, string(data))
 				return err
 			}
 

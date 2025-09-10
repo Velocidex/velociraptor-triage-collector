@@ -11,12 +11,12 @@ Output: [
    "Rules": [
     {
      "Rule": "Prefetch",
-     "Glob": "Windows\\prefetch\\*.pf",
+     "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
      "Ref": ""
     },
     {
      "Rule": "Prefetch",
-     "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
+     "Glob": "Windows\\prefetch\\*.pf",
      "Ref": ""
     }
    ]
@@ -124,16 +124,17 @@ Output: [
 Query: SELECT *
 FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", _KapeTriage=TRUE)
 WHERE Glob =~ "prefetch"
+ORDER BY Glob
 
 Output: [
  {
   "Rule": "Prefetch/Prefetch",
-  "Glob": "Windows\\prefetch\\*.pf",
+  "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
   "_Source": "Windows.Triage.Targets/SearchGlobs"
  },
  {
   "Rule": "Prefetch/Prefetch",
-  "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
+  "Glob": "Windows\\prefetch\\*.pf",
   "_Source": "Windows.Triage.Targets/SearchGlobs"
  }
 ]

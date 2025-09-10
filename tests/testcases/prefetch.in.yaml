@@ -20,3 +20,4 @@ Queries:
     SELECT *
     FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", _KapeTriage=TRUE)
     WHERE Glob =~ "prefetch"
+    ORDER BY Glob

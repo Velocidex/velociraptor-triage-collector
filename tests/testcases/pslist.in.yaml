@@ -1,0 +1,8 @@
+Queries:
+  - LET _ <= import(artifact="Windows.Triage.Targets")
+
+  # The _Live target has only Ref rules - without globs.
+  - SELECT * FROM FilterTable(Required="_Live")
+  - |
+    SELECT * FROM Collections(Targets=dict(_Live=TRUE))
+    GROUP BY Rule, Glob

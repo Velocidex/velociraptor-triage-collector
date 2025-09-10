@@ -1,0 +1,5 @@
+Name: _Live
+Description: Collect live artifacts
+Targets:
+ - Name: ProcessListing
+   Ref: PsList

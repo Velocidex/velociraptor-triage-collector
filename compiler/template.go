@@ -2,6 +2,9 @@ package compiler
 
 import (
 	"bytes"
+	"compress/gzip"
+	"encoding/base64"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -21,6 +24,8 @@ type RuleCSV struct {
 	Description string
 	Glob        string
 	Ref         string
+
+	VQL string
 }
 
 type TargetCSV struct {
@@ -33,6 +38,8 @@ type ArtifactContent struct {
 	Commit      string
 	Rules       []*RuleCSV
 	TargetFiles []*TargetCSV
+
+	Config *api.Config
 }
 
 func readFile(args ...interface{}) interface{} {
@@ -80,11 +87,40 @@ func indentTemplate(args ...interface{}) interface{} {
 }
 
 func calculateTemplate(template_str string, params *ArtifactContent) (string, error) {
-	templ, err := template.New("").Funcs(
-		template.FuncMap{
-			"Indent":   indentTemplate,
-			"ReadFile": readFile,
-		}).Parse(template_str)
+	var templ *template.Template
+	var err error
+
+	funcMap := template.FuncMap{
+		"Indent":   indentTemplate,
+		"ReadFile": readFile,
+
+		// Compress a template into base64
+		"Compress": func(name string, args interface{}) string {
+			b := &bytes.Buffer{}
+			err := templ.ExecuteTemplate(b, name, args)
+			if err != nil {
+				return fmt.Sprintf("<%v>", err)
+			}
+
+			// Compress the string and encode as base64
+			bc := &bytes.Buffer{}
+			gz, err := gzip.NewWriterLevel(bc, 9)
+			if err != nil {
+				return fmt.Sprintf("<%v>", err)
+			}
+
+			gz.Write(b.Bytes())
+			gz.Close()
+
+			enc := &bytes.Buffer{}
+			encoder := base64.NewEncoder(base64.StdEncoding, enc)
+			encoder.Write(bc.Bytes())
+			encoder.Close()
+			return string(enc.Bytes())
+		},
+	}
+
+	templ, err = template.New("").Funcs(funcMap).Parse(template_str)
 	if err != nil {
 		return "", err
 	}
@@ -110,6 +146,7 @@ func (self *Compiler) GetArtifact() (string, error) {
 	params := &ArtifactContent{
 		Time:   time.Now().UTC().Format(time.RFC3339),
 		Commit: self.GetCommit(),
+		Config: self.config_obj,
 	}
 
 	for _, target_file_any := range self.targets.Values() {
@@ -122,10 +159,12 @@ func (self *Compiler) GetArtifact() (string, error) {
 
 		for _, t := range target_file.Rules {
 			params.Rules = append(params.Rules, &RuleCSV{
-				Target: sanitize(target_file.Name),
-				Name:   sanitize(t.Name),
-				Glob:   t.Glob,
-				Ref:    sanitize(t.Ref),
+				Target:      sanitize(target_file.Name),
+				Description: t.Comment,
+				Name:        sanitize(t.Name),
+				Glob:        t.Glob,
+				Ref:         sanitize(t.Ref),
+				VQL:         t.VQL,
 			})
 		}
 	}
@@ -133,6 +172,12 @@ func (self *Compiler) GetArtifact() (string, error) {
 	sort.Slice(params.Rules, func(i, j int) bool {
 		key1 := params.Rules[i].Target + params.Rules[i].Name
 		key2 := params.Rules[j].Target + params.Rules[j].Name
+		return key1 < key2
+	})
+
+	sort.Slice(params.TargetFiles, func(i, j int) bool {
+		key1 := strings.ReplaceAll(params.TargetFiles[i].Name, "_", " ")
+		key2 := strings.ReplaceAll(params.TargetFiles[j].Name, "_", " ")
 		return key1 < key2
 	})
 

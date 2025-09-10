@@ -1,4 +1,11 @@
-name: Windows.Triage.Targets
+{{ define "GlobTable" }}
+  Target,Rule,Glob,Ref
+  {{- range .Rules }}
+  {{ .Target}},{{ .Name }},"{{ .Glob }}",{{ .Ref -}}
+  {{ end }}
+{{ end -}}
+
+name: {{ .Config.Name }}
 description: |
   This artifact aims to preserve raw files from the endpoint by
   selectively acquiring the most important files for the investigation
@@ -86,6 +93,13 @@ export: |
   LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
   LET S = scope()
 
+  {{- if .Config.Debug }}
+  LET GlobTable <= '''{{ template "GlobTable" . }}
+  '''
+  {{ else }}
+  LET GlobTable <= gunzip(string=base64decode(string="{{ Compress "GlobTable" . }}"))
+  {{ end }}
+
   LET SlowGlobRegex <= if(condition=S.DropVerySlowRules,
      then="^\\*\\*", else="RunSlowFileGlobs!!!")
 
@@ -93,12 +107,7 @@ export: |
   LET TargetTable <= SELECT Target,
        enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
     FROM parse_csv(accessor="data",
-  filename='''
-  Target,Rule,Glob,Ref
-  {{- range .Rules }}
-  {{ .Target}},{{ .Name }},"{{ .Glob }}",{{ .Ref -}}
-  {{ end }}
-  ''')
+  filename=GlobTable)
   GROUP BY Target
 
   //  Build a lookup cache on target.
@@ -114,7 +123,7 @@ export: |
        SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
      })
      WHERE if(condition=Glob =~ SlowGlobRegex,
-              then=log(message="Dropping rule %v/%v because it is too slow: %v",
+              then=log(level="INFO", message="Dropping rule %v/%v because it is too slow: %v",
                        dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
               else=TRUE)
 
@@ -123,7 +132,8 @@ export: |
   query={
     -- If there is a reference, resolve it from the table recursively.
     SELECT *
-    FROM if(condition=Ref AND log(message="%v/%v: Resolving Ref %v", dedup=-1, args=[Target, Rule, Ref]),
+    FROM if(condition=Ref AND log(level="DEBUG", message="%v/%v: Resolving Ref %v",
+         dedup=-1, args=[Target, Rule, Ref]),
     then={
        SELECT * FROM Expand(
           FilteredTable={
@@ -131,14 +141,15 @@ export: |
           })
     }, else={
        SELECT Target, Rule, Glob FROM scope()
+       WHERE if(condition=Glob,
+         then=log(level="DEBUG", message="%v/%v: Glob is %v",
+                  args=[Target, Rule, Glob], dedup=-1),
+         else=TRUE)
     })
   })
 
-sources:
-- name: SearchGlobs
-  query: |
-    -- Collect all the top level targets that the user selected.
-    LET Collections <= SELECT Target + "/" + Rule AS Rule, Glob
+  -- Collect all the top level targets that the user selected.
+  LET Collections(Targets) = SELECT Target + "/" + Rule AS Rule, Glob
     FROM Expand(FilteredTable={
       SELECT Target,
             Rules.Rule AS Rule,
@@ -146,24 +157,39 @@ sources:
             Rules.Ref AS Ref
      FROM flatten(query={
        SELECT * FROM TargetTable
-       WHERE get(field=Target)
-        AND log(message="Collecting target %v: %v", args=[Target, Rule], dedup=-1)
+       WHERE get(item=Targets, field=Target)
+        AND log(level="INFO", message="Collecting target %v, Rules: %v",
+             args=[Target, Rules.Rule], dedup=-1)
      })
     })
     GROUP BY Rule, Glob
 
-    SELECT * FROM Collections
+    {{ range $idx, $r := .Rules -}}
+    {{- if $r.VQL -}}
+    // {{ .Description }}
+    LET Collect{{ $r.Target }}_{{ $r.Name }} =
+{{ Indent .VQL 7 -}}
+    {{- end -}}
+    {{- end }}
+
+sources:
+- name: SearchGlobs
+  query: |
+    LET AllCollections <= Collections(Targets=scope())
+
+    SELECT * FROM AllCollections
+    WHERE Glob
 
 - name: All Matches Metadata
   query: |
-    LET GlobLookup <= memoize(query=Collections, key="Glob")
-    LET NTFSGlobs = SELECT * FROM Collections
-       WHERE Glob =~ "[:$]" AND NOT Glob =~ "\\$Recycle.Bin"
-    LET AutoGlobs = SELECT * FROM Collections
-       WHERE Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]"
+    LET GlobLookup <= memoize(query=AllCollections, key="Glob")
+    LET NTFSGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND Glob =~ "[:$]" AND NOT Glob =~ "\\$Recycle.Bin"
+    LET AutoGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND ( Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]" )
 
-    LET _ <= if(condition=MaxFileSize > 0,
-                then=log(message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
+    LET _ <= if(condition=MaxFileSize > 0 AND MaxFileSize < 100000000000,
+                then=log(level="INFO", message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
                          args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
 
     LET PreferredAccessor <= if(
@@ -176,30 +202,44 @@ sources:
                              Ctime AS Changed,
                              Mtime AS Modified,
                              Atime AS LastAccessed,
-                             Accessor
+                             Accessor,
+                             Data
     FROM foreach(row={
         SELECT _value AS Device FROM foreach(row=Devices)
     }, query={
       SELECT * FROM chain(async=TRUE,
-      a={
+      {{ range $idx, $r := .Rules -}}
+      {{- if $r.VQL -}}
+      {{ $r.Target }}_{{ $r.Name }}={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "{{ $r.Target }}/{{ $r.Name }}"
+        }, then=Collect{{ $r.Target }}_{{ $r.Name }})
+      },
+      {{- end -}}
+      {{- end }}
+      GlobNTFS={
         SELECT *,
                get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
-               "ntfs" AS Accessor
+               "ntfs" AS Accessor,
+               dict(Globs=Globs) AS Data
         FROM glob(globs=NTFSGlobs.Glob, accessor="ntfs", root=Device)
-      }, b={
+      },
+      GlobAuto={
         SELECT *,
                get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
-               PreferredAccessor AS Accessor
+               PreferredAccessor AS Accessor,
+               dict(Globs=Globs) AS Data
         FROM glob(globs=AutoGlobs.Glob,
                   accessor=PreferredAccessor,
                   root=Device)
       })
     })
     WHERE NOT IsDir
-    AND log(message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
+    AND log(level="INFO", message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
     AND if(condition= Size <= MaxFileSize,
            then=TRUE,
-           else=log(message="Skipping file %v (Size %v) Due to MaxFileSize",
+           else=log(level="WARN", message="Skipping file %v (Size %v) Due to MaxFileSize",
                     dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
 
     SELECT * FROM AllResults

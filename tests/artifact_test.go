@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	VelociraptorUrl        = "https://github.com/Velocidex/velociraptor/releases/download/v0.74/velociraptor-v0.74.5-linux-amd64-musl"
+	VelociraptorUrl        = "https://github.com/Velocidex/velociraptor/releases/download/v0.75/velociraptor-v0.75.1-linux-amd64-musl"
 	VelociraptorBinaryPath = "./velociraptor.bin"
 )
 

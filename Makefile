@@ -4,6 +4,7 @@ all:
 compile: kapefiles uac
 
 kapefiles: config/Windows.Triage.Targets.yaml
+	go run ./cmd compile -v --config config/Windows.KapeFiles.Targets.yaml
 	go run ./cmd compile -v --config config/Windows.Triage.Targets.yaml
 
 uac: config/Linux.Triage.UAC.yaml
