@@ -1,10 +1,15 @@
-Name: Windows.Triage.Targets
+Name: Windows.KapeFiles.Targets
 Description: |
   This artifact compiles the rules emitted by the KapeFile project.
 
+  This artifact is a subset of `Windows.Triage.Targets` retained for
+  backwards compatibility.
+
+  The rules in this artifact are documented
+  [here](https://triage.velocidex.com/docs/windows.triage.targets/rules/)
+
 TargetDirectories:
   - KapeFiles/Targets/
-  - config/WindowsTargets/
 
 ArtifactTemplate: templates/Windows.Triage.Targets.yaml
 
@@ -21,10 +26,9 @@ RegExToGlob:
   "*.\\b[a-zA-Z0-9_-]{8}\\b.compiled": "*.compiled"
 
 Output:
-  - output/Windows.Triage.Targets.zip
-  - output/Windows.Triage.Targets.yaml
-  - docs/content/docs/Windows.Triage.Targets/Windows.Triage.Targets.yaml
-  - docs/content/docs/Windows.Triage.Targets/Windows.Triage.Targets.zip
+  - output/Windows.KapeFiles.Targets.yaml
 
-StateFile: docs/content/docs/Windows.Triage.Targets/rules/Windows.Triage.Targets.json
 PathSep: "\\"
+
+# Set to build in debug mode.
+Debug: false

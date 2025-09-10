@@ -1,0 +1,19 @@
+Name: PsList
+Description: Collect all currently running binaries.
+Targets:
+- Name: From Pslist
+  Comment: Uses PSList to get all running binaries.
+  VQL: |
+    SELECT * FROM foreach(row={
+      SELECT *, Name AS ProcName
+      FROM pslist()
+      WHERE Exe
+    }, query={
+      SELECT *,
+             "auto" AS Accessor,
+             dict(Name=ProcName,
+                  CreateTime=CreateTime,
+                  OwnerSid=OwnerSid,
+                  CommandLine=CommandLine) AS Data
+      FROM stat(filename=Exe)
+    })

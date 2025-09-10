@@ -6,3 +6,5 @@ date: 2025-08-10T00:14:44+10:00
 # The Velociraptor Triage Artifact Site
 
 This project manages the Velociraptor Triage Artifacts.
+
+You can visit this project's GitHub site on https://github.com/Velocidex/velociraptor-triage-collector

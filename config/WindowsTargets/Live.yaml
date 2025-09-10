@@ -1,0 +1,4 @@
+Name: _Live
+Description: Collect live artifacts
+Targets:
+ - Ref: PsList

@@ -18,6 +18,15 @@ type TargetRule struct {
 	// preferred field for newer targets instead of the fields below.
 	Glob string `json:"Glob,omitempty"`
 
+	// Rules may contain a full VQL query which will generate a list
+	// of files to upload. The query must generate the following
+	// columns:
+	// - OSPath: This will be the file that is uploaded.
+	// - Size: The size of the file to be uploaded.
+	// - Btime, Ctime, Mtime, Atime: The times of the uploaded file.
+	// - Accessor: The accessor to use to upload the file.
+	VQL string `json:"VQL,omitempty"`
+
 	// The KapeFiles was the initial inspiration for this collector,
 	// but the meaning of these fields is not well documented. We take
 	// the more precise explanation here
@@ -85,6 +94,9 @@ type Config struct {
 	Transformer string `json:"Transformer,omitempty"`
 
 	SkipFiles []string `json:"SkipFiles"`
+
+	// Set to build artifact in debug mode
+	Debug bool `json:"Debug"`
 }
 
 type Transformer func(

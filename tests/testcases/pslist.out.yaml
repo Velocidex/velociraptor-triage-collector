@@ -1,0 +1,24 @@
+Query: LET _ <= import(artifact="Windows.Triage.Targets")
+Output: []
+
+# The _Live target has only Ref rules - without globs.
+Query: SELECT * FROM FilterTable(Required="_Live")
+Output: [
+ {
+  "Target": "_Live",
+  "Rule": "",
+  "Glob": "",
+  "Ref": "PsList"
+ }
+]
+
+Query: SELECT * FROM Collections(Targets=dict(_Live=TRUE))
+GROUP BY Rule, Glob
+
+Output: [
+ {
+  "Rule": "PsList/From_Pslist",
+  "Glob": ""
+ }
+]
+
