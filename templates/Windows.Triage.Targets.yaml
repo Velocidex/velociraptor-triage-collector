@@ -123,7 +123,7 @@ export: |
        SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
      })
      WHERE if(condition=Glob =~ SlowGlobRegex,
-              then=log(message="Dropping rule %v/%v because it is too slow: %v",
+              then=log(level="INFO", message="Dropping rule %v/%v because it is too slow: %v",
                        dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
               else=TRUE)
 
@@ -132,7 +132,8 @@ export: |
   query={
     -- If there is a reference, resolve it from the table recursively.
     SELECT *
-    FROM if(condition=Ref AND log(message="%v/%v: Resolving Ref %v", dedup=-1, args=[Target, Rule, Ref]),
+    FROM if(condition=Ref AND log(level="DEBUG", message="%v/%v: Resolving Ref %v",
+         dedup=-1, args=[Target, Rule, Ref]),
     then={
        SELECT * FROM Expand(
           FilteredTable={
@@ -140,6 +141,10 @@ export: |
           })
     }, else={
        SELECT Target, Rule, Glob FROM scope()
+       WHERE if(condition=Glob,
+         then=log(level="DEBUG", message="%v/%v: Glob is %v",
+                  args=[Target, Rule, Glob], dedup=-1),
+         else=TRUE)
     })
   })
 
@@ -153,7 +158,8 @@ export: |
      FROM flatten(query={
        SELECT * FROM TargetTable
        WHERE get(item=Targets, field=Target)
-        AND log(message="Collecting target %v: %v", args=[Target, Rule], dedup=-1)
+        AND log(level="INFO", message="Collecting target %v, Rules: %v",
+             args=[Target, Rules.Rule], dedup=-1)
      })
     })
     GROUP BY Rule, Glob
@@ -182,8 +188,8 @@ sources:
     LET AutoGlobs = SELECT * FROM AllCollections
        WHERE Glob AND ( Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]" )
 
-    LET _ <= if(condition=MaxFileSize > 0,
-                then=log(message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
+    LET _ <= if(condition=MaxFileSize > 0 AND MaxFileSize < 100000000000,
+                then=log(level="INFO", message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
                          args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
 
     LET PreferredAccessor <= if(
@@ -230,10 +236,10 @@ sources:
       })
     })
     WHERE NOT IsDir
-    AND log(message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
+    AND log(level="INFO", message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
     AND if(condition= Size <= MaxFileSize,
            then=TRUE,
-           else=log(message="Skipping file %v (Size %v) Due to MaxFileSize",
+           else=log(level="WARN", message="Skipping file %v (Size %v) Due to MaxFileSize",
                     dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
 
     SELECT * FROM AllResults
