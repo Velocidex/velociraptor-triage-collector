@@ -10,7 +10,7 @@ artifacts := \
 	output/Linux.Triage.UAC.yaml
 
 compile: $(artifacts)
-	zip docs/static/artifacts/Velociraptor_Triage_v0.1.zip output/*.yaml
+	cd output && rm -f Velociraptor_Triage_v0.1.zip && zip Velociraptor_Triage_v0.1.zip *.yaml
 
 output/%.yaml: config/%.yaml templates/%.yaml
 	go run ./cmd compile -v --config $<

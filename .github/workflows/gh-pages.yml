@@ -32,7 +32,6 @@ jobs:
           make compile
           mkdir docs/static/artifacts
           cp output/*.zip docs/static/artifacts/
-          zip docs/static/artifacts/Velociraptor_Triage_v0.1.zip output/*.yaml
 
       - name: Build
         run: cd docs/ && hugo --minify
