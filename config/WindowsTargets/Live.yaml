@@ -3,3 +3,7 @@ Description: Collect live artifacts
 Targets:
  - Name: ProcessListing
    Ref: PsList
+
+ - Name: AdaptiveScheduledTasks
+   Comment: Collects binaries mentioned in the scheduled tasks
+   Ref: AdaptiveScheduledTasks

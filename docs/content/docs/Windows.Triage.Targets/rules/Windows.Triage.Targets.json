@@ -12564,6 +12564,17 @@
     }
    ]
   },
+  "AdaptiveScheduledTasks": {
+   "Name": "AdaptiveScheduledTasks",
+   "Description": "Collect binaries mentioned in the ScheduledTasks",
+   "Rules": [
+    {
+     "Name": "Commands",
+     "Comment": "Includes results of Windows.System.TaskScheduler",
+     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS TaskData\n  FROM items(item={ SELECT * FROM Artifact.Windows.System.TaskScheduler() })\n  WHERE TaskData.Command\n}, query={\n  SELECT *, \"auto\" AS Accessor, TaskData AS Data\n  FROM stat(filename=TaskData.Command)\n})\n"
+    }
+   ]
+  },
   "_Live": {
    "Name": "_Live",
    "Description": "Collect live artifacts",
@@ -12571,6 +12582,11 @@
     {
      "Name": "ProcessListing",
      "Ref": "PsList"
+    },
+    {
+     "Name": "AdaptiveScheduledTasks",
+     "Comment": "Collects binaries mentioned in the scheduled tasks",
+     "Ref": "AdaptiveScheduledTasks"
     }
    ]
   },
@@ -12581,7 +12597,7 @@
     {
      "Name": "From Pslist",
      "Comment": "Uses PSList to get all running binaries.",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT *, Name AS ProcName\n  FROM pslist()\n  WHERE Exe\n}, query={\n  SELECT *,\n         \"auto\" AS Accessor,\n         dict(Name=ProcName,\n              CreateTime=CreateTime,\n              OwnerSid=OwnerSid,\n              CommandLine=CommandLine) AS Data\n  FROM stat(filename=Exe)\n})\n"
+     "VQL": "SELECT * FROM foreach(row={\n  SELECT *, Name AS ProcName\n  FROM pslist()\n  WHERE Exe\n}, query={\n  SELECT *,\n         \"auto\" AS Accessor,\n         dict(Name=ProcName,\n              ProcessCreateTime=CreateTime,\n              OwnerSid=OwnerSid,\n              CommandLine=CommandLine) AS Data\n  FROM stat(filename=Exe)\n})\n"
     }
    ]
   }

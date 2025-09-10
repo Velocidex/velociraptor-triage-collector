@@ -117,6 +117,10 @@ function buildDescript(item, all_data, indent) {
             data += indent + addRow("Reference", t.Ref, next_indent);
         }
 
+        if(t.VQL) {
+            data += indent + addRow("VQL", t.VQL, next_indent);
+        }
+
         data += "\n" + indent
     }
 
@@ -131,6 +135,11 @@ function buildGlobs(item, all_data) {
         if(t.Glob) {
             res += addRow(item.Name + "/" + t.Name, t.Glob)
         }
+
+        if(t.VQL) {
+            res += addRow(item.Name + "/" + t.Name, t.VQL)
+        }
+
         if(t.Ref) {
             let target = data_lookup[t.Ref];
             if(target) {

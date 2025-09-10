@@ -1,0 +1,14 @@
+Name: AdaptiveScheduledTasks
+Description: Collect binaries mentioned in the ScheduledTasks
+Targets:
+- Name: Commands
+  Comment: Includes results of Windows.System.TaskScheduler
+  VQL: |
+    SELECT * FROM foreach(row={
+      SELECT _value AS TaskData
+      FROM items(item={ SELECT * FROM Artifact.Windows.System.TaskScheduler() })
+      WHERE TaskData.Command
+    }, query={
+      SELECT *, "auto" AS Accessor, TaskData AS Data
+      FROM stat(filename=TaskData.Command)
+    })

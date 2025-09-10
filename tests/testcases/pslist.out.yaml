@@ -6,6 +6,12 @@ Query: SELECT * FROM FilterTable(Required="_Live")
 Output: [
  {
   "Target": "_Live",
+  "Rule": "AdaptiveScheduledTasks",
+  "Glob": "",
+  "Ref": "AdaptiveScheduledTasks"
+ },
+ {
+  "Target": "_Live",
   "Rule": "ProcessListing",
   "Glob": "",
   "Ref": "PsList"
@@ -16,6 +22,10 @@ Query: SELECT * FROM Collections(Targets=dict(_Live=TRUE))
 GROUP BY Rule, Glob
 
 Output: [
+ {
+  "Rule": "AdaptiveScheduledTasks/Commands",
+  "Glob": ""
+ },
  {
   "Rule": "PsList/From_Pslist",
   "Glob": ""

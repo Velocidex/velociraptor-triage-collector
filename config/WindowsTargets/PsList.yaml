@@ -12,7 +12,7 @@ Targets:
       SELECT *,
              "auto" AS Accessor,
              dict(Name=ProcName,
-                  CreateTime=CreateTime,
+                  ProcessCreateTime=CreateTime,
                   OwnerSid=OwnerSid,
                   CommandLine=CommandLine) AS Data
       FROM stat(filename=Exe)
