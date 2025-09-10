@@ -6,7 +6,7 @@ Query: SELECT * FROM FilterTable(Required="_Live")
 Output: [
  {
   "Target": "_Live",
-  "Rule": "",
+  "Rule": "ProcessListing",
   "Glob": "",
   "Ref": "PsList"
  }
