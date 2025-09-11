@@ -95,6 +95,10 @@ function buildDescript(item, all_data, indent) {
         data += indent + addRow("Author", item.Author, indent)
     }
 
+    if (item.Preamble) {
+        data += indent + addRow("Preamble", item.Preamble, indent)
+    }
+
     data += indent + addRow("Rules", "", indent);
 
     for(let i=0; i<item.Rules.length; i++) {

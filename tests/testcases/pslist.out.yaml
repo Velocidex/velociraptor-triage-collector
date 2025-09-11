@@ -12,6 +12,12 @@ Output: [
  },
  {
   "Target": "_Live",
+  "Rule": "PrefetchBinaries",
+  "Glob": "",
+  "Ref": "PrefetchBinaries"
+ },
+ {
+  "Target": "_Live",
   "Rule": "ProcessListing",
   "Glob": "",
   "Ref": "PsList"
@@ -24,6 +30,10 @@ GROUP BY Rule, Glob
 Output: [
  {
   "Rule": "AdaptiveScheduledTasks/Commands",
+  "Glob": ""
+ },
+ {
+  "Rule": "PrefetchBinaries/Executables",
   "Glob": ""
  },
  {

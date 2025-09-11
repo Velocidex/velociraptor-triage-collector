@@ -5,5 +5,7 @@ Targets:
    Ref: PsList
 
  - Name: AdaptiveScheduledTasks
-   Comment: Collects binaries mentioned in the scheduled tasks
    Ref: AdaptiveScheduledTasks
+
+ - Name: PrefetchBinaries
+   Ref: PrefetchBinaries
