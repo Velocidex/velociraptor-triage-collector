@@ -1,0 +1,1957 @@
+name: Windows.Triage.Targets
+description: |
+  This artifact aims to preserve raw files from the endpoint by
+  selectively acquiring the most important files for the investigation
+  at hand. The artfiact collates multiple rules from sources such as
+  the KapeFiles repository.
+
+  Kape is a popular bulk collector tool for triaging a system
+  quickly. While KAPE itself is not an opensource tool, the logic it
+  uses to decide which files to collect is encoded in YAML files
+  hosted on the KapeFiles project
+  (https://github.com/EricZimmerman/KapeFiles) and released under an
+  MIT license.
+
+  This artifact is automatically generated from these YAML files,
+  contributed and maintained by the community. This artifact only
+  encapsulates the KAPE "Targets" - basically a bunch of glob
+  expressions used for collecting files on the endpoint. We do not
+  do any post processing of these files - we just collect them.
+
+  We recommend that timeouts and upload limits be used
+  conservatively with this artifact because we can upload really
+  vast quantities of data very quickly.
+
+  NOTE:
+    This artifact was built from [The Velociraptor Triage
+    Repository](https://triage.velocidex.com/docs/)
+
+  Commit 9cf75b3 on 2025-09-11T15:34:20Z
+
+reference:
+  - https://www.kroll.com/en/insights/publications/cyber/kroll-artifact-parser-extractor-kape
+  - https://github.com/EricZimmerman/KapeFiles
+
+parameters:
+  - name: Devices
+    type: json_array
+    description: |
+      Name of the drive letter to search. You can add multiple drives
+      separated with a comma.
+    default: '["C:"]'
+
+  - name: DropVerySlowRules
+    type: bool
+    default: Y
+    description: |
+      Some rules are very slow due to a recursive search at the higher
+      levels (For example a glob such as `C:\**\*.ini` ). These rules
+      cause the collection to be very slow as the entire filesystem
+      must be searched.
+
+      By default we drop these rules but you can enable them if you
+      like. This will cause the collection to be a lot slower.
+
+  - name: VSS_MAX_AGE_DAYS
+    type: int
+    default: 0
+    description: |
+      If larger than zero we analyze VSS within this many days
+      ago. (e.g 7 will analyze all VSS within the last week).  Note
+      that when using VSS analysis we have to use the ntfs accessor
+      for everything which will be much slower.
+
+  - name: MaxFileSize
+    type: int
+    default: 100000000
+    description: |
+      The max size in bytes of the individual files to collect.
+      Set to 0 to disable it (Default 100Mb).
+
+  - name: UPLOAD_IS_RESUMABLE
+    type: bool
+    default: Y
+    description: |
+      If set the uploads can be resumed if the flow times out or
+      errors.
+
+  - name: _BasicCollection
+    description: "Basic Collection"
+    type: bool
+
+  - name: _KapeTriage
+    description: "Calls Kape Triage"
+    type: bool
+
+  - name: _Live
+    description: "Collect live artifacts"
+    type: bool
+
+  - name: _SANS_Triage
+    description: "SANS Triage Collection"
+    type: bool
+
+  - name: 1Password
+    description: "1Password Password Manager"
+    type: bool
+
+  - name: 360SecureBrowser
+    description: "360 Secure Browser"
+    type: bool
+
+  - name: 4KVideoDownloader
+    description: "4K Video Downloader"
+    type: bool
+
+  - name: AVG
+    description: "AVG Antivirus Data"
+    type: bool
+
+  - name: AceText
+    description: "AceText"
+    type: bool
+
+  - name: AcronisTrueImage
+    description: "Acronis True Image"
+    type: bool
+
+  - name: Action1
+    description: "Action1 Application Logs"
+    type: bool
+
+  - name: ActiveDirectoryNTDS
+    description: "Active Directory NTDS"
+    type: bool
+
+  - name: ActiveDirectorySysvol
+    description: "Active Directory Sysvol"
+    type: bool
+
+  - name: AdaptiveScheduledTasks
+    description: "Collect binaries mentioned in the ScheduledTasks"
+    type: bool
+
+  - name: AdvancedIPScanner
+    description: "Advanced IP Scanner Artifacts"
+    type: bool
+
+  - name: AdvancedPortScanner
+    description: "Advanced Port Scanner Artifacts"
+    type: bool
+
+  - name: AgentRansack
+    description: "Agent Ransack - Free File Searching Utility"
+    type: bool
+
+  - name: Amcache
+    description: "Amcache.hve"
+    type: bool
+
+  - name: Ammyy
+    description: "Ammyy Data"
+    type: bool
+
+  - name: Antivirus
+    description: "Antivirus"
+    type: bool
+
+  - name: AnyDesk
+    description: "AnyDesk"
+    type: bool
+
+  - name: ApacheAccessLog
+    description: "Apache Access Log"
+    type: bool
+
+  - name: AppCompatPCA
+    description: "AppCompat PCA Folder"
+    type: bool
+
+  - name: AppData
+    description: "AppData"
+    type: bool
+
+  - name: AppXPackages
+    description: "AppXPackages"
+    type: bool
+
+  - name: ApplicationEvents
+    description: "Windows Application Event Log"
+    type: bool
+
+  - name: Arc
+    description: "Arc Browser"
+    type: bool
+
+  - name: AsperaConnect
+    description: "Aspera Connect Log Files"
+    type: bool
+
+  - name: AteraAgent
+    description: "AteraAgent"
+    type: bool
+
+  - name: Avast
+    description: "Avast Antivirus Data"
+    type: bool
+
+  - name: AviraAVLogs
+    description: "Avira Logs"
+    type: bool
+
+  - name: BCD
+    description: "Boot Configuration Files"
+    type: bool
+
+  - name: BITS
+    description: "Microsoft BITS (Background Intelligent Transer Service) persistent files"
+    type: bool
+
+  - name: BitTorrent
+    description: "BitTorrent"
+    type: bool
+
+  - name: Bitdefender
+    description: "Bitdefender Antivirus Data"
+    type: bool
+
+  - name: Bitmap
+    description: "$Bitmap"
+    type: bool
+
+  - name: Boot
+    description: "$Boot"
+    type: bool
+
+  - name: BoxDrive_Metadata
+    description: "Box Cloud Storage Metadata"
+    type: bool
+
+  - name: BoxDrive_UserFiles
+    description: "Box Cloud Storage Files"
+    type: bool
+
+  - name: BraveBrowser
+    description: "Brave Browser"
+    type: bool
+
+  - name: BrowserCache
+    description: "Browser Caches"
+    type: bool
+
+  - name: CapabilityAccessManager
+    description: "Capability Access Manager database"
+    type: bool
+
+  - name: CertUtil
+    description: "Certutil"
+    type: bool
+
+  - name: ChatGPT
+    description: "A Target to collect files related to ChatGPT Desktop"
+    type: bool
+
+  - name: Chrome
+    description: "Chrome"
+    type: bool
+
+  - name: ChromeExtensions
+    description: "Chrome Extension Files"
+    type: bool
+
+  - name: ChromeFileSystem
+    description: "Chrome HTML5 File System Contents"
+    type: bool
+
+  - name: CiscoJabber
+    description: "Jabber"
+    type: bool
+
+  - name: ClipboardMaster
+    description: "ClipboardMaster"
+    type: bool
+
+  - name: CloudStorage_All
+    description: "Cloud Storage Contents and Metadata"
+    type: bool
+
+  - name: CloudStorage_Metadata
+    description: "Cloud Storage Metadata"
+    type: bool
+
+  - name: CloudStorage_OneDriveExplorer
+    description: "OneDrive and other files used with OneDriveExplorer"
+    type: bool
+
+  - name: CocCoc
+    description: "CocCoc Browser"
+    type: bool
+
+  - name: CombinedLogs
+    description: "Collect Event logs, Trace logs, Windows Firewall, PowerShell console logs, and .NET CLR UsageLogs"
+    type: bool
+
+  - name: Combofix
+    description: "ComboFix Antivirus Data"
+    type: bool
+
+  - name: ConfluenceLogs
+    description: "Confluence Log Files"
+    type: bool
+
+  - name: CrowdStrikeFalcon
+    description: "CrowdStrike Falcon"
+    type: bool
+
+  - name: Cybereason
+    description: "Cybereason Sensor/Detection Logs"
+    type: bool
+
+  - name: Cylance
+    description: "Cylance Antivirus Logs"
+    type: bool
+
+  - name: DC_
+    description: "DC++"
+    type: bool
+
+  - name: DWAgent
+    description: "DWAgent Log Files"
+    type: bool
+
+  - name: Debian
+    description: "Debian on Windows Subsystem for Linux"
+    type: bool
+
+  - name: DirectoryOpus
+    description: "Directory Opus"
+    type: bool
+
+  - name: DirectoryTraversal_AudioFiles
+    description: "Find audio files covering a multitude of formats"
+    type: bool
+
+  - name: DirectoryTraversal_ExcelDocuments
+    description: "Find Excel and Excel alternative documents"
+    type: bool
+
+  - name: DirectoryTraversal_PDFDocuments
+    description: "Find PDF and PDF alternative documents"
+    type: bool
+
+  - name: DirectoryTraversal_PictureFiles
+    description: "Find picture files covering a multitude of formats"
+    type: bool
+
+  - name: DirectoryTraversal_SQLiteDatabases
+    description: "Find files with common SQLite file extensions"
+    type: bool
+
+  - name: DirectoryTraversal_VideoFiles
+    description: "Find video files covering a multitude of formats"
+    type: bool
+
+  - name: DirectoryTraversal_WildCardExample
+    description: "Find zip archives"
+    type: bool
+
+  - name: DirectoryTraversal_WordDocuments
+    description: "Find Word and Word alternative documents"
+    type: bool
+
+  - name: Discord
+    description: "Discord Cache and LevelDB Files"
+    type: bool
+
+  - name: DoubleCommander
+    description: "Double Commander"
+    type: bool
+
+  - name: Drivers
+    description: "Windows Drivers"
+    type: bool
+
+  - name: Dropbox_Metadata
+    description: "Dropbox Cloud Storage Metadata"
+    type: bool
+
+  - name: Dropbox_UserFiles
+    description: "Dropbox Cloud Storage Files"
+    type: bool
+
+  - name: EFCommander
+    description: "EF Commander"
+    type: bool
+
+  - name: ESET
+    description: "ESET Antivirus Data"
+    type: bool
+
+  - name: Edge
+    description: "Edge"
+    type: bool
+
+  - name: EdgeChromium
+    description: "Microsoft Edge Chromium Artifacts"
+    type: bool
+
+  - name: EdgeChromiumExtensions
+    description: "Edge Chromium Extension Files"
+    type: bool
+
+  - name: Emsisoft
+    description: "Emsisoft Antivirus Logs"
+    type: bool
+
+  - name: EncapsulationLogging
+    description: "EncapsulationLogging"
+    type: bool
+
+  - name: EventLogs
+    description: "Event logs"
+    type: bool
+
+  - name: EventLogs_RDP
+    description: "Collect Win7+ RDP related Event logs"
+    type: bool
+
+  - name: EventTraceLogs
+    description: "Event Trace Logs"
+    type: bool
+
+  - name: EventTranscriptDB
+    description: "EventTranscript.db (and other files related to Telemetry and Diagnostic Data)"
+    type: bool
+
+  - name: Evernote
+    description: "Evernote"
+    type: bool
+
+  - name: Everything_VoidTools_
+    description: "Everything (VoidTools)"
+    type: bool
+
+  - name: EvidenceOfExecution
+    description: "Evidence of execution related files"
+    type: bool
+
+  - name: Exchange
+    description: "Exchange Log Files"
+    type: bool
+
+  - name: ExchangeClientAccess
+    description: "Exchange Client Access Log Files"
+    type: bool
+
+  - name: ExchangeCve_2021_26855
+    description: "Exchange Server Vulnerability *.Compiled Files"
+    type: bool
+
+  - name: ExchangeSetupLog
+    description: "Exchange Setup Log"
+    type: bool
+
+  - name: ExchangeTransport
+    description: "Exchange Transport Log Files"
+    type: bool
+
+  - name: FSecure
+    description: "F-Secure Antivirus Data"
+    type: bool
+
+  - name: FTPClients
+    description: "FTP Clients"
+    type: bool
+
+  - name: FastStoneImageViewer
+    description: "FastStone Image Viewer"
+    type: bool
+
+  - name: Fences
+    description: "Fences"
+    type: bool
+
+  - name: FileExplorerReplacements
+    description: "File Explorer Replacements"
+    type: bool
+
+  - name: FileSystem
+    description: "File system metadata"
+    type: bool
+
+  - name: FileZillaClient
+    description: "FileZilla XML and SQLite Log Files"
+    type: bool
+
+  - name: FileZillaServer
+    description: "FileZilla Server Logs"
+    type: bool
+
+  - name: Firefox
+    description: "Firefox"
+    type: bool
+
+  - name: FreeCommander
+    description: "FreeCommander XE"
+    type: bool
+
+  - name: FreeDownloadManager
+    description: "Free Download Manager"
+    type: bool
+
+  - name: FreeFileSync
+    description: "FreeFileSync"
+    type: bool
+
+  - name: Freenet
+    description: "Freenet"
+    type: bool
+
+  - name: FrostWire
+    description: "FrostWire"
+    type: bool
+
+  - name: Gigatribe
+    description: "Gigatribe Files"
+    type: bool
+
+  - name: GoogleDrive_Metadata
+    description: "Google Drive Metadata"
+    type: bool
+
+  - name: GoogleDriveBackupSync_UserFiles
+    description: "Google Backup and Sync Storage Files"
+    type: bool
+
+  - name: GoogleEarth
+    description: "Google Earth"
+    type: bool
+
+  - name: GroupPolicy
+    description: "Current Group Policy Enforcement"
+    type: bool
+
+  - name: HeidiSQL
+    description: "HeidiSQL"
+    type: bool
+
+  - name: HexChat
+    description: "HexChat"
+    type: bool
+
+  - name: HitmanPro
+    description: "HitmanPro Antivirus Data"
+    type: bool
+
+  - name: HostsFile
+    description: "Hosts file"
+    type: bool
+
+  - name: IDrive
+    description: "IDrive Backup Artifacts"
+    type: bool
+
+  - name: IISConfiguration
+    description: "IIS"
+    type: bool
+
+  - name: IISLogFiles
+    description: "IIS Log Files"
+    type: bool
+
+  - name: IRCClients
+    description: "IRC Clients"
+    type: bool
+
+  - name: ISLOnline
+    description: "ISLOnline Remote Access Tool"
+    type: bool
+
+  - name: ITarian
+    description: "ITarian RMM"
+    type: bool
+
+  - name: IceChat
+    description: "IceChat"
+    type: bool
+
+  - name: IconCacheDB
+    description: "IconCache.db files"
+    type: bool
+
+  - name: ImgBurn
+    description: "ImgBurn"
+    type: bool
+
+  - name: InternetExplorer
+    description: "Internet Explorer"
+    type: bool
+
+  - name: IrfanView
+    description: "IrfanView"
+    type: bool
+
+  - name: J
+    description: "$J"
+    type: bool
+
+  - name: JDownloader2
+    description: "JDownloader 2"
+    type: bool
+
+  - name: JavaWebCache
+    description: "Java WebStart Cache - (IDX Files)"
+    type: bool
+
+  - name: JumpLists
+    description: "Jump lists"
+    type: bool
+
+  - name: Kali
+    description: "Kali on Windows Subsystem for Linux"
+    type: bool
+
+  - name: KapeTriage
+    description: "KapeTriage collects most of the files needed for a DFIR Investigation. This Target pulls evidence from File System files, Registry Hives, Event Logs, Scheduled Tasks, Evidence of Execution, SRUM data, SUM data, Cloud metadata, WER, WBEM, Web Browser data (IE/Edge, Chrome, Mozilla history), LNK Files, JumpLists, Notepad unsaved sessions (Win11), 3rd party remote access software logs, 3rd party antivirus software logs, Windows 10/11 Timeline database, and $I Recycle Bin files."
+    type: bool
+
+  - name: Kaseya
+    description: "Kaseya Data"
+    type: bool
+
+  - name: Keepass
+    description: "Keepass"
+    type: bool
+
+  - name: KeepassXC
+    description: "KeepassXC"
+    type: bool
+
+  - name: LNKFilesAndJumpLists
+    description: "LNK Files and jump lists"
+    type: bool
+
+  - name: Level
+    description: "Level.io Application Logs"
+    type: bool
+
+  - name: LinuxOnWindowsProfileFiles
+    description: "Linux on Windows Profile Files"
+    type: bool
+
+  - name: LiveUserFiles
+    description: "Live User Files"
+    type: bool
+
+  - name: LnkTargets
+    description: "Collect targets of Lnk Files"
+    type: bool
+
+  - name: LogFile
+    description: "$LogFile"
+    type: bool
+
+  - name: LogFiles
+    description: "LogFiles (includes SUM)"
+    type: bool
+
+  - name: LogMeIn
+    description: "LogMeIn Data"
+    type: bool
+
+  - name: MFT
+    description: "$MFT"
+    type: bool
+
+  - name: MFTMirr
+    description: "$MFTMirr"
+    type: bool
+
+  - name: MOF
+    description: "MOF files (WMI)"
+    type: bool
+
+  - name: MSSQLErrorLog
+    description: "MS SQL ErrorLogs"
+    type: bool
+
+  - name: MacriumReflect
+    description: "Macrium Reflect"
+    type: bool
+
+  - name: Malwarebytes
+    description: "Malwarebytes Data"
+    type: bool
+
+  - name: ManageEngineLogs
+    description: "ManageEngine Log Files"
+    type: bool
+
+  - name: Mattermost
+    description: "Mattermost"
+    type: bool
+
+  - name: McAfee
+    description: "McAfee Log Files"
+    type: bool
+
+  - name: McAfee_ePO
+    description: "McAfee ePO Log Files"
+    type: bool
+
+  - name: MediaMonkey
+    description: "MediaMonkey"
+    type: bool
+
+  - name: Megasync
+    description: "MegaSync Data Collection"
+    type: bool
+
+  - name: MemoryFiles
+    description: "Memory Files"
+    type: bool
+
+  - name: MeshAgent
+    description: "MeshAgent log and configuration files"
+    type: bool
+
+  - name: MessagingClients
+    description: "Messaging and communication apps"
+    type: bool
+
+  - name: MicrosoftAzureCopy
+    description: "Microsoft Azure Copy"
+    type: bool
+
+  - name: MicrosoftOfficeBackstage
+    description: "Microsoft Office Backstage"
+    type: bool
+
+  - name: MicrosoftOneNote
+    description: "Microsoft OneNote"
+    type: bool
+
+  - name: MicrosoftSafetyScanner
+    description: "Microsoft Safety Scanner"
+    type: bool
+
+  - name: MicrosoftStickyNotes
+    description: "Microsoft Sticky Notes"
+    type: bool
+
+  - name: MicrosoftTeams
+    description: "Microsoft Teams"
+    type: bool
+
+  - name: MicrosoftToDo
+    description: "Microsoft To Do"
+    type: bool
+
+  - name: MidnightCommander
+    description: "Midnight Commander"
+    type: bool
+
+  - name: MiniTimelineCollection
+    description: "MFT, Registry and Event Logs to generate a mini timeline"
+    type: bool
+
+  - name: MobaXTerm
+    description: "MobaXTerm"
+    type: bool
+
+  - name: MouseWithoutBorders
+    description: "Mouse Without Borders"
+    type: bool
+
+  - name: MstyDatabase
+    description: "Msty is a UI to interact with large language models (LLMs)"
+    type: bool
+
+  - name: MultiCommander
+    description: "Multi Commander"
+    type: bool
+
+  - name: NETCLRUsageLogs
+    description: ".NET CLR UsageLogs"
+    type: bool
+
+  - name: NGINXLogs
+    description: "NGINX Log Files"
+    type: bool
+
+  - name: NZBGet
+    description: "NZBGet"
+    type: bool
+
+  - name: Nessus
+    description: "Nessus"
+    type: bool
+
+  - name: NetMonitorforEmployeesProfessional
+    description: "Net Monitor for Employees Pro"
+    type: bool
+
+  - name: NetworkScanner
+    description: "Network Scanner Tools"
+    type: bool
+
+  - name: NewsbinPro
+    description: "Newsbin Pro"
+    type: bool
+
+  - name: Newsleecher
+    description: "Newsleecher"
+    type: bool
+
+  - name: Nicotine_
+    description: "Nicotine++"
+    type: bool
+
+  - name: Notepad
+    description: "A Target to collect files that are currently open in Notepad (Windows 11+)"
+    type: bool
+
+  - name: Notepad_
+    description: "Notepad++ Backups, recently searched/replaced terms and recently opened documents"
+    type: bool
+
+  - name: Notion
+    description: "Notion Note-Taking App"
+    type: bool
+
+  - name: OfficeAutosave
+    description: "Office Autosave"
+    type: bool
+
+  - name: OfficeDiagnostics
+    description: "Office Diagnostics"
+    type: bool
+
+  - name: OfficeDocumentCache
+    description: "Office Document Cache"
+    type: bool
+
+  - name: OneCommander
+    description: "One Commander"
+    type: bool
+
+  - name: OneDrive_Metadata
+    description: "Microsoft OneDrive Storage Metadata"
+    type: bool
+
+  - name: OneDrive_UserFiles
+    description: "Microsoft OneDrive Storage Files"
+    type: bool
+
+  - name: OpenSSHClient
+    description: "OpenSSH Client config, known hosts and keys"
+    type: bool
+
+  - name: OpenSSHServer
+    description: "OpenSSH Server Config and Logs"
+    type: bool
+
+  - name: OpenVPNClient
+    description: "OpenVPN Client Config and Log"
+    type: bool
+
+  - name: Opera
+    description: "Opera"
+    type: bool
+
+  - name: OutlookPSTOST
+    description: "Outlook PST and OST files"
+    type: bool
+
+  - name: P2PClients
+    description: "P2P Clients"
+    type: bool
+
+  - name: PeaZip
+    description: "PeaZip"
+    type: bool
+
+  - name: PerfLogs
+    description: "Perflogs Folder Copy"
+    type: bool
+
+  - name: PowerShell7Config
+    description: "PowerShell 7 Runtime Config"
+    type: bool
+
+  - name: PowerShellConsole
+    description: "PowerShell Console Log File"
+    type: bool
+
+  - name: PowerShellTranscripts
+    description: "PowerShell Transcripts"
+    type: bool
+
+  - name: Prefetch
+    description: "Prefetch files"
+    type: bool
+
+  - name: PrefetchBinaries
+    description: "Download binaries mentioned in prefetch files."
+    type: bool
+
+  - name: ProgramData
+    description: "ProgramData Folder Copy"
+    type: bool
+
+  - name: ProgramExecution
+    description: "Program Execution Triage Collection"
+    type: bool
+
+  - name: ProtonVPN
+    description: "ProtonVPN"
+    type: bool
+
+  - name: PsList
+    description: "Collect all currently running binaries."
+    type: bool
+
+  - name: PuffinSecureBrowser
+    description: "Puffin Secure Browser"
+    type: bool
+
+  - name: PushNotification
+    description: "Windows Push Notification Service"
+    type: bool
+
+  - name: Q_Dir
+    description: "Q-Dir"
+    type: bool
+
+  - name: QFinderPro_QNAP_
+    description: "QFinderPro (QNAP)"
+    type: bool
+
+  - name: QQBrowser
+    description: "QQ Browser"
+    type: bool
+
+  - name: QlikSense
+    description: "Qlik Sense"
+    type: bool
+
+  - name: QuickAssist
+    description: "Microsoft Quick Assist/Remote Help"
+    type: bool
+
+  - name: RDCMan
+    description: "A Target to collect files that are related to RDCMan"
+    type: bool
+
+  - name: RDPCache
+    description: "RDP Cache Files"
+    type: bool
+
+  - name: RDPJumplist
+    description: "RDP Jumplist Files"
+    type: bool
+
+  - name: RDPLogs
+    description: "RDP Logs"
+    type: bool
+
+  - name: Radmin
+    description: "Radmin Server/Viewer Logs and Chats"
+    type: bool
+
+  - name: RcloneConf
+    description: "Rclone config file"
+    type: bool
+
+  - name: RecentFileCache
+    description: "RecentFileCache"
+    type: bool
+
+  - name: RecentFolders
+    description: "Recent Folders LNK files"
+    type: bool
+
+  - name: RecycleBin
+    description: "Recycle Bin DataAndInfo"
+    type: bool
+
+  - name: RecycleBin_DataFiles
+    description: "Recycle Bin Data Files"
+    type: bool
+
+  - name: RecycleBin_InfoFiles
+    description: "Recycle Bin Info Files"
+    type: bool
+
+  - name: RegistryHives
+    description: "System and user related Registry hives"
+    type: bool
+
+  - name: RegistryHivesMSIXApps
+    description: "MSIX/APPX App Hives"
+    type: bool
+
+  - name: RegistryHivesOther
+    description: "Other Registry Hives"
+    type: bool
+
+  - name: RegistryHivesSystem
+    description: "System level/related Registry hives"
+    type: bool
+
+  - name: RegistryHivesUser
+    description: "User Related Registry hives"
+    type: bool
+
+  - name: Remcos
+    description: "Remcos RAT"
+    type: bool
+
+  - name: RemoteAdmin
+    description: "Composite target for files related to remote administration tools"
+    type: bool
+
+  - name: RemoteDesktopManager
+    description: "A Target to collect files that are related to Remote Desktop Manager from Devolutions"
+    type: bool
+
+  - name: RemoteUtilities_app
+    description: "Remote Utilities"
+    type: bool
+
+  - name: RoamingProfile
+    description: "User Related Registry Hives, LNK files, etc"
+    type: bool
+
+  - name: Robo_FTP
+    description: "Robo-FTP"
+    type: bool
+
+  - name: RogueKiller
+    description: "RogueKiller Anti-Malware (by Adlice Software)"
+    type: bool
+
+  - name: RustDesk
+    description: "RustDesk"
+    type: bool
+
+  - name: SABnbzd
+    description: "SABnbzd"
+    type: bool
+
+  - name: SCCMClientLogs
+    description: "SCCM Client Log Files"
+    type: bool
+
+  - name: SDB
+    description: "Shim SDB FIles"
+    type: bool
+
+  - name: SDS
+    description: "$SDS"
+    type: bool
+
+  - name: SOFELK
+    description: "SOF-ELK related files of interest"
+    type: bool
+
+  - name: SQLiteDatabases
+    description: "SQLDatabases Target for use with SQLECmd Module"
+    type: bool
+
+  - name: SRUM
+    description: "System Resource Usage Monitor (SRUM) Data"
+    type: bool
+
+  - name: SUM
+    description: "SUM Database"
+    type: bool
+
+  - name: SUPERAntiSpyware
+    description: "SUPERAntiSpyware Data"
+    type: bool
+
+  - name: SUSELinuxEnterpriseServer
+    description: "SUSE Linux Enterprise Server on Windows Subsystem for Linux"
+    type: bool
+
+  - name: ScheduledTasks
+    description: "Scheduled tasks (*.job and XML)"
+    type: bool
+
+  - name: ScreenConnect
+    description: "ScreenConnect Data (now known as ConnectWise Control)"
+    type: bool
+
+  - name: SecureAge
+    description: "SecureAge Antivirus Logs"
+    type: bool
+
+  - name: SentinelOne
+    description: "Sentinel One Logs"
+    type: bool
+
+  - name: ServerTriage
+    description: "A compound target for gathering artifacts common to servers."
+    type: bool
+
+  - name: Session
+    description: "Session Desktop"
+    type: bool
+
+  - name: ShareX
+    description: "ShareX"
+    type: bool
+
+  - name: Shareaza
+    description: "Shareaza"
+    type: bool
+
+  - name: SiemensTIA
+    description: "Copy Siemens TIA Settings"
+    type: bool
+
+  - name: Signal
+    description: "Signal (Please view this tkape file for documentation on decryption!)"
+    type: bool
+
+  - name: SignatureCatalog
+    description: "Obtain detached signature catalog files"
+    type: bool
+
+  - name: SimpleHelp
+    description: "SimpleHelp Remote Access Client"
+    type: bool
+
+  - name: Skype
+    description: "Skype"
+    type: bool
+
+  - name: Slack
+    description: "Slack"
+    type: bool
+
+  - name: Snagit
+    description: "Snagit"
+    type: bool
+
+  - name: SnipAndSketch
+    description: "Snip & Sketch Cached Images"
+    type: bool
+
+  - name: SnippingTool
+    description: "SnippingTools screenshots"
+    type: bool
+
+  - name: SoftPerfectNetscan
+    description: "Soft Perfect Network Scanner Output"
+    type: bool
+
+  - name: Sophos
+    description: "Sophos Data"
+    type: bool
+
+  - name: Soulseek
+    description: "Soulseek"
+    type: bool
+
+  - name: SpeedCommander
+    description: "SpeedCommander"
+    type: bool
+
+  - name: Splashtop
+    description: "Splashtop"
+    type: bool
+
+  - name: StartupFolders
+    description: "Startup Folders"
+    type: bool
+
+  - name: StartupInfo
+    description: "StartupInfo XML Files"
+    type: bool
+
+  - name: Steam
+    description: "Steam"
+    type: bool
+
+  - name: SublimeText
+    description: "Sublime Text 2/3/4 Auto Save Session"
+    type: bool
+
+  - name: SugarSync
+    description: "SugarSync"
+    type: bool
+
+  - name: SumatraPDF
+    description: "SumatraPDF"
+    type: bool
+
+  - name: Supermium
+    description: "Supermium"
+    type: bool
+
+  - name: SupremoRemoteDesktop
+    description: "Supremo Remote Desktop Control Logs"
+    type: bool
+
+  - name: Symantec_AV_Logs
+    description: "Symantec AV Logs"
+    type: bool
+
+  - name: Syncthing
+    description: "Syncthing Configuration and Logs"
+    type: bool
+
+  - name: Syscache
+    description: "syscache.hve"
+    type: bool
+
+  - name: T
+    description: "$T"
+    type: bool
+
+  - name: TablacusExplorer
+    description: "Tablacus Explorer"
+    type: bool
+
+  - name: TeamViewerLogs
+    description: "TeamViewer Logs"
+    type: bool
+
+  - name: Telegram
+    description: "Telegram Desktop"
+    type: bool
+
+  - name: TeraCopy
+    description: "TeraCopy log history"
+    type: bool
+
+  - name: ThumbCache
+    description: "Thumbcache DB"
+    type: bool
+
+  - name: Thunderbird
+    description: "Mozilla Thunderbird Email Client"
+    type: bool
+
+  - name: TorrentClients
+    description: "Torrent Clients"
+    type: bool
+
+  - name: Torrents
+    description: "Torrent Files"
+    type: bool
+
+  - name: TotalAV
+    description: "TotalAV Antivirus Data"
+    type: bool
+
+  - name: TotalCommander
+    description: "Total Commander"
+    type: bool
+
+  - name: TreeSize
+    description: "TreeSize - Scan History"
+    type: bool
+
+  - name: TrendMicro
+    description: "Trend Micro Data"
+    type: bool
+
+  - name: UCBrowser
+    description: "UCBrowser"
+    type: bool
+
+  - name: UEMS
+    description: "UEMS Manage Engine Agent"
+    type: bool
+
+  - name: USBDetective
+    description: "Collects files that can be input into USB Detective for parsing"
+    type: bool
+
+  - name: USBDevicesLogs
+    description: "USB devices log files"
+    type: bool
+
+  - name: Ubuntu
+    description: "Ubuntu on Windows Subsystem for Linux"
+    type: bool
+
+  - name: Ultraviewer
+    description: "UltraViewer"
+    type: bool
+
+  - name: Usenet
+    description: "Usenet (NZB) Files"
+    type: bool
+
+  - name: UsenetClients
+    description: "Usenet Clients"
+    type: bool
+
+  - name: UsersFolders
+    description: "Users folders Dump"
+    type: bool
+
+  - name: VIPRE
+    description: "VIPRE Data"
+    type: bool
+
+  - name: VLC_Media_Player
+    description: "VLC Media Player"
+    type: bool
+
+  - name: VMware
+    description: "Runs all VMware modules to collect VMware VM config files, logs and Virtual Hard Disks"
+    type: bool
+
+  - name: VMwareInventory
+    description: "VMware - Virtual Machine Inventory"
+    type: bool
+
+  - name: VMwareMemory
+    description: "VMware - Virtual Machine Memory"
+    type: bool
+
+  - name: VNCLogs
+    description: "VNC Logs"
+    type: bool
+
+  - name: Viber
+    description: "ViberPC Messaging App"
+    type: bool
+
+  - name: VirtualBox
+    description: "Runs all VirtualBox modules to collect Virtualbox VM config files, logs and Virtual Hard Disks"
+    type: bool
+
+  - name: VirtualBoxConfig
+    description: "Collects VirtualBox configuration files"
+    type: bool
+
+  - name: VirtualBoxLogs
+    description: "Collects VirtualBox log files"
+    type: bool
+
+  - name: VirtualBoxMemory
+    description: "VirtualBox - Memory"
+    type: bool
+
+  - name: VirtualDisks
+    description: "Virtual Disks"
+    type: bool
+
+  - name: VisualStudioCode
+    description: "Visual Studio Code artifacts"
+    type: bool
+
+  - name: Vivaldi
+    description: "Vivaldi Artifacts"
+    type: bool
+
+  - name: WBEM
+    description: "Web-Based Enterprise Management (WBEM)"
+    type: bool
+
+  - name: WER
+    description: "Windows Error Reporting"
+    type: bool
+
+  - name: WSL
+    description: "All Windows Subsystem for Linux targets"
+    type: bool
+
+  - name: WaveBrowser
+    description: "WaveBrowser"
+    type: bool
+
+  - name: WebBrowsers
+    description: "Web browser history, bookmarks, etc."
+    type: bool
+
+  - name: WebServers
+    description: "Logs from all known web server applications and supporting services"
+    type: bool
+
+  - name: Webroot
+    description: "Webroot Antivirus"
+    type: bool
+
+  - name: WhatsApp
+    description: "WhatsApp Local Files"
+    type: bool
+
+  - name: WhatsApp_Media
+    description: "WhatsApp Shared Media Files"
+    type: bool
+
+  - name: WinDefendDetectionHist
+    description: "Windows Defender Threat DetectionHistory files"
+    type: bool
+
+  - name: WinSCP
+    description: "WinSCP"
+    type: bool
+
+  - name: WindowsApp
+    description: "WindowsApp Logs"
+    type: bool
+
+  - name: WindowsCopilotRecall
+    description: "Windows Copilot+ Recall"
+    type: bool
+
+  - name: WindowsDefender
+    description: "Windows Defender Data"
+    type: bool
+
+  - name: WindowsFirewall
+    description: "Windows Firewall Logs"
+    type: bool
+
+  - name: WindowsHello
+    description: "Windows Hello"
+    type: bool
+
+  - name: WindowsIndexSearch
+    description: "Windows Index Search"
+    type: bool
+
+  - name: WindowsNetwork
+    description: "Windows Networks settings"
+    type: bool
+
+  - name: WindowsNotificationsDB
+    description: "Windows 10 Notification DB"
+    type: bool
+
+  - name: WindowsOSUpgradeArtifacts
+    description: "Windows OS Upgrade Artifacts"
+    type: bool
+
+  - name: WindowsPowerDiagnostics
+    description: "Windows Power Diagnostics"
+    type: bool
+
+  - name: WindowsServerDNSAndDHCP
+    description: "Windows Server DNS and DHCP log files"
+    type: bool
+
+  - name: WindowsSubsystemforAndroid
+    description: "Windows Subsystem for Android (WSA)"
+    type: bool
+
+  - name: WindowsTelemetryDiagnosticsLegacy
+    description: "Legacy Windows Telemetry and Diagnostics files (*.rbs)"
+    type: bool
+
+  - name: WindowsTimeline
+    description: "ActivitiesCache.db collector"
+    type: bool
+
+  - name: WindowsUpdate
+    description: "Windows Update Logs"
+    type: bool
+
+  - name: WindowsYourPhone
+    description: "Windows Your Phone"
+    type: bool
+
+  - name: XPRestorePoints
+    description: "XP Restore Points - System Volume Information directory"
+    type: bool
+
+  - name: XYplorer
+    description: "XYplorer"
+    type: bool
+
+  - name: Xeox
+    description: "Xeox Application Logs"
+    type: bool
+
+  - name: Yandex
+    description: "Yandex Artifacts"
+    type: bool
+
+  - name: ZScaler
+    description: "Zscaler Logs"
+    type: bool
+
+  - name: ZohoAssist
+    description: "Zoho Assist artifacts"
+    type: bool
+
+  - name: Zoom
+    description: "Zoom client artifacts"
+    type: bool
+
+  - name: eMule
+    description: "eMule"
+    type: bool
+
+  - name: iTunesBackup
+    description: "iTunes Backups"
+    type: bool
+
+  - name: mIRC
+    description: "mIRC"
+    type: bool
+
+  - name: mRemoteNG
+    description: "mRemoteNG"
+    type: bool
+
+  - name: openSUSE
+    description: "openSUSE on Windows Subsystem for Linux"
+    type: bool
+
+  - name: pCloudDatabase
+    description: "pCloud Database"
+    type: bool
+
+  - name: qBittorrent
+    description: "qBittorrent"
+    type: bool
+
+  - name: uTorrent
+    description: "uTorrent"
+    type: bool
+
+
+export: |
+  LET VQL_MATERIALIZE_ROW_LIMIT <= 10000
+  LET NTFS_CACHE_TIME <= 100000
+  LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
+  LET S = scope()
+
+  // Helper for VQL targets - try to download the file, but if failed,
+  // we return an empty row to record the filename.
+  LET TryToDownload(OSPath, Row) = SELECT * FROM switch(
+  a={
+    SELECT *, "auto" AS Accessor, Row AS Data
+    FROM stat(filename=OSPath, accessor="auto")
+  }, b={
+    SELECT OSPath,
+           0 AS Size,
+           NULL AS Btime,
+           NULL AS Ctime,
+           NULL AS Mtime,
+           NULL AS Atime,
+           "" AS Accessor,
+           Row AS Data
+    FROM scope()
+  })
+  LET GlobTable <= gunzip(string=base64decode(string="H4sIAAAAAAAC/8y9XXPiOLc2fP78Cio1b9XzsN1Up7unZ+59RoB0ZxoSJpCk77tcpRK2AE9sy2MJEmbX/u9v6cufsiwT6JmDBFvWuq4lWZblpaWl/9PrLWG6QdS534XI+RLilXOP1v+n17ucQ0JecOo72RG4gt7zLgFjSOEKEkSciweCUuL23WGSsFR3ij0YupeJlHBXXIK4Gcbl+wH5MwwounAaSBR6O7jPEjsgT/HGQuUQb4jbH4R4w4E+fn6/QN4uRVcpfiEodT5+fg9ECpBJ4Arj5wimzxr0ewyjIN64Hz+/J+izyy73+IU+S8oE+9ZcI4yfA9SNqd93pVgHnl2aopiCBSIkwHEnPinbk7KdOZdwRY4iZILWbGP8EocY+mCGKGRtqROlklbC1rSTV4piVi1H3cpMuielrXmv4T7wcNyNTgnZt5uvAaE4PXR9EqSYPc8UkuMaJxPs3DI5W+dmyak6tckp3gQx7wK7ETExfmJfgTPkB/Co28Ule53v2C2iLzh9BkOPstY/T5EfeBSnnbglSE+A9DKQzlrMUUoCQnkXRyFFXTtUpUiO0+M41orMU7RGKYq9jj1AQc6a6/cdphDMYAw3qFt9c0kpaE13jxKc0iDeABj74HYy7Vq5GUAPxn7vdjK1ppYPNgHXOPQ7llXJuvZterHFKfV2tNstzKQ6EMUwIVtMjyhYJsrr1p7xEHtM3jAgMxXxEHvy2J5yiROwCGjHB2KJkx6X6kCU7lh/jp9R3HkkxWV7Qtae8TEgAUU+mAZxx2GilOxxSWu+J7Tq/hp5QivTS+QpiH38QsA8xRR5tLUlzgIvxQSvqSsl8gb46dtj4COsBlEodT59AzwJFNIaxuqfnn2ZZ+DhyP30rccle7mkNq1f/D6wUgAcr8F/6RNLOgwfvzjDxy9g+Cg/TeYp3qQw4kTDxy/uMKbBPkh3hH2UqKqrSIHvc+BcjLG3i1BMCe8wF4iyzpO4wzDsiRIMkyQMPMhfmtb4ohs+IU3KAatM10GIbuI1BuMrUx30+67K+WHgr0oQhbe5vioLr2mRlsFO+fdeWaNCwU0a6YsTEn/1xwfw2+Lu1nhLib/6MPiDyFHo0ENL9Eod+QtGYZCsMEz9+hAtuwtufwCpJ8VTHAdkme7QTQQ3yJEJrKtDgCdlHTmv8GrBRHY3A/iKI+QqCRem3jbYIzLwV31rPk31aVn4HaAB8FGEY9cef+GlQVJ4I7YzSYmMg7XTS0f+sipnDajQhkHIiyA7PldmrJoIWPIejYMUsZHo4XY5Xjj8XybIzrJmUs69OJA9Dp3FvxePd9NcQpxnMj5MmNTC2yJ/FyJ/CckzcUY4imDsE+dC5trD2EP+zXzhwThGqaNSwM0cyDQwDANhu+n3XaiuBwkg5euDVRB3QGWqsCbZCKsydMSdDUeNkLPhqIY2xymt4bFEc/n5495WA+3Y+loogTfWQzt6rS5KwKXa2KCY3sOYQO/Z4SdAnoERjtfBpsEWlr25D3QbePzVXYRyPS6ctUoDSwrJVvSi5EiuIoQF403so9cpPrZkStyC6TiCsPiaiTzobZGjftVTP8Ch72adTZKMcJRAPnpi/RpxZf7Bdo+MOEfIAppyRXmvtxbvh+5aDaZ3X/od4TtARoeDw/8DmVMOcUsdP7ueVbR627IXM+slh49fysl7SCi/wA4ql4IUiktBCoeP7LaXMlwF1EdrFPN3z0XxtJRthKMVvg5eWR51XM6Q4hd/QdPgGV3D0MMxz1lNLIscVihFkMi82VklU8i6CZGDH5YuTxaTJbvGfssXIhKw9ssvyuNShmvxWcCuy8PS5a8BjWA8TzHLkJ2Ussxg+AJTtDrwb72L0nk5ozdcI84kjjQXAZrf5RnYWTmT+ggBC7hG9KB6Uy6irolL8kpJ/B5vduhbEIZConBayrZ4mE/u2ekiObCSsLzVtLIAr7fhRuRUJ5UsMQ1iFN7FMlN2Ws6Gky3mtSiOyhcPEYwp8vhleay+HEoZl5jCcPjI8snD8uUUxT6vLp4jOytleryZ30/YdX5QuvSEVinGvEnJw/Jl+WU5LjxPMm1cfKYOY0SeHfkLRlsoP04ehEENs56luWuWcq63hdTtD+grlZ1EGZaNjsGS9VdrYZEl4CYmFIYh8gEkAIIFSvcBe7JKHY9EZzqI7o6J0xR6qAvV/S6Og3gDgpi/3uEqRCDCvkWxuhBzqoL2gL3Z9eXpD9g1a5QYiU6e8wP6SvWo1Zz2mvLsTaryi804iwOhKBLNZeh5eBfTwpD7QJ7unj5/UqMcwjMnolU11nq/ma3YKmUFt93DtsquQmpqu7X1d6r5EqGs+vZCNN8GbhIpDJ/EeUEUxgcfkWchnLBRwNDzECFTvHHEORAJTD8xHOan+deYGk7MR0MnOwHz0TD7UFR3HCaJJ0YeiQfVnRSFctRvrbT9LN/3OfSe4QYRlpmNVEnAvujAGqfsI/J7uZHm1rDCwCeXchWY2++7fCYhv/auPyCpX6ctPhYqsYG9gF7HEY/FMEmK0oXHQl7UyrLqWSTIC9aBp9FBbz8zaiOJK+rIwvS47cIt5HHHKEQU+f0CmPp+n+z511jxi54nsbYDnoL4F1At58cP7ksQoz0VA3aYSw7Qnr6+gaA0jD492fe5piiyJxsmCc/IUI8F1avfSJB6zjD1TJ4RlZaw3Co7M39g48OAyVNKL2HyC4TPh9UnITJifYCUHqZeyYBd8adQWjROtJ9DBzkxWPa4UJo0T8KfQ5Xy7L3SoXHK9xwqlGaJlQa/Le5ulRHyXEosKE7Z4KlfMLFKetMk+znqoDo7r/SwnxA/YzvVz6QrFefTm8XynLfKw1F/kIQBKfcbxsnxc9RGdVZdKdI6n3wOZSoT0ZkuzZPNZ9GiPEudadE+L3wWbaoTykofw6TxOfSozDYrLVrmd8+hSX1iWCnTPPl7Dj3Ks8ZDkqAUjsRHhiPO1MyKyQFT5JQ/PSnv7mEq5yaL8y06CvZNLr+hc4oBFKieEY6iFHJbrZMfliev5KhzuJzcD3uy4yRunlsAqjnJU+GJwdWJMdcnBsy+HrWAQRwoc28n1CAOBCq3z/L/YPgojPyVb/899+fDa/oCUyRO3dEWEeoGLPfgNQp1UJrJSR1ScUqgDlCdFR/azop3o3ogtZbdBeHGg+mOtJdY5CtPiBdgCnPsvP9vxavNuSslC/CZaV2Y2flYaB/QgxY9SEsT93dfrm+mk0UzGLermsBUhhalHue3jRCP81sleDUaO+zv4gpj6l6NxsVUCaAu5dMaVzfLhcP+VR6UitFAfVYUHVokQECXmPs/O/JXdLcEFK40Gm3yPKwHg1RBZlMbhWMwif0EB9wrvLFmC/ldlb+nregmlpuYojRG1ixjRJ4pTlxppiJWJIvfpwFFYHxV8YYQ/VO/SNAXfdL/+CvHX717gSH7IdvofxVBBBNH/lz8JA7EJYypw/9d/MR+ZOLrOA32KHc7v8KvQCQVv8KbvdLFC/MKv/I/VU4tLBs1dUXtMaEaLMsuaipXl/dLlY8DnUplWa5Tg2iZO4X7zPms1ZLAc2d9Dz97J4VNNoISSYuhwJai9OlfJmhbVdGRSLPQQsund10/jixzaC8xWaym6EanXWBRomwzptgylc0kJYoWW4ktQ8kKUiJot0XYcuRWhjpLV0uDLafRhqDVoN3t/jgNtG74JQ0sTAq2pFVjQZlntwoDsuXvMe7TCPhlcI9eYOq/mTvJ4AMGr/zxSiq0uPt3I6ytAChRWbj6d6PTu/6XOKWr8wlvqEDsFRD7OlorU5Ad5xit4S6kVVNPmbDN3mNdvLIlp0TSaj6xJakYRkokVtYRW6KS3UND1mb9sOUp2zWUnYR7NYknmh+ftDUIM4vALdq6SuSjbYojO/YvGG9C5AqJ8sucMzXCB7sITPyNHUv+kcJELGk4+hNacUevx/eXwIe0nUBNQD2hlYSuI18HKVrjVzvV8V9BGEJXyuSfEH2t0jcTcHkpgO11vblFtLkebibgX+DyfVfQJYoSnML00FNfS9Kw0sDBLSesjgFFUQIC9YklvzkbHPv7gj9PaKQd4Zi9fAc3k5+l3UV9S45gAldBGNCDmLdXr6U8XU3oyytMS2lYNs+fNyA3pSv73Ail9IEGoZPdmGPu5c1EVXWGJ71LRukhoTGiD2k4KrtlVqdN9R4mnHuKXwr0Vcgmau6/YlbAwsXlGAX491ydWFuvltBbSL/Ml478BaoN8q/GVsv2XYLi4c1ACr+TJgLwIfkQ/0n8994vnzfv3axZE3mQN9qMnPWcxkbSjbJgTVcWGCngakv/FYWsL75Hm4DQ9AC+BnuLmQ670ivHDo4giAo2IKUB7zmQP746ewVkTO6W0oQAbwvpJqEDD0fg/SAQV/3VIER7FPort1xTU5b6A7SUPSLFKdwgt6oLay7ZG9psTWh+OVfjNWhhuXOGbb9ds0AbRgYGZjvrhQFbY68wUpytkNaKmCwn7fiZraQZ/NxFbFDB2l7TzKC10JRZLIJdtLHoI16UadosQc3oZduPHvVcd8jE3WJ4agYtmZq0mOcqjoHZHKyjrUi1iB3N4Ocqm40Kx/UU5RghDbBnLVYTeatl0oBbtkU2AZ+tWCb6lrgnbUXTBD8p43e1tTZTGa2relJb82o7qdagWia1MMA181RtqI3Q52okZgWsTKjN4DWjaRnd2mrazKC3k5ZpLC2WzSQV62QFvc08acAtGyQbcM91583srYFWzIXTRFupENj6zxkKkPnCKTAZVuKjhq/VwNvMUzHpNuCe6zaZ2Y0RXFoLVovhUka3slc3w9c98wzw56q+NiXazOTNyGXDuB71XKUyca/aXASaYStOAQ245yqUlj377iH1jymjQ7bFpxQpd02tVOcqeJNCjFSYp7Jvl+Vs+rNYLyltnce+0xhGT2BUOujFvxfLyQxUv8CU8ZTYW287fiWdMLDSKCAe/g2uVih1+DEQJ61vG57ZfYiDdYD83ghH0S6Wd5G4AsMdLa6V/rm7axaoZgYJZazl83ogGxlG1hBD4bddlLCRzdWBIuJWAPPzgRdGnwYr1Rd01oPHhTlajSTw8lbbmZvH+jlJBUgF8M6XNkkwDEPuaFX0sbpw6t5YOrlSQm4autBf0CGMU5ysauzF1EZy8dRI5zIZbJgNkGseYxcyK88pMmZ5GtFv/AIuwxAJuqx3Map7uF2Ukxt5FrsNTJk6fNG9OtHlTHhK/mReVFKqMiXXvuLNqTn/NUqq+1CUrqY1Cl+nSHbNonDF80ah0k0t0hZuYTv1DG0gv8V8cDHCYSjWMPMwDmgDiUmF7L4V6WuJjeL3XohjxCPnyMmnC5nGkqpiCnfymoQ4RemR7DWYe+QdvBCBK2k8Gcb+Tbzm8RjkpasgbkV5EPE5Q8jGn9ms0lbMKjEkkcKnmVheBoi9EfYc8dO+olPkcy1cL8vALQZiA2xtuqSMazdpYcDXThZoOUwmQAuC3BJXQrc21Rso9Lb6Eo21rd5A02CsL/G0GesN8BWLeQm2xaJnQC0PyUqgNoZrA3LdbFxHP7LNVEy3ZdxW060JuLJatQxtZT01oOvMpyWCruZTA5fZfqpltbWfWrDqDaglVgsDqoGoZsAsYVsZMA3odQtmCd7agmmgaDBhlngsTZgGlqoNswzfZsM0AVfMiGVgSzNiI77OjlhmsLUjmopQXVRbpmg1HRqgq9a7MrCF9c6EXTffleCtzHcGfI3prITfZjozQFfsVwL2lN//OFoFMfL5iikRyGPJYwOJJVQXIo0nyRhgJYk5fkHpYovCkA13CQ6RCLNzUbgiLxhEeUQrEWq1LFq4UBV/WFyN0T7wEFGallOq+VWdZcFK8tKZsl8HKXqBYaiKJdNVclUM3E6WYDS9Bw8EbpBiuZ0sR9P7LEkK4XXwWoj2p46yFbLsYyHcsf6a4+Sn4Cl4Dni8lWvtUlkaQkICGLu5SDUErT12jlaz02nhZbOqxSgspACRBH7fwRTyIHW+/E6qOT7yj5GUuAVpNxfLGnEe3jA/BMOYBjwIJ45eYKoLL+yl5LK0+K8BqLAeboRjmuJQvMW+aNcFe+nKBnWBYoJFfNfccsZxueIyxKEGHyb7DxV8EbhR/oK7hAaebv2uzOCKDMXlv1WIYqSoZhy1kNIMIk3CurXiVaBCWPHxCDjjUR6zr6nvHI/+679KtTF+EqvK5a/mOREu9OJyv9hqx2gVwNgRP+BpMQXDxMxejIwgxOYp/gN5dCDOvtw+TIN49wqk1ZuP7NwUY7omWXQBmNByhIG6HtJdFsfUMPp/szIkwTh0vRTH/B/jymq1ptIKki3Y2scG6qxRv+8OiiQGPVLvrBqkXgM3op6ohzMqgajnMvh2TeQ9O5sWEt+ggS9OWZdt+AB+syJlGoM+a3LO+uDoBvZNinfJ2dg5uoF9iwmNYYTOpoAiaNGBnFUBYmDHBKQoRJYhh45SAZN3ksKgB98q0D+bDgLexN8U6PZUCgh8gwZkC338cjYFBLyBnwYR+gvH56sCRdCkwyv9BPZb//W0CjDYAYNtoD3njWfvxtKNVxtU3CU74mRngJ82TbrPs5WOmUCPCYiApuIrY3b/4K6D2Aesrxlg4v8gugTS7ZF06ru7mVAMWM9QkuV2F61iGIS94nrHs9WW2K9VODic/96kyEMx/YFtwGMDniAmP4YyRayJiyWWP5aR2480nMsUskEWDMFw5wdYfEbxQ7UQVES6+bhJHAgdCD0HetSBwXrtwJCdRakDE+TAnQNfVo5PiOPv186aXduQyAmeQ/jqBHviRJ+gE31aOdGnxImitRMlH50o8ZyI7J04Wjt4s3HwBjoRP2CFT6GTRk4KX5x0/fmTQ8LYoRQ6e+w5e/zqvMC98xJB52XvvKCVDL6jKdnk1UNh5qvk8FP+GS6OwuAZgfyyLPBrSJzXkLw6Htk7lOyd15A6r2HEEtk/+sr+8dOV8xpC9sfOQuc1fHGwT5w19hPnz+SlUa/5+DqnnY+vuU7sV69R4q+d14Q4+DUhzZiBR3cpEvdRnpTvJAycVZQ4q2TjeH7qeInnoIQ46DV11mGwdjbB2tmiYO0E4Spyggg6fyQfnD8+PDt/JGvnjyRy/kg2LMFz/kjY36sT/fHhjwRt2AXnj9fQeU6hg1PoJN6rk2zWTrKJnCTeOEkcOUkSOQlZOQnxnYQkDtlvHLqBDmUt6gWtEucVRqHz6q0byygCNeV7TsvATcII4a94NQrvV6AK7a8ckfK//f/XBMsDj4uKE9u+VR6ADw5/CKK9A8nagfvA8VPPWYd7Z/2J/SXO+hN01p9WvAo3wXrvRJ/2TvS8dyK8d/6kTpR8Eq0/2TgRq7Dow96Jkg/sxImSvRNR4kQfKHHY7+vaicnewZs9fzTYkxDtV06K/3TIPnD2wd7Z4xVv+s5LtHcOu31jlT0FoT+CqT95hVESIuc/QaJK9leQNErh1M+bITvjdcsP9G3Ux57jY++V/YscH1N2RNmRt2JHzsvq2cE+ZQ8HdVK6dl6SvkMjX2lOPJz6jvxVC/b1vo3qHeyLzK5XXC1bReLdJlBOEHJlqC1yyN0ZSXWBp2TCu1WI5MZbPOwROwdZArhezoVtuZGGS3iRnx8VLEVt8JkMeI3CTiRZIMRWDmmfsWWQ2e3xo11IA5h6IIgDGwKVP4sK2cqQBK8RTIh5Q4ScQGbPLPWt+ESuNrMsgMxurz/JlkAQb23FoAQGxBPbR0hLu6N+626svrTF82eZHOSXd9U/rO4w1mC3Ffn4R/zAX72eFO00YBH0tkGMgHq0aQoP76gaYJOT8QTxGudRx08ARyiMPZTN8dUATjh/WPPT1PpzZjtRimuZ9OQ6b9ST60KDDuKgIW6D0mlynY1xJdZisuSbU4Hbu/HHD/qYrew6/9fjmXr6bT07QmmDVTZgHLsvalfF71GEKQJDPwrigNAUUpw2FULkLWUVe9G5Exlkt6CObHDZ5yunFO/PB7F1uJqda2qnmoqrT+lxWOlgv2O4fxZwj4iPYsnqb5CKZyQiDrW6LxqCGVXcF+vguVvqMfAFadfLj8V4t5HR6KlnYNNuU6EhsPOeNBVL4z3ZzGPyhrMgyRzi6gxtbocG9LLbYR26xR3OgFxyhKsD27gfGtBr7ocNDEdWetkFUYPd6oZoAi+v4a6jW3kiGgg0noh1kq7eiO0PnN4bsc5s4RtoIKv6BtbxLR3rDBwVxzoNRZtznQm87FynAbd0sGvk0DjYaVhsnexMRTGv1q2TtrrdGcgqbnd1cCvfOANB3TeuzvGEVkNCAkLfUGs1jH4z2bF9TNkZrwhdWBEpXk9ZUES7NZgG0vqax1KZTjiWZ7hC/bXd5jUZ1iA74uK/vqDnw+qj/+tq9ZKPrdQ2seqA76yqG5PK667azJl4MM43jpjEHkzILuSj0SnebIJ442gTmzYk9iq7B+uEs32Pu9Odj0JW1hE8uY/TkWTH1mGBWLlaSjfTkH0Ndd3yrp9vdGeBdxyGaWe8frZjXSYK7sfztxRJfY5otHoDNP9Cy57KdzLbuyVKoyCGodyRlrwT336jbI9P6cH//326S1DKbyYMO2t2tDZimlmME06iyUnq6ORa/bPu1jF1JBSRbpu5en4ywilaLv6u6hnPxVYmP4b/rJVwmqf7TBVyxo5LQPPEU+mpA8tWNDhjFAZ7xGfUaRAFfwk/7+IiiAxdVGsW81l+ocnk1ljAiqjIIy1pA0TDvk65SYzSzQHcLr9NSyqZAx3zBRST9TrwAhR7h944gJsYE+70jTjiu5g+h4xVR7oIEUoWdOcfdNWgv3u5TDbe6wLaAehpfFNAAJctij2Nb1gly2DXjRXdiPpWpA8W+v1P366sHxq0apaf3djfwqxsT7Obbnh2GHIlz/jKqaQAf9XUomXLDYhbkameD9TGFnZsxYo4H3OGBu7Yw4hA/iAaVxUsUZS4xYc2r8k0xhQ56kBtSt+IpDLmB5ljBPfgg1K+Af4WU7TC+Bks4iBJ0NE8/QF6XQ2IBGkhexNJhn2gW/YR84gDf4lxSICjTzVwicyFQzXj1wH/fhc32xyzuayc7H4XKxvjwCP7rnQLBFNv24lRiLyFVG3aaEVXqE01vT3ZBz6KPXS3nrwib8fDdAwjTwRRv1CHTRmL2/ez3IXzBhFu7KTelq81lMcNWe+5xyHr0kZKnUpSg+DiQLICqGOW9dXbwniDxKhMbDfgqETgiW1PodjeIMQb/V6YBWORlOyJ3UyFGZx9epfXE2WsewQ+vP9wCT58/vXnn3NeuRfqDPs8mhNgFRiEclVeB/rHy5/d6xTHdBL77ldKk3mKXw8ufoEu3NGt2qVUgJ9EsyBGNNmt3JeXlxRj6kKSxIjKipTzgeAFrX449en51Ls2N7rdTpbudQojxEahfXffL2y3MVzM2fVsk48mbYr8dJdkjY4vjpWX+JUp3mjF+AsvwSm9xyEqNdocIMujRWhs9TlA8XEpYCjFqoWYZoWo5iRuKaX2hGSa2hTQ/qksY6gp+8ITei12lHKugdysqj7Mv34nLhWXbdbEFt4W+TvWarhxVVpQG4ByH4JMjEkps2sTh2532dK7U6vpUn6JEodV13+CMFTbPPPIUCpNJDUJiAotCYikssA9XmFwvZzz7loel3M8BfFiNJcLuhcjfhUSuqA4RjzM22OAXviWgTJRBH8DIhlcL24eG4cOmYzLsvF/auBwLebnxA9QW0ksvBShmM8tNb9CFxSmPvaeXSHsyqB4cjKNVYeK2XSPkhB6SHheVh3GL5ySQ7lRtOJlxoXLnmgm8aI/D3+Wr63ErlOU44PvExU3zEp4FvhxsNnSMrNKtYPYhTSoyLMkK+G7uFJfd7Gd4r+DccAF+IEp5yJByC9xlFNMsku4CqG3IyAL73VxkSWqNCMApjAsl5AnWbF//3dOqo5lfhm7U2x9e8F/y1d+Y8m/ldPktya7Ig/L12fXS373rpfl9MV4wattvCin89wqb6EzKvY/3LfmY3FNedPzmgm5fTV9mz+qevTvs2lX5NcorKDKLjJHbYoT0fu/r79+/n85mnpbTSuhHJqR5Yilq9rZa7GoPd9OzRn6vtbjJpu8bN5+DXJRWdU6VHNM2prD3XFUBncxizKowMEr1befEvwFwT3KKPTqN7qHWeCv5TZ6nsA4Ob4F7ulusYlMhcY7rhi+kjZjn64oZsKC48IxpUGZeO7ArKCbHehsWpMU1iptt9FOl0oy0+E0ao50YVMYnEZq1UMbwQnL1MI6h4S84NQ/qkgh3gS6m/4mUBJsYhz3ByfU8xkdssjTVcDTVXVbbZyOyVxFp+PR1htKo4Ac31kkuby+QbKx4pHQXNSAerqaMVGZfDBtSpGiNWtFFVDupnV8refyWqWF/fe455WLGlBP2O5NVKJNUZyiI4uRAzRDt3vW2TG8axjdlbhOWG+NZeM9CXlDR93QnsS1U3d5DWRyyaaIMH5MSQTAO3KIPS3DE1rBJDm+cb3k8m34p6uyRtKiIYWbVQprrmQAfUXZaN4qYnyf5JviXj3nwtmEtJGxce1rYRp07RWspG1gKlD5TcwGP5AalkFw8BKgpc4l+9Qa7vXLXlvqqnRhsIb7bDVsF3Ka6FeUdiOnSTYT14GcjSxPwM5gjqF/O3ORNIt2LsMfX49n6nEQMfObmXpKtqe2Exf9u/wZBPEaG3nafN71JP2+u/Yj+XBb4fNldD6kEPwVJOCoIimELCpAaYOH8m4PjWagQq7iOkKWHiPqqF+DfjGibox9dJRg9jlcfNo7yPcHK/h8lKCHoyREFPmDkDX6TJFTgO2SIhQm9ClIkZMdAYmSww7W7NpLkKKf3exwkKQ4ORIkoLsYkRYEjekke9+5WTZ3icXqvGKk6S/BBtI0WCEnO5IxPdQKiMeAUAh+Ab+Cy/dN9bfYwpDP0VmjGt/Jmrfy+RkynIzCvLeN/TY5qs6EgAgJ0NewNGzWUoW23CmaC9uzrHGazZx1YbhelDkmMKVbBc1PwOwA5NeiLIohetoUvyj4Ap4bHeT3oez+n+VrvRuncZV4v3HHtBMp8oZSd2Q5ZTkz6hTvkjkOA+/gjHCU7ChKAU8EIrUyfV/x++M5eyJnvnlZvwZdQqy4aGTukDxGZyKwNBhi2XwdKd9oR4uvd98scQ0SHJ6K7iQUCwpTyr4utjvK3nxgoeK92xfKlTKdqrKV+DRkN7c3R9wlNQYtgvMOWdde21YOmlruVxT4weL3qaMOir0NAeTPEDQP2ZRMxeegjknhSngDWmCxvFn5v6LX0RZSR/6aon7nQDyrXNIlNQpoxINYOtkRGIYopRp3mizHgOcohdHQ4eTDdBMKevVgGKx2qbKd6qAMyrSqUQyvoUeoR7X4igklfKo8P6q3fhXeB1HP/ZpF1r3h707npvSGz9aSVIohcrk3V6O72ezuNl/zLVuOUkgLqnyQzJBE5sq+l/VYuyiC6cFWu+ndl++zqdvXY45CBOOjSj1MvW2wRz2JoC/+iK8s3KXSWmFCDvg9yp6aMs4Yse+BI7QUgnrlJq9euJN7fBXUbMHmUur7rAwouk5+3AKyQRQMw5AXOQ+1VUabwSRBvhXczVhkHpvw7pEwxHWvRCnp6srMukbefRDUBjcdX91Onti4fxCsfN0jqB6T3MfbhLjwtmLBRkOB+TUx3jMrlmVsAOJvrTGiMAhb6my4o5iNy/JmfLMoPwM3NwsA82hErPWJ5beaXiuIESXpXq3PLYsNRKqBJR9gsi7PnqYs18qTIp973XUpSkHGiP+CVhlm1Se5z03BFXG1RodrVnBnNSzm+bh4HBXdVdtR2pYYdUBUheJv+sICrKNFu5DfI4J3qYdIHklXeNlLKLQ6pnbyoHoZ0tflcj65vy/C3I+Uu6oaH11cqMPy9RsPqevysHw9urkfsYvsl11ZTO/ikI0hsiOxwEz2ZrXOXj/0vFlMe0JaBptmCdNgs6W9kfSC541ZdYotrATgHX0L181iKo4HeEfrlGAYvsADueMb+ui2o5EecTkVP1RSbr8NVv8mt8JeUEgDrwSQ9496tkkEg/AtnIRCuiM8qqGJp3SLOjJkEX8Yi4faKrDcGqYBoUfx5WPDEg1vLdXidG1t9aIsYRrA2BnhCPu4tsERT3UnsZ/gIKaZQT2NojC3fSsM9asvtLj4NqzToEiNLAsn+yb5276jk8zYk8uriUoofRvdeDjmt2Z8lYXAydLA+KoZXOZRH2g30eZql8aO/C1t9qW8Wpu/QqUUU01VsEjJe/GYojRGNHO5vpmAy0v7QHzqjXFzi6gUyupAD91mFK1jP6FVcbcAHe6/wOX77kpbKMyBsx2LrcOzZdUyUbIVi0cjV2eKVuDYR6/AhzSHbrRoco48QUGrxZc3k5/dgMENfEgt2QDZrXw1Nnkbdd+eXCxotgkzJXK6YtlkV4KuLhFvZWXFEXNcx5Aq4J5CdhWevQaeesYaFVAPVQuk+NJWydmSj5bYXqbCND0A8p534Kq3kma2dA3jxwC9ONlRedDT1kMrKTcA+wC9fPyQDax+U10HSj84hRPwARS6JDYMaezyClK9D4P3rrfmS2/V3C6TzWPoG/m+oBilMGx1v2lgxOlm8IefXRoQCTOQuAo291E1ajMN4mcVnrY5emWDLmEQP3tK1rL4nPBLClcrlJ6qDja7YMBuORkwjTYCfAB9n50SP4Ah3gym+aWOdcQXN5/8fqkHIQ/ylKnl7QjFUcJo+aR/rqbzm3PxE3fl992fftOkPZD4tzQO/zu7OIOvussz+KrNkKXDPVSjBYedgCe04lMscjcG8akP+C4IxwVqXuxilyG7Y5SE+MC6QLV5g7CL+W9RRW+X+LvUAjcTFbgR+WCG/eOCW0/xyw/X79iKPJ+uiwN5wi+fP5XjQT3dPX3+9Pfd4LpS1Yr7pyhoboq2Wv6A22vfJv8WpcXyeK7yGK3hLmy0aZ2DUlM5jY4c5+DvNl631mAXJWIclh2BdYojMOKvxDEiNIhh2xqJ2ped/Dqog6jB53l5hzuKI0gDT0f9DYaBw/5124eaSfBNGwc/f/rwr/ejXy8/fryeTLrtP13m7rb3dFcFDHtOl9XotN90Fy20+0zXuS22dz6GVe7oXObruq90F2LdftJ1dtu9pLsyF/eQrrN23D+6K7lm3+i6DnZ7RnelzveKrjPa7RPdlTHfH7rOaL03dFfS0p7Qel5yFlLSwNhhD+iutJW9n+vclvs+d+Ut7Pes4bTc8rczaWGr3zqr5f7OXUkL+zrXOa33dO7KWtrLucJrvY+zFWl5/+Yy1TluZHXP5m8wQcs0gBvkZLGgeAw9dVLOMwrxzlcr7vJZhgv9hbJsHmn94iI/qeapx9HjuWvJZblCDBcZGUqclXNNb7/xGZph7OfDuosLbXpZ8hZTlECfZZaH5es83O5ii8JwhGOCRUiaWmJZ5h55By9EV0HMVxhdq4hnuvSqpHDW/Sp8ni7KCdW8fGcvEWaQZ812+ipnXNw/zHhQnPuHWeWKvFBLVyHDlpA8c/BySjn309WEw7DfypXJPb8wua+ko9VVil8I34vwonhaySfG1MsgQnymV4T0Kibx/AQdoCN+AN/SDMhdbXjsZo1LpsjLQ5iJQ5ZfBdbOR6gaXDkdaoetcndGPHYjuY7cBcrKJHBfQfVdyLJGOM6DBpWhptLPMUae+TOmVulMUgrqtaxBd11SUKDUEmQRBY0LSb8Ny/EEGzHUJ+BRUiX7hh4BITY8cORvaTa76p0nJ6y/ITSHhPRUDIneAq6RiBeZeY1VYcUEDPgehdZoyiejCiW+LqX/WtMntEStw3wfZUBqvqtxXagE+T4qON7XYfLJrKBVnxKU9v2iFipNb7/V9sIUl9z+YHr7rQOC2cRiiZqjCXMGKHRPbdHlueWnN0PxLt/+pRtdLS62MIh0n02WT6wNpz1FxUrTmaOlB7KAVW7Iotcv33kxtOk94nAXoV5hobsLUiHWd+/n/bY7Isx37Cbq2mZ75bQ0Aj7nIiyC97OZDPRZ6o3Cuv+dywUKdig+rr2LJaeMbyBU7WYO0g2GtzhCrs7008oa4o3BU9GeVOBYcVrYgNropKnHxGT7zWGiKn5fsJdzvgw1X2mq1m9qOsN+i2C+pXx9AXG7sGb1cWU1eLOw2Lq4eS/jafy8hOkG8Tib4vdCXJBxKrN4lT/Jo+JV4kzSFKesTYjNxF7UXh7X93f5A6EyZweW/tZKx0Z5o8wM3cSO/C09xPxDjsiw6ypVJLZImkaBlI1spFDR56+KV3hNaQbZMlfJa3B2vRRhQX+aXS9VyixIU0f98ivsSFy9u3Zmd9fKe5sbyWd31+LaYvH7lN80NkSbLfgyD34e1sbKeQfaW/w+zeNCcwx3evfFndzf391P7760Q5OjsWXQsBn00mAX3aN1iDzqyFOgzstvf3HRlRd7U7iLvS3DfyvUGxDkb09tvKOQwheYotWBIuLIkyt2AoYxDYBM0e2fUxAsnfBNtt/JFNGOohWM3oV48y4fiVryFjY7bHzLdlCk3+9Mfo/ILqSktQauhjNVsyIcOBfrytj48dtIFqoKJiIh/5oUjsWTeBPEYh+aYgIYjhcoXCvCebgjxXC0xaxuKWuPZS2tHzXzqJH4CMU0hWEjicynsskHssxDKUojTFiDV4c2i17z3C73GET++CoD9YZrhBzxoywHsn8u1b8H1wjJDd75f5GrHcf05WGwOAgkd4SjCMe9bMMCW25NCyqWoFSvJXH+XrhHyY4WXzkaIB9SmGb5ys9XK+LbKsWH1I5Ztr08GKC2OBxT5s2zdoLk5ZFKt6pvSVUwYIkt45qVzxYTZLv0N1fKm2HBXejroWejE9zc2Wh692XhLoaTBpLFqLlRzhYjQ9FFh+ODxyDdEdZL6zFELjfL1QXxFBXQgb/Mqy1ODqNFeBpd6187pUUrquVO5+7T6DobQxTsfxIOze+c/BAME+7q0gqMRACG3l3qbRFfiIpTVwh/0BS/SjO+AmO02m2qXbc11fjKlX0qx2llezuPkeFND3oVTAacP+4elMLbSxbkB3CG42d0cArHoHgcmOyAhYzF48wmaCSQuwkYAsBpaWaD8ZUE30ByiD2HHfCASy0726MN7E2DKKDId2eTL0MmnFdFhNODGM4sIhiGQKSA8S5KQGF9ie57cxbEgb+LErc/8KPkKLw2jG2wQuk6CAE5EOdCnQ3IgdSyJnDDV6qLrOpMm5W8wCTPqs4KWcmWjzKc7KiwQVLlKwyRbU8MSUq+VDqMiGzlkm21hsEGMSJbhUjgJog3anXvKCAeBr9xH3Y+HcvOxaku+5hdTn2xFww/1OW6uR8BdXxx4eSLiXWZCwPai4vCmTZvZvxdIhgRsUGLTOIpOqFFsIlhyGcZ+ZE2z/MhEfutsQNtjhB6zzwHO9DlWKIQsVvAtwKRx7p8j4Gsa36gy/G0hZQMk4RPSMpjlk8VdfjXLkUjnBwcfgTYIZiHMCaAUFSIoDOAf3k4ObgJu+b2B0QFczVDcdOVNO+BsDh9pQALbVQhCev6FfSeCYUbVN/AMr/Uun5IWur7biYTxMMkuYV7udawUoq7GN1iWuIUKUDMXwerIAzoYbRF3jNK+edPq6Ey3ytNaDNQkL++oOfD6qP/62r1gorWzDKQzO5efh68dxvVcK1Lcr0LwyV6pSI69o8tQ9/VsNurLqYtsj06wQKh+OF+Sn6Y/reYBms5ylSTM3V1uhVH1AQiP7Yhlbkrp2pdskUZ+CPOjpZw84OLoFjd/jTYoxu/pvUCrhE9sMF6jNJshbZIBTK5somwGK9GBKW03jMtaOA9Hxht8Q0iUnkdEHD5+f0vPPhkCGnzKEhTHzqS0hRHEu6iUhztLmqpsv8CfuXaXb5XDqjg8ufLS56GYBoGdgslC4zF4wGJaVk18XatvG2B3Ma0nYdnd/VddQN0yyR+FdsXxoN3YiSUr2ZrockMX13LklvMtpQmBFCWOoiyZuDhCLwfBCKXvxrwZSf+yrL0wv1AOcF1VE2uzRbCblfiTd7ILi+BfcMX8prHX9z1XMnZQqmZRXXIQfAYF3XCYIyrXzYAr+UFKpzFrB/NJfYxMfRQcvvqex7syKUsN39Ms025zXryHnS4hxSmZ1Lqk/fp0yd4+Qtard5/+rBe/euDv/7XL/779/6l9+v7D9CFnJ3wleJCk8Efier8KvsWavY3BMMwCwKTL4cuVLES6WUi2R2MA+UiJ1f6BjgWvplA56nZIMD4QIP7ZYNIqwvjDK/g9yVKIyc7arOMs3zsqyN7avCOoKeAbvGOXuHURylxeBqQiUCmigfIdlU8d+tc4gNxNQRl44K1AhEJ+GflDG4CT2SpTyEqC0c22fcF8s6C5++9CMieUiSHyl+l1vqku5gGEQLQo8E+oAfpq/H2qplhfxcivsJ5DfOJO2vF1CLp/IC9NN6qGakt+54ResisMuwEDFM++AxkRIUwDDYoNsa/IJR9YalhUWkH0eoeo6WJ8RYbTgko8z1owZfueq0b2FTAhZglR3usnLrubr+clrdVC66OhSk9mmZ4FbSjM0cW7UPy3E6Wo+n9A4EbMZ0IbidLMJregywJyC3KiYcT5OeLhPud1qbnLZ2B98sGKAslduw1mKnQ9jTpOL7c3H7n6PyoODUab4L4Vc7S5fn/c/UFUeeBoBhRZWYCIrXQkopmY3HRjf9abRC1A7r9zxVpApF9zy0iZEcc8aMxVi9RDFchckUGGc3uKNFY/BSnK28RneE4oDhd43QSJSE+IMRdskR4Mhg6t4gCmUc50alhdsUZ+xbRnszZW+O0l+H15ilWjehNxBqzexttiI/llKb+SmHFTTxfSSVr3QvWzOkXn/mjGOvNx6Ji30a5RFGS9XD2zDRKCrwvOH1WH/lDfw9jD/ngZq6+8LlnmEy+mctEg+Qcp1Qny9IbpRdsPD9H6Rp5FMhrRRB2XV6+RZR4MOYYL2QV8ODa1c5DXAHsUkNfKLNk3oPIH/irj7JOXkiIkLdFqQ5YXWp8pbBMU5EpiyLE4GWUp9vAwzSIEXCyo6ud7x/YSyEQMaRWzeCxlGGd96okpgYqJnzSHZu04UZsoNkRWMi0IROa8s/bTtBSqA37Baf+EbWdiRnw1VDN7I+dQVd6uzpevqGwfqhcQ8y3C2YCjbg3sdqBCFjsh5yhB5mYQWfzl16GVXqV1lEekk7lljsomUvN7QWLLUytbg4bVhGeOVNTriSUv/nGG/JL2NoEIYeJCqdsixBDR4XxFYXBLmLfIqoPqSihgv5em7aZ6KpDwR6yhCtx0B+sgrhBBfk9d23jfm5bDcpRJfvAa6oBAQO4lmerBpGvoSZApkubFVXm+6//ks9+5odaQ5L31QaqGji3hvUQE7hHPpj4ASU2iKvShg+3mNt9xI8MngLGAbcGQdOm2kLCncOUBmLiJxYpAqOXY2Rx6ctcJbNsK48AV92zmCcZ7ihmhXcmrx4KgTrlyNRYv/knExdVlVGB5cYJ4cd2FHYu30SwW4UB2aL0SHwl3gD/hFP/OGQmWQYdB3ATY0IDjzhyxrmY1PBQFrK489HTwEer3SZFCU5p1qIb8Sch2vM9Qy2IVN4OhNJ1TswHqCLJxKZZgsaZdHHAOqjSvMxdXNg18y5GeutwqjUPF2XdVrg7us0+yhoAy4UYJglxPwze83hOOEZev6B0ZZe3WopxkUiheqRcaUBgA98WulFDQbJ1fBWafM1QKUlT3eVd9e4SFC8WX8U3giPPiqPAgt8GIVu3sChXLypjjoHxYgjmacDaK/iGDhWYwAc+gRYwk1ErEPK6QC2+WaAB8mwDOP7w88+X/2rB83mmDnCtGgpEOx3v22ovNdbdtxi/xOBrOWwOF33mV/LQN3p53nl7jLkq3x8ku1VRUpgFMsnhjm5xGvyFfDDMN1XBqcQqGgwYHCzmIQDm0s/oQAw8fN8V1jB47VRhCdnyMrLWypDagEQbM0OJFmYDJhtEC5xsDhaA9626pa2alQxjGjuphPNBvafQI9VNTwyiEMBfLy2mTvPbrGli9o1ABwY+mOE+ZHiP89tCs3+c31ZNpVnvKy5XvpqtICpmzzcgVZXhprzMoM13nnL4fzl2NU8I8Zy9BV5TvjZMnlJuec61yiBVdIO2mQ0b2B0NMX6eL5Z3i6Vzu1havEaFiNsfxIRqQO66geAmEPDh/eVHgFP2+xnolgpLkZ7aS6gZyhhtoRJT3xSPvk1rcQaGlEJvy0eHSxQlOIXpofnzxbhZBB8ijnBMUUwHGb/u5s271XuiLcH8mHpvhjp5vSuq+Yd55gk9AtwLegTK6fnW1RcX+Uk5T76v88VFflLOwy1F8C8eI0sdV3LgXUgQEk7J8ricA812IqAUP2DXEPxPkDjix24srp5qIaPawByla975swO5sFgmZVmyIFa/yO4rTwG/qJfQb4u726rzep7P/cVN2AlhJ4Oqs1c9dlaBQSbpo+80x6YocM8X9wj6fKegvgrykFkKbLmld0sWHaFb1OsOek7fqCePd2zQ1iIe8pm1vVlMuK1gAfctlrbcVWuEU9YPcgNN3pJAQNAAvSKwoCmON7cwQny3dAmedzCXdloZ4xC9SaVSJKWcdZnCmMi9iAu6FJKzj4i6USXvUQuiNBMd9DW3w4LwbkXYwMwvMNYae//slPVCfnjf/5EFFc/J+SnLXeYwgn/h2J14H0QzzBfhy42oz6/PIs9gV+cpWiPqba+CGKYBIo6I0MiGiSr6icriZAfaJWSJvMoe2XWLoDZzHr6qMZSVeqmJpDzG5DDyhCHuQh1qcyXJCEcJpPPRUEY8yc51+UtBJouRJWs5reNHGiSLN7wkXbigRcgq9yI71uUTixQy06MMVVlM0kktDiSrWnWsy1cJD1m/XgwSWb9qEwKyJlX3g+IBPsveUkKQYval5mRHIN+cxRyVXQkUPafnhG9seJ3iCMxJGIg1c+zCbr0OYr4cFslYl45I46/MfL7VsLebBoN9N2fC+RyYga1lmzcdh9y1ygb9JjI4yDczBFzMK9q9DSQq/CCYxF56SKjBsU1bnBT5KKYBDG1KlJFd4zQine9PIsW5tA3fYrcSTzSP6tiRjRSE24i4ldxfdYFnImr+bL4j2+KqLefpdmH/DVte7wWTxF8VKud0yC9J7EtfX6X479dB7KOU77d/O5wDJ09oYmH53N/XKpt81n//XdXo778DeQiuMH6OYNq8DmKJYh4iMJPmjqXiy7bvZuIGipYn2EzQz7aYMzHs0lTEhyWmUP1mJgnSkyDtbEvDDhR2VAyhmSfb9K1tD00zmYJRKM2EfH8tueXyG25ZBtOTMM2M13AfeIatb81EStrQMlr21zTjS2ED/BSSN7Y6htDe5DjP8e2Nk5gb2xRvAnP/3ULB5PmJobpEpIk33RMO0Wu/M8r1cigGRvMU+YFp90Azq0TrCbRehtbOP0cpCQjlvROFFB3dCyoVcsAeB2xWgY+gU4Z7ZLMpADSz/L7DFMqAPUfWLoeQCM1E99ylIYg3fJHq7WR6dFVmSNySezuZNpNm+3+bJz7MlIts53ED0Ran1NvRI29VJm6iiGFCtpi+pTAZRu7wrec6xB5ftdIcT8aqWIfY6xU/l7VkS5yARUCPbeZLnPS4uIki3bEeGD+j+PiBDAfpCRAD12NAAvaNMA3iY4dlEqLHIZqZntDqDV3+E1ppO3y1/FcGYmtfuJR7dwmJQtsC4yB1+H8QxEHLmq7f342DVPzPgh4VEf70U7C2QCAUpnTwpy87ozB4XqCYIIcdAX6omadmF11+kYfv4vuxinVJyj71ZiA1LXsckNoRIz2FVhWwTLNd4D0PCXtBFZY381Qgk00bFxTEsxagRRRbh4CvKEyMgCIfy6bw7sejGYydu9AH9+MvyurPC5H6mwEO/WI28cNf4jiGIRihVH6tqUZkjI7ArdQFGeLODm7pvK9hs/I/zllEGXsy+mEvtwbJCKLyFilnsTJhrQbk5bkwidyP53JXRZntBJOgS5RGQcwzp3uU9sTcolvc87+Zv60yuoCrfgrztlAhKpqFT0P62y5KuIGNcamTzg7e4m6rcJll/+6sic/58yvcvcXYQzYFUFxQX5tMeQlitJdBTDPGdzLbO1VKte3MOw3+UQroo4WfWhl224XvyynrIEPtQHaS8hqIcYqWi7eUstTGckY/EdAdGI8pajd2njnv887dzBr4jlbqTIpwB0hH/CjXuo8fVoGI60w084spn39LP753R1+HSx4qlr0RtjRqQyztJKTBYzIgxBsz1udPeu1E5RyjnUCsalfFa9HuMUAvKFV61eeC2QUxnVJUxwtxzO7N2hGH2VR+v++mPIXPwovMlbms2tyWrvlm0335ficVucHK64Z/BCYf1599Px0j2Vs30sl3uCtudscgdJvgZemNkjbb52mJ7iejf4+mk3vwFMTf586FPOffjeOqrkU5kQhYqhrQPAaEQuBc/CQvDq6CmOH8dH8SIIZTr79C0U1lubm9vvtgEO1SnBulQyFez2xx832YJCSL4gN8SAFL5csaq30BXxLSd1XmgQ/pMaBl3wlJcSLs1u1vtCssbVkZ+iiEhCByGuICoA336Ujb2LIwPZ0ZdUs3NUwOBy2Gz8luaaFL0KhWBeILm5yrqxuQKoCtpu3mvn5XVzd1ddpQ9OOhjojcEQd6WdjgynBLAzuY3n3pvxG7O+5ozD2YQ0iRdaWOxu+UzBtwzdV8NEeXyimQHFFLXW+xLdvobja/u53cLhe2dySXOBrTeDeOw+9YPzlE59rpcM8tWcb3N4+Te+sbILMfh2as+q7IHStdyneriw7VbYM/mQ5nx1QNkzsC8w04HSuXCXcoeYdqbUV+XMxuxt9sa0DkPgrLeIe64XasXSHeqRY61LAF+o6g1A/Wa9taVvmPxDPWdHfsDnWhhDvWRsf72cIiY5fKSBFyAxmbmhJZZYx9GcRXOW3fLh8Wk/vBeLh8E+G5SFpqsCP7URVraianoM0igXWrYBVczL6K7YiM9XpC0g7V2sh6ZMUe2aiOVOMeba6g93xUvyNl3f7JKIx9qCXd4rjRykI3yGiFfBsMUFXTXsdvxLWqWGuOI2/gonFQ1I3kCODJ6OH+ZvnvoxqGlD0W/FSAx97UU7GdkqHLvZXCXW/wsW3Uju7uevk0vJ8c1Z6k7LHgpwLscodPxWDXYruzHXuzJVDXm92l+dpR/HuxnNi/Y3ju48DM9dEduEsrOgW6XQviUJfnLcjljyuJNdOxzwGH6dZEuzwDNvAigrvaau2IxlteiW8x+LeiPB/Nkfeqif+46u1wF99EfI8IxSkCcxzElFQitoLvc+BciJy9RxzuItS7idc4jURsAJAK6b57P++7RHpyu+B+8uVmsbz/N9DNaWXExpmsbI+VUuoDQakjSgjGwyUYT66HD9PlUfZhIVpXsBvH23GPbG5SvOEmdyd7I0GldtQUaN4au2KYI+Qch6spfV1RU4EfiJiJ5jO+DUVuW56pMBrmfA08BvW7kDYUUEyeT9EehW0PJ8vJxSMPc+c0D4N71spkQI8E0m2zB03KxbhfWr9YCRUwT4TRFVhFx/Hu8kCqALYJ2SUJTmkZMUt+K2hTkd9GEAVeijyc+hUP+jz9jbCN20Mp/d/IFGOKSEV5kfYGuFal38BAvBShmC9LqsQOzC+8FbhVfzMXpogHrnTECsJLHrNDHFYzRNHhIKJ/RIdD9WJ8GCPCA3TJw0qG0TbFEVLrI6QTrQwQotxSxE7pFcHxk9gX+uJCHVYy3Cymd7GKaJGdVDMtYRrAmGcRh5UM3yBBBx6CTBxVLvP+jF3lB9WLeDNDNxxcHlYy5LtbX1zkJ5VM+f4kPMJG624lFfHiepSLi+JpJWO2ooD3x3LNgSaPivUhnYerOYQ3KrvOj6qXeStm7Vf0+uysnoVvz0qDMKCBej2wtCwJQL4bdElqR6hqaeq4kmXBG7z0QFZBSJ4Cwr1daYpDHs6ulKuKkISQbGUDzU6qmXZJiiJcadKKg0uKHCW/8QrIEsFIuPKKvbTVmabGHyazBcvEfquXQprCHKZwWsn4eDvi23HfjjQE3xF+ZVfZb+XSf/AW520rP6tki8TJ7ReWKzvJMskqUEtycx9xUt56uxK3HO1xuFP7Gddx3AJOtt5LS3gN9zgNKPsgmU2PpuPL+wVOFsZcSzfjwWy5V2/Idxr338g7S3dmRl0i8NbHV60uceCtDXVc2NMULPAuNazxbi+xijSiZfo+m56Kplyppe6n1iXVghpVYt7KVW+ZQO9d7ysmVMQ2SneU72HJXfLtOW9iQmEYijUDxXFElcwNRM78ORCDAGkXyGN49fuuPB5s98iQVfe1UBYufAeUEeQrvyVkxxeMNyFyRWZjhJW/B94ugkszjS56yz+GyhS5o50nC9zxN5JYx6JpZlIQvVIgmn8EnXXgm2Y6fdCbfwRdW5CdZpZygJ2/A70lVkwzeClCzI/HtgkM1ExQCwr0d5Mc17eUww79PfCtYY0M+FlIo7+TwCpmUjOHJl7S38vTNTBTM6UxKNM/mNw2JFQ7uTYW1D+Q3CISVTNfNQrV30ZhFemqmaQW5ervZLEOptXMpI+i9Y+gs4za1UxWidj1t7K0BQYz4JeDgv1N+LaRwAw8WRQwBTYgf4YBRR//gbytwcia+SqByP4mfItIZwaKWoizv5PFKpJaM009itrfStMWra2ZoRyp7e9AX7WFGW6Gr4QY/sH4ar4hizshQ2VNb7/psk/8DWqcKmwM6pQdcXF9UKe/iefN28zqUC0r89yBRf5BbG+OY/Ij0dvdrfr9smdVq7ze/F13amoEqitQ9SlsF9UrofU1KoOdfCvdv42Eb9Uxf+P+z3Ox/7MW/23bP4tNms8AXNhXWodu8iTr90v+Wvbi+ubW4PtVBjxhiNUfh/zGrbkl5gqD6+XcUQdgjFa7jW6O0GVZ3l0v572Pg8sPbnE+j8s0Iv6GVx2wskiocsmg/ERowJ5/mZf3rG3Fn3+Z95hEo7p8Z95OkIvF1zbIaTHUaSfoaU8X4LROwbf9AMsUeqjj3StsX1PH5W6Rtm2CZVbTRaJJFGZ0tch296+A23r7OKzdPSzAtt5CCdvlPpbgLW+joOl2Lws87bdyobaRstVc7U82ICbY77OpfjfdZmS5WWTmxFADtsUstuUa6GaHvgVhiFKncCztZxXvxkIGETZy6IeBh0Re0M+3tcycudQBCMsxKE0r3KvdssLgWwWLMIrqDjbQNHXwGZIQXwyv4tVfvvNAUIyo3KiYAJb818rPp4RNe1wRuGKZRXXIk+yRbiGQcxeGLYYUOvfEc+VWk5fKe2YxGs0EJteQnardlqd4U4kr7I5Gs2LrX4yvnMX4qpoLJkkCqbd1R9w7lbVqxaYVKK1BsBQGr58/2QGIn8+frJDspBcO+7v4Sezb9N8/LcYL7RWQX7m7nky/OdyJVflOZifF64GPYg/drfNN1njOWnIuwwoh19tcXBTO8hzT22+8pMPYL+2op0vPpRq2tRM+XMo8SZxP38Bj4COcNfXmb/tPz77MM/Bw5H761uOSvVxSm9YvDk6q9EOPBnvu3iQCYTc/B9I3C/ljxIPRzkNI1ziNWMYyyMBf9fVkvq/1GcgGf/ivIAyhex2kaI1f3axv6ruQi8qS6NGvAuqjNYp99gKRnnLZo1JxJCvk7YtI6f/jrxx/9e4FhuyHbKP/1ZM0m5wsSvGC4B65mdnKWJy3umCV/K/M4G/b6fqNKpzDMcuO62zF7q7Ridy4LFjOXeg2Xc7m5NXAdza3qwa+U3lGtcCf6zZaKXEaHyoz+LkKaKPCiV2sLFjOVdpOupzCIasN/6wFbdXidG5brQxnK6iVHqf362og+kG+VS3sZ/ZvamA/qfdRO8e5WpSlJqd2UWqgOZvTUAPf6Txh2gjOdf8s1Ti7Z0wD8elcV9oIzlXBlmqc2Lmlgebkbic2POeqWWttTuWn0gJ/rnJaKXE6b5Y2gnMVs02Npg8wC8uJ2t3faDF5A/5aJAEbHvX9eRyTsuG1cKQ4WeHX1q9kmY+XIESe0fzWFXOLCc3s3G/WjxxiD0jz+elQ2cfq6dDgHlKYqlo8EegWR+i01ejGOy9EO9WCPp6qCcl5KX/1+k+uT14DcLNJ0Yb3SifTV7Z3PRh3nrtq66ILjnD+plPnyPFHOAzlavsjGArSrpcfCyYTqdEuZiQ02HcFtp1118RhYUwtUZmsGBY8jTYETtJm3TMQmC1rHL3le90AbvxU59g2Ni0DQashKSc58gaYLTgCvtV+Y8I3G044gZXZxMBhYTfhPF2tJgbKTmYTTm5htjDwtVkLOEXrR7WBoOVzVuDbfsyaeLp9zXLe1m9ZA1/LVyTHt/q4M3C0f09xmravKQOD+UuGo6/O+JLco5guUxgT4Xzkr8rOMTnyOICbGJOAuBWZ6nnjaFnHVfSXOBdv8yvG5jNGChu/La6DEP2HIchp8o9FV5Um0kwo8ydoGHZe4zRS4/zjyoDTSH0nmIohvkO53mBBUwQj2znFcRrsEXskUZQoP68tjFnb3a3XfO/0MzF6Id75YJPCZFs8bhocv52Qf3Vl4/pzkciosk0MNzwjuILeM/LBQ1JxyuDAIo97czW6m83ubtkLe3x1O3nie+wGfsOwoLBeI0a3mCIw9Dw2SlkFYUAPoy3ynlF6E/votcOKGeE0P1CQ5SUzwk+OQooqQDK7e/l58N5tVMPtWxbkeheGS/RKFwim3vbHFqHvatitNRfLSNghexUQsEAofrifkh+m/i2WPqwyLpVenU6lEfWAyI9tRWXuymnT01YvAnd+ZUdLuPnBJVCsbn8a7NGN3670ggbe84GrS8Dl5/e/8ImgENLjFr0JOI7WL+qchLvI+HrJNVpiMMagEHyNZQB4LS9QSJ671OoS+5gYKtPz8C6m5B5j6vZdynJzNRtHDKy584hpfJMrilO4Qc1vXpHbjbG0nWgh5yiNArFO/ah3eJLLGyt5HkLvSIttwkXN6GJxyvGlyOWNPHaLSPrWK0iq+OKJP6oIhIsatV8Em/jYGiJC1owvWiT/aDuORAC8Y2MZI9MSpXCEk0PmQ5RfauRVMsqEkgdGbESfQWmF0H951pAjGDQ+aA+JDyniTy2qfc48LO7mabBnvYLIx7Px+mi0pz6hFUwSnuVIF9VM3ljXasnY5XtQfN2C8ZV9xPPye/oliX0J31i4k5PCJPFX2Qq+xf3D7G1bCNkg2O9w1IB2sh17OuNbY7J/ZqUW9w/Zd1ZNRJ+N5XqY5a/gyF8J/XT7zkzxRnTAi4dZjjCf3A9jGiySwwtMkVNNaFhnop6bana5mEOBLybTIN69TmKK0iQNCFrwlTIOuwL4JZBfA+IieFpMwQqSbfM3c2Uk8enzvz5+YJCDRsbSSCfFmK6Zlu6gyHMKnVPv3Nqm3lv1RNQT9XtehRH1XMZwQq3XhMLVOfXlBKfQdJPiXXJOTTnBKTTdYkJjGKFzKqs4TqUvObey5BSaYgJSFCKDMf4U6mLyTrKcQucEEvLin1NfwXASXeWK+nMqKyhOoS3ZQh+/nFNZwXAKXWkQob9wfNaqVRxv1veVfgL7rf96cmUZ8oAhv1XFMzdUNjIoNVT5Ie0vuR2GxyJZbFEYguyK/C63/ULIIbKvdJ8hZAM9S0Zwt6PJjp6C2BVQeZiNjjqARXEDOtt96v5GfZ/unj5/MmjNr/9ztP7B1dtRu7+lMrU68j06jJ+FPJ+FNNPzBb98/mQvYcUBqai96eYB0FfaoK3MMaCvtAuIjeAfOJ9oVpoO/sAri+wlHeuihT15Kvv4FHx8gdgoqmn3KBOKWsuWm8Yqq65L2VnTAsLMRVCaBcM4B4GUy6xKBgo+VVKJ5yHttYVsPRHioe/umOriwRHQPG7BcIOc7AgMY7oP0h0pB0mRislMvSXytjEO8eaQJ/JgG6qVopgGMQrvYgadHYPJ+F7sXJIIWJ/vgCYziIgYGQJ7oy7TAG6Qw0oY7lDs8Y2q8jMVTqGYd/IqJsd5JAV5XM1TcCkQowQZSoGniaSqiFgLNIk3cnex4rlOjbsExYvF1wKBTNHDP6GVOOdNOT/j+YQXnGpOrJ20RbySebPK3MIUfXfkTyaV+dS74kopO/wLOuqgzc4ks2XyAYpQTJY3Q0ceguXNECgffQOQyO0OdxTLDWHnOKUw7Lu5x7/i2MQwdMQPGFIKvS0vC/D0MedyDibhwlxiEONAzBjroNst5xKR/Bm6/qo0MVICaqlDAVJ6BEri4rEFfxBTPDKJIj0osuA6PJnuUjSCFIZ449QSzG+5EaRifq/fEc4AESUh+orCxMkPQaGzAb89pTBJUKrph9Sld3LPI+G9IOvOEr6QrOnosovtoLwLVpsx8n4x8AIYs16Z4LDNRJsVJUfs5SAl9udDghz+H6xxCsaI0GecgP2vgK9tCXZRU7jFerQ6DtNb47QnY8e6Mt5ikStEexT6K1Di5IFm97+C41i4Zwbyx1dufyDhy5wRDGLgr3gnt7/8ADpMVHMAJlf6DOuX57NKJE9B/IuhIDyzEcC4MKm2EqkZj3wKAXs3xzBCWel/fXvhyafwXb9CxW/maWuYY2Y0IfSeHf6/rT3yTJWWV5TeQtrWa3KEQquqo0xC5NE026LNjFTqfgsgfKvPPDyPGUSuSBPTwG61mRdQW50fBJ6cUM4QYrgJqCN+wAgmrONttBewzmQRBXTrCgGXXRMTswouSIaxv3jm0Z/YGZDH1g1DvTvEMHMwuloA7+Xn+HL7gb4e0MuBey6KxiLHpWGQuIXgbz9Wh/4giTen4h2IEgmxiptME2USxJslxqFTPCGlnXz5IMY/tRqMj3RXJojBPPAqzUylyFsqNhUuQOM1naN0jTx6iyjxIN/Vlv3yGIS+3NcbS5tTv+/G4nL+aYWTLSaO+OnyzVeS07zc+YUssGNfQ9YoZBYB3+eg8YUwDMOeqLv6i0GAi59eVbFdSBB6dtSBqVsUrUPl/J1mhz0m1DPjCredzBmFD+p9+aVBDIP3Guml289dFBKE/BGOIhizD5byKQjigHephh6QCcxT/Af7Qi5L9y7/pbqwbI/e7KjoI1796lZ58iO586YrPrpKH7ImaP5g5I2k0mIyGvb8lTApTOkukTXriCEyeAl8BIi4lEXN13vtZ4Nrlrs3Q/FO+WrJtIfE1VLxsWqZg3SJuN5IuKsQ3sRr7BSO+TN/beH78TS+KbhC5ACFnVntKTrCIhg5/D+4TgMU+2AaEMrdOR/U2Ew9HMImWWpYvf/7+uvn/+dyAG5o8YshWd1+3w3ZgyI/zfb++iSsb+H7wrBvIrhBym1GBw2ThL+M3DBYpTA9eKXhmj1cqX66gS5TeAA3Xu7e0wxM+P8NjBA5Es4OSKztUwsPDHemeDs2QcxuFNHejXbEUkGtcWVrB8sgQvw11QotB8HuCmNKaAoTEOJNbgLuit0ZVXxR87XY7Tdc1kNh6bbudrVBtoPtVmEQoSV6pU7hGHwAH3m8eLCAe9S8YDV7nQnRHpMt2LSUxZeIy4AUV642MH86nle8sfsNdBuYct/X7Ch74TW++1VOl3iXeShjDdLsAPKTsRwDqjD7QGeZnB1yoPxm1JErwxUr7ExaWDz9npTOeSJIUzgfXzv5oXlPizyfS8Rh4q+9wl4WekzVEtSdNC13LFDkh++IRMifqB33at9FzuLfi+VkBrKEfMVwYXLKeuIvgzGs6M6pM87WWAR63OoKSxNyV3PMsYQtEQj0uNUtxg3AJymHFZ9duAM9gTbSQTvJSQrXldu0xt/MkK/wb4E/abmMrNYhafUcSrwcjVbDYx2KVs/TEIZWQ9QWpUKPXwlQYcA9ya1pp2uJw3Bkv2kVX9ayDK1kNlE39ND1gBst8CcpkD1r9x6gEuDDBHy6spj5WuOJNCBnoUT6FtinKYwFpVX0Ej28LnCJhqFr3BI9mTlkSQfak9Ts0drYBp1tHE6YY852YD7V+KazQhahZPRktSgyZvCTFNCG0yrIrR6+HuBWg28d3bbxHjUEt7XhOlUzsVfBcrNsPVNlo2wL/JMU0Ia2LbxRA3IlspEJ+TRFsSCUoTuOuUWZbMFhVkdhG6ypoRBZnKYuHKepPxvq1phQeuxqOCgT8kkKY0NoEcK4sVfQRDBuoThVf2THbBVbS8+hCavVRnCSstnxtkXz0mNXAnkZcE9SlCa6E+48utglKYqwmHmU/lGOTATScTfI3FZKM4saSTbiLuwMaQTnoZN4aK81SsFNvMKvFgQ8n3rLHCIYU+SB4aPQL0uYxH7Cd+bNg1noSiCzZwc9JdfL5dy+W9hK81jio+fkrVTkug0fj1NPjr7AYjKfdfFv6ETy+w6mkPtXv+EW5CDHlTSXP+/teKuefJrI6Fph3yraFdirbRelH6JxYvwliNGeilk0E7n09R+gPX09UoFzkHreYrdajL/VF0N0b42jKB6FMXUVZmNVywgRvBlxF4HXKHwDbxUudx04xB7dBvHGyY7ELBH/lGn08lNNKvaWKfwLp1nnqkHj8zI7wc1Ry1vmNkNzeQNyi1dkXTki/OuzgwvRWnqPONxFqMcqJpW++yrPYLtHemld7A47vDyCx9JZOhc/cXOz7/50HynDtvvT8nXNXos/LXFC/vunpW1ukQ+uQujtyOQ1CXGKUkclAJUCUhShaIVS0aya3C+jpOSUoYSyxmNB9MKfy8tOPFKmO80RLDkJgtFjgF5QyptVflp6vWl2X+67ed7CYZ/lZc2i3wHe0InnsY7eQlZ+GFtcggtUs/sHV4ypFrskwWm2GMJIpR0HamrNy7KSfjYJvEQhYvkddQBgknuXNessMmdu+5meVTS1OwTy1dObz7LLfSMMaCLgVBapyiI2lRLd7qKVmIfnh6Iv6RJWSTV6l+bymaf8cruLfZSugtR3ZOwpUEgDQ99PESF85tmgdC5R2hp2hfFzcZVQK1u+UqkzWUHW7VuxjWCIYh+mDd9oLXyelH7Hu1TugNalqF9CvIIhmCFC4AYRm6hlej02HOhdJIHelddltalxE8FkBoMQ3Nxe3X3vTK7EWQfJEexIY0JhyNebWZZ3lEKy7clt110pvwwiZHen31DC7qVTwiCIAzs66X1CBkEcWFFwPzjSskCuoUBCNl+Q0MYlojkC0aY6s5ViQdrxpWjNitadigkO/hDmmCXm7gVyU3nnKqAyhX1q5mf1nH9eBZTmWQun9by7Auauhkic7OCCb2QtcaR+FIbDR0f+agwH8kppnY5RKntRNgnmvun8FOTO6dfLufFbkA+GqLemSWZ2sUBsd3n/8vVmMZ3cuy/eK2DgWftvARdWHdS8U57EpSlCQbzG/cGLZwWcoj937EtxHKTI484I04CwL/ZWJm8cpNfpn/lwxMyU+xn2+y5lF73It61cdjukW/4oRZAiH4x3KfvEkbMtyxTuUUqgeXR7vZz3BzRKbCg73MsgZkXJbmWK0CL4CznqACw8GGeuHrOpYcHocMbX1vB4fkrcJR6MVRD6bDCeotjnIx+HHwJ+rHuo2NUev5o9GnpZvtY/oAcw3LAG0To6LQAr0R4X5dvzl02WdpTibdeZTogV2B5GVyl+ISh1sqN2F8Usa24r7tddBnXQLR5UDcBVHz4tsp0PXwODzpHOxGJyo2mhyFxbdPjWPm0NJFqnNh2RtVNbA5Heq03H1ObV1kBQ9jPTAbd4zDTglpxldLA2vl8N2DU3rEb8I9pP2S9Ki9zqF9UEXfFS0oFbeSk14GvclHQUXd2UGtiMnkEmXlvPoBZerRuOjtfCDaeBquoTo0O38olpwK85xegIrJ1iGkj0/ig6Jkt/lAaeimeIlqDNM6QJuuypoYW29NTQMmhcNbQctq4aTcWoOkzoSFodJhrAKw4MWmgLB4Ym9JoTgY7AyomggaE+m69jaJvNbwAvz6/nwCecX3+YzBbOQxysA+QDpCb7Iv5wR6yvY08vUaNLgsMdt52CdYojUI72pFt9VszhMi4xQM2WuRWGmqdTRF/Hj0FKdzAUQR3eqOviaoz4tNceOcNIzvBcqMNqjmwGkU9W8zMZC6uUbXr7jaszjP3fdlESBkTMbuvSq7L3Msr712CPuFApoZqbn+wDDxGlVDlF5c+zLBDdJTAJQGieiA3itUtk3kGlwqzQjkH4Pi+s0VKimeBqF9OdI354KNNhYg4MkIWNGMEYx4EHwy8p3iXTIGJP+kAg6YKY7qFYFA8TWmkvNR1ERLoUx9Qw1HuTIiTBOHS9FMf8H+PJnvmaOp1C1XfVRhujXq+DRST3Y9ll9PY6b9dQ8l0V0MWQ12sh79NZNJDYBna7wPTHcOcR6fXMdoHmj2HOI8zrma0Dxx9DXooY38xPzkZODMwdArsfQ1+J6K7XwTJQ+zH8hQjtDdyW8ayPIi8EstazWwZSP4a8EEFdz20dGP0Y9lJEdA2/daBza/JyhPM65bludDVi+UNIU7jnTgYOP9b6JtSssYWsbp51ijeDqRo8NADLLcZaUQvHSqQYUqIRXsTbEQOlbmGl1WdHUQs19Ghgs/BG0aERFKNsSu32P1dfEJ9QE0f1DOiFrIJ4nmKeKTvTZgwR8rYiJG3htJZ1MbyKV3/5LJs8zLI44gfc/ieLiMdHhfFfK6V9SooxhwqFlwV8vJnfTxz+H1ztSBAjQqSJvz5BwbP1VDZp0i86WWrRspoHuwRQDPafTLEed/EKhTSfWhnGNJjBsLZtUgvV/mew/2zg+XJ983YOU9DKcl1liNORtGTOQ3hAqcMSxP6c4QHcJShGfpsn0z702N+7P+m7IKYoXUMPZTNaTQQ49evIj4GPMOFg/QHcS4QZq4ebmH1EssG6OAfy4xbMoLcNYgTyDM1VwCWl2UuczFBUwLze8RmAJ5w+Eyq8uOSGEEJ5INvzPkLRCUAIOQVIXABR4oXKuHAqFVjLLJmznOK8kE3W9FeY+oBvb8w/oGXyOCDP7PP58XbEH9B7BMPH25HGsU/vtV6V4527/s0ls7j72CO8MrLPTS1IsaeQF97J94EBYhlstlRfgNLcqMymQsNN84C8j8GKtXP2X7oEWvgr8ezzkVve47oIxSVlrCLSFkFVwfVdKaDRTQBeQe+ZfTTEfgfQglAjcIsBtg66Z0fNJecOfTEMwg565jKZmrzRXuFXGRw/TwCPM7CC3vMukSG11dtrv8Kv75IU7W0Q6qIVKd6UCjJXglK0sH7ffbzCr6xRDvotguxxRHHuqi1ls+S8ZTdC1Egr+VWflCXIYhFYrYsi6khVwYVTraxGGdVDlHVtzF7osirKakXauq7CqfM4vpGlfBzfFEspL38dq8tfx9rL3/Pr3zUZZuNvKsNs/E1mINxMu/MDPMI+ch4X7Ed47oj2YXj9sqyuzFUYRzVgmkecHKvoCtUEo6YIGyfLS4gyd9lpoQ26ffZRy9E062gmtRvpcCJ2Md9lt62iHlonNkvgSZ7TAhcpp4M2WN5h+pmPAuFxIS0ISOvODHmVZIHG/iA4NmPzYU0CPbu6Fj67Kmy2DHpdYtnD0A8c+dvuriMzmsJ7VTGV93MXSCXTgIhjCj3aSUkl04RodFzRAVYdiaqQ1u43OvCq742eos0dRodc9oWpIrb4ZOgAS64YVbx2NxIdZO5DogXt6tuhozA6djQR2jp1NDQXo1NHjRPTbu2RC+jvgoVziA6x6hlShbV0pdBBV/woqsit/gE6zIpzQBXzQXgHQO+55GU72MvraeaC0vzAWc3963SrT/xXodsm/XWo5Rn/p6vJzOH/NItOVyjiTjIkEO/eJpGGhbIN4pN7hy+YAONdlDRWCM/Cc7j9gS/dgGuyirQ9S0nHcvanyX3TQKRp1dLT5L5YngKCOVB4UW4xdcZoFcCYjZDFkUz+BsOAJbJfmWTaPZNbBpu2wpTy0mp9cSGPZDJOUMxE2QV1zC7BPVKeIDJoaSHpbWFLC0DNr4SiAkXmllduE3b1tdsIb+fD20Sjc+JtozI5YrbxZM6YTSTWw4kmJq07bxObtUtvE5vep7eJrm0g08RSHsw0obcMat7Uim08fJsIai6+RpJjWlfZz7cRvnWQ1ohfHqg1EVj5+zZx/P+8XVtP47ravv9+BeplFSpYrLU032UpDFMNhU4DmzWjSpabuG02aRwlKVBt7f++5WNsx06cAnPTJs7r53EOTnx4/bwWh18XT9+GoYuytXHYRe7bSOwit7YSXeQeLTwXn9nKc1F4+QC7SBpOwC4Wb0dgF5PdE9hF59mEdZEZzVgnS5dLsBNf9wl24nv6BdtpLI7BTiJf52DnCUnvYAHFV2xetPJ29gdcfEafwInv4TTspGh4DbtYvHoPLppmD8JF09WTcDEYvQkH+qprhMgFb4wSafgf56H8hFYctQwu/j5jS90QEEyDAUlliTzNyDQuItV6XESGwWUBXzRAmmAHo0EkWXxdumUextEEa3QsxTC7jnnk3XiDLIdkqEphI/YN269Jgdb4jcXlpZuGwZT0NzJUSfUSYioSRZqR5z5HBeSReAtoHJzv1+sks9wDdqDtNvz4odr/+GG3qkXkSL9J7BhGtSc86TJN7EhyALQ25UmGofrcDgbqrmH4E2YxelMBWQozE4GJxzmVyWDRVpXJXpLKEm/xRs8ynYbScDoNRQgm3WgWhj9uwXVR4EIa0zSa1MC8u5ne/SMN6R6fRHpCqwLjKuD/IjYXaAbnelrwv1tcT6A9bWFVjvM8kHWWajchIA60h/6QDldDYc8FT7iTFYtzKd4LwkaEv/QsAUXqkpQ6siSOuJV6ybquhd/5+Z7PUWVkbXj3NRRRbLlMgiW2Yb/Lybzn+LCDDIvYr0w8fA2zelc5Soq0rLi+I1/g8Z9/55tgl/8Z5PE6eEWr/L+seEl2hdYoi/kSCkwXoQfaHu0HtY4vnTAMVCzDCGalnDUTXhgmnPIJTLJwMg/YH11PT+8InTllidLDiHPRp6febFvKf5XAzT2NL3mVFKKsF3//pZCTlAnOkxRXCxTBNA3Yn1MiiY8S4gKNp/MUVmtc7EZnZ8vH73MDVlyT33oxNWLRVBEJQGYtQWp6zhxfjrJ+gXYVQF0v5BIbpB42sjSn3OzULNWwFhs8hrZVZPETitD0LKovuNw6UR0CDY2wdzE0b+lR4OJ60do1yye7eLHP/O+++wYcCejSNm058aZCKDchzcxX8gIQLCLB9bjKcJLCcJmv+dboGGT7E+nN8g2lKQ4mxSGv8DM6qCVmFVaKArFvBa/F7u4Kg1p+R4fSuFSMagbLChXP6GC5Ns1OT3h6fvrX6fkXNtVvw7u7mfQsszlLcreJrMjh9eRxMX34CbiA5wFskxdkKTafRhD2vZHst/BIVLBAm0sYPQM/eG79ATQfAm3R9exzkWp1z6N5emPff314Gi+uvZ8Sbt8bqf0C9EQ99il5N82HQB/7lHAg7zvZ5ynpwGbTkr7PCLXuidJ+6j0Q+9w0mv38k3CPhfV7lH8XhcfV6fOc0ayeT9mx9cTOMc1i9MaivQc3sNpy2dlBzppQVLpzJ7+qJTVc0lRY+8qXXPu3XNYQxtfXzkOdW3zGS1lOJr09VonD0/OhH6sl6diz7MHxQWeoMfKZtkDM3HEvTPE0vJoeEXGRvBB6VJltojvMdcMJ09WlbJWenwH1UC81XQ2TXL94NYph9XtpX/Ms5lM9YnUBN7wPH/NNAWM0LqpkTb0x2bD9DL+gW7wB1VtV19Q5zMijtVzgNF2R6q/ZyuWFbuxv+x3MFgjGcJUiJqdtYg81GynZ58acJRtSUCsYO+YBwrQloor1/k0YcdTsf1mAHvMYVoiPYcUrvff1GN7Pi+QFVmjJ7JgwSUl+jRszx6+ouErgJsNllURlPbtCDgD1SIeHE81wcr1eJ1GCsuhwouQ1KgAbR766C8dZfPVtMg/Ij/N1HW+jvBPgLgR3qErxpvu9PxwuM2466kZ1liprnNV+xSr/GhfjLC5wEgfjPJcK3QCKuwemk3vQOcYoL/EEFznmQQ+mI5Ptq2QDX17R82F1EX9ZrV6ROtA8HCURPrKs87ub31zWPNt4lDXCuxxW8cohN/wZBWTDu7DmruWKW8pa1wO2eHSNC/AUjn9nkWOlKqZ4E0FViLOl6PsSFeSN7reu/gMfAkFcr77nKA8oRTtUFQfl7XKLNjA6BOwPFKuSVVpQoBTST3SFgXityfzUY0R7vantOfurjpsn5RLRRZXDUSGcpT69dMeWKNmhNMlQMI6q5CWpElSyuCjxyj20TqUCUMxFkcQgO3lxGiijeKW9AtnXRn5DJniX4wxlFbiEJYq5rAA551Qb0aNtyMllSN01L8PGo2nA8m9fwxlVrOq+Ik32ZEVFvGjTjn3+hsNuTBEa+b6ItohGmsEFL6zxgWXTRazo7KPApnlQlXbTWE5fs1+yyZc6oYH7E++L+RZnNTRJATQJjJmIPW2Ilf7VdiRB3RWTNrJRLC7mP/MFos2KOU6oZAFTdmCRY4ASOaYtqIzA+sn9CMQGGO8rzFdtdgXMEHmWdR43bgwrM1iGE4/eVNGSbkKJCTMPJLEh59PcaPQbgWC0BQUqc6asBnKY+dDMYYaYc9aS5KjZEH4LyA9YzGaAaUxoS6/TpqLzktgrnwrmkyCcFcilXidpCtocjJkt/7N5+vyEJwJIcSjSmToXmnWyGP5EOnyH13InuOllrqN3uSt3wut+yzp4h5tsJ7bmKatDdzv6+tzbOSzLHcyct7avF24nZ6s7rp3b1wnX50FodcjV6fml4RXvSEpxfclHxHZ9PXx9uzkMp1+dwdMrtpPFcI81SLqcYrvhde9YHb7TZbQT3vAd1eG9fDk7KZpOnTpLlytnJ4Hu0/krjGCKiuBXSf9bdS25Db91v/AWj0vy+AdkE7Btqtggvrtqa4rYzBCqaJg88rklhn5AIMkALwlzZHIWUOXoSSCc2Fhoi4Yglgr9mI2rCmUxinsypnjzjjNK8Ua0dnzwlYvvvhPHYb7jIqlqCA7G6q362NsihhJ/YbwLyA+IWMMobVVvIJZGeS35ZbeuLeKqJSAyRXcBF1TRSZcKkNCOrHm6J5/y+32VYvwM2s/rZE6tl8N6cIN035JogtOU+Ru1qA5bTJOYfDkAXoPrNxTtWW9gIA/cr2WyLT+V5mB9B+aLnCK2ZzM25IxvHTLHt1zmuJGfjmGGW5SmE5yVOKWO1I1EW84Fig5Rii6TjPZ6+JrQgTXdnr9DZLmRI1w8zqgj8+JxZj0ebVG8T1H8AMtnCqmn2PIoUf0GAyWwn83WQ+i5kcc2GzSwpJK832GOHooEblCgbNLFsWKPmN1SnewY5qSP1Dxn+xGZ8TZ7foDFBvHHRO5JA9r0qaLtZZLBImG3xkxTjDH1wRaxmQbBnO4Qg3B8FwJ+EuOsSl6SYs9KKHZMq8vpQ0hXDEwfQvPYJMX7mPvgKms8B/YDjdx4t0oyFIsbp+6btpZq2lJ71ZxfH+ZCyZBUXLnXsJNVulnBVTsqnjnHaRJRPSJl17Ts+xpQ87LIh0m2Ucpuppl5eJs/jGCWCVlHNcW07/uy0PN2vSh06x2u+NIAZkz3413SuF3m+0Q7xg9Zjni8ZVT7tjeMasdkBgb0v3HsekEPXS8aR5QVFcSi3m1Y9ngTWfLJYdU6k0j6v5MTNNunKKC/bMifhov2iVnLmnY0p/iMq2A5LCqwQ3L0iraWSeJoh1hDJnnYZ6hkA2AB2xHCZ13rpEg7BC1neEWwD1m01IfR3ot8MsG7fF+h4h0UILkPzy80orYi76aLSUB+wGQLWXsF/HF2dta3QUYgtOaeDfhfSVnBlrZVE4RVxrubQG6pir7NgOOdAmUSh051ktbK6G2XutnaJcpqNLklBwJtaKI9HjqlrIYK5nBIJ3lGbFKWgkpNCrHRP37An3///8UfJOtIYAxvEcy9Qwe4i+Ch3n8EOdfst9P2jR7Qg98WOMBdCD/5/p70tXK/m9hPvb8ncS3c7yb2Fu/vya3p9rfTl5/BXXYQ95Du78luqPa7i+Cp3N+TXhHtb6H21HPvy61IubvJPXX7e3Irkv1uam/Z/p7kmmK/g95btd+HWxfstzN+wk029fpz2guTqgdst1MFgZktZQz8dpR6veIOFwdHENwG8Gm53fmAP41vvSFfIZuZVkNU6xGpgRa92o6omPBW0rtARSNGhR3KudCPK+oNwleX7yxrE/XygQskc2QZ0duArSN9u85fWMhJ7P8FAAD//14S+J8OqQIA"))
+  
+
+  LET SlowGlobRegex <= if(condition=S.DropVerySlowRules,
+     then="^\\*\\*", else="RunSlowFileGlobs!!!")
+
+  -- Group the targets for faster searching.
+  LET TargetTable <= SELECT Target,
+       enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
+    FROM parse_csv(accessor="data",
+  filename=GlobTable)
+  GROUP BY Target
+
+  //  Build a lookup cache on target.
+  LET Lookup <= memoize(query={
+    SELECT * FROM TargetTable
+  }, key="Target")
+
+  -- Extract all rules within the required target. Uses the memoized
+  -- structure above.
+  LET FilterTable(Required) =
+     SELECT Required AS Target, *
+     FROM flatten(query={
+       SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
+     })
+     WHERE if(condition=Glob =~ SlowGlobRegex,
+              then=log(level="INFO", message="Dropping rule %v/%v because it is too slow: %v",
+                       dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
+              else=TRUE)
+
+  LET Expand(FilteredTable) = SELECT * FROM foreach(
+  row=FilteredTable,
+  query={
+    -- If there is a reference, resolve it from the table recursively.
+    SELECT *
+    FROM if(condition=Ref AND log(level="DEBUG", message="%v/%v: Resolving Ref %v",
+         dedup=-1, args=[Target, Rule, Ref]),
+    then={
+       SELECT * FROM Expand(
+          FilteredTable={
+             SELECT * FROM FilterTable(Required=Ref)
+          })
+    }, else={
+       SELECT Target, Rule, Glob FROM scope()
+       WHERE if(condition=Glob,
+         then=log(level="DEBUG", message="%v/%v: Glob is %v",
+                  args=[Target, Rule, Glob], dedup=-1),
+         else=TRUE)
+    })
+  })
+
+  -- Collect all the top level targets that the user selected.
+  LET Collections(Targets) = SELECT Target + "/" + Rule AS Rule, Glob
+    FROM Expand(FilteredTable={
+      SELECT Target,
+            Rules.Rule AS Rule,
+            Rules.Glob AS Glob,
+            Rules.Ref AS Ref
+     FROM flatten(query={
+       SELECT * FROM TargetTable
+       WHERE get(item=Targets, field=Target)
+        AND log(level="INFO", message="Collecting target %v, Rules: %v",
+             args=[Target, Rules.Rule], dedup=-1)
+     })
+    })
+    GROUP BY Rule, Glob
+
+    // Includes results of Windows.System.TaskScheduler
+    LET CollectAdaptiveScheduledTasks_Commands =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+            SELECT * FROM Artifact.Windows.System.TaskScheduler()
+         })
+         WHERE Row.Command
+       }, query={
+         SELECT * FROM TryToDownload(OSPath=Row.Command, Row=Row)
+       })
+       // 
+    LET CollectLnkTargets_Targets =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+            SELECT * FROM Artifact.Windows.Forensics.Lnk(
+               UploadLnk=TRUE,
+               TargetGlob='''C:\{ProgramData,Users\*\AppData\*}\Microsoft\Windows\{Start Menu\Programs\StartUp,Recent\**}\*.lnk'''
+            )
+         })
+         WHERE Row.LinkTarget.LinkTarget
+       }, query= {
+         SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)
+       })
+       // Try to download Executables mentioned in prefetch files.
+    LET CollectPrefetchBinaries_Executables =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+           SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath
+           FROM Artifact.Windows.Forensics.Prefetch()
+         })
+       }, query={
+         SELECT * FROM TryToDownload(OSPath=Row.ExecutableDosPath, Row=Row)
+       })
+       // Uses PSList to get all running binaries.
+    LET CollectPsList_From_Pslist =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+           SELECT * FROM pslist()
+         })
+       }, query={
+          SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)
+       })
+       
+    // From PrefetchBinaries
+    // Avoid materializing this query unless necessary
+    LET DriveReplaceLookup = SELECT
+       split(sep_string="\\", string=Name)[-1] AS Drive,
+       upcase(string=SymlinkTarget) AS Target,
+       len(list=SymlinkTarget) AS Len
+    FROM winobj()
+    WHERE Name =~ "^\\\\GLOBAL\\?\\?\\\\.:"
+    
+    LET PrefetchCache <= memoize(key="Key", name="PrefetchCache",
+    query={
+      SELECT "X" AS Key, DriveReplaceLookup AS Value
+      FROM scope()
+    })
+    
+    LET _DriveReplace(Path) = SELECT Drive + Path[Len:] AS ResolvedPath
+    FROM foreach(row=PrefetchCache.X.Value)
+    WHERE upcase(string=Path[:Len]) = Target
+    
+    LET DriveReplace(Path) = _DriveReplace(Path=Path)[0].ResolvedPath || Path
+    
+
+sources:
+- name: SearchGlobs
+  notebook:
+    - type: none
+  query: |
+    LET AllCollections <= Collections(Targets=scope())
+
+    SELECT * FROM AllCollections
+    --WHERE Glob
+
+- name: All Matches Metadata
+  notebook:
+    - type: vql
+      template: |
+       // This cell generates other cells to preview the collected
+       // data.  DO NOT recalculate this cell - each time new cells
+       // will be added. Instead delete the notebook and allow
+       // Velociraptor to recreate the entire notebook.
+       LET ArtifactsWithResults <=
+         SELECT pathspec(accessor="fs", parse=Data.VFSPath)[4] AS Artifact ,
+           pathspec(accessor="fs", parse=Data.VFSPath)[-1][:-5] AS Source ,
+           stat(accessor="fs", filename=Data.VFSPath + ".index").Size / 8 AS Records
+         FROM enumerate_flow(client_id=ClientId, flow_id=FlowId)
+         WHERE Type =~ "Result" AND Records > 0
+
+       LET _ <= SELECT notebook_update_cell(notebook_id=NotebookId, type="vql",
+       input=format(format='''
+       /*
+       # Results From %v
+       */
+       SELECT * FROM source(source=%q)
+       ''', args=[Source, Source]),
+       output=format(format='''
+       <i>Recalculate</i> to show Results from <b>%v</b> with <b>%v</b> rows
+       ''', args=[Source, Records])) AS NotebookModification
+       FROM ArtifactsWithResults
+
+       /*
+       # Results Overview
+       */
+       SELECT Source, Records FROM ArtifactsWithResults ORDER BY Source
+
+
+  query: |
+    LET GlobLookup <= memoize(query=AllCollections, key="Glob")
+    LET NTFSGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND Glob =~ "[:$]" AND NOT Glob =~ "\\$Recycle.Bin"
+    LET AutoGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND ( Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]" )
+
+    LET _ <= if(condition=MaxFileSize > 0,
+                then=log(level="INFO", message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
+                         args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
+
+    LET PreferredAccessor <= if(
+       condition=VSS_MAX_AGE_DAYS > 0,
+       then="ntfs_vss", else="auto")
+
+    LET AllGlobs = SELECT *
+    FROM foreach(row={
+        SELECT _value AS Device FROM foreach(row=Devices)
+    }, query={
+      SELECT * FROM chain(
+      GlobNTFS={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               "ntfs" AS Accessor,
+               dict(Globs=Globs) AS Data,
+               "Glob" AS Type
+        FROM glob(globs=NTFSGlobs.Glob, accessor="ntfs", root=Device)
+      },
+      GlobAuto={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               PreferredAccessor AS Accessor,
+               dict(Globs=Globs) AS Data,
+               "Glob" AS Type
+        FROM glob(globs=AutoGlobs.Glob,
+                  accessor=PreferredAccessor,
+                  root=Device)
+      })
+    })
+    WHERE NOT IsDir
+
+    LET AllResults <= SELECT Type,
+                             OSPath AS SourceFile,
+                             Size,
+                             Btime AS Created,
+                             Ctime AS Changed,
+                             Mtime AS Modified,
+                             Atime AS LastAccessed,
+                             Accessor,
+                             Data
+    FROM chain(
+      AdaptiveScheduledTasks_Commands={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "AdaptiveScheduledTasks/Commands"
+           AND log(message="Collecting Custom VQL Rule AdaptiveScheduledTasks/Commands",
+                   dedup= -1 )
+        }, then={
+          SELECT "AdaptiveScheduledTasks/Commands" AS Type,
+                 "AdaptiveScheduledTasks/Commands" AS Rule,
+                 *
+          FROM CollectAdaptiveScheduledTasks_Commands
+        })
+      },LnkTargets_Targets={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "LnkTargets/Targets"
+           AND log(message="Collecting Custom VQL Rule LnkTargets/Targets",
+                   dedup= -1 )
+        }, then={
+          SELECT "LnkTargets/Targets" AS Type,
+                 "LnkTargets/Targets" AS Rule,
+                 *
+          FROM CollectLnkTargets_Targets
+        })
+      },PrefetchBinaries_Executables={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "PrefetchBinaries/Executables"
+           AND log(message="Collecting Custom VQL Rule PrefetchBinaries/Executables",
+                   dedup= -1 )
+        }, then={
+          SELECT "PrefetchBinaries/Executables" AS Type,
+                 "PrefetchBinaries/Executables" AS Rule,
+                 *
+          FROM CollectPrefetchBinaries_Executables
+        })
+      },PsList_From_Pslist={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "PsList/From_Pslist"
+           AND log(message="Collecting Custom VQL Rule PsList/From_Pslist",
+                   dedup= -1 )
+        }, then={
+          SELECT "PsList/From_Pslist" AS Type,
+                 "PsList/From_Pslist" AS Rule,
+                 *
+          FROM CollectPsList_From_Pslist
+        })
+      },
+      Globs=AllGlobs
+    )
+    WHERE log(level="INFO", message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
+    AND if(condition= Size <= MaxFileSize,
+           then=TRUE,
+           else=log(level="WARN", message="Skipping file %v (Size %v) Due to MaxFileSize",
+                    dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
+
+    SELECT * FROM AllResults
+
+- name: AdaptiveScheduledTasks_Commands
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) + Data AS Data
+      FROM AllResults
+      WHERE Type = "AdaptiveScheduledTasks/Commands"
+    }, column="Data")
+- name: LnkTargets_Targets
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) + Data AS Data
+      FROM AllResults
+      WHERE Type = "LnkTargets/Targets"
+    }, column="Data")
+- name: PrefetchBinaries_Executables
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) + Data AS Data
+      FROM AllResults
+      WHERE Type = "PrefetchBinaries/Executables"
+    }, column="Data")
+- name: PsList_From_Pslist
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) + Data AS Data
+      FROM AllResults
+      WHERE Type = "PsList/From_Pslist"
+    }, column="Data")
+
+- name: Uploads
+  query: |
+    LET UploadOrHash(SourceFile, Accessor, Modified) = if(condition=UPLOAD_IS_RESUMABLE,
+     then=dict(Path= stat(filename=SourceFile, accessor=Accessor).OSPath,
+               sha256=hash(path= SourceFile, accessor=Accessor).SHA256,
+               Upload=upload(file=SourceFile, accessor=Accessor, mtime=Modified)),
+     else=upload(file=SourceFile, accessor=Accessor, mtime=Modified))
+
+    -- Upload the files. Split into workers so the files are uploaded in parallel.
+    LET uploaded_files = SELECT *
+    FROM foreach(row={
+       SELECT * FROM AllResults
+       WHERE Size > 0 AND Size < MaxFileSize
+       },
+          workers=30,
+          query={
+            SELECT now() AS CopiedOnTimestamp,
+                   Created,
+                   Changed,
+                   LastAccessed,
+                   Modified,
+                   SourceFile,
+                   Size,
+                   UploadOrHash(SourceFile=SourceFile,
+                                Accessor=Accessor,
+                                Modified=Modified) AS Upload
+            FROM scope()
+      })
+
+    -- Separate the hashes into their own column.
+    SELECT CopiedOnTimestamp,
+           SourceFile,
+           Upload.Path AS DestinationFile,
+           Size AS FileSize,
+           Upload.sha256 AS SourceFileSha256,
+           Created,
+           Changed,
+           Modified,
+           LastAccessed
+    FROM uploaded_files
+
+  notebook:
+    - type: none
+    - type: vql_suggestion
+      name: Post process collection
+      template: |
+        /*
+
+        # Post process this collection.
+
+        Uncomment the following and evaluate the cell to create new
+        collections based on the files collected from this artifact.
+
+        The below VQL will apply remapping so standard artifacts will
+        see the KapeFiles.Targets collection below as a virtual
+        Windows Client. The artifacts will be collected to a temporary
+        container and then re-imported as new collections into this
+        client.
+
+        NOTE: This is only a stop gap in case the proper artifacts
+        were not collected in the first place. Parsing artifacts
+        through a remapped collection is not as accurate as parsing
+        directly on the endpoint. See
+        https://docs.velociraptor.app/training/playbooks/preservation/
+        for more info.
+
+        */
+        LET _ <= import(artifact="Windows.KapeFiles.Remapping")
+
+        LET tmp <= tempfile()
+
+        LET Results = SELECT import_collection(filename=Container, client_id=ClientId) AS Import
+        FROM collect(artifacts=[
+                       "Windows.Forensics.Usn",
+                       "Windows.NTFS.MFT",
+                     ],
+                     args=dict(`Windows.Forensics.Usn`=dict(),
+                               `Windows.NTFS.MFT`=dict()),
+                     output=tmp,
+                     remapping=GetRemapping(FlowId=FlowId, ClientId=ClientId))
+
+        // SELECT * FROM Results
+
+column_types:
+- name: CopiedOnTimestamp
+  type: timestamp

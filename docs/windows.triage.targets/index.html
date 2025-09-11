@@ -1,0 +1,2029 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  Windows.Triage.Targets
+  #
+
+This artifact is built automatically from the
+KapeFiles project.
+You can download the artifact for manual import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s glob() plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://triage.velocidex.com/docs/windows.triage.targets/"><meta property="og:site_name" content="Triage Artifacts"><meta property="og:title" content="Windows.Triage.Targets"><meta property="og:description" content="Windows.Triage.Targets # This artifact is built automatically from the KapeFiles project.
+You can download the artifact for manual import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name to each glob. Velociraptor’s glob() plugin implementation is very efficient and minimizes the number of passes it needs to make over the filesystem, when using multiple glob expressions at the same time."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><title>&lt;span class="icon">
+&lt;i class="fa-solid fa-desktop">&lt;/i>
+&lt;/span>
+Windows.Triage.Targets
+| Triage Artifacts</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=http://triage.velocidex.com/docs/windows.triage.targets/><link rel=stylesheet href=/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5+NfY=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=http://triage.velocidex.com/docs/windows.triage.targets/index.xml title="Triage Artifacts"><script src=/js/jquery-3.3.1.min.js?1703133391></script><link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css?1703133392 rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css rel=stylesheet><script src=//cdn.datatables.net/2.3.0/js/dataTables.min.js></script><link href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js integrity="sha512-0UbR6HN0dY8fWN9T7fF658896tsPgnbRREHCNq46J9/JSn8GonXDZmqtTc3qS879GM0zV49b9LPhdc/maKP8Kg==" crossorigin=anonymous referrerpolicy=no-referrer></script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css integrity="sha512-56GJrpSgHk6Mc9Fltt+bQKcICJoEpxtvozXPA5n5OT0rfWiqGlJmJCI/vl16kctf/0XbBloh03vl7OF2xFnR8g==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css rel=stylesheet><script>$(document).ready(function(){$(".json-renderer").each(function(){try{data=JSON.parse($(this).text()),$(this).jsonViewer(data,{collapsed:!0,rootCollapsable:!1})}catch{}}),$(".datatable").each(function(){new DataTable(this,{paging:!0})}),$(".scroll-datatable").each(function(){let e=$(this),t=new DataTable(this,{paging:!1,scrollY:200})})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Triage Artifacts</span></a></h2><ul><li><a href=/docs/triage_artifacts/>Preservation Artifacts</a><ul></ul></li><li><a href=/docs/linux.triage.uac/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</a><ul><li><a href=/docs/linux.triage.uac/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/windows.triage.targets/ class=active><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</a><ul><li><a href=/docs/windows.triage.targets/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/github/><span class=icon><i class="fa-brands fa-github"></i>
+</span>Github</a><ul></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</h3><label for=toc-control></label></div></header><article class="markdown book-article"><h1 id=windowstriagetargets>Windows.Triage.Targets
+<a class=anchor href=#windowstriagetargets>#</a></h1><p>This artifact is built automatically from the
+<a href=https://github.com/EricZimmerman/KapeFiles>KapeFiles</a> project.</p><p>You can <a href=Windows.Triage.Targets.zip>download the artifact</a> for manual import into Velociraptor.</p><p>The description below explains how to use this artifact in practice.</p><p>The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s <code>glob()</code> plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time.</p><p>Therefore the artifact first traverses all the rules to build a large
+list of glob expressions, which it uses to search for candidate files.</p><h2 id=parameters>Parameters
+<a class=anchor href=#parameters>#</a></h2><ol><li><p><strong>Devices</strong>: This is the list of drives that should be
+considered. By default we only consider the <code>C:</code> drive but if you
+might have other drives in use, then we consider those as well. The
+drive name is prepended to each glob specified by the different
+rules to begin searching on that device.</p></li><li><p><strong>DropVerySlowRules</strong>: Some targets specify globs which need to
+examine every file on the disk. For example,
+<code>DirectoryTraversal_AudioFiles</code> has a glob similar to
+<code>C:\**\*.{3gp,aa,aac,act,aiff}</code>.</p><p>This type of search is very slow as it needs to examine every file
+on disk. By default we disable these rules because they are too
+slow to be useful. If you really want them enabled, switch this
+setting off, but collection time will increase significantly.</p></li><li><p><strong>VSS_MAX_AGE_DAYS</strong>: By default we do not consider Volume Shadow
+Copies during file collection. However, if you set this value to a
+number larger than 0, we consider this many days worth of VSS
+copies.</p><p>This setting causes Velociraptor to repeat the search on all VSS
+copies within the specified time limit, and check for changed files
+between VSS copies. If the file has changed (or maybe deleted)
+between the different VSS copies, then Velociraptor will collect
+multiple copies of the same file. Note that some files naturally
+change between VSS copies (e.g. log files) so this can end up
+collecting a lot more data than anticipated.</p><p>NOTE: Setting this will result in a slow down as we need to switch
+to using the <code>ntfs</code> accessor for all files (i.e. parse the low
+level filesystem), and inspect each VSS copy for a change in the
+file.</p></li><li><p><strong>MaxFileSize</strong>: Sometimes we encounter very large files in
+unexpected location (e.g. browser cache). This setting ensures that
+very large files will not be collected. By default the setting is
+disabled (i.e. we collect any file size), but it is a good idea to
+limit it as very large files are not often useful.</p></li><li><p><strong>UPLOAD_IS_RESUMABLE</strong>: This setting controls how uploads are send
+from the Velociraptor client to the server. When enabled, the
+client will send upload information in advance so that if the
+collection times out or the client is restarted, the uploads may be
+resumed.</p><p>The setting only has an effect when collecting this artifact
+remotely from a client (i.e. does nothing for offline collections).</p></li></ol><p>Following these parameters, there are many checkboxes for each
+possible collection target.</p><p>The most useful <code>meta-targets</code> are the <code>SANS_Triage</code>, <code>KapeTriage</code></p><h2 id=artifact>Artifact
+<a class=anchor href=#artifact>#</a></h2><div style=max-height:500px;overflow-y:auto><pre>
+<code style=margin-top:-40px;font-size:medium class=language-yaml>
+
+name: Windows.Triage.Targets
+description: |
+  This artifact aims to preserve raw files from the endpoint by
+  selectively acquiring the most important files for the investigation
+  at hand. The artfiact collates multiple rules from sources such as
+  the KapeFiles repository.
+
+  Kape is a popular bulk collector tool for triaging a system
+  quickly. While KAPE itself is not an opensource tool, the logic it
+  uses to decide which files to collect is encoded in YAML files
+  hosted on the KapeFiles project
+  (https://github.com/EricZimmerman/KapeFiles) and released under an
+  MIT license.
+
+  This artifact is automatically generated from these YAML files,
+  contributed and maintained by the community. This artifact only
+  encapsulates the KAPE &#34;Targets&#34; - basically a bunch of glob
+  expressions used for collecting files on the endpoint. We do not
+  do any post processing of these files - we just collect them.
+
+  We recommend that timeouts and upload limits be used
+  conservatively with this artifact because we can upload really
+  vast quantities of data very quickly.
+
+  NOTE:
+    This artifact was built from [The Velociraptor Triage
+    Repository](https://triage.velocidex.com/docs/)
+
+  Commit 9cf75b3 on 2025-09-11T15:34:20Z
+
+reference:
+  - https://www.kroll.com/en/insights/publications/cyber/kroll-artifact-parser-extractor-kape
+  - https://github.com/EricZimmerman/KapeFiles
+
+parameters:
+  - name: Devices
+    type: json_array
+    description: |
+      Name of the drive letter to search. You can add multiple drives
+      separated with a comma.
+    default: &#39;[&#34;C:&#34;]&#39;
+
+  - name: DropVerySlowRules
+    type: bool
+    default: Y
+    description: |
+      Some rules are very slow due to a recursive search at the higher
+      levels (For example a glob such as `C:\**\*.ini` ). These rules
+      cause the collection to be very slow as the entire filesystem
+      must be searched.
+
+      By default we drop these rules but you can enable them if you
+      like. This will cause the collection to be a lot slower.
+
+  - name: VSS_MAX_AGE_DAYS
+    type: int
+    default: 0
+    description: |
+      If larger than zero we analyze VSS within this many days
+      ago. (e.g 7 will analyze all VSS within the last week).  Note
+      that when using VSS analysis we have to use the ntfs accessor
+      for everything which will be much slower.
+
+  - name: MaxFileSize
+    type: int
+    default: 100000000
+    description: |
+      The max size in bytes of the individual files to collect.
+      Set to 0 to disable it (Default 100Mb).
+
+  - name: UPLOAD_IS_RESUMABLE
+    type: bool
+    default: Y
+    description: |
+      If set the uploads can be resumed if the flow times out or
+      errors.
+
+  - name: _BasicCollection
+    description: &#34;Basic Collection&#34;
+    type: bool
+
+  - name: _KapeTriage
+    description: &#34;Calls Kape Triage&#34;
+    type: bool
+
+  - name: _Live
+    description: &#34;Collect live artifacts&#34;
+    type: bool
+
+  - name: _SANS_Triage
+    description: &#34;SANS Triage Collection&#34;
+    type: bool
+
+  - name: 1Password
+    description: &#34;1Password Password Manager&#34;
+    type: bool
+
+  - name: 360SecureBrowser
+    description: &#34;360 Secure Browser&#34;
+    type: bool
+
+  - name: 4KVideoDownloader
+    description: &#34;4K Video Downloader&#34;
+    type: bool
+
+  - name: AVG
+    description: &#34;AVG Antivirus Data&#34;
+    type: bool
+
+  - name: AceText
+    description: &#34;AceText&#34;
+    type: bool
+
+  - name: AcronisTrueImage
+    description: &#34;Acronis True Image&#34;
+    type: bool
+
+  - name: Action1
+    description: &#34;Action1 Application Logs&#34;
+    type: bool
+
+  - name: ActiveDirectoryNTDS
+    description: &#34;Active Directory NTDS&#34;
+    type: bool
+
+  - name: ActiveDirectorySysvol
+    description: &#34;Active Directory Sysvol&#34;
+    type: bool
+
+  - name: AdaptiveScheduledTasks
+    description: &#34;Collect binaries mentioned in the ScheduledTasks&#34;
+    type: bool
+
+  - name: AdvancedIPScanner
+    description: &#34;Advanced IP Scanner Artifacts&#34;
+    type: bool
+
+  - name: AdvancedPortScanner
+    description: &#34;Advanced Port Scanner Artifacts&#34;
+    type: bool
+
+  - name: AgentRansack
+    description: &#34;Agent Ransack - Free File Searching Utility&#34;
+    type: bool
+
+  - name: Amcache
+    description: &#34;Amcache.hve&#34;
+    type: bool
+
+  - name: Ammyy
+    description: &#34;Ammyy Data&#34;
+    type: bool
+
+  - name: Antivirus
+    description: &#34;Antivirus&#34;
+    type: bool
+
+  - name: AnyDesk
+    description: &#34;AnyDesk&#34;
+    type: bool
+
+  - name: ApacheAccessLog
+    description: &#34;Apache Access Log&#34;
+    type: bool
+
+  - name: AppCompatPCA
+    description: &#34;AppCompat PCA Folder&#34;
+    type: bool
+
+  - name: AppData
+    description: &#34;AppData&#34;
+    type: bool
+
+  - name: AppXPackages
+    description: &#34;AppXPackages&#34;
+    type: bool
+
+  - name: ApplicationEvents
+    description: &#34;Windows Application Event Log&#34;
+    type: bool
+
+  - name: Arc
+    description: &#34;Arc Browser&#34;
+    type: bool
+
+  - name: AsperaConnect
+    description: &#34;Aspera Connect Log Files&#34;
+    type: bool
+
+  - name: AteraAgent
+    description: &#34;AteraAgent&#34;
+    type: bool
+
+  - name: Avast
+    description: &#34;Avast Antivirus Data&#34;
+    type: bool
+
+  - name: AviraAVLogs
+    description: &#34;Avira Logs&#34;
+    type: bool
+
+  - name: BCD
+    description: &#34;Boot Configuration Files&#34;
+    type: bool
+
+  - name: BITS
+    description: &#34;Microsoft BITS (Background Intelligent Transer Service) persistent files&#34;
+    type: bool
+
+  - name: BitTorrent
+    description: &#34;BitTorrent&#34;
+    type: bool
+
+  - name: Bitdefender
+    description: &#34;Bitdefender Antivirus Data&#34;
+    type: bool
+
+  - name: Bitmap
+    description: &#34;$Bitmap&#34;
+    type: bool
+
+  - name: Boot
+    description: &#34;$Boot&#34;
+    type: bool
+
+  - name: BoxDrive_Metadata
+    description: &#34;Box Cloud Storage Metadata&#34;
+    type: bool
+
+  - name: BoxDrive_UserFiles
+    description: &#34;Box Cloud Storage Files&#34;
+    type: bool
+
+  - name: BraveBrowser
+    description: &#34;Brave Browser&#34;
+    type: bool
+
+  - name: BrowserCache
+    description: &#34;Browser Caches&#34;
+    type: bool
+
+  - name: CapabilityAccessManager
+    description: &#34;Capability Access Manager database&#34;
+    type: bool
+
+  - name: CertUtil
+    description: &#34;Certutil&#34;
+    type: bool
+
+  - name: ChatGPT
+    description: &#34;A Target to collect files related to ChatGPT Desktop&#34;
+    type: bool
+
+  - name: Chrome
+    description: &#34;Chrome&#34;
+    type: bool
+
+  - name: ChromeExtensions
+    description: &#34;Chrome Extension Files&#34;
+    type: bool
+
+  - name: ChromeFileSystem
+    description: &#34;Chrome HTML5 File System Contents&#34;
+    type: bool
+
+  - name: CiscoJabber
+    description: &#34;Jabber&#34;
+    type: bool
+
+  - name: ClipboardMaster
+    description: &#34;ClipboardMaster&#34;
+    type: bool
+
+  - name: CloudStorage_All
+    description: &#34;Cloud Storage Contents and Metadata&#34;
+    type: bool
+
+  - name: CloudStorage_Metadata
+    description: &#34;Cloud Storage Metadata&#34;
+    type: bool
+
+  - name: CloudStorage_OneDriveExplorer
+    description: &#34;OneDrive and other files used with OneDriveExplorer&#34;
+    type: bool
+
+  - name: CocCoc
+    description: &#34;CocCoc Browser&#34;
+    type: bool
+
+  - name: CombinedLogs
+    description: &#34;Collect Event logs, Trace logs, Windows Firewall, PowerShell console logs, and .NET CLR UsageLogs&#34;
+    type: bool
+
+  - name: Combofix
+    description: &#34;ComboFix Antivirus Data&#34;
+    type: bool
+
+  - name: ConfluenceLogs
+    description: &#34;Confluence Log Files&#34;
+    type: bool
+
+  - name: CrowdStrikeFalcon
+    description: &#34;CrowdStrike Falcon&#34;
+    type: bool
+
+  - name: Cybereason
+    description: &#34;Cybereason Sensor/Detection Logs&#34;
+    type: bool
+
+  - name: Cylance
+    description: &#34;Cylance Antivirus Logs&#34;
+    type: bool
+
+  - name: DC_
+    description: &#34;DC&#43;&#43;&#34;
+    type: bool
+
+  - name: DWAgent
+    description: &#34;DWAgent Log Files&#34;
+    type: bool
+
+  - name: Debian
+    description: &#34;Debian on Windows Subsystem for Linux&#34;
+    type: bool
+
+  - name: DirectoryOpus
+    description: &#34;Directory Opus&#34;
+    type: bool
+
+  - name: DirectoryTraversal_AudioFiles
+    description: &#34;Find audio files covering a multitude of formats&#34;
+    type: bool
+
+  - name: DirectoryTraversal_ExcelDocuments
+    description: &#34;Find Excel and Excel alternative documents&#34;
+    type: bool
+
+  - name: DirectoryTraversal_PDFDocuments
+    description: &#34;Find PDF and PDF alternative documents&#34;
+    type: bool
+
+  - name: DirectoryTraversal_PictureFiles
+    description: &#34;Find picture files covering a multitude of formats&#34;
+    type: bool
+
+  - name: DirectoryTraversal_SQLiteDatabases
+    description: &#34;Find files with common SQLite file extensions&#34;
+    type: bool
+
+  - name: DirectoryTraversal_VideoFiles
+    description: &#34;Find video files covering a multitude of formats&#34;
+    type: bool
+
+  - name: DirectoryTraversal_WildCardExample
+    description: &#34;Find zip archives&#34;
+    type: bool
+
+  - name: DirectoryTraversal_WordDocuments
+    description: &#34;Find Word and Word alternative documents&#34;
+    type: bool
+
+  - name: Discord
+    description: &#34;Discord Cache and LevelDB Files&#34;
+    type: bool
+
+  - name: DoubleCommander
+    description: &#34;Double Commander&#34;
+    type: bool
+
+  - name: Drivers
+    description: &#34;Windows Drivers&#34;
+    type: bool
+
+  - name: Dropbox_Metadata
+    description: &#34;Dropbox Cloud Storage Metadata&#34;
+    type: bool
+
+  - name: Dropbox_UserFiles
+    description: &#34;Dropbox Cloud Storage Files&#34;
+    type: bool
+
+  - name: EFCommander
+    description: &#34;EF Commander&#34;
+    type: bool
+
+  - name: ESET
+    description: &#34;ESET Antivirus Data&#34;
+    type: bool
+
+  - name: Edge
+    description: &#34;Edge&#34;
+    type: bool
+
+  - name: EdgeChromium
+    description: &#34;Microsoft Edge Chromium Artifacts&#34;
+    type: bool
+
+  - name: EdgeChromiumExtensions
+    description: &#34;Edge Chromium Extension Files&#34;
+    type: bool
+
+  - name: Emsisoft
+    description: &#34;Emsisoft Antivirus Logs&#34;
+    type: bool
+
+  - name: EncapsulationLogging
+    description: &#34;EncapsulationLogging&#34;
+    type: bool
+
+  - name: EventLogs
+    description: &#34;Event logs&#34;
+    type: bool
+
+  - name: EventLogs_RDP
+    description: &#34;Collect Win7&#43; RDP related Event logs&#34;
+    type: bool
+
+  - name: EventTraceLogs
+    description: &#34;Event Trace Logs&#34;
+    type: bool
+
+  - name: EventTranscriptDB
+    description: &#34;EventTranscript.db (and other files related to Telemetry and Diagnostic Data)&#34;
+    type: bool
+
+  - name: Evernote
+    description: &#34;Evernote&#34;
+    type: bool
+
+  - name: Everything_VoidTools_
+    description: &#34;Everything (VoidTools)&#34;
+    type: bool
+
+  - name: EvidenceOfExecution
+    description: &#34;Evidence of execution related files&#34;
+    type: bool
+
+  - name: Exchange
+    description: &#34;Exchange Log Files&#34;
+    type: bool
+
+  - name: ExchangeClientAccess
+    description: &#34;Exchange Client Access Log Files&#34;
+    type: bool
+
+  - name: ExchangeCve_2021_26855
+    description: &#34;Exchange Server Vulnerability *.Compiled Files&#34;
+    type: bool
+
+  - name: ExchangeSetupLog
+    description: &#34;Exchange Setup Log&#34;
+    type: bool
+
+  - name: ExchangeTransport
+    description: &#34;Exchange Transport Log Files&#34;
+    type: bool
+
+  - name: FSecure
+    description: &#34;F-Secure Antivirus Data&#34;
+    type: bool
+
+  - name: FTPClients
+    description: &#34;FTP Clients&#34;
+    type: bool
+
+  - name: FastStoneImageViewer
+    description: &#34;FastStone Image Viewer&#34;
+    type: bool
+
+  - name: Fences
+    description: &#34;Fences&#34;
+    type: bool
+
+  - name: FileExplorerReplacements
+    description: &#34;File Explorer Replacements&#34;
+    type: bool
+
+  - name: FileSystem
+    description: &#34;File system metadata&#34;
+    type: bool
+
+  - name: FileZillaClient
+    description: &#34;FileZilla XML and SQLite Log Files&#34;
+    type: bool
+
+  - name: FileZillaServer
+    description: &#34;FileZilla Server Logs&#34;
+    type: bool
+
+  - name: Firefox
+    description: &#34;Firefox&#34;
+    type: bool
+
+  - name: FreeCommander
+    description: &#34;FreeCommander XE&#34;
+    type: bool
+
+  - name: FreeDownloadManager
+    description: &#34;Free Download Manager&#34;
+    type: bool
+
+  - name: FreeFileSync
+    description: &#34;FreeFileSync&#34;
+    type: bool
+
+  - name: Freenet
+    description: &#34;Freenet&#34;
+    type: bool
+
+  - name: FrostWire
+    description: &#34;FrostWire&#34;
+    type: bool
+
+  - name: Gigatribe
+    description: &#34;Gigatribe Files&#34;
+    type: bool
+
+  - name: GoogleDrive_Metadata
+    description: &#34;Google Drive Metadata&#34;
+    type: bool
+
+  - name: GoogleDriveBackupSync_UserFiles
+    description: &#34;Google Backup and Sync Storage Files&#34;
+    type: bool
+
+  - name: GoogleEarth
+    description: &#34;Google Earth&#34;
+    type: bool
+
+  - name: GroupPolicy
+    description: &#34;Current Group Policy Enforcement&#34;
+    type: bool
+
+  - name: HeidiSQL
+    description: &#34;HeidiSQL&#34;
+    type: bool
+
+  - name: HexChat
+    description: &#34;HexChat&#34;
+    type: bool
+
+  - name: HitmanPro
+    description: &#34;HitmanPro Antivirus Data&#34;
+    type: bool
+
+  - name: HostsFile
+    description: &#34;Hosts file&#34;
+    type: bool
+
+  - name: IDrive
+    description: &#34;IDrive Backup Artifacts&#34;
+    type: bool
+
+  - name: IISConfiguration
+    description: &#34;IIS&#34;
+    type: bool
+
+  - name: IISLogFiles
+    description: &#34;IIS Log Files&#34;
+    type: bool
+
+  - name: IRCClients
+    description: &#34;IRC Clients&#34;
+    type: bool
+
+  - name: ISLOnline
+    description: &#34;ISLOnline Remote Access Tool&#34;
+    type: bool
+
+  - name: ITarian
+    description: &#34;ITarian RMM&#34;
+    type: bool
+
+  - name: IceChat
+    description: &#34;IceChat&#34;
+    type: bool
+
+  - name: IconCacheDB
+    description: &#34;IconCache.db files&#34;
+    type: bool
+
+  - name: ImgBurn
+    description: &#34;ImgBurn&#34;
+    type: bool
+
+  - name: InternetExplorer
+    description: &#34;Internet Explorer&#34;
+    type: bool
+
+  - name: IrfanView
+    description: &#34;IrfanView&#34;
+    type: bool
+
+  - name: J
+    description: &#34;$J&#34;
+    type: bool
+
+  - name: JDownloader2
+    description: &#34;JDownloader 2&#34;
+    type: bool
+
+  - name: JavaWebCache
+    description: &#34;Java WebStart Cache - (IDX Files)&#34;
+    type: bool
+
+  - name: JumpLists
+    description: &#34;Jump lists&#34;
+    type: bool
+
+  - name: Kali
+    description: &#34;Kali on Windows Subsystem for Linux&#34;
+    type: bool
+
+  - name: KapeTriage
+    description: &#34;KapeTriage collects most of the files needed for a DFIR Investigation. This Target pulls evidence from File System files, Registry Hives, Event Logs, Scheduled Tasks, Evidence of Execution, SRUM data, SUM data, Cloud metadata, WER, WBEM, Web Browser data (IE/Edge, Chrome, Mozilla history), LNK Files, JumpLists, Notepad unsaved sessions (Win11), 3rd party remote access software logs, 3rd party antivirus software logs, Windows 10/11 Timeline database, and $I Recycle Bin files.&#34;
+    type: bool
+
+  - name: Kaseya
+    description: &#34;Kaseya Data&#34;
+    type: bool
+
+  - name: Keepass
+    description: &#34;Keepass&#34;
+    type: bool
+
+  - name: KeepassXC
+    description: &#34;KeepassXC&#34;
+    type: bool
+
+  - name: LNKFilesAndJumpLists
+    description: &#34;LNK Files and jump lists&#34;
+    type: bool
+
+  - name: Level
+    description: &#34;Level.io Application Logs&#34;
+    type: bool
+
+  - name: LinuxOnWindowsProfileFiles
+    description: &#34;Linux on Windows Profile Files&#34;
+    type: bool
+
+  - name: LiveUserFiles
+    description: &#34;Live User Files&#34;
+    type: bool
+
+  - name: LnkTargets
+    description: &#34;Collect targets of Lnk Files&#34;
+    type: bool
+
+  - name: LogFile
+    description: &#34;$LogFile&#34;
+    type: bool
+
+  - name: LogFiles
+    description: &#34;LogFiles (includes SUM)&#34;
+    type: bool
+
+  - name: LogMeIn
+    description: &#34;LogMeIn Data&#34;
+    type: bool
+
+  - name: MFT
+    description: &#34;$MFT&#34;
+    type: bool
+
+  - name: MFTMirr
+    description: &#34;$MFTMirr&#34;
+    type: bool
+
+  - name: MOF
+    description: &#34;MOF files (WMI)&#34;
+    type: bool
+
+  - name: MSSQLErrorLog
+    description: &#34;MS SQL ErrorLogs&#34;
+    type: bool
+
+  - name: MacriumReflect
+    description: &#34;Macrium Reflect&#34;
+    type: bool
+
+  - name: Malwarebytes
+    description: &#34;Malwarebytes Data&#34;
+    type: bool
+
+  - name: ManageEngineLogs
+    description: &#34;ManageEngine Log Files&#34;
+    type: bool
+
+  - name: Mattermost
+    description: &#34;Mattermost&#34;
+    type: bool
+
+  - name: McAfee
+    description: &#34;McAfee Log Files&#34;
+    type: bool
+
+  - name: McAfee_ePO
+    description: &#34;McAfee ePO Log Files&#34;
+    type: bool
+
+  - name: MediaMonkey
+    description: &#34;MediaMonkey&#34;
+    type: bool
+
+  - name: Megasync
+    description: &#34;MegaSync Data Collection&#34;
+    type: bool
+
+  - name: MemoryFiles
+    description: &#34;Memory Files&#34;
+    type: bool
+
+  - name: MeshAgent
+    description: &#34;MeshAgent log and configuration files&#34;
+    type: bool
+
+  - name: MessagingClients
+    description: &#34;Messaging and communication apps&#34;
+    type: bool
+
+  - name: MicrosoftAzureCopy
+    description: &#34;Microsoft Azure Copy&#34;
+    type: bool
+
+  - name: MicrosoftOfficeBackstage
+    description: &#34;Microsoft Office Backstage&#34;
+    type: bool
+
+  - name: MicrosoftOneNote
+    description: &#34;Microsoft OneNote&#34;
+    type: bool
+
+  - name: MicrosoftSafetyScanner
+    description: &#34;Microsoft Safety Scanner&#34;
+    type: bool
+
+  - name: MicrosoftStickyNotes
+    description: &#34;Microsoft Sticky Notes&#34;
+    type: bool
+
+  - name: MicrosoftTeams
+    description: &#34;Microsoft Teams&#34;
+    type: bool
+
+  - name: MicrosoftToDo
+    description: &#34;Microsoft To Do&#34;
+    type: bool
+
+  - name: MidnightCommander
+    description: &#34;Midnight Commander&#34;
+    type: bool
+
+  - name: MiniTimelineCollection
+    description: &#34;MFT, Registry and Event Logs to generate a mini timeline&#34;
+    type: bool
+
+  - name: MobaXTerm
+    description: &#34;MobaXTerm&#34;
+    type: bool
+
+  - name: MouseWithoutBorders
+    description: &#34;Mouse Without Borders&#34;
+    type: bool
+
+  - name: MstyDatabase
+    description: &#34;Msty is a UI to interact with large language models (LLMs)&#34;
+    type: bool
+
+  - name: MultiCommander
+    description: &#34;Multi Commander&#34;
+    type: bool
+
+  - name: NETCLRUsageLogs
+    description: &#34;.NET CLR UsageLogs&#34;
+    type: bool
+
+  - name: NGINXLogs
+    description: &#34;NGINX Log Files&#34;
+    type: bool
+
+  - name: NZBGet
+    description: &#34;NZBGet&#34;
+    type: bool
+
+  - name: Nessus
+    description: &#34;Nessus&#34;
+    type: bool
+
+  - name: NetMonitorforEmployeesProfessional
+    description: &#34;Net Monitor for Employees Pro&#34;
+    type: bool
+
+  - name: NetworkScanner
+    description: &#34;Network Scanner Tools&#34;
+    type: bool
+
+  - name: NewsbinPro
+    description: &#34;Newsbin Pro&#34;
+    type: bool
+
+  - name: Newsleecher
+    description: &#34;Newsleecher&#34;
+    type: bool
+
+  - name: Nicotine_
+    description: &#34;Nicotine&#43;&#43;&#34;
+    type: bool
+
+  - name: Notepad
+    description: &#34;A Target to collect files that are currently open in Notepad (Windows 11&#43;)&#34;
+    type: bool
+
+  - name: Notepad_
+    description: &#34;Notepad&#43;&#43; Backups, recently searched/replaced terms and recently opened documents&#34;
+    type: bool
+
+  - name: Notion
+    description: &#34;Notion Note-Taking App&#34;
+    type: bool
+
+  - name: OfficeAutosave
+    description: &#34;Office Autosave&#34;
+    type: bool
+
+  - name: OfficeDiagnostics
+    description: &#34;Office Diagnostics&#34;
+    type: bool
+
+  - name: OfficeDocumentCache
+    description: &#34;Office Document Cache&#34;
+    type: bool
+
+  - name: OneCommander
+    description: &#34;One Commander&#34;
+    type: bool
+
+  - name: OneDrive_Metadata
+    description: &#34;Microsoft OneDrive Storage Metadata&#34;
+    type: bool
+
+  - name: OneDrive_UserFiles
+    description: &#34;Microsoft OneDrive Storage Files&#34;
+    type: bool
+
+  - name: OpenSSHClient
+    description: &#34;OpenSSH Client config, known hosts and keys&#34;
+    type: bool
+
+  - name: OpenSSHServer
+    description: &#34;OpenSSH Server Config and Logs&#34;
+    type: bool
+
+  - name: OpenVPNClient
+    description: &#34;OpenVPN Client Config and Log&#34;
+    type: bool
+
+  - name: Opera
+    description: &#34;Opera&#34;
+    type: bool
+
+  - name: OutlookPSTOST
+    description: &#34;Outlook PST and OST files&#34;
+    type: bool
+
+  - name: P2PClients
+    description: &#34;P2P Clients&#34;
+    type: bool
+
+  - name: PeaZip
+    description: &#34;PeaZip&#34;
+    type: bool
+
+  - name: PerfLogs
+    description: &#34;Perflogs Folder Copy&#34;
+    type: bool
+
+  - name: PowerShell7Config
+    description: &#34;PowerShell 7 Runtime Config&#34;
+    type: bool
+
+  - name: PowerShellConsole
+    description: &#34;PowerShell Console Log File&#34;
+    type: bool
+
+  - name: PowerShellTranscripts
+    description: &#34;PowerShell Transcripts&#34;
+    type: bool
+
+  - name: Prefetch
+    description: &#34;Prefetch files&#34;
+    type: bool
+
+  - name: PrefetchBinaries
+    description: &#34;Download binaries mentioned in prefetch files.&#34;
+    type: bool
+
+  - name: ProgramData
+    description: &#34;ProgramData Folder Copy&#34;
+    type: bool
+
+  - name: ProgramExecution
+    description: &#34;Program Execution Triage Collection&#34;
+    type: bool
+
+  - name: ProtonVPN
+    description: &#34;ProtonVPN&#34;
+    type: bool
+
+  - name: PsList
+    description: &#34;Collect all currently running binaries.&#34;
+    type: bool
+
+  - name: PuffinSecureBrowser
+    description: &#34;Puffin Secure Browser&#34;
+    type: bool
+
+  - name: PushNotification
+    description: &#34;Windows Push Notification Service&#34;
+    type: bool
+
+  - name: Q_Dir
+    description: &#34;Q-Dir&#34;
+    type: bool
+
+  - name: QFinderPro_QNAP_
+    description: &#34;QFinderPro (QNAP)&#34;
+    type: bool
+
+  - name: QQBrowser
+    description: &#34;QQ Browser&#34;
+    type: bool
+
+  - name: QlikSense
+    description: &#34;Qlik Sense&#34;
+    type: bool
+
+  - name: QuickAssist
+    description: &#34;Microsoft Quick Assist/Remote Help&#34;
+    type: bool
+
+  - name: RDCMan
+    description: &#34;A Target to collect files that are related to RDCMan&#34;
+    type: bool
+
+  - name: RDPCache
+    description: &#34;RDP Cache Files&#34;
+    type: bool
+
+  - name: RDPJumplist
+    description: &#34;RDP Jumplist Files&#34;
+    type: bool
+
+  - name: RDPLogs
+    description: &#34;RDP Logs&#34;
+    type: bool
+
+  - name: Radmin
+    description: &#34;Radmin Server/Viewer Logs and Chats&#34;
+    type: bool
+
+  - name: RcloneConf
+    description: &#34;Rclone config file&#34;
+    type: bool
+
+  - name: RecentFileCache
+    description: &#34;RecentFileCache&#34;
+    type: bool
+
+  - name: RecentFolders
+    description: &#34;Recent Folders LNK files&#34;
+    type: bool
+
+  - name: RecycleBin
+    description: &#34;Recycle Bin DataAndInfo&#34;
+    type: bool
+
+  - name: RecycleBin_DataFiles
+    description: &#34;Recycle Bin Data Files&#34;
+    type: bool
+
+  - name: RecycleBin_InfoFiles
+    description: &#34;Recycle Bin Info Files&#34;
+    type: bool
+
+  - name: RegistryHives
+    description: &#34;System and user related Registry hives&#34;
+    type: bool
+
+  - name: RegistryHivesMSIXApps
+    description: &#34;MSIX/APPX App Hives&#34;
+    type: bool
+
+  - name: RegistryHivesOther
+    description: &#34;Other Registry Hives&#34;
+    type: bool
+
+  - name: RegistryHivesSystem
+    description: &#34;System level/related Registry hives&#34;
+    type: bool
+
+  - name: RegistryHivesUser
+    description: &#34;User Related Registry hives&#34;
+    type: bool
+
+  - name: Remcos
+    description: &#34;Remcos RAT&#34;
+    type: bool
+
+  - name: RemoteAdmin
+    description: &#34;Composite target for files related to remote administration tools&#34;
+    type: bool
+
+  - name: RemoteDesktopManager
+    description: &#34;A Target to collect files that are related to Remote Desktop Manager from Devolutions&#34;
+    type: bool
+
+  - name: RemoteUtilities_app
+    description: &#34;Remote Utilities&#34;
+    type: bool
+
+  - name: RoamingProfile
+    description: &#34;User Related Registry Hives, LNK files, etc&#34;
+    type: bool
+
+  - name: Robo_FTP
+    description: &#34;Robo-FTP&#34;
+    type: bool
+
+  - name: RogueKiller
+    description: &#34;RogueKiller Anti-Malware (by Adlice Software)&#34;
+    type: bool
+
+  - name: RustDesk
+    description: &#34;RustDesk&#34;
+    type: bool
+
+  - name: SABnbzd
+    description: &#34;SABnbzd&#34;
+    type: bool
+
+  - name: SCCMClientLogs
+    description: &#34;SCCM Client Log Files&#34;
+    type: bool
+
+  - name: SDB
+    description: &#34;Shim SDB FIles&#34;
+    type: bool
+
+  - name: SDS
+    description: &#34;$SDS&#34;
+    type: bool
+
+  - name: SOFELK
+    description: &#34;SOF-ELK related files of interest&#34;
+    type: bool
+
+  - name: SQLiteDatabases
+    description: &#34;SQLDatabases Target for use with SQLECmd Module&#34;
+    type: bool
+
+  - name: SRUM
+    description: &#34;System Resource Usage Monitor (SRUM) Data&#34;
+    type: bool
+
+  - name: SUM
+    description: &#34;SUM Database&#34;
+    type: bool
+
+  - name: SUPERAntiSpyware
+    description: &#34;SUPERAntiSpyware Data&#34;
+    type: bool
+
+  - name: SUSELinuxEnterpriseServer
+    description: &#34;SUSE Linux Enterprise Server on Windows Subsystem for Linux&#34;
+    type: bool
+
+  - name: ScheduledTasks
+    description: &#34;Scheduled tasks (*.job and XML)&#34;
+    type: bool
+
+  - name: ScreenConnect
+    description: &#34;ScreenConnect Data (now known as ConnectWise Control)&#34;
+    type: bool
+
+  - name: SecureAge
+    description: &#34;SecureAge Antivirus Logs&#34;
+    type: bool
+
+  - name: SentinelOne
+    description: &#34;Sentinel One Logs&#34;
+    type: bool
+
+  - name: ServerTriage
+    description: &#34;A compound target for gathering artifacts common to servers.&#34;
+    type: bool
+
+  - name: Session
+    description: &#34;Session Desktop&#34;
+    type: bool
+
+  - name: ShareX
+    description: &#34;ShareX&#34;
+    type: bool
+
+  - name: Shareaza
+    description: &#34;Shareaza&#34;
+    type: bool
+
+  - name: SiemensTIA
+    description: &#34;Copy Siemens TIA Settings&#34;
+    type: bool
+
+  - name: Signal
+    description: &#34;Signal (Please view this tkape file for documentation on decryption!)&#34;
+    type: bool
+
+  - name: SignatureCatalog
+    description: &#34;Obtain detached signature catalog files&#34;
+    type: bool
+
+  - name: SimpleHelp
+    description: &#34;SimpleHelp Remote Access Client&#34;
+    type: bool
+
+  - name: Skype
+    description: &#34;Skype&#34;
+    type: bool
+
+  - name: Slack
+    description: &#34;Slack&#34;
+    type: bool
+
+  - name: Snagit
+    description: &#34;Snagit&#34;
+    type: bool
+
+  - name: SnipAndSketch
+    description: &#34;Snip &amp; Sketch Cached Images&#34;
+    type: bool
+
+  - name: SnippingTool
+    description: &#34;SnippingTools screenshots&#34;
+    type: bool
+
+  - name: SoftPerfectNetscan
+    description: &#34;Soft Perfect Network Scanner Output&#34;
+    type: bool
+
+  - name: Sophos
+    description: &#34;Sophos Data&#34;
+    type: bool
+
+  - name: Soulseek
+    description: &#34;Soulseek&#34;
+    type: bool
+
+  - name: SpeedCommander
+    description: &#34;SpeedCommander&#34;
+    type: bool
+
+  - name: Splashtop
+    description: &#34;Splashtop&#34;
+    type: bool
+
+  - name: StartupFolders
+    description: &#34;Startup Folders&#34;
+    type: bool
+
+  - name: StartupInfo
+    description: &#34;StartupInfo XML Files&#34;
+    type: bool
+
+  - name: Steam
+    description: &#34;Steam&#34;
+    type: bool
+
+  - name: SublimeText
+    description: &#34;Sublime Text 2/3/4 Auto Save Session&#34;
+    type: bool
+
+  - name: SugarSync
+    description: &#34;SugarSync&#34;
+    type: bool
+
+  - name: SumatraPDF
+    description: &#34;SumatraPDF&#34;
+    type: bool
+
+  - name: Supermium
+    description: &#34;Supermium&#34;
+    type: bool
+
+  - name: SupremoRemoteDesktop
+    description: &#34;Supremo Remote Desktop Control Logs&#34;
+    type: bool
+
+  - name: Symantec_AV_Logs
+    description: &#34;Symantec AV Logs&#34;
+    type: bool
+
+  - name: Syncthing
+    description: &#34;Syncthing Configuration and Logs&#34;
+    type: bool
+
+  - name: Syscache
+    description: &#34;syscache.hve&#34;
+    type: bool
+
+  - name: T
+    description: &#34;$T&#34;
+    type: bool
+
+  - name: TablacusExplorer
+    description: &#34;Tablacus Explorer&#34;
+    type: bool
+
+  - name: TeamViewerLogs
+    description: &#34;TeamViewer Logs&#34;
+    type: bool
+
+  - name: Telegram
+    description: &#34;Telegram Desktop&#34;
+    type: bool
+
+  - name: TeraCopy
+    description: &#34;TeraCopy log history&#34;
+    type: bool
+
+  - name: ThumbCache
+    description: &#34;Thumbcache DB&#34;
+    type: bool
+
+  - name: Thunderbird
+    description: &#34;Mozilla Thunderbird Email Client&#34;
+    type: bool
+
+  - name: TorrentClients
+    description: &#34;Torrent Clients&#34;
+    type: bool
+
+  - name: Torrents
+    description: &#34;Torrent Files&#34;
+    type: bool
+
+  - name: TotalAV
+    description: &#34;TotalAV Antivirus Data&#34;
+    type: bool
+
+  - name: TotalCommander
+    description: &#34;Total Commander&#34;
+    type: bool
+
+  - name: TreeSize
+    description: &#34;TreeSize - Scan History&#34;
+    type: bool
+
+  - name: TrendMicro
+    description: &#34;Trend Micro Data&#34;
+    type: bool
+
+  - name: UCBrowser
+    description: &#34;UCBrowser&#34;
+    type: bool
+
+  - name: UEMS
+    description: &#34;UEMS Manage Engine Agent&#34;
+    type: bool
+
+  - name: USBDetective
+    description: &#34;Collects files that can be input into USB Detective for parsing&#34;
+    type: bool
+
+  - name: USBDevicesLogs
+    description: &#34;USB devices log files&#34;
+    type: bool
+
+  - name: Ubuntu
+    description: &#34;Ubuntu on Windows Subsystem for Linux&#34;
+    type: bool
+
+  - name: Ultraviewer
+    description: &#34;UltraViewer&#34;
+    type: bool
+
+  - name: Usenet
+    description: &#34;Usenet (NZB) Files&#34;
+    type: bool
+
+  - name: UsenetClients
+    description: &#34;Usenet Clients&#34;
+    type: bool
+
+  - name: UsersFolders
+    description: &#34;Users folders Dump&#34;
+    type: bool
+
+  - name: VIPRE
+    description: &#34;VIPRE Data&#34;
+    type: bool
+
+  - name: VLC_Media_Player
+    description: &#34;VLC Media Player&#34;
+    type: bool
+
+  - name: VMware
+    description: &#34;Runs all VMware modules to collect VMware VM config files, logs and Virtual Hard Disks&#34;
+    type: bool
+
+  - name: VMwareInventory
+    description: &#34;VMware - Virtual Machine Inventory&#34;
+    type: bool
+
+  - name: VMwareMemory
+    description: &#34;VMware - Virtual Machine Memory&#34;
+    type: bool
+
+  - name: VNCLogs
+    description: &#34;VNC Logs&#34;
+    type: bool
+
+  - name: Viber
+    description: &#34;ViberPC Messaging App&#34;
+    type: bool
+
+  - name: VirtualBox
+    description: &#34;Runs all VirtualBox modules to collect Virtualbox VM config files, logs and Virtual Hard Disks&#34;
+    type: bool
+
+  - name: VirtualBoxConfig
+    description: &#34;Collects VirtualBox configuration files&#34;
+    type: bool
+
+  - name: VirtualBoxLogs
+    description: &#34;Collects VirtualBox log files&#34;
+    type: bool
+
+  - name: VirtualBoxMemory
+    description: &#34;VirtualBox - Memory&#34;
+    type: bool
+
+  - name: VirtualDisks
+    description: &#34;Virtual Disks&#34;
+    type: bool
+
+  - name: VisualStudioCode
+    description: &#34;Visual Studio Code artifacts&#34;
+    type: bool
+
+  - name: Vivaldi
+    description: &#34;Vivaldi Artifacts&#34;
+    type: bool
+
+  - name: WBEM
+    description: &#34;Web-Based Enterprise Management (WBEM)&#34;
+    type: bool
+
+  - name: WER
+    description: &#34;Windows Error Reporting&#34;
+    type: bool
+
+  - name: WSL
+    description: &#34;All Windows Subsystem for Linux targets&#34;
+    type: bool
+
+  - name: WaveBrowser
+    description: &#34;WaveBrowser&#34;
+    type: bool
+
+  - name: WebBrowsers
+    description: &#34;Web browser history, bookmarks, etc.&#34;
+    type: bool
+
+  - name: WebServers
+    description: &#34;Logs from all known web server applications and supporting services&#34;
+    type: bool
+
+  - name: Webroot
+    description: &#34;Webroot Antivirus&#34;
+    type: bool
+
+  - name: WhatsApp
+    description: &#34;WhatsApp Local Files&#34;
+    type: bool
+
+  - name: WhatsApp_Media
+    description: &#34;WhatsApp Shared Media Files&#34;
+    type: bool
+
+  - name: WinDefendDetectionHist
+    description: &#34;Windows Defender Threat DetectionHistory files&#34;
+    type: bool
+
+  - name: WinSCP
+    description: &#34;WinSCP&#34;
+    type: bool
+
+  - name: WindowsApp
+    description: &#34;WindowsApp Logs&#34;
+    type: bool
+
+  - name: WindowsCopilotRecall
+    description: &#34;Windows Copilot&#43; Recall&#34;
+    type: bool
+
+  - name: WindowsDefender
+    description: &#34;Windows Defender Data&#34;
+    type: bool
+
+  - name: WindowsFirewall
+    description: &#34;Windows Firewall Logs&#34;
+    type: bool
+
+  - name: WindowsHello
+    description: &#34;Windows Hello&#34;
+    type: bool
+
+  - name: WindowsIndexSearch
+    description: &#34;Windows Index Search&#34;
+    type: bool
+
+  - name: WindowsNetwork
+    description: &#34;Windows Networks settings&#34;
+    type: bool
+
+  - name: WindowsNotificationsDB
+    description: &#34;Windows 10 Notification DB&#34;
+    type: bool
+
+  - name: WindowsOSUpgradeArtifacts
+    description: &#34;Windows OS Upgrade Artifacts&#34;
+    type: bool
+
+  - name: WindowsPowerDiagnostics
+    description: &#34;Windows Power Diagnostics&#34;
+    type: bool
+
+  - name: WindowsServerDNSAndDHCP
+    description: &#34;Windows Server DNS and DHCP log files&#34;
+    type: bool
+
+  - name: WindowsSubsystemforAndroid
+    description: &#34;Windows Subsystem for Android (WSA)&#34;
+    type: bool
+
+  - name: WindowsTelemetryDiagnosticsLegacy
+    description: &#34;Legacy Windows Telemetry and Diagnostics files (*.rbs)&#34;
+    type: bool
+
+  - name: WindowsTimeline
+    description: &#34;ActivitiesCache.db collector&#34;
+    type: bool
+
+  - name: WindowsUpdate
+    description: &#34;Windows Update Logs&#34;
+    type: bool
+
+  - name: WindowsYourPhone
+    description: &#34;Windows Your Phone&#34;
+    type: bool
+
+  - name: XPRestorePoints
+    description: &#34;XP Restore Points - System Volume Information directory&#34;
+    type: bool
+
+  - name: XYplorer
+    description: &#34;XYplorer&#34;
+    type: bool
+
+  - name: Xeox
+    description: &#34;Xeox Application Logs&#34;
+    type: bool
+
+  - name: Yandex
+    description: &#34;Yandex Artifacts&#34;
+    type: bool
+
+  - name: ZScaler
+    description: &#34;Zscaler Logs&#34;
+    type: bool
+
+  - name: ZohoAssist
+    description: &#34;Zoho Assist artifacts&#34;
+    type: bool
+
+  - name: Zoom
+    description: &#34;Zoom client artifacts&#34;
+    type: bool
+
+  - name: eMule
+    description: &#34;eMule&#34;
+    type: bool
+
+  - name: iTunesBackup
+    description: &#34;iTunes Backups&#34;
+    type: bool
+
+  - name: mIRC
+    description: &#34;mIRC&#34;
+    type: bool
+
+  - name: mRemoteNG
+    description: &#34;mRemoteNG&#34;
+    type: bool
+
+  - name: openSUSE
+    description: &#34;openSUSE on Windows Subsystem for Linux&#34;
+    type: bool
+
+  - name: pCloudDatabase
+    description: &#34;pCloud Database&#34;
+    type: bool
+
+  - name: qBittorrent
+    description: &#34;qBittorrent&#34;
+    type: bool
+
+  - name: uTorrent
+    description: &#34;uTorrent&#34;
+    type: bool
+
+
+export: |
+  LET VQL_MATERIALIZE_ROW_LIMIT &lt;= 10000
+  LET NTFS_CACHE_TIME &lt;= 100000
+  LET NTFS_DISABLE_FULL_PATH_RESOLUTION &lt;= TRUE
+  LET S = scope()
+
+  // Helper for VQL targets - try to download the file, but if failed,
+  // we return an empty row to record the filename.
+  LET TryToDownload(OSPath, Row) = SELECT * FROM switch(
+  a={
+    SELECT *, &#34;auto&#34; AS Accessor, Row AS Data
+    FROM stat(filename=OSPath, accessor=&#34;auto&#34;)
+  }, b={
+    SELECT OSPath,
+           0 AS Size,
+           NULL AS Btime,
+           NULL AS Ctime,
+           NULL AS Mtime,
+           NULL AS Atime,
+           &#34;&#34; AS Accessor,
+           Row AS Data
+    FROM scope()
+  })
+  LET GlobTable &lt;= gunzip(string=base64decode(string=&#34;H4sIAAAAAAAC/8y9XXPiOLc2fP78Cio1b9XzsN1Up7unZ&#43;59RoB0ZxoSJpCk77tcpRK2AE9sy2MJEmbX/u9v6cufsiwT6JmDBFvWuq4lWZblpaWl/9PrLWG6QdS534XI&#43;RLilXOP1v&#43;n17ucQ0JecOo72RG4gt7zLgFjSOEKEkSciweCUuL23WGSsFR3ij0YupeJlHBXXIK4Gcbl&#43;wH5MwwounAaSBR6O7jPEjsgT/HGQuUQb4jbH4R4w4E&#43;fn6/QN4uRVcpfiEodT5&#43;fg9ECpBJ4Arj5wimzxr0ewyjIN64Hz&#43;/J&#43;izyy73&#43;IU&#43;S8oE&#43;9ZcI4yfA9SNqd93pVgHnl2aopiCBSIkwHEnPinbk7KdOZdwRY4iZILWbGP8EocY&#43;mCGKGRtqROlklbC1rSTV4piVi1H3cpMuielrXmv4T7wcNyNTgnZt5uvAaE4PXR9EqSYPc8UkuMaJxPs3DI5W&#43;dmyak6tckp3gQx7wK7ETExfmJfgTPkB/Co28Ule53v2C2iLzh9BkOPstY/T5EfeBSnnbglSE&#43;A9DKQzlrMUUoCQnkXRyFFXTtUpUiO0&#43;M41orMU7RGKYq9jj1AQc6a6/cdphDMYAw3qFt9c0kpaE13jxKc0iDeABj74HYy7Vq5GUAPxn7vdjK1ppYPNgHXOPQ7llXJuvZterHFKfV2tNstzKQ6EMUwIVtMjyhYJsrr1p7xEHtM3jAgMxXxEHvy2J5yiROwCGjHB2KJkx6X6kCU7lh/jp9R3HkkxWV7Qtae8TEgAUU&#43;mAZxx2GilOxxSWu&#43;J7Tq/hp5QivTS&#43;QpiH38QsA8xRR5tLUlzgIvxQSvqSsl8gb46dtj4COsBlEodT59AzwJFNIaxuqfnn2ZZ&#43;DhyP30rccle7mkNq1f/D6wUgAcr8F/6RNLOgwfvzjDxy9g&#43;Cg/TeYp3qQw4kTDxy/uMKbBPkh3hH2UqKqrSIHvc&#43;BcjLG3i1BMCe8wF4iyzpO4wzDsiRIMkyQMPMhfmtb4ohs&#43;IU3KAatM10GIbuI1BuMrUx30&#43;67K&#43;WHgr0oQhbe5vioLr2mRlsFO&#43;fdeWaNCwU0a6YsTEn/1xwfw2&#43;Lu1nhLib/6MPiDyFHo0ENL9Eod&#43;QtGYZCsMEz9&#43;hAtuwtufwCpJ8VTHAdkme7QTQQ3yJEJrKtDgCdlHTmv8GrBRHY3A/iKI&#43;QqCRem3jbYIzLwV31rPk31aVn4HaAB8FGEY9cef&#43;GlQVJ4I7YzSYmMg7XTS0f&#43;sipnDajQhkHIiyA7PldmrJoIWPIejYMUsZHo4XY5Xjj8XybIzrJmUs69OJA9Dp3FvxePd9NcQpxnMj5MmNTC2yJ/FyJ/CckzcUY4imDsE&#43;dC5trD2EP&#43;zXzhwThGqaNSwM0cyDQwDANhu&#43;n3XaiuBwkg5euDVRB3QGWqsCbZCKsydMSdDUeNkLPhqIY2xymt4bFEc/n5495WA&#43;3Y&#43;loogTfWQzt6rS5KwKXa2KCY3sOYQO/Z4SdAnoERjtfBpsEWlr25D3QbePzVXYRyPS6ctUoDSwrJVvSi5EiuIoQF403so9cpPrZkStyC6TiCsPiaiTzobZGjftVTP8Ch72adTZKMcJRAPnpi/RpxZf7Bdo&#43;MOEfIAppyRXmvtxbvh&#43;5aDaZ3X/od4TtARoeDw/8DmVMOcUsdP7ueVbR627IXM&#43;slh49fysl7SCi/wA4ql4IUiktBCoeP7LaXMlwF1EdrFPN3z0XxtJRthKMVvg5eWR51XM6Q4hd/QdPgGV3D0MMxz1lNLIscVihFkMi82VklU8i6CZGDH5YuTxaTJbvGfssXIhKw9ssvyuNShmvxWcCuy8PS5a8BjWA8TzHLkJ2Ussxg&#43;AJTtDrwb72L0nk5ozdcI84kjjQXAZrf5RnYWTmT&#43;ggBC7hG9KB6Uy6irolL8kpJ/B5vduhbEIZConBayrZ4mE/u2ekiObCSsLzVtLIAr7fhRuRUJ5UsMQ1iFN7FMlN2Ws6Gky3mtSiOyhcPEYwp8vhleay&#43;HEoZl5jCcPjI8snD8uUUxT6vLp4jOytleryZ30/YdX5QuvSEVinGvEnJw/Jl&#43;WU5LjxPMm1cfKYOY0SeHfkLRlsoP04ehEENs56luWuWcq63hdTtD&#43;grlZ1EGZaNjsGS9VdrYZEl4CYmFIYh8gEkAIIFSvcBe7JKHY9EZzqI7o6J0xR6qAvV/S6Og3gDgpi/3uEqRCDCvkWxuhBzqoL2gL3Z9eXpD9g1a5QYiU6e8wP6SvWo1Zz2mvLsTaryi804iwOhKBLNZeh5eBfTwpD7QJ7unj5/UqMcwjMnolU11nq/ma3YKmUFt93DtsquQmpqu7X1d6r5EqGs&#43;vZCNN8GbhIpDJ/EeUEUxgcfkWchnLBRwNDzECFTvHHEORAJTD8xHOan&#43;deYGk7MR0MnOwHz0TD7UFR3HCaJJ0YeiQfVnRSFctRvrbT9LN/3OfSe4QYRlpmNVEnAvujAGqfsI/J7uZHm1rDCwCeXchWY2&#43;&#43;7fCYhv/auPyCpX6ctPhYqsYG9gF7HEY/FMEmK0oXHQl7UyrLqWSTIC9aBp9FBbz8zaiOJK&#43;rIwvS47cIt5HHHKEQU&#43;f0CmPp&#43;n&#43;z511jxi54nsbYDnoL4F1At58cP7ksQoz0VA3aYSw7Qnr6&#43;gaA0jD492fe5piiyJxsmCc/IUI8F1avfSJB6zjD1TJ4RlZaw3Co7M39g48OAyVNKL2HyC4TPh9UnITJifYCUHqZeyYBd8adQWjROtJ9DBzkxWPa4UJo0T8KfQ5Xy7L3SoXHK9xwqlGaJlQa/Le5ulRHyXEosKE7Z4KlfMLFKetMk&#43;znqoDo7r/SwnxA/YzvVz6QrFefTm8XynLfKw1F/kIQBKfcbxsnxc9RGdVZdKdI6n3wOZSoT0ZkuzZPNZ9GiPEudadE&#43;L3wWbaoTykofw6TxOfSozDYrLVrmd8&#43;hSX1iWCnTPPl7Dj3Ks8ZDkqAUjsRHhiPO1MyKyQFT5JQ/PSnv7mEq5yaL8y06CvZNLr&#43;hc4oBFKieEY6iFHJbrZMfliev5KhzuJzcD3uy4yRunlsAqjnJU&#43;GJwdWJMdcnBsy&#43;HrWAQRwoc28n1CAOBCq3z/L/YPgojPyVb/899&#43;fDa/oCUyRO3dEWEeoGLPfgNQp1UJrJSR1ScUqgDlCdFR/azop3o3ogtZbdBeHGg&#43;mOtJdY5CtPiBdgCnPsvP9vxavNuSslC/CZaV2Y2flYaB/QgxY9SEsT93dfrm&#43;mk0UzGLermsBUhhalHue3jRCP81sleDUaO&#43;zv4gpj6l6NxsVUCaAu5dMaVzfLhcP&#43;VR6UitFAfVYUHVokQECXmPs/O/JXdLcEFK40Gm3yPKwHg1RBZlMbhWMwif0EB9wrvLFmC/ldlb&#43;nregmlpuYojRG1ixjRJ4pTlxppiJWJIvfpwFFYHxV8YYQ/VO/SNAXfdL/&#43;CvHX717gSH7IdvofxVBBBNH/lz8JA7EJYypw/9d/MR&#43;ZOLrOA32KHc7v8KvQCQVv8KbvdLFC/MKv/I/VU4tLBs1dUXtMaEaLMsuaipXl/dLlY8DnUplWa5Tg2iZO4X7zPms1ZLAc2d9Dz97J4VNNoISSYuhwJai9OlfJmhbVdGRSLPQQsund10/jixzaC8xWaym6EanXWBRomwzptgylc0kJYoWW4ktQ8kKUiJot0XYcuRWhjpLV0uDLafRhqDVoN3t/jgNtG74JQ0sTAq2pFVjQZlntwoDsuXvMe7TCPhlcI9eYOq/mTvJ4AMGr/zxSiq0uPt3I6ytAChRWbj6d6PTu/6XOKWr8wlvqEDsFRD7OlorU5Ad5xit4S6kVVNPmbDN3mNdvLIlp0TSaj6xJakYRkokVtYRW6KS3UND1mb9sOUp2zWUnYR7NYknmh&#43;ftDUIM4vALdq6SuSjbYojO/YvGG9C5AqJ8sucMzXCB7sITPyNHUv&#43;kcJELGk4&#43;hNacUevx/eXwIe0nUBNQD2hlYSuI18HKVrjVzvV8V9BGEJXyuSfEH2t0jcTcHkpgO11vblFtLkebibgX&#43;DyfVfQJYoSnML00FNfS9Kw0sDBLSesjgFFUQIC9YklvzkbHPv7gj9PaKQd4Zi9fAc3k5&#43;l3UV9S45gAldBGNCDmLdXr6U8XU3oyytMS2lYNs&#43;fNyA3pSv73Ail9IEGoZPdmGPu5c1EVXWGJ71LRukhoTGiD2k4KrtlVqdN9R4mnHuKXwr0Vcgmau6/YlbAwsXlGAX491ydWFuvltBbSL/Ml478BaoN8q/GVsv2XYLi4c1ACr&#43;TJgLwIfkQ/0n8994vnzfv3axZE3mQN9qMnPWcxkbSjbJgTVcWGCngakv/FYWsL75Hm4DQ9AC&#43;BnuLmQ670ivHDo4giAo2IKUB7zmQP746ewVkTO6W0oQAbwvpJqEDD0fg/SAQV/3VIER7FPort1xTU5b6A7SUPSLFKdwgt6oLay7ZG9psTWh&#43;OVfjNWhhuXOGbb9ds0AbRgYGZjvrhQFbY68wUpytkNaKmCwn7fiZraQZ/NxFbFDB2l7TzKC10JRZLIJdtLHoI16UadosQc3oZduPHvVcd8jE3WJ4agYtmZq0mOcqjoHZHKyjrUi1iB3N4Ocqm40Kx/UU5RghDbBnLVYTeatl0oBbtkU2AZ&#43;tWCb6lrgnbUXTBD8p43e1tTZTGa2relJb82o7qdagWia1MMA181RtqI3Q52okZgWsTKjN4DWjaRnd2mrazKC3k5ZpLC2WzSQV62QFvc08acAtGyQbcM91583srYFWzIXTRFupENj6zxkKkPnCKTAZVuKjhq/VwNvMUzHpNuCe6zaZ2Y0RXFoLVovhUka3slc3w9c98wzw56q&#43;NiXazOTNyGXDuB71XKUyca/aXASaYStOAQ245yqUlj377iH1jymjQ7bFpxQpd02tVOcqeJNCjFSYp7Jvl&#43;Vs&#43;rNYLyltnce&#43;0xhGT2BUOujFvxfLyQxUv8CU8ZTYW287fiWdMLDSKCAe/g2uVih1&#43;DEQJ61vG57ZfYiDdYD83ghH0S6Wd5G4AsMdLa6V/rm7axaoZgYJZazl83ogGxlG1hBD4bddlLCRzdWBIuJWAPPzgRdGnwYr1Rd01oPHhTlajSTw8lbbmZvH&#43;jlJBUgF8M6XNkkwDEPuaFX0sbpw6t5YOrlSQm4autBf0CGMU5ysauzF1EZy8dRI5zIZbJgNkGseYxcyK88pMmZ5GtFv/AIuwxAJuqx3Map7uF2Ukxt5FrsNTJk6fNG9OtHlTHhK/mReVFKqMiXXvuLNqTn/NUqq&#43;1CUrqY1Cl&#43;nSHbNonDF80ah0k0t0hZuYTv1DG0gv8V8cDHCYSjWMPMwDmgDiUmF7L4V6WuJjeL3XohjxCPnyMmnC5nGkqpiCnfymoQ4RemR7DWYe&#43;QdvBCBK2k8Gcb&#43;Tbzm8RjkpasgbkV5EPE5Q8jGn9ms0lbMKjEkkcKnmVheBoi9EfYc8dO&#43;olPkcy1cL8vALQZiA2xtuqSMazdpYcDXThZoOUwmQAuC3BJXQrc21Rso9Lb6Eo21rd5A02CsL/G0GesN8BWLeQm2xaJnQC0PyUqgNoZrA3LdbFxHP7LNVEy3ZdxW060JuLJatQxtZT01oOvMpyWCruZTA5fZfqpltbWfWrDqDaglVgsDqoGoZsAsYVsZMA3odQtmCd7agmmgaDBhlngsTZgGlqoNswzfZsM0AVfMiGVgSzNiI77OjlhmsLUjmopQXVRbpmg1HRqgq9a7MrCF9c6EXTffleCtzHcGfI3prITfZjozQFfsVwL2lN//OFoFMfL5iikRyGPJYwOJJVQXIo0nyRhgJYk5fkHpYovCkA13CQ6RCLNzUbgiLxhEeUQrEWq1LFq4UBV/WFyN0T7wEFGallOq&#43;VWdZcFK8tKZsl8HKXqBYaiKJdNVclUM3E6WYDS9Bw8EbpBiuZ0sR9P7LEkK4XXwWoj2p46yFbLsYyHcsf6a4&#43;Sn4Cl4Dni8lWvtUlkaQkICGLu5SDUErT12jlaz02nhZbOqxSgspACRBH7fwRTyIHW&#43;/E6qOT7yj5GUuAVpNxfLGnEe3jA/BMOYBjwIJ45eYKoLL&#43;yl5LK0&#43;K8BqLAeboRjmuJQvMW&#43;aNcFe&#43;nKBnWBYoJFfNfccsZxueIyxKEGHyb7DxV8EbhR/oK7hAaebv2uzOCKDMXlv1WIYqSoZhy1kNIMIk3CurXiVaBCWPHxCDjjUR6zr6nvHI/&#43;679KtTF&#43;EqvK5a/mOREu9OJyv9hqx2gVwNgRP&#43;BpMQXDxMxejIwgxOYp/gN5dCDOvtw&#43;TIN49wqk1ZuP7NwUY7omWXQBmNByhIG6HtJdFsfUMPp/szIkwTh0vRTH/B/jymq1ptIKki3Y2scG6qxRv&#43;8OiiQGPVLvrBqkXgM3op6ohzMqgajnMvh2TeQ9O5sWEt&#43;ggS9OWZdt&#43;AB&#43;syJlGoM&#43;a3LO&#43;uDoBvZNinfJ2dg5uoF9iwmNYYTOpoAiaNGBnFUBYmDHBKQoRJYhh45SAZN3ksKgB98q0D&#43;bDgLexN8U6PZUCgh8gwZkC338cjYFBLyBnwYR&#43;gvH56sCRdCkwyv9BPZb//W0CjDYAYNtoD3njWfvxtKNVxtU3CU74mRngJ82TbrPs5WOmUCPCYiApuIrY3b/4K6D2Aesrxlg4v8gugTS7ZF06ru7mVAMWM9QkuV2F61iGIS94nrHs9WW2K9VODic/96kyEMx/YFtwGMDniAmP4YyRayJiyWWP5aR2480nMsUskEWDMFw5wdYfEbxQ7UQVES6&#43;bhJHAgdCD0HetSBwXrtwJCdRakDE&#43;TAnQNfVo5PiOPv186aXduQyAmeQ/jqBHviRJ&#43;gE31aOdGnxImitRMlH50o8ZyI7J04Wjt4s3HwBjoRP2CFT6GTRk4KX5x0/fmTQ8LYoRQ6e&#43;w5e/zqvMC98xJB52XvvKCVDL6jKdnk1UNh5qvk8FP&#43;GS6OwuAZgfyyLPBrSJzXkLw6Htk7lOyd15A6r2HEEtk/&#43;sr&#43;8dOV8xpC9sfOQuc1fHGwT5w19hPnz&#43;SlUa/5&#43;DqnnY&#43;vuU7sV69R4q&#43;d14Q4&#43;DUhzZiBR3cpEvdRnpTvJAycVZQ4q2TjeH7qeInnoIQ46DV11mGwdjbB2tmiYO0E4Spyggg6fyQfnD8&#43;PDt/JGvnjyRy/kg2LMFz/kjY36sT/fHhjwRt2AXnj9fQeU6hg1PoJN6rk2zWTrKJnCTeOEkcOUkSOQlZOQnxnYQkDtlvHLqBDmUt6gWtEucVRqHz6q0byygCNeV7TsvATcII4a94NQrvV6AK7a8ckfK//f/XBMsDj4uKE9u&#43;VR6ADw5/CKK9A8nagfvA8VPPWYd7Z/2J/SXO&#43;hN01p9WvAo3wXrvRJ/2TvS8dyK8d/6kTpR8Eq0/2TgRq7Dow96Jkg/sxImSvRNR4kQfKHHY7&#43;vaicnewZs9fzTYkxDtV06K/3TIPnD2wd7Z4xVv&#43;s5LtHcOu31jlT0FoT&#43;CqT95hVESIuc/QaJK9leQNErh1M&#43;bITvjdcsP9G3Ux57jY&#43;&#43;V/YscH1N2RNmRt2JHzsvq2cE&#43;ZQ8HdVK6dl6SvkMjX2lOPJz6jvxVC/b1vo3qHeyLzK5XXC1bReLdJlBOEHJlqC1yyN0ZSXWBp2TCu1WI5MZbPOwROwdZArhezoVtuZGGS3iRnx8VLEVt8JkMeI3CTiRZIMRWDmmfsWWQ2e3xo11IA5h6IIgDGwKVP4sK2cqQBK8RTIh5Q4ScQGbPLPWt&#43;ESuNrMsgMxurz/JlkAQb23FoAQGxBPbR0hLu6N&#43;626svrTF82eZHOSXd9U/rO4w1mC3Ffn4R/zAX72eFO00YBH0tkGMgHq0aQoP76gaYJOT8QTxGudRx08ARyiMPZTN8dUATjh/WPPT1PpzZjtRimuZ9OQ6b9ST60KDDuKgIW6D0mlynY1xJdZisuSbU4Hbu/HHD/qYrew6/9fjmXr6bT07QmmDVTZgHLsvalfF71GEKQJDPwrigNAUUpw2FULkLWUVe9G5Exlkt6CObHDZ5yunFO/PB7F1uJqda2qnmoqrT&#43;lxWOlgv2O4fxZwj4iPYsnqb5CKZyQiDrW6LxqCGVXcF&#43;vguVvqMfAFadfLj8V4t5HR6KlnYNNuU6EhsPOeNBVL4z3ZzGPyhrMgyRzi6gxtbocG9LLbYR26xR3OgFxyhKsD27gfGtBr7ocNDEdWetkFUYPd6oZoAi&#43;v4a6jW3kiGgg0noh1kq7eiO0PnN4bsc5s4RtoIKv6BtbxLR3rDBwVxzoNRZtznQm87FynAbd0sGvk0DjYaVhsnexMRTGv1q2TtrrdGcgqbnd1cCvfOANB3TeuzvGEVkNCAkLfUGs1jH4z2bF9TNkZrwhdWBEpXk9ZUES7NZgG0vqax1KZTjiWZ7hC/bXd5jUZ1iA74uK/vqDnw&#43;qj/&#43;tq9ZKPrdQ2seqA76yqG5PK667azJl4MM43jpjEHkzILuSj0SnebIJ442gTmzYk9iq7B&#43;uEs32Pu9Odj0JW1hE8uY/TkWTH1mGBWLlaSjfTkH0Ndd3yrp9vdGeBdxyGaWe8frZjXSYK7sfztxRJfY5otHoDNP9Cy57KdzLbuyVKoyCGodyRlrwT336jbI9P6cH//326S1DKbyYMO2t2tDZimlmME06iyUnq6ORa/bPu1jF1JBSRbpu5en4ywilaLv6u6hnPxVYmP4b/rJVwmqf7TBVyxo5LQPPEU&#43;mpA8tWNDhjFAZ7xGfUaRAFfwk/7&#43;IiiAxdVGsW81l&#43;ocnk1ljAiqjIIy1pA0TDvk65SYzSzQHcLr9NSyqZAx3zBRST9TrwAhR7h944gJsYE&#43;70jTjiu5g&#43;h4xVR7oIEUoWdOcfdNWgv3u5TDbe6wLaAehpfFNAAJctij2Nb1gly2DXjRXdiPpWpA8W&#43;v1P366sHxq0apaf3djfwqxsT7Obbnh2GHIlz/jKqaQAf9XUomXLDYhbkameD9TGFnZsxYo4H3OGBu7Yw4hA/iAaVxUsUZS4xYc2r8k0xhQ56kBtSt&#43;IpDLmB5ljBPfgg1K&#43;Af4WU7TC&#43;Bks4iBJ0NE8/QF6XQ2IBGkhexNJhn2gW/YR84gDf4lxSICjTzVwicyFQzXj1wH/fhc32xyzuayc7H4XKxvjwCP7rnQLBFNv24lRiLyFVG3aaEVXqE01vT3ZBz6KPXS3nrwib8fDdAwjTwRRv1CHTRmL2/ez3IXzBhFu7KTelq81lMcNWe&#43;5xyHr0kZKnUpSg&#43;DiQLICqGOW9dXbwniDxKhMbDfgqETgiW1PodjeIMQb/V6YBWORlOyJ3UyFGZx9epfXE2WsewQ&#43;vP9wCT58/vXnn3NeuRfqDPs8mhNgFRiEclVeB/rHy5/d6xTHdBL77ldKk3mKXw8ufoEu3NGt2qVUgJ9EsyBGNNmt3JeXlxRj6kKSxIjKipTzgeAFrX449en51Ls2N7rdTpbudQojxEahfXffL2y3MVzM2fVsk48mbYr8dJdkjY4vjpWX&#43;JUp3mjF&#43;AsvwSm9xyEqNdocIMujRWhs9TlA8XEpYCjFqoWYZoWo5iRuKaX2hGSa2hTQ/qksY6gp&#43;8ITei12lHKugdysqj7Mv34nLhWXbdbEFt4W&#43;TvWarhxVVpQG4ByH4JMjEkps2sTh2532dK7U6vpUn6JEodV13&#43;CMFTbPPPIUCpNJDUJiAotCYikssA9XmFwvZzz7loel3M8BfFiNJcLuhcjfhUSuqA4RjzM22OAXviWgTJRBH8DIhlcL24eG4cOmYzLsvF/auBwLebnxA9QW0ksvBShmM8tNb9CFxSmPvaeXSHsyqB4cjKNVYeK2XSPkhB6SHheVh3GL5ySQ7lRtOJlxoXLnmgm8aI/D3&#43;Wr63ErlOU44PvExU3zEp4FvhxsNnSMrNKtYPYhTSoyLMkK&#43;G7uFJfd7Gd4r&#43;DccAF&#43;IEp5yJByC9xlFNMsku4CqG3IyAL73VxkSWqNCMApjAsl5AnWbF//3dOqo5lfhm7U2x9e8F/y1d&#43;Y8m/ldPktya7Ig/L12fXS373rpfl9MV4wattvCin89wqb6EzKvY/3LfmY3FNedPzmgm5fTV9mz&#43;qevTvs2lX5NcorKDKLjJHbYoT0fu/r79&#43;/n85mnpbTSuhHJqR5Yilq9rZa7GoPd9OzRn6vtbjJpu8bN5&#43;DXJRWdU6VHNM2prD3XFUBncxizKowMEr1befEvwFwT3KKPTqN7qHWeCv5TZ6nsA4Ob4F7ulusYlMhcY7rhi&#43;kjZjn64oZsKC48IxpUGZeO7ArKCbHehsWpMU1iptt9FOl0oy0&#43;E0ao50YVMYnEZq1UMbwQnL1MI6h4S84NQ/qkgh3gS6m/4mUBJsYhz3ByfU8xkdssjTVcDTVXVbbZyOyVxFp&#43;PR1htKo4Ac31kkuby&#43;QbKx4pHQXNSAerqaMVGZfDBtSpGiNWtFFVDupnV8refyWqWF/fe455WLGlBP2O5NVKJNUZyiI4uRAzRDt3vW2TG8axjdlbhOWG&#43;NZeM9CXlDR93QnsS1U3d5DWRyyaaIMH5MSQTAO3KIPS3DE1rBJDm&#43;cb3k8m34p6uyRtKiIYWbVQprrmQAfUXZaN4qYnyf5JviXj3nwtmEtJGxce1rYRp07RWspG1gKlD5TcwGP5AalkFw8BKgpc4l&#43;9Qa7vXLXlvqqnRhsIb7bDVsF3Ka6FeUdiOnSTYT14GcjSxPwM5gjqF/O3ORNIt2LsMfX49n6nEQMfObmXpKtqe2Exf9u/wZBPEaG3nafN71JP2&#43;u/Yj&#43;XBb4fNldD6kEPwVJOCoIimELCpAaYOH8m4PjWagQq7iOkKWHiPqqF&#43;DfjGibox9dJRg9jlcfNo7yPcHK/h8lKCHoyREFPmDkDX6TJFTgO2SIhQm9ClIkZMdAYmSww7W7NpLkKKf3exwkKQ4ORIkoLsYkRYEjekke9&#43;5WTZ3icXqvGKk6S/BBtI0WCEnO5IxPdQKiMeAUAh&#43;Ab&#43;Cy/dN9bfYwpDP0VmjGt/Jmrfy&#43;RkynIzCvLeN/TY5qs6EgAgJ0NewNGzWUoW23CmaC9uzrHGazZx1YbhelDkmMKVbBc1PwOwA5NeiLIohetoUvyj4Ap4bHeT3oez&#43;n&#43;VrvRuncZV4v3HHtBMp8oZSd2Q5ZTkz6hTvkjkOA&#43;/gjHCU7ChKAU8EIrUyfV/x&#43;&#43;M5eyJnvnlZvwZdQqy4aGTukDxGZyKwNBhi2XwdKd9oR4uvd98scQ0SHJ6K7iQUCwpTyr4utjvK3nxgoeK92xfKlTKdqrKV&#43;DRkN7c3R9wlNQYtgvMOWdde21YOmlruVxT4weL3qaMOir0NAeTPEDQP2ZRMxeegjknhSngDWmCxvFn5v6LX0RZSR/6aon7nQDyrXNIlNQpoxINYOtkRGIYopRp3mizHgOcohdHQ4eTDdBMKevVgGKx2qbKd6qAMyrSqUQyvoUeoR7X4igklfKo8P6q3fhXeB1HP/ZpF1r3h707npvSGz9aSVIohcrk3V6O72ezuNl/zLVuOUkgLqnyQzJBE5sq&#43;l/VYuyiC6cFWu&#43;ndl&#43;&#43;zqdvXY45CBOOjSj1MvW2wRz2JoC/&#43;iK8s3KXSWmFCDvg9yp6aMs4Yse&#43;BI7QUgnrlJq9euJN7fBXUbMHmUur7rAwouk5&#43;3AKyQRQMw5AXOQ&#43;1VUabwSRBvhXczVhkHpvw7pEwxHWvRCnp6srMukbefRDUBjcdX91Onti4fxCsfN0jqB6T3MfbhLjwtmLBRkOB&#43;TUx3jMrlmVsAOJvrTGiMAhb6my4o5iNy/JmfLMoPwM3NwsA82hErPWJ5beaXiuIESXpXq3PLYsNRKqBJR9gsi7PnqYs18qTIp973XUpSkHGiP&#43;CVhlm1Se5z03BFXG1RodrVnBnNSzm&#43;bh4HBXdVdtR2pYYdUBUheJv&#43;sICrKNFu5DfI4J3qYdIHklXeNlLKLQ6pnbyoHoZ0tflcj65vy/C3I&#43;Uu6oaH11cqMPy9RsPqevysHw9urkfsYvsl11ZTO/ikI0hsiOxwEz2ZrXOXj/0vFlMe0JaBptmCdNgs6W9kfSC541ZdYotrATgHX0L181iKo4HeEfrlGAYvsADueMb&#43;ui2o5EecTkVP1RSbr8NVv8mt8JeUEgDrwSQ9496tkkEg/AtnIRCuiM8qqGJp3SLOjJkEX8Yi4faKrDcGqYBoUfx5WPDEg1vLdXidG1t9aIsYRrA2BnhCPu4tsERT3UnsZ/gIKaZQT2NojC3fSsM9asvtLj4NqzToEiNLAsn&#43;yb5276jk8zYk8uriUoofRvdeDjmt2Z8lYXAydLA&#43;KoZXOZRH2g30eZql8aO/C1t9qW8Wpu/QqUUU01VsEjJe/GYojRGNHO5vpmAy0v7QHzqjXFzi6gUyupAD91mFK1jP6FVcbcAHe6/wOX77kpbKMyBsx2LrcOzZdUyUbIVi0cjV2eKVuDYR6/AhzSHbrRoco48QUGrxZc3k5/dgMENfEgt2QDZrXw1Nnkbdd&#43;eXCxotgkzJXK6YtlkV4KuLhFvZWXFEXNcx5Aq4J5CdhWevQaeesYaFVAPVQuk&#43;NJWydmSj5bYXqbCND0A8p534Kq3kma2dA3jxwC9ONlRedDT1kMrKTcA&#43;wC9fPyQDax&#43;U10HSj84hRPwARS6JDYMaezyClK9D4P3rrfmS2/V3C6TzWPoG/m&#43;oBilMGx1v2lgxOlm8IefXRoQCTOQuAo291E1ajMN4mcVnrY5emWDLmEQP3tK1rL4nPBLClcrlJ6qDja7YMBuORkwjTYCfAB9n50SP4Ah3gym&#43;aWOdcQXN5/8fqkHIQ/ylKnl7QjFUcJo&#43;aR/rqbzm3PxE3fl992fftOkPZD4tzQO/zu7OIOvussz&#43;KrNkKXDPVSjBYedgCe04lMscjcG8akP&#43;C4IxwVqXuxilyG7Y5SE&#43;MC6QLV5g7CL&#43;W9RRW&#43;X&#43;LvUAjcTFbgR&#43;WCG/eOCW0/xyw/X79iKPJ&#43;uiwN5wi&#43;fP5XjQT3dPX3&#43;9Pfd4LpS1Yr7pyhoboq2Wv6A22vfJv8WpcXyeK7yGK3hLmy0aZ2DUlM5jY4c5&#43;DvNl631mAXJWIclh2BdYojMOKvxDEiNIhh2xqJ2ped/Dqog6jB53l5hzuKI0gDT0f9DYaBw/5124eaSfBNGwc/f/rwr/ejXy8/fryeTLrtP13m7rb3dFcFDHtOl9XotN90Fy20&#43;0zXuS22dz6GVe7oXObruq90F2LdftJ1dtu9pLsyF/eQrrN23D&#43;6K7lm3&#43;i6DnZ7RnelzveKrjPa7RPdlTHfH7rOaL03dFfS0p7Qel5yFlLSwNhhD&#43;iutJW9n&#43;vclvs&#43;d&#43;Ut7Pes4bTc8rczaWGr3zqr5f7OXUkL&#43;zrXOa33dO7KWtrLucJrvY&#43;zFWl5/&#43;Yy1TluZHXP5m8wQcs0gBvkZLGgeAw9dVLOMwrxzlcr7vJZhgv9hbJsHmn94iI/qeapx9HjuWvJZblCDBcZGUqclXNNb7/xGZph7OfDuosLbXpZ8hZTlECfZZaH5es83O5ii8JwhGOCRUiaWmJZ5h55By9EV0HMVxhdq4hnuvSqpHDW/Sp8ni7KCdW8fGcvEWaQZ812&#43;ipnXNw/zHhQnPuHWeWKvFBLVyHDlpA8c/BySjn309WEw7DfypXJPb8wua&#43;ko9VVil8I34vwonhaySfG1MsgQnymV4T0Kibx/AQdoCN&#43;AN/SDMhdbXjsZo1LpsjLQ5iJQ5ZfBdbOR6gaXDkdaoetcndGPHYjuY7cBcrKJHBfQfVdyLJGOM6DBpWhptLPMUae&#43;TOmVulMUgrqtaxBd11SUKDUEmQRBY0LSb8Ny/EEGzHUJ&#43;BRUiX7hh4BITY8cORvaTa76p0nJ6y/ITSHhPRUDIneAq6RiBeZeY1VYcUEDPgehdZoyiejCiW&#43;LqX/WtMntEStw3wfZUBqvqtxXagE&#43;T4qON7XYfLJrKBVnxKU9v2iFipNb7/V9sIUl9z&#43;YHr7rQOC2cRiiZqjCXMGKHRPbdHlueWnN0PxLt/&#43;pRtdLS62MIh0n02WT6wNpz1FxUrTmaOlB7KAVW7Iotcv33kxtOk94nAXoV5hobsLUiHWd&#43;/n/bY7Isx37Cbq2mZ75bQ0Aj7nIiyC97OZDPRZ6o3Cuv&#43;dywUKdig&#43;rr2LJaeMbyBU7WYO0g2GtzhCrs7008oa4o3BU9GeVOBYcVrYgNropKnHxGT7zWGiKn5fsJdzvgw1X2mq1m9qOsN&#43;i2C&#43;pXx9AXG7sGb1cWU1eLOw2Lq4eS/jafy8hOkG8Tib4vdCXJBxKrN4lT/Jo&#43;JV4kzSFKesTYjNxF7UXh7X93f5A6EyZweW/tZKx0Z5o8wM3cSO/C09xPxDjsiw6ypVJLZImkaBlI1spFDR56&#43;KV3hNaQbZMlfJa3B2vRRhQX&#43;aXS9VyixIU0f98ivsSFy9u3Zmd9fKe5sbyWd31&#43;LaYvH7lN80NkSbLfgyD34e1sbKeQfaW/w&#43;zeNCcwx3evfFndzf391P7760Q5OjsWXQsBn00mAX3aN1iDzqyFOgzstvf3HRlRd7U7iLvS3DfyvUGxDkb09tvKOQwheYotWBIuLIkyt2AoYxDYBM0e2fUxAsnfBNtt/JFNGOohWM3oV48y4fiVryFjY7bHzLdlCk3&#43;9Mfo/ILqSktQauhjNVsyIcOBfrytj48dtIFqoKJiIh/5oUjsWTeBPEYh&#43;aYgIYjhcoXCvCebgjxXC0xaxuKWuPZS2tHzXzqJH4CMU0hWEjicynsskHssxDKUojTFiDV4c2i17z3C73GET&#43;&#43;CoD9YZrhBzxoywHsn8u1b8H1wjJDd75f5GrHcf05WGwOAgkd4SjCMe9bMMCW25NCyqWoFSvJXH&#43;XrhHyY4WXzkaIB9SmGb5ys9XK&#43;LbKsWH1I5Ztr08GKC2OBxT5s2zdoLk5ZFKt6pvSVUwYIkt45qVzxYTZLv0N1fKm2HBXejroWejE9zc2Wh692XhLoaTBpLFqLlRzhYjQ9FFh&#43;ODxyDdEdZL6zFELjfL1QXxFBXQgb/Mqy1ODqNFeBpd6187pUUrquVO5&#43;7T6DobQxTsfxIOze&#43;c/BAME&#43;7q0gqMRACG3l3qbRFfiIpTVwh/0BS/SjO&#43;AmO02m2qXbc11fjKlX0qx2llezuPkeFND3oVTAacP&#43;4elMLbSxbkB3CG42d0cArHoHgcmOyAhYzF48wmaCSQuwkYAsBpaWaD8ZUE30ByiD2HHfCASy0726MN7E2DKKDId2eTL0MmnFdFhNODGM4sIhiGQKSA8S5KQGF9ie57cxbEgb&#43;LErc/8KPkKLw2jG2wQuk6CAE5EOdCnQ3IgdSyJnDDV6qLrOpMm5W8wCTPqs4KWcmWjzKc7KiwQVLlKwyRbU8MSUq&#43;VDqMiGzlkm21hsEGMSJbhUjgJog3anXvKCAeBr9xH3Y&#43;HcvOxaku&#43;5hdTn2xFww/1OW6uR8BdXxx4eSLiXWZCwPai4vCmTZvZvxdIhgRsUGLTOIpOqFFsIlhyGcZ&#43;ZE2z/MhEfutsQNtjhB6zzwHO9DlWKIQsVvAtwKRx7p8j4Gsa36gy/G0hZQMk4RPSMpjlk8VdfjXLkUjnBwcfgTYIZiHMCaAUFSIoDOAf3k4ObgJu&#43;b2B0QFczVDcdOVNO&#43;BsDh9pQALbVQhCev6FfSeCYUbVN/AMr/Uun5IWur7biYTxMMkuYV7udawUoq7GN1iWuIUKUDMXwerIAzoYbRF3jNK&#43;edPq6Ey3ytNaDNQkL&#43;&#43;oOfD6qP/62r1gorWzDKQzO5efh68dxvVcK1Lcr0LwyV6pSI69o8tQ9/VsNurLqYtsj06wQKh&#43;OF&#43;Sn6Y/reYBms5ylSTM3V1uhVH1AQiP7Yhlbkrp2pdskUZ&#43;CPOjpZw84OLoFjd/jTYoxu/pvUCrhE9sMF6jNJshbZIBTK5somwGK9GBKW03jMtaOA9Hxht8Q0iUnkdEHD5&#43;f0vPPhkCGnzKEhTHzqS0hRHEu6iUhztLmqpsv8CfuXaXb5XDqjg8ufLS56GYBoGdgslC4zF4wGJaVk18XatvG2B3Ma0nYdnd/VddQN0yyR&#43;FdsXxoN3YiSUr2ZrockMX13LklvMtpQmBFCWOoiyZuDhCLwfBCKXvxrwZSf&#43;yrL0wv1AOcF1VE2uzRbCblfiTd7ILi&#43;BfcMX8prHX9z1XMnZQqmZRXXIQfAYF3XCYIyrXzYAr&#43;UFKpzFrB/NJfYxMfRQcvvqex7syKUsN39Ms025zXryHnS4hxSmZ1Lqk/fp0yd4&#43;Qtard5/&#43;rBe/euDv/7XL/779/6l9&#43;v7D9CFnJ3wleJCk8Efier8KvsWavY3BMMwCwKTL4cuVLES6WUi2R2MA&#43;UiJ1f6BjgWvplA56nZIMD4QIP7ZYNIqwvjDK/g9yVKIyc7arOMs3zsqyN7avCOoKeAbvGOXuHURylxeBqQiUCmigfIdlU8d&#43;tc4gNxNQRl44K1AhEJ&#43;GflDG4CT2SpTyEqC0c22fcF8s6C5&#43;&#43;9CMieUiSHyl&#43;l1vqku5gGEQLQo8E&#43;oAfpq/H2qplhfxcivsJ5DfOJO2vF1CLp/IC9NN6qGakt&#43;54ResisMuwEDFM&#43;&#43;AxkRIUwDDYoNsa/IJR9YalhUWkH0eoeo6WJ8RYbTgko8z1owZfueq0b2FTAhZglR3usnLrubr&#43;clrdVC66OhSk9mmZ4FbSjM0cW7UPy3E6Wo&#43;n9A4EbMZ0IbidLMJregywJyC3KiYcT5OeLhPud1qbnLZ2B98sGKAslduw1mKnQ9jTpOL7c3H7n6PyoODUab4L4Vc7S5fn/c/UFUeeBoBhRZWYCIrXQkopmY3HRjf9abRC1A7r9zxVpApF9zy0iZEcc8aMxVi9RDFchckUGGc3uKNFY/BSnK28RneE4oDhd43QSJSE&#43;IMRdskR4Mhg6t4gCmUc50alhdsUZ&#43;xbRnszZW&#43;O0l&#43;H15ilWjehNxBqzexttiI/llKb&#43;SmHFTTxfSSVr3QvWzOkXn/mjGOvNx6Ji30a5RFGS9XD2zDRKCrwvOH1WH/lDfw9jD/ngZq6&#43;8LlnmEy&#43;mctEg&#43;Qcp1Qny9IbpRdsPD9H6Rp5FMhrRRB2XV6&#43;RZR4MOYYL2QV8ODa1c5DXAHsUkNfKLNk3oPIH/irj7JOXkiIkLdFqQ5YXWp8pbBMU5EpiyLE4GWUp9vAwzSIEXCyo6ud7x/YSyEQMaRWzeCxlGGd96okpgYqJnzSHZu04UZsoNkRWMi0IROa8s/bTtBSqA37Baf&#43;EbWdiRnw1VDN7I&#43;dQVd6uzpevqGwfqhcQ8y3C2YCjbg3sdqBCFjsh5yhB5mYQWfzl16GVXqV1lEekk7lljsomUvN7QWLLUytbg4bVhGeOVNTriSUv/nGG/JL2NoEIYeJCqdsixBDR4XxFYXBLmLfIqoPqSihgv5em7aZ6KpDwR6yhCtx0B&#43;sgrhBBfk9d23jfm5bDcpRJfvAa6oBAQO4lmerBpGvoSZApkubFVXm&#43;6//ks9&#43;5odaQ5L31QaqGji3hvUQE7hHPpj4ASU2iKvShg&#43;3mNt9xI8MngLGAbcGQdOm2kLCncOUBmLiJxYpAqOXY2Rx6ctcJbNsK48AV92zmCcZ7ihmhXcmrx4KgTrlyNRYv/knExdVlVGB5cYJ4cd2FHYu30SwW4UB2aL0SHwl3gD/hFP/OGQmWQYdB3ATY0IDjzhyxrmY1PBQFrK489HTwEer3SZFCU5p1qIb8Sch2vM9Qy2IVN4OhNJ1TswHqCLJxKZZgsaZdHHAOqjSvMxdXNg18y5GeutwqjUPF2XdVrg7us0&#43;yhoAy4UYJglxPwze83hOOEZev6B0ZZe3WopxkUiheqRcaUBgA98WulFDQbJ1fBWafM1QKUlT3eVd9e4SFC8WX8U3giPPiqPAgt8GIVu3sChXLypjjoHxYgjmacDaK/iGDhWYwAc&#43;gRYwk1ErEPK6QC2&#43;WaAB8mwDOP7w88&#43;X/2rB83mmDnCtGgpEOx3v22ovNdbdtxi/xOBrOWwOF33mV/LQN3p53nl7jLkq3x8ku1VRUpgFMsnhjm5xGvyFfDDMN1XBqcQqGgwYHCzmIQDm0s/oQAw8fN8V1jB47VRhCdnyMrLWypDagEQbM0OJFmYDJhtEC5xsDhaA9626pa2alQxjGjuphPNBvafQI9VNTwyiEMBfLy2mTvPbrGli9o1ABwY&#43;mOE&#43;ZHiP89tCs3&#43;c31ZNpVnvKy5XvpqtICpmzzcgVZXhprzMoM13nnL4fzl2NU8I8Zy9BV5TvjZMnlJuec61yiBVdIO2mQ0b2B0NMX6eL5Z3i6Vzu1havEaFiNsfxIRqQO66geAmEPDh/eVHgFP2&#43;xnolgpLkZ7aS6gZyhhtoRJT3xSPvk1rcQaGlEJvy0eHSxQlOIXpofnzxbhZBB8ijnBMUUwHGb/u5s271XuiLcH8mHpvhjp5vSuq&#43;Yd55gk9AtwLegTK6fnW1RcX&#43;Uk5T76v88VFflLOwy1F8C8eI0sdV3LgXUgQEk7J8ricA812IqAUP2DXEPxPkDjix24srp5qIaPawByla975swO5sFgmZVmyIFa/yO4rTwG/qJfQb4u726rzep7P/cVN2AlhJ4Oqs1c9dlaBQSbpo&#43;80x6YocM8X9wj6fKegvgrykFkKbLmld0sWHaFb1OsOek7fqCePd2zQ1iIe8pm1vVlMuK1gAfctlrbcVWuEU9YPcgNN3pJAQNAAvSKwoCmON7cwQny3dAmedzCXdloZ4xC9SaVSJKWcdZnCmMi9iAu6FJKzj4i6USXvUQuiNBMd9DW3w4LwbkXYwMwvMNYae//slPVCfnjf/5EFFc/J&#43;SnLXeYwgn/h2J14H0QzzBfhy42oz6/PIs9gV&#43;cpWiPqba&#43;CGKYBIo6I0MiGiSr6icriZAfaJWSJvMoe2XWLoDZzHr6qMZSVeqmJpDzG5DDyhCHuQh1qcyXJCEcJpPPRUEY8yc51&#43;UtBJouRJWs5reNHGiSLN7wkXbigRcgq9yI71uUTixQy06MMVVlM0kktDiSrWnWsy1cJD1m/XgwSWb9qEwKyJlX3g&#43;IBPsveUkKQYval5mRHIN&#43;cxRyVXQkUPafnhG9seJ3iCMxJGIg1c&#43;zCbr0OYr4cFslYl45I46/MfL7VsLebBoN9N2fC&#43;RyYga1lmzcdh9y1ygb9JjI4yDczBFzMK9q9DSQq/CCYxF56SKjBsU1bnBT5KKYBDG1KlJFd4zQine9PIsW5tA3fYrcSTzSP6tiRjRSE24i4ldxfdYFnImr&#43;bL4j2&#43;KqLefpdmH/DVte7wWTxF8VKud0yC9J7EtfX6X479dB7KOU77d/O5wDJ09oYmH53N/XKpt81n//XdXo778DeQiuMH6OYNq8DmKJYh4iMJPmjqXiy7bvZuIGipYn2EzQz7aYMzHs0lTEhyWmUP1mJgnSkyDtbEvDDhR2VAyhmSfb9K1tD00zmYJRKM2EfH8tueXyG25ZBtOTMM2M13AfeIatb81EStrQMlr21zTjS2ED/BSSN7Y6htDe5DjP8e2Nk5gb2xRvAnP/3ULB5PmJobpEpIk33RMO0Wu/M8r1cigGRvMU&#43;YFp90Azq0TrCbRehtbOP0cpCQjlvROFFB3dCyoVcsAeB2xWgY&#43;gU4Z7ZLMpADSz/L7DFMqAPUfWLoeQCM1E99ylIYg3fJHq7WR6dFVmSNySezuZNpNm&#43;3&#43;bJz7MlIts53ED0Ran1NvRI29VJm6iiGFCtpi&#43;pTAZRu7wrec6xB5ftdIcT8aqWIfY6xU/l7VkS5yARUCPbeZLnPS4uIki3bEeGD&#43;j&#43;PiBDAfpCRAD12NAAvaNMA3iY4dlEqLHIZqZntDqDV3&#43;E1ppO3y1/FcGYmtfuJR7dwmJQtsC4yB1&#43;H8QxEHLmq7f342DVPzPgh4VEf70U7C2QCAUpnTwpy87ozB4XqCYIIcdAX6omadmF11&#43;kYfv4vuxinVJyj71ZiA1LXsckNoRIz2FVhWwTLNd4D0PCXtBFZY381Qgk00bFxTEsxagRRRbh4CvKEyMgCIfy6bw7sejGYydu9AH9&#43;MvyurPC5H6mwEO/WI28cNf4jiGIRihVH6tqUZkjI7ArdQFGeLODm7pvK9hs/I/zllEGXsy&#43;mEvtwbJCKLyFilnsTJhrQbk5bkwidyP53JXRZntBJOgS5RGQcwzp3uU9sTcolvc87&#43;Zv60yuoCrfgrztlAhKpqFT0P62y5KuIGNcamTzg7e4m6rcJll/&#43;6sic/58yvcvcXYQzYFUFxQX5tMeQlitJdBTDPGdzLbO1VKte3MOw3&#43;UQroo4WfWhl224XvyynrIEPtQHaS8hqIcYqWi7eUstTGckY/EdAdGI8pajd2njnv887dzBr4jlbqTIpwB0hH/CjXuo8fVoGI60w084spn39LP753R1&#43;HSx4qlr0RtjRqQyztJKTBYzIgxBsz1udPeu1E5RyjnUCsalfFa9HuMUAvKFV61eeC2QUxnVJUxwtxzO7N2hGH2VR&#43;v&#43;&#43;mPIXPwovMlbms2tyWrvlm0335ficVucHK64Z/BCYf1599Px0j2Vs30sl3uCtudscgdJvgZemNkjbb52mJ7iejf4&#43;mk3vwFMTf586FPOffjeOqrkU5kQhYqhrQPAaEQuBc/CQvDq6CmOH8dH8SIIZTr79C0U1lubm9vvtgEO1SnBulQyFez2xx832YJCSL4gN8SAFL5csaq30BXxLSd1XmgQ/pMaBl3wlJcSLs1u1vtCssbVkZ&#43;iiEhCByGuICoA336Ujb2LIwPZ0ZdUs3NUwOBy2Gz8luaaFL0KhWBeILm5yrqxuQKoCtpu3mvn5XVzd1ddpQ9OOhjojcEQd6WdjgynBLAzuY3n3pvxG7O&#43;5ozD2YQ0iRdaWOxu&#43;UzBtwzdV8NEeXyimQHFFLXW&#43;xLdvobja/u53cLhe2dySXOBrTeDeOw&#43;9YPzlE59rpcM8tWcb3N4&#43;Te&#43;sbILMfh2as&#43;q7IHStdyneriw7VbYM/mQ5nx1QNkzsC8w04HSuXCXcoeYdqbUV&#43;XMxuxt9sa0DkPgrLeIe64XasXSHeqRY61LAF&#43;o6g1A/Wa9taVvmPxDPWdHfsDnWhhDvWRsf72cIiY5fKSBFyAxmbmhJZZYx9GcRXOW3fLh8Wk/vBeLh8E&#43;G5SFpqsCP7URVraianoM0igXWrYBVczL6K7YiM9XpC0g7V2sh6ZMUe2aiOVOMeba6g93xUvyNl3f7JKIx9qCXd4rjRykI3yGiFfBsMUFXTXsdvxLWqWGuOI2/gonFQ1I3kCODJ6OH&#43;ZvnvoxqGlD0W/FSAx97UU7GdkqHLvZXCXW/wsW3Uju7uevk0vJ8c1Z6k7LHgpwLscodPxWDXYruzHXuzJVDXm92l&#43;dpR/HuxnNi/Y3ju48DM9dEduEsrOgW6XQviUJfnLcjljyuJNdOxzwGH6dZEuzwDNvAigrvaau2IxlteiW8x&#43;LeiPB/Nkfeqif&#43;46u1wF99EfI8IxSkCcxzElFQitoLvc&#43;BciJy9RxzuItS7idc4jURsAJAK6b57P&#43;&#43;7RHpyu&#43;B&#43;8uVmsbz/N9DNaWXExpmsbI&#43;VUuoDQakjSgjGwyUYT66HD9PlUfZhIVpXsBvH23GPbG5SvOEmdyd7I0GldtQUaN4au2KYI&#43;Qch6spfV1RU4EfiJiJ5jO&#43;DUVuW56pMBrmfA08BvW7kDYUUEyeT9EehW0PJ8vJxSMPc&#43;c0D4N71spkQI8E0m2zB03KxbhfWr9YCRUwT4TRFVhFx/Hu8kCqALYJ2SUJTmkZMUt&#43;K2hTkd9GEAVeijyc&#43;hUP&#43;jz9jbCN20Mp/d/IFGOKSEV5kfYGuFal38BAvBShmC9LqsQOzC&#43;8FbhVfzMXpogHrnTECsJLHrNDHFYzRNHhIKJ/RIdD9WJ8GCPCA3TJw0qG0TbFEVLrI6QTrQwQotxSxE7pFcHxk9gX&#43;uJCHVYy3Cymd7GKaJGdVDMtYRrAmGcRh5UM3yBBBx6CTBxVLvP&#43;jF3lB9WLeDNDNxxcHlYy5LtbX1zkJ5VM&#43;f4kPMJG624lFfHiepSLi&#43;JpJWO2ooD3x3LNgSaPivUhnYerOYQ3KrvOj6qXeStm7Vf0&#43;uysnoVvz0qDMKCBej2wtCwJQL4bdElqR6hqaeq4kmXBG7z0QFZBSJ4Cwr1daYpDHs6ulKuKkISQbGUDzU6qmXZJiiJcadKKg0uKHCW/8QrIEsFIuPKKvbTVmabGHyazBcvEfquXQprCHKZwWsn4eDvi23HfjjQE3xF&#43;ZVfZb&#43;XSf/AW520rP6tki8TJ7ReWKzvJMskqUEtycx9xUt56uxK3HO1xuFP7Gddx3AJOtt5LS3gN9zgNKPsgmU2PpuPL&#43;wVOFsZcSzfjwWy5V2/Idxr338g7S3dmRl0i8NbHV60uceCtDXVc2NMULPAuNazxbi&#43;xijSiZfo&#43;m56Kplyppe6n1iXVghpVYt7KVW&#43;ZQO9d7ysmVMQ2SneU72HJXfLtOW9iQmEYijUDxXFElcwNRM78ORCDAGkXyGN49fuuPB5s98iQVfe1UBYufAeUEeQrvyVkxxeMNyFyRWZjhJW/B94ugkszjS56yz&#43;GyhS5o50nC9zxN5JYx6JpZlIQvVIgmn8EnXXgm2Y6fdCbfwRdW5CdZpZygJ2/A70lVkwzeClCzI/HtgkM1ExQCwr0d5Mc17eUww79PfCtYY0M&#43;FlIo7&#43;TwCpmUjOHJl7S38vTNTBTM6UxKNM/mNw2JFQ7uTYW1D&#43;Q3CISVTNfNQrV30ZhFemqmaQW5ervZLEOptXMpI&#43;i9Y&#43;gs4za1UxWidj1t7K0BQYz4JeDgv1N&#43;LaRwAw8WRQwBTYgf4YBRR//gbytwcia&#43;SqByP4mfItIZwaKWoizv5PFKpJaM009itrfStMWra2ZoRyp7e9AX7WFGW6Gr4QY/sH4ar4hizshQ2VNb7/psk/8DWqcKmwM6pQdcXF9UKe/iefN28zqUC0r89yBRf5BbG&#43;OY/Ij0dvdrfr9smdVq7ze/F13amoEqitQ9SlsF9UrofU1KoOdfCvdv42Eb9Uxf&#43;P&#43;z3Ox/7MW/23bP4tNms8AXNhXWodu8iTr90v&#43;Wvbi&#43;ubW4PtVBjxhiNUfh/zGrbkl5gqD6&#43;XcUQdgjFa7jW6O0GVZ3l0v572Pg8sPbnE&#43;j8s0Iv6GVx2wskiocsmg/ERowJ5/mZf3rG3Fn3&#43;Z95hEo7p8Z95OkIvF1zbIaTHUaSfoaU8X4LROwbf9AMsUeqjj3StsX1PH5W6Rtm2CZVbTRaJJFGZ0tch296&#43;A23r7OKzdPSzAtt5CCdvlPpbgLW&#43;joOl2Lws87bdyobaRstVc7U82ICbY77OpfjfdZmS5WWTmxFADtsUstuUa6GaHvgVhiFKncCztZxXvxkIGETZy6IeBh0Re0M&#43;3tcycudQBCMsxKE0r3KvdssLgWwWLMIrqDjbQNHXwGZIQXwyv4tVfvvNAUIyo3KiYAJb818rPp4RNe1wRuGKZRXXIk&#43;yRbiGQcxeGLYYUOvfEc&#43;VWk5fKe2YxGs0EJteQnardlqd4U4kr7I5Gs2LrX4yvnMX4qpoLJkkCqbd1R9w7lbVqxaYVKK1BsBQGr58/2QGIn8&#43;frJDspBcO&#43;7v4Sezb9N8/LcYL7RWQX7m7nky/OdyJVflOZifF64GPYg/drfNN1njOWnIuwwoh19tcXBTO8hzT22&#43;8pMPYL&#43;2op0vPpRq2tRM&#43;XMo8SZxP38Bj4COcNfXmb/tPz77MM/Bw5H761uOSvVxSm9YvDk6q9EOPBnvu3iQCYTc/B9I3C/ljxIPRzkNI1ziNWMYyyMBf9fVkvq/1GcgGf/ivIAyhex2kaI1f3axv6ruQi8qS6NGvAuqjNYp99gKRnnLZo1JxJCvk7YtI6f/jrxx/9e4FhuyHbKP/1ZM0m5wsSvGC4B65mdnKWJy3umCV/K/M4G/b6fqNKpzDMcuO62zF7q7Ridy4LFjOXeg2Xc7m5NXAdza3qwa&#43;U3lGtcCf6zZaKXEaHyoz&#43;LkKaKPCiV2sLFjOVdpOupzCIasN/6wFbdXidG5brQxnK6iVHqf362og&#43;kG&#43;VS3sZ/ZvamA/qfdRO8e5WpSlJqd2UWqgOZvTUAPf6Txh2gjOdf8s1Ti7Z0wD8elcV9oIzlXBlmqc2Lmlgebkbic2POeqWWttTuWn0gJ/rnJaKXE6b5Y2gnMVs02Npg8wC8uJ2t3faDF5A/5aJAEbHvX9eRyTsuG1cKQ4WeHX1q9kmY&#43;XIESe0fzWFXOLCc3s3G/WjxxiD0jz&#43;elQ2cfq6dDgHlKYqlo8EegWR&#43;i01ejGOy9EO9WCPp6qCcl5KX/1&#43;k&#43;uT14DcLNJ0Yb3SifTV7Z3PRh3nrtq66ILjnD&#43;plPnyPFHOAzlavsjGArSrpcfCyYTqdEuZiQ02HcFtp1118RhYUwtUZmsGBY8jTYETtJm3TMQmC1rHL3le90AbvxU59g2Ni0DQashKSc58gaYLTgCvtV&#43;Y8I3G044gZXZxMBhYTfhPF2tJgbKTmYTTm5htjDwtVkLOEXrR7WBoOVzVuDbfsyaeLp9zXLe1m9ZA1/LVyTHt/q4M3C0f09xmravKQOD&#43;UuGo6/O&#43;JLco5guUxgT4Xzkr8rOMTnyOICbGJOAuBWZ6nnjaFnHVfSXOBdv8yvG5jNGChu/La6DEP2HIchp8o9FV5Um0kwo8ydoGHZe4zRS4/zjyoDTSH0nmIohvkO53mBBUwQj2znFcRrsEXskUZQoP68tjFnb3a3XfO/0MzF6Id75YJPCZFs8bhocv52Qf3Vl4/pzkciosk0MNzwjuILeM/LBQ1JxyuDAIo97czW6m83ubtkLe3x1O3nie&#43;wGfsOwoLBeI0a3mCIw9Dw2SlkFYUAPoy3ynlF6E/votcOKGeE0P1CQ5SUzwk&#43;OQooqQDK7e/l58N5tVMPtWxbkeheGS/RKFwim3vbHFqHvatitNRfLSNghexUQsEAofrifkh&#43;m/i2WPqwyLpVenU6lEfWAyI9tRWXuymnT01YvAnd&#43;ZUdLuPnBJVCsbn8a7NGN3670ggbe84GrS8Dl5/e/8ImgENLjFr0JOI7WL&#43;qchLvI&#43;HrJNVpiMMagEHyNZQB4LS9QSJ671OoS&#43;5gYKtPz8C6m5B5j6vZdynJzNRtHDKy584hpfJMrilO4Qc1vXpHbjbG0nWgh5yiNArFO/ah3eJLLGyt5HkLvSIttwkXN6GJxyvGlyOWNPHaLSPrWK0iq&#43;OKJP6oIhIsatV8Em/jYGiJC1owvWiT/aDuORAC8Y2MZI9MSpXCEk0PmQ5RfauRVMsqEkgdGbESfQWmF0H951pAjGDQ&#43;aA&#43;JDyniTy2qfc48LO7mabBnvYLIx7Px&#43;mi0pz6hFUwSnuVIF9VM3ljXasnY5XtQfN2C8ZV9xPPye/oliX0J31i4k5PCJPFX2Qq&#43;xf3D7G1bCNkg2O9w1IB2sh17OuNbY7J/ZqUW9w/Zd1ZNRJ&#43;N5XqY5a/gyF8J/XT7zkzxRnTAi4dZjjCf3A9jGiySwwtMkVNNaFhnop6bana5mEOBLybTIN69TmKK0iQNCFrwlTIOuwL4JZBfA&#43;IieFpMwQqSbfM3c2Uk8enzvz5&#43;YJCDRsbSSCfFmK6Zlu6gyHMKnVPv3Nqm3lv1RNQT9XtehRH1XMZwQq3XhMLVOfXlBKfQdJPiXXJOTTnBKTTdYkJjGKFzKqs4TqUvObey5BSaYgJSFCKDMf4U6mLyTrKcQucEEvLin1NfwXASXeWK&#43;nMqKyhOoS3ZQh&#43;/nFNZwXAKXWkQob9wfNaqVRxv1veVfgL7rf96cmUZ8oAhv1XFMzdUNjIoNVT5Ie0vuR2GxyJZbFEYguyK/C63/ULIIbKvdJ8hZAM9S0Zwt6PJjp6C2BVQeZiNjjqARXEDOtt96v5GfZ/unj5/MmjNr/9ztP7B1dtRu7&#43;lMrU68j06jJ&#43;FPJ&#43;FNNPzBb98/mQvYcUBqai96eYB0FfaoK3MMaCvtAuIjeAfOJ9oVpoO/sAri&#43;wlHeuihT15Kvv4FHx8gdgoqmn3KBOKWsuWm8Yqq65L2VnTAsLMRVCaBcM4B4GUy6xKBgo&#43;VVKJ5yHttYVsPRHioe/umOriwRHQPG7BcIOc7AgMY7oP0h0pB0mRislMvSXytjEO8eaQJ/JgG6qVopgGMQrvYgadHYPJ&#43;F7sXJIIWJ/vgCYziIgYGQJ7oy7TAG6Qw0oY7lDs8Y2q8jMVTqGYd/IqJsd5JAV5XM1TcCkQowQZSoGniaSqiFgLNIk3cnex4rlOjbsExYvF1wKBTNHDP6GVOOdNOT/j&#43;YQXnGpOrJ20RbySebPK3MIUfXfkTyaV&#43;dS74kopO/wLOuqgzc4ks2XyAYpQTJY3Q0ceguXNECgffQOQyO0OdxTLDWHnOKUw7Lu5x7/i2MQwdMQPGFIKvS0vC/D0MedyDibhwlxiEONAzBjroNst5xKR/Bm6/qo0MVICaqlDAVJ6BEri4rEFfxBTPDKJIj0osuA6PJnuUjSCFIZ449QSzG&#43;5EaRifq/fEc4AESUh&#43;orCxMkPQaGzAb89pTBJUKrph9Sld3LPI&#43;G9IOvOEr6QrOnosovtoLwLVpsx8n4x8AIYs16Z4LDNRJsVJUfs5SAl9udDghz&#43;H6xxCsaI0GecgP2vgK9tCXZRU7jFerQ6DtNb47QnY8e6Mt5ikStEexT6K1Di5IFm97&#43;C41i4Zwbyx1dufyDhy5wRDGLgr3gnt7/8ADpMVHMAJlf6DOuX57NKJE9B/IuhIDyzEcC4MKm2EqkZj3wKAXs3xzBCWel/fXvhyafwXb9CxW/maWuYY2Y0IfSeHf6/rT3yTJWWV5TeQtrWa3KEQquqo0xC5NE026LNjFTqfgsgfKvPPDyPGUSuSBPTwG61mRdQW50fBJ6cUM4QYrgJqCN&#43;wAgmrONttBewzmQRBXTrCgGXXRMTswouSIaxv3jm0Z/YGZDH1g1DvTvEMHMwuloA7&#43;Xn&#43;HL7gb4e0MuBey6KxiLHpWGQuIXgbz9Wh/4giTen4h2IEgmxiptME2USxJslxqFTPCGlnXz5IMY/tRqMj3RXJojBPPAqzUylyFsqNhUuQOM1naN0jTx6iyjxIN/Vlv3yGIS&#43;3NcbS5tTv&#43;/G4nL&#43;aYWTLSaO&#43;OnyzVeS07zc&#43;YUssGNfQ9YoZBYB3&#43;eg8YUwDMOeqLv6i0GAi59eVbFdSBB6dtSBqVsUrUPl/J1mhz0m1DPjCredzBmFD&#43;p9&#43;aVBDIP3Guml289dFBKE/BGOIhizD5byKQjigHephh6QCcxT/Af7Qi5L9y7/pbqwbI/e7KjoI1796lZ58iO586YrPrpKH7ImaP5g5I2k0mIyGvb8lTApTOkukTXriCEyeAl8BIi4lEXN13vtZ4Nrlrs3Q/FO&#43;WrJtIfE1VLxsWqZg3SJuN5IuKsQ3sRr7BSO&#43;TN/beH78TS&#43;KbhC5ACFnVntKTrCIhg5/D&#43;4TgMU&#43;2AaEMrdOR/U2Ew9HMImWWpYvf/7&#43;uvn/&#43;dyAG5o8YshWd1&#43;3w3ZgyI/zfb&#43;&#43;iSsb&#43;H7wrBvIrhBym1GBw2ThL&#43;M3DBYpTA9eKXhmj1cqX66gS5TeAA3Xu7e0wxM&#43;P8NjBA5Es4OSKztUwsPDHemeDs2QcxuFNHejXbEUkGtcWVrB8sgQvw11QotB8HuCmNKaAoTEOJNbgLuit0ZVXxR87XY7Tdc1kNh6bbudrVBtoPtVmEQoSV6pU7hGHwAH3m8eLCAe9S8YDV7nQnRHpMt2LSUxZeIy4AUV642MH86nle8sfsNdBuYct/X7Ch74TW&#43;&#43;1VOl3iXeShjDdLsAPKTsRwDqjD7QGeZnB1yoPxm1JErwxUr7ExaWDz9npTOeSJIUzgfXzv5oXlPizyfS8Rh4q&#43;9wl4WekzVEtSdNC13LFDkh&#43;&#43;IRMifqB33at9FzuLfi&#43;VkBrKEfMVwYXLKeuIvgzGs6M6pM87WWAR63OoKSxNyV3PMsYQtEQj0uNUtxg3AJymHFZ9duAM9gTbSQTvJSQrXldu0xt/MkK/wb4E/abmMrNYhafUcSrwcjVbDYx2KVs/TEIZWQ9QWpUKPXwlQYcA9ya1pp2uJw3Bkv2kVX9ayDK1kNlE39ND1gBst8CcpkD1r9x6gEuDDBHy6spj5WuOJNCBnoUT6FtinKYwFpVX0Ej28LnCJhqFr3BI9mTlkSQfak9Ts0drYBp1tHE6YY852YD7V&#43;KazQhahZPRktSgyZvCTFNCG0yrIrR6&#43;HuBWg28d3bbxHjUEt7XhOlUzsVfBcrNsPVNlo2wL/JMU0Ia2LbxRA3IlspEJ&#43;TRFsSCUoTuOuUWZbMFhVkdhG6ypoRBZnKYuHKepPxvq1phQeuxqOCgT8kkKY0NoEcK4sVfQRDBuoThVf2THbBVbS8&#43;hCavVRnCSstnxtkXz0mNXAnkZcE9SlCa6E&#43;48utglKYqwmHmU/lGOTATScTfI3FZKM4saSTbiLuwMaQTnoZN4aK81SsFNvMKvFgQ8n3rLHCIYU&#43;SB4aPQL0uYxH7Cd&#43;bNg1noSiCzZwc9JdfL5dy&#43;W9hK81jio&#43;fkrVTkug0fj1NPjr7AYjKfdfFv6ETy&#43;w6mkPtXv&#43;EW5CDHlTSXP&#43;/teKuefJrI6Fph3yraFdirbRelH6JxYvwliNGeilk0E7n09R&#43;gPX09UoFzkHreYrdajL/VF0N0b42jKB6FMXUVZmNVywgRvBlxF4HXKHwDbxUudx04xB7dBvHGyY7ELBH/lGn08lNNKvaWKfwLp1nnqkHj8zI7wc1Ry1vmNkNzeQNyi1dkXTki/OuzgwvRWnqPONxFqMcqJpW&#43;&#43;yrPYLtHemld7A47vDyCx9JZOhc/cXOz7/50HynDtvvT8nXNXos/LXFC/vunpW1ukQ&#43;uQujtyOQ1CXGKUkclAJUCUhShaIVS0aya3C&#43;jpOSUoYSyxmNB9MKfy8tOPFKmO80RLDkJgtFjgF5QyptVflp6vWl2X&#43;67ed7CYZ/lZc2i3wHe0InnsY7eQlZ&#43;GFtcggtUs/sHV4ypFrskwWm2GMJIpR0HamrNy7KSfjYJvEQhYvkddQBgknuXNessMmdu&#43;5meVTS1OwTy1dObz7LLfSMMaCLgVBapyiI2lRLd7qKVmIfnh6Iv6RJWSTV6l&#43;bymaf8cruLfZSugtR3ZOwpUEgDQ99PESF85tmgdC5R2hp2hfFzcZVQK1u&#43;UqkzWUHW7VuxjWCIYh&#43;mDd9oLXyelH7Hu1TugNalqF9CvIIhmCFC4AYRm6hlej02HOhdJIHelddltalxE8FkBoMQ3Nxe3X3vTK7EWQfJEexIY0JhyNebWZZ3lEKy7clt110pvwwiZHen31DC7qVTwiCIAzs66X1CBkEcWFFwPzjSskCuoUBCNl&#43;Q0MYlojkC0aY6s5ViQdrxpWjNitadigkO/hDmmCXm7gVyU3nnKqAyhX1q5mf1nH9eBZTmWQun9by7Auauhkic7OCCb2QtcaR&#43;FIbDR0f&#43;agwH8kppnY5RKntRNgnmvun8FOTO6dfLufFbkA&#43;GqLemSWZ2sUBsd3n/8vVmMZ3cuy/eK2DgWftvARdWHdS8U57EpSlCQbzG/cGLZwWcoj937EtxHKTI484I04CwL/ZWJm8cpNfpn/lwxMyU&#43;xn2&#43;y5lF73It61cdjukW/4oRZAiH4x3KfvEkbMtyxTuUUqgeXR7vZz3BzRKbCg73MsgZkXJbmWK0CL4CznqACw8GGeuHrOpYcHocMbX1vB4fkrcJR6MVRD6bDCeotjnIx&#43;HHwJ&#43;rHuo2NUev5o9GnpZvtY/oAcw3LAG0To6LQAr0R4X5dvzl02WdpTibdeZTogV2B5GVyl&#43;ISh1sqN2F8Usa24r7tddBnXQLR5UDcBVHz4tsp0PXwODzpHOxGJyo2mhyFxbdPjWPm0NJFqnNh2RtVNbA5Heq03H1ObV1kBQ9jPTAbd4zDTglpxldLA2vl8N2DU3rEb8I9pP2S9Ki9zqF9UEXfFS0oFbeSk14GvclHQUXd2UGtiMnkEmXlvPoBZerRuOjtfCDaeBquoTo0O38olpwK85xegIrJ1iGkj0/ig6Jkt/lAaeimeIlqDNM6QJuuypoYW29NTQMmhcNbQctq4aTcWoOkzoSFodJhrAKw4MWmgLB4Ym9JoTgY7AyomggaE&#43;m69jaJvNbwAvz6/nwCecX3&#43;YzBbOQxysA&#43;QDpCb7Iv5wR6yvY08vUaNLgsMdt52CdYojUI72pFt9VszhMi4xQM2WuRWGmqdTRF/Hj0FKdzAUQR3eqOviaoz4tNceOcNIzvBcqMNqjmwGkU9W8zMZC6uUbXr7jaszjP3fdlESBkTMbuvSq7L3Msr712CPuFApoZqbn&#43;wDDxGlVDlF5c&#43;zLBDdJTAJQGieiA3itUtk3kGlwqzQjkH4Pi&#43;s0VKimeBqF9OdI354KNNhYg4MkIWNGMEYx4EHwy8p3iXTIGJP&#43;kAg6YKY7qFYFA8TWmkvNR1ERLoUx9Qw1HuTIiTBOHS9FMf8H&#43;PJnvmaOp1C1XfVRhujXq&#43;DRST3Y9ll9PY6b9dQ8l0V0MWQ12sh79NZNJDYBna7wPTHcOcR6fXMdoHmj2HOI8zrma0Dxx9DXooY38xPzkZODMwdArsfQ1&#43;J6K7XwTJQ&#43;zH8hQjtDdyW8ayPIi8EstazWwZSP4a8EEFdz20dGP0Y9lJEdA2/daBza/JyhPM65bludDVi&#43;UNIU7jnTgYOP9b6JtSssYWsbp51ijeDqRo8NADLLcZaUQvHSqQYUqIRXsTbEQOlbmGl1WdHUQs19Ghgs/BG0aERFKNsSu32P1dfEJ9QE0f1DOiFrIJ4nmKeKTvTZgwR8rYiJG3htJZ1MbyKV3/5LJs8zLI44gfc/ieLiMdHhfFfK6V9SooxhwqFlwV8vJnfTxz&#43;H1ztSBAjQqSJvz5BwbP1VDZp0i86WWrRspoHuwRQDPafTLEed/EKhTSfWhnGNJjBsLZtUgvV/mew/2zg&#43;XJ983YOU9DKcl1liNORtGTOQ3hAqcMSxP6c4QHcJShGfpsn0z702N&#43;7P&#43;m7IKYoXUMPZTNaTQQ49evIj4GPMOFg/QHcS4QZq4ebmH1EssG6OAfy4xbMoLcNYgTyDM1VwCWl2UuczFBUwLze8RmAJ5w&#43;Eyq8uOSGEEJ5INvzPkLRCUAIOQVIXABR4oXKuHAqFVjLLJmznOK8kE3W9FeY&#43;oBvb8w/oGXyOCDP7PP58XbEH9B7BMPH25HGsU/vtV6V4527/s0ls7j72CO8MrLPTS1IsaeQF97J94EBYhlstlRfgNLcqMymQsNN84C8j8GKtXP2X7oEWvgr8ezzkVve47oIxSVlrCLSFkFVwfVdKaDRTQBeQe&#43;ZfTTEfgfQglAjcIsBtg66Z0fNJecOfTEMwg565jKZmrzRXuFXGRw/TwCPM7CC3vMukSG11dtrv8Kv75IU7W0Q6qIVKd6UCjJXglK0sH7ffbzCr6xRDvotguxxRHHuqi1ls&#43;S8ZTdC1Egr&#43;VWflCXIYhFYrYsi6khVwYVTraxGGdVDlHVtzF7osirKakXauq7CqfM4vpGlfBzfFEspL38dq8tfx9rL3/Pr3zUZZuNvKsNs/E1mINxMu/MDPMI&#43;ch4X7Ed47oj2YXj9sqyuzFUYRzVgmkecHKvoCtUEo6YIGyfLS4gyd9lpoQ26ffZRy9E062gmtRvpcCJ2Md9lt62iHlonNkvgSZ7TAhcpp4M2WN5h&#43;pmPAuFxIS0ISOvODHmVZIHG/iA4NmPzYU0CPbu6Fj67Kmy2DHpdYtnD0A8c&#43;dvuriMzmsJ7VTGV93MXSCXTgIhjCj3aSUkl04RodFzRAVYdiaqQ1u43OvCq742eos0dRodc9oWpIrb4ZOgAS64YVbx2NxIdZO5DogXt6tuhozA6djQR2jp1NDQXo1NHjRPTbu2RC&#43;jvgoVziA6x6hlShbV0pdBBV/woqsit/gE6zIpzQBXzQXgHQO&#43;55GU72MvraeaC0vzAWc3963SrT/xXodsm/XWo5Rn/p6vJzOH/NItOVyjiTjIkEO/eJpGGhbIN4pN7hy&#43;YAONdlDRWCM/Cc7j9gS/dgGuyirQ9S0nHcvanyX3TQKRp1dLT5L5YngKCOVB4UW4xdcZoFcCYjZDFkUz&#43;BsOAJbJfmWTaPZNbBpu2wpTy0mp9cSGPZDJOUMxE2QV1zC7BPVKeIDJoaSHpbWFLC0DNr4SiAkXmllduE3b1tdsIb&#43;fD20Sjc&#43;JtozI5YrbxZM6YTSTWw4kmJq07bxObtUtvE5vep7eJrm0g08RSHsw0obcMat7Uim08fJsIai6&#43;RpJjWlfZz7cRvnWQ1ohfHqg1EVj5&#43;zZx/P&#43;8XVtP47ravv9&#43;BeplFSpYrLU032UpDFMNhU4DmzWjSpabuG02aRwlKVBt7f&#43;&#43;5WNsx06cAnPTJs7r53EOTnx4/bwWh18XT9&#43;GoYuytXHYRe7bSOwit7YSXeQeLTwXn9nKc1F4&#43;QC7SBpOwC4Wb0dgF5PdE9hF59mEdZEZzVgnS5dLsBNf9wl24nv6BdtpLI7BTiJf52DnCUnvYAHFV2xetPJ29gdcfEafwInv4TTspGh4DbtYvHoPLppmD8JF09WTcDEYvQkH&#43;qprhMgFb4wSafgf56H8hFYctQwu/j5jS90QEEyDAUlliTzNyDQuItV6XESGwWUBXzRAmmAHo0EkWXxdumUextEEa3QsxTC7jnnk3XiDLIdkqEphI/YN269Jgdb4jcXlpZuGwZT0NzJUSfUSYioSRZqR5z5HBeSReAtoHJzv1&#43;sks9wDdqDtNvz4odr/&#43;GG3qkXkSL9J7BhGtSc86TJN7EhyALQ25UmGofrcDgbqrmH4E2YxelMBWQozE4GJxzmVyWDRVpXJXpLKEm/xRs8ynYbScDoNRQgm3WgWhj9uwXVR4EIa0zSa1MC8u5ne/SMN6R6fRHpCqwLjKuD/IjYXaAbnelrwv1tcT6A9bWFVjvM8kHWWajchIA60h/6QDldDYc8FT7iTFYtzKd4LwkaEv/QsAUXqkpQ6siSOuJV6ybquhd/5&#43;Z7PUWVkbXj3NRRRbLlMgiW2Yb/Lybzn&#43;LCDDIvYr0w8fA2zelc5Soq0rLi&#43;I1/g8Z9/55tgl/8Z5PE6eEWr/L&#43;seEl2hdYoi/kSCkwXoQfaHu0HtY4vnTAMVCzDCGalnDUTXhgmnPIJTLJwMg/YH11PT&#43;8InTllidLDiHPRp6febFvKf5XAzT2NL3mVFKKsF3//pZCTlAnOkxRXCxTBNA3Yn1MiiY8S4gKNp/MUVmtc7EZnZ8vH73MDVlyT33oxNWLRVBEJQGYtQWp6zhxfjrJ&#43;gXYVQF0v5BIbpB42sjSn3OzULNWwFhs8hrZVZPETitD0LKovuNw6UR0CDY2wdzE0b&#43;lR4OJ60do1yye7eLHP/O&#43;&#43;&#43;wYcCejSNm058aZCKDchzcxX8gIQLCLB9bjKcJLCcJmv&#43;dboGGT7E&#43;nN8g2lKQ4mxSGv8DM6qCVmFVaKArFvBa/F7u4Kg1p&#43;R4fSuFSMagbLChXP6GC5Ns1OT3h6fvrX6fkXNtVvw7u7mfQsszlLcreJrMjh9eRxMX34CbiA5wFskxdkKTafRhD2vZHst/BIVLBAm0sYPQM/eG79ATQfAm3R9exzkWp1z6N5emPff314Gi&#43;uvZ8Sbt8bqf0C9EQ99il5N82HQB/7lHAg7zvZ5ynpwGbTkr7PCLXuidJ&#43;6j0Q&#43;9w0mv38k3CPhfV7lH8XhcfV6fOc0ayeT9mx9cTOMc1i9MaivQc3sNpy2dlBzppQVLpzJ7&#43;qJTVc0lRY&#43;8qXXPu3XNYQxtfXzkOdW3zGS1lOJr09VonD0/OhH6sl6diz7MHxQWeoMfKZtkDM3HEvTPE0vJoeEXGRvBB6VJltojvMdcMJ09WlbJWenwH1UC81XQ2TXL94NYph9XtpX/Ms5lM9YnUBN7wPH/NNAWM0LqpkTb0x2bD9DL&#43;gW7wB1VtV19Q5zMijtVzgNF2R6q/ZyuWFbuxv&#43;x3MFgjGcJUiJqdtYg81GynZ58acJRtSUCsYO&#43;YBwrQloor1/k0YcdTsf1mAHvMYVoiPYcUrvff1GN7Pi&#43;QFVmjJ7JgwSUl&#43;jRszx6&#43;ouErgJsNllURlPbtCDgD1SIeHE81wcr1eJ1GCsuhwouQ1KgAbR766C8dZfPVtMg/Ij/N1HW&#43;jvBPgLgR3qErxpvu9PxwuM2466kZ1liprnNV&#43;xSr/GhfjLC5wEgfjPJcK3QCKuwemk3vQOcYoL/EEFznmQQ&#43;mI5Ptq2QDX17R82F1EX9ZrV6ROtA8HCURPrKs87ub31zWPNt4lDXCuxxW8cohN/wZBWTDu7DmruWKW8pa1wO2eHSNC/AUjn9nkWOlKqZ4E0FViLOl6PsSFeSN7reu/gMfAkFcr77nKA8oRTtUFQfl7XKLNjA6BOwPFKuSVVpQoBTST3SFgXityfzUY0R7vantOfurjpsn5RLRRZXDUSGcpT69dMeWKNmhNMlQMI6q5CWpElSyuCjxyj20TqUCUMxFkcQgO3lxGiijeKW9AtnXRn5DJniX4wxlFbiEJYq5rAA551Qb0aNtyMllSN01L8PGo2nA8m9fwxlVrOq&#43;Ik32ZEVFvGjTjn3&#43;hsNuTBEa&#43;b6ItohGmsEFL6zxgWXTRazo7KPApnlQlXbTWE5fs1&#43;yyZc6oYH7E&#43;&#43;L&#43;RZnNTRJATQJjJmIPW2Ilf7VdiRB3RWTNrJRLC7mP/MFos2KOU6oZAFTdmCRY4ASOaYtqIzA&#43;sn9CMQGGO8rzFdtdgXMEHmWdR43bgwrM1iGE4/eVNGSbkKJCTMPJLEh59PcaPQbgWC0BQUqc6asBnKY&#43;dDMYYaYc9aS5KjZEH4LyA9YzGaAaUxoS6/TpqLzktgrnwrmkyCcFcilXidpCtocjJkt/7N5&#43;vyEJwJIcSjSmToXmnWyGP5EOnyH13InuOllrqN3uSt3wut&#43;yzp4h5tsJ7bmKatDdzv6&#43;tzbOSzLHcyct7avF24nZ6s7rp3b1wnX50FodcjV6fml4RXvSEpxfclHxHZ9PXx9uzkMp1&#43;dwdMrtpPFcI81SLqcYrvhde9YHb7TZbQT3vAd1eG9fDk7KZpOnTpLlytnJ4Hu0/krjGCKiuBXSf9bdS25Db91v/AWj0vy&#43;AdkE7Btqtggvrtqa4rYzBCqaJg88rklhn5AIMkALwlzZHIWUOXoSSCc2Fhoi4Yglgr9mI2rCmUxinsypnjzjjNK8Ua0dnzwlYvvvhPHYb7jIqlqCA7G6q362NsihhJ/YbwLyA&#43;IWMMobVVvIJZGeS35ZbeuLeKqJSAyRXcBF1TRSZcKkNCOrHm6J5/y&#43;32VYvwM2s/rZE6tl8N6cIN035JogtOU&#43;Ru1qA5bTJOYfDkAXoPrNxTtWW9gIA/cr2WyLT&#43;V5mB9B&#43;aLnCK2ZzM25IxvHTLHt1zmuJGfjmGGW5SmE5yVOKWO1I1EW84Fig5Rii6TjPZ6&#43;JrQgTXdnr9DZLmRI1w8zqgj8&#43;JxZj0ebVG8T1H8AMtnCqmn2PIoUf0GAyWwn83WQ&#43;i5kcc2GzSwpJK832GOHooEblCgbNLFsWKPmN1SnewY5qSP1Dxn&#43;xGZ8TZ7foDFBvHHRO5JA9r0qaLtZZLBImG3xkxTjDH1wRaxmQbBnO4Qg3B8FwJ&#43;EuOsSl6SYs9KKHZMq8vpQ0hXDEwfQvPYJMX7mPvgKms8B/YDjdx4t0oyFIsbp&#43;6btpZq2lJ71ZxfH&#43;ZCyZBUXLnXsJNVulnBVTsqnjnHaRJRPSJl17Ts&#43;xpQ87LIh0m2Ucpuppl5eJs/jGCWCVlHNcW07/uy0PN2vSh06x2u&#43;NIAZkz3413SuF3m&#43;0Q7xg9Zjni8ZVT7tjeMasdkBgb0v3HsekEPXS8aR5QVFcSi3m1Y9ngTWfLJYdU6k0j6v5MTNNunKKC/bMifhov2iVnLmnY0p/iMq2A5LCqwQ3L0iraWSeJoh1hDJnnYZ6hkA2AB2xHCZ13rpEg7BC1neEWwD1m01IfR3ot8MsG7fF&#43;h4h0UILkPzy80orYi76aLSUB&#43;wGQLWXsF/HF2dta3QUYgtOaeDfhfSVnBlrZVE4RVxrubQG6pir7NgOOdAmUSh051ktbK6G2XutnaJcpqNLklBwJtaKI9HjqlrIYK5nBIJ3lGbFKWgkpNCrHRP37An3///8UfJOtIYAxvEcy9Qwe4i&#43;Ch3n8EOdfst9P2jR7Qg98WOMBdCD/5/p70tXK/m9hPvb8ncS3c7yb2Fu/vya3p9rfTl5/BXXYQ95Du78luqPa7i&#43;Cp3N&#43;TXhHtb6H21HPvy61IubvJPXX7e3Irkv1uam/Z/p7kmmK/g95btd&#43;HWxfstzN&#43;wk029fpz2guTqgdst1MFgZktZQz8dpR6veIOFwdHENwG8Gm53fmAP41vvSFfIZuZVkNU6xGpgRa92o6omPBW0rtARSNGhR3KudCPK&#43;oNwleX7yxrE/XygQskc2QZ0duArSN9u85fWMhJ7P8FAAD//14S&#43;J8OqQIA&#34;))
+  
+
+  LET SlowGlobRegex &lt;= if(condition=S.DropVerySlowRules,
+     then=&#34;^\\*\\*&#34;, else=&#34;RunSlowFileGlobs!!!&#34;)
+
+  -- Group the targets for faster searching.
+  LET TargetTable &lt;= SELECT Target,
+       enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
+    FROM parse_csv(accessor=&#34;data&#34;,
+  filename=GlobTable)
+  GROUP BY Target
+
+  //  Build a lookup cache on target.
+  LET Lookup &lt;= memoize(query={
+    SELECT * FROM TargetTable
+  }, key=&#34;Target&#34;)
+
+  -- Extract all rules within the required target. Uses the memoized
+  -- structure above.
+  LET FilterTable(Required) =
+     SELECT Required AS Target, *
+     FROM flatten(query={
+       SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
+     })
+     WHERE if(condition=Glob =~ SlowGlobRegex,
+              then=log(level=&#34;INFO&#34;, message=&#34;Dropping rule %v/%v because it is too slow: %v&#34;,
+                       dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
+              else=TRUE)
+
+  LET Expand(FilteredTable) = SELECT * FROM foreach(
+  row=FilteredTable,
+  query={
+    -- If there is a reference, resolve it from the table recursively.
+    SELECT *
+    FROM if(condition=Ref AND log(level=&#34;DEBUG&#34;, message=&#34;%v/%v: Resolving Ref %v&#34;,
+         dedup=-1, args=[Target, Rule, Ref]),
+    then={
+       SELECT * FROM Expand(
+          FilteredTable={
+             SELECT * FROM FilterTable(Required=Ref)
+          })
+    }, else={
+       SELECT Target, Rule, Glob FROM scope()
+       WHERE if(condition=Glob,
+         then=log(level=&#34;DEBUG&#34;, message=&#34;%v/%v: Glob is %v&#34;,
+                  args=[Target, Rule, Glob], dedup=-1),
+         else=TRUE)
+    })
+  })
+
+  -- Collect all the top level targets that the user selected.
+  LET Collections(Targets) = SELECT Target &#43; &#34;/&#34; &#43; Rule AS Rule, Glob
+    FROM Expand(FilteredTable={
+      SELECT Target,
+            Rules.Rule AS Rule,
+            Rules.Glob AS Glob,
+            Rules.Ref AS Ref
+     FROM flatten(query={
+       SELECT * FROM TargetTable
+       WHERE get(item=Targets, field=Target)
+        AND log(level=&#34;INFO&#34;, message=&#34;Collecting target %v, Rules: %v&#34;,
+             args=[Target, Rules.Rule], dedup=-1)
+     })
+    })
+    GROUP BY Rule, Glob
+
+    // Includes results of Windows.System.TaskScheduler
+    LET CollectAdaptiveScheduledTasks_Commands =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+            SELECT * FROM Artifact.Windows.System.TaskScheduler()
+         })
+         WHERE Row.Command
+       }, query={
+         SELECT * FROM TryToDownload(OSPath=Row.Command, Row=Row)
+       })
+       // 
+    LET CollectLnkTargets_Targets =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+            SELECT * FROM Artifact.Windows.Forensics.Lnk(
+               UploadLnk=TRUE,
+               TargetGlob=&#39;&#39;&#39;C:\{ProgramData,Users\*\AppData\*}\Microsoft\Windows\{Start Menu\Programs\StartUp,Recent\**}\*.lnk&#39;&#39;&#39;
+            )
+         })
+         WHERE Row.LinkTarget.LinkTarget
+       }, query= {
+         SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)
+       })
+       // Try to download Executables mentioned in prefetch files.
+    LET CollectPrefetchBinaries_Executables =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+           SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath
+           FROM Artifact.Windows.Forensics.Prefetch()
+         })
+       }, query={
+         SELECT * FROM TryToDownload(OSPath=Row.ExecutableDosPath, Row=Row)
+       })
+       // Uses PSList to get all running binaries.
+    LET CollectPsList_From_Pslist =
+       SELECT * FROM foreach(row={
+         SELECT _value AS Row
+         FROM items(item={
+           SELECT * FROM pslist()
+         })
+       }, query={
+          SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)
+       })
+       
+    // From PrefetchBinaries
+    // Avoid materializing this query unless necessary
+    LET DriveReplaceLookup = SELECT
+       split(sep_string=&#34;\\&#34;, string=Name)[-1] AS Drive,
+       upcase(string=SymlinkTarget) AS Target,
+       len(list=SymlinkTarget) AS Len
+    FROM winobj()
+    WHERE Name =~ &#34;^\\\\GLOBAL\\?\\?\\\\.:&#34;
+    
+    LET PrefetchCache &lt;= memoize(key=&#34;Key&#34;, name=&#34;PrefetchCache&#34;,
+    query={
+      SELECT &#34;X&#34; AS Key, DriveReplaceLookup AS Value
+      FROM scope()
+    })
+    
+    LET _DriveReplace(Path) = SELECT Drive &#43; Path[Len:] AS ResolvedPath
+    FROM foreach(row=PrefetchCache.X.Value)
+    WHERE upcase(string=Path[:Len]) = Target
+    
+    LET DriveReplace(Path) = _DriveReplace(Path=Path)[0].ResolvedPath || Path
+    
+
+sources:
+- name: SearchGlobs
+  notebook:
+    - type: none
+  query: |
+    LET AllCollections &lt;= Collections(Targets=scope())
+
+    SELECT * FROM AllCollections
+    --WHERE Glob
+
+- name: All Matches Metadata
+  notebook:
+    - type: vql
+      template: |
+       // This cell generates other cells to preview the collected
+       // data.  DO NOT recalculate this cell - each time new cells
+       // will be added. Instead delete the notebook and allow
+       // Velociraptor to recreate the entire notebook.
+       LET ArtifactsWithResults &lt;=
+         SELECT pathspec(accessor=&#34;fs&#34;, parse=Data.VFSPath)[4] AS Artifact ,
+           pathspec(accessor=&#34;fs&#34;, parse=Data.VFSPath)[-1][:-5] AS Source ,
+           stat(accessor=&#34;fs&#34;, filename=Data.VFSPath &#43; &#34;.index&#34;).Size / 8 AS Records
+         FROM enumerate_flow(client_id=ClientId, flow_id=FlowId)
+         WHERE Type =~ &#34;Result&#34; AND Records &gt; 0
+
+       LET _ &lt;= SELECT notebook_update_cell(notebook_id=NotebookId, type=&#34;vql&#34;,
+       input=format(format=&#39;&#39;&#39;
+       /*
+       # Results From %v
+       */
+       SELECT * FROM source(source=%q)
+       &#39;&#39;&#39;, args=[Source, Source]),
+       output=format(format=&#39;&#39;&#39;
+       &lt;i&gt;Recalculate&lt;/i&gt; to show Results from &lt;b&gt;%v&lt;/b&gt; with &lt;b&gt;%v&lt;/b&gt; rows
+       &#39;&#39;&#39;, args=[Source, Records])) AS NotebookModification
+       FROM ArtifactsWithResults
+
+       /*
+       # Results Overview
+       */
+       SELECT Source, Records FROM ArtifactsWithResults ORDER BY Source
+
+
+  query: |
+    LET GlobLookup &lt;= memoize(query=AllCollections, key=&#34;Glob&#34;)
+    LET NTFSGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND Glob =~ &#34;[:$]&#34; AND NOT Glob =~ &#34;\\$Recycle.Bin&#34;
+    LET AutoGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND ( Glob =~ &#34;\\$Recycle.Bin&#34; OR NOT Glob =~ &#34;[:$]&#34; )
+
+    LET _ &lt;= if(condition=MaxFileSize &gt; 0,
+                then=log(level=&#34;INFO&#34;, message=&#34;Limiting file acquisition to MaxFileSize %v bytes (%v)&#34;,
+                         args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
+
+    LET PreferredAccessor &lt;= if(
+       condition=VSS_MAX_AGE_DAYS &gt; 0,
+       then=&#34;ntfs_vss&#34;, else=&#34;auto&#34;)
+
+    LET AllGlobs = SELECT *
+    FROM foreach(row={
+        SELECT _value AS Device FROM foreach(row=Devices)
+    }, query={
+      SELECT * FROM chain(
+      GlobNTFS={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               &#34;ntfs&#34; AS Accessor,
+               dict(Globs=Globs) AS Data,
+               &#34;Glob&#34; AS Type
+        FROM glob(globs=NTFSGlobs.Glob, accessor=&#34;ntfs&#34;, root=Device)
+      },
+      GlobAuto={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               PreferredAccessor AS Accessor,
+               dict(Globs=Globs) AS Data,
+               &#34;Glob&#34; AS Type
+        FROM glob(globs=AutoGlobs.Glob,
+                  accessor=PreferredAccessor,
+                  root=Device)
+      })
+    })
+    WHERE NOT IsDir
+
+    LET AllResults &lt;= SELECT Type,
+                             OSPath AS SourceFile,
+                             Size,
+                             Btime AS Created,
+                             Ctime AS Changed,
+                             Mtime AS Modified,
+                             Atime AS LastAccessed,
+                             Accessor,
+                             Data
+    FROM chain(
+      AdaptiveScheduledTasks_Commands={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;AdaptiveScheduledTasks/Commands&#34;
+           AND log(message=&#34;Collecting Custom VQL Rule AdaptiveScheduledTasks/Commands&#34;,
+                   dedup= -1 )
+        }, then={
+          SELECT &#34;AdaptiveScheduledTasks/Commands&#34; AS Type,
+                 &#34;AdaptiveScheduledTasks/Commands&#34; AS Rule,
+                 *
+          FROM CollectAdaptiveScheduledTasks_Commands
+        })
+      },LnkTargets_Targets={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;LnkTargets/Targets&#34;
+           AND log(message=&#34;Collecting Custom VQL Rule LnkTargets/Targets&#34;,
+                   dedup= -1 )
+        }, then={
+          SELECT &#34;LnkTargets/Targets&#34; AS Type,
+                 &#34;LnkTargets/Targets&#34; AS Rule,
+                 *
+          FROM CollectLnkTargets_Targets
+        })
+      },PrefetchBinaries_Executables={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;PrefetchBinaries/Executables&#34;
+           AND log(message=&#34;Collecting Custom VQL Rule PrefetchBinaries/Executables&#34;,
+                   dedup= -1 )
+        }, then={
+          SELECT &#34;PrefetchBinaries/Executables&#34; AS Type,
+                 &#34;PrefetchBinaries/Executables&#34; AS Rule,
+                 *
+          FROM CollectPrefetchBinaries_Executables
+        })
+      },PsList_From_Pslist={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;PsList/From_Pslist&#34;
+           AND log(message=&#34;Collecting Custom VQL Rule PsList/From_Pslist&#34;,
+                   dedup= -1 )
+        }, then={
+          SELECT &#34;PsList/From_Pslist&#34; AS Type,
+                 &#34;PsList/From_Pslist&#34; AS Rule,
+                 *
+          FROM CollectPsList_From_Pslist
+        })
+      },
+      Globs=AllGlobs
+    )
+    WHERE log(level=&#34;INFO&#34;, message=&#34;Found %v for rule %v&#34;, args=[SourceFile, Rule], dedup=10)
+    AND if(condition= Size &lt;= MaxFileSize,
+           then=TRUE,
+           else=log(level=&#34;WARN&#34;, message=&#34;Skipping file %v (Size %v) Due to MaxFileSize&#34;,
+                    dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
+
+    SELECT * FROM AllResults
+
+- name: AdaptiveScheduledTasks_Commands
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;AdaptiveScheduledTasks/Commands&#34;
+    }, column=&#34;Data&#34;)
+- name: LnkTargets_Targets
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;LnkTargets/Targets&#34;
+    }, column=&#34;Data&#34;)
+- name: PrefetchBinaries_Executables
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;PrefetchBinaries/Executables&#34;
+    }, column=&#34;Data&#34;)
+- name: PsList_From_Pslist
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;PsList/From_Pslist&#34;
+    }, column=&#34;Data&#34;)
+
+- name: Uploads
+  query: |
+    LET UploadOrHash(SourceFile, Accessor, Modified) = if(condition=UPLOAD_IS_RESUMABLE,
+     then=dict(Path= stat(filename=SourceFile, accessor=Accessor).OSPath,
+               sha256=hash(path= SourceFile, accessor=Accessor).SHA256,
+               Upload=upload(file=SourceFile, accessor=Accessor, mtime=Modified)),
+     else=upload(file=SourceFile, accessor=Accessor, mtime=Modified))
+
+    -- Upload the files. Split into workers so the files are uploaded in parallel.
+    LET uploaded_files = SELECT *
+    FROM foreach(row={
+       SELECT * FROM AllResults
+       WHERE Size &gt; 0 AND Size &lt; MaxFileSize
+       },
+          workers=30,
+          query={
+            SELECT now() AS CopiedOnTimestamp,
+                   Created,
+                   Changed,
+                   LastAccessed,
+                   Modified,
+                   SourceFile,
+                   Size,
+                   UploadOrHash(SourceFile=SourceFile,
+                                Accessor=Accessor,
+                                Modified=Modified) AS Upload
+            FROM scope()
+      })
+
+    -- Separate the hashes into their own column.
+    SELECT CopiedOnTimestamp,
+           SourceFile,
+           Upload.Path AS DestinationFile,
+           Size AS FileSize,
+           Upload.sha256 AS SourceFileSha256,
+           Created,
+           Changed,
+           Modified,
+           LastAccessed
+    FROM uploaded_files
+
+  notebook:
+    - type: none
+    - type: vql_suggestion
+      name: Post process collection
+      template: |
+        /*
+
+        # Post process this collection.
+
+        Uncomment the following and evaluate the cell to create new
+        collections based on the files collected from this artifact.
+
+        The below VQL will apply remapping so standard artifacts will
+        see the KapeFiles.Targets collection below as a virtual
+        Windows Client. The artifacts will be collected to a temporary
+        container and then re-imported as new collections into this
+        client.
+
+        NOTE: This is only a stop gap in case the proper artifacts
+        were not collected in the first place. Parsing artifacts
+        through a remapped collection is not as accurate as parsing
+        directly on the endpoint. See
+        https://docs.velociraptor.app/training/playbooks/preservation/
+        for more info.
+
+        */
+        LET _ &lt;= import(artifact=&#34;Windows.KapeFiles.Remapping&#34;)
+
+        LET tmp &lt;= tempfile()
+
+        LET Results = SELECT import_collection(filename=Container, client_id=ClientId) AS Import
+        FROM collect(artifacts=[
+                       &#34;Windows.Forensics.Usn&#34;,
+                       &#34;Windows.NTFS.MFT&#34;,
+                     ],
+                     args=dict(`Windows.Forensics.Usn`=dict(),
+                               `Windows.NTFS.MFT`=dict()),
+                     output=tmp,
+                     remapping=GetRemapping(FlowId=FlowId, ClientId=ClientId))
+
+        // SELECT * FROM Results
+
+column_types:
+- name: CopiedOnTimestamp
+  type: timestamp
+<script>hljs.highlightAll()</script>
+
+</code>
+</pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div></main></body></html>
