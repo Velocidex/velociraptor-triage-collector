@@ -33,9 +33,7 @@ Targets:
       FROM items(item={
         SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath
         FROM Artifact.Windows.Forensics.Prefetch()
-        WHERE ExecutableDosPath
       })
     }, query={
-      SELECT *, "auto" AS Accessor, Row AS Data
-      FROM stat(filename=Row.ExecutableDosPath)
+      SELECT * FROM TryToDownload(OSPath=Row.ExecutableDosPath, Row=Row)
     })

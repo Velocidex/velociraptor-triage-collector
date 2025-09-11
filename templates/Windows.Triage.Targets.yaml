@@ -70,10 +70,10 @@ parameters:
 
   - name: MaxFileSize
     type: int
-    default: 18446744073709551615
+    default: 100000000
     description: |
       The max size in bytes of the individual files to collect.
-      Set to 0 to disable it.
+      Set to 0 to disable it (Default 100Mb).
 
   - name: UPLOAD_IS_RESUMABLE
     type: bool
@@ -92,6 +92,24 @@ export: |
   LET NTFS_CACHE_TIME <= 100000
   LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
   LET S = scope()
+
+  // Helper for VQL targets - try to download the file, but if failed,
+  // we return an empty row to record the filename.
+  LET TryToDownload(OSPath, Row) = SELECT * FROM switch(
+  a={
+    SELECT *, "auto" AS Accessor, Row AS Data
+    FROM stat(filename=OSPath, accessor="auto")
+  }, b={
+    SELECT OSPath,
+           0 AS Size,
+           NULL AS Btime,
+           NULL AS Ctime,
+           NULL AS Mtime,
+           NULL AS Atime,
+           "" AS Accessor,
+           Row AS Data
+    FROM scope()
+  })
 
   {{- if .Config.Debug }}
   LET GlobTable <= '''{{ template "GlobTable" . }}
@@ -187,7 +205,7 @@ sources:
     LET AllCollections <= Collections(Targets=scope())
 
     SELECT * FROM AllCollections
-    WHERE Glob
+    --WHERE Glob
 
 - name: All Matches Metadata
   notebook:
@@ -229,7 +247,7 @@ sources:
     LET AutoGlobs = SELECT * FROM AllCollections
        WHERE Glob AND ( Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]" )
 
-    LET _ <= if(condition=MaxFileSize > 0 AND MaxFileSize < 100000000000,
+    LET _ <= if(condition=MaxFileSize > 0,
                 then=log(level="INFO", message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
                          args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
 
@@ -237,34 +255,11 @@ sources:
        condition=VSS_MAX_AGE_DAYS > 0,
        then="ntfs_vss", else="auto")
 
-    LET AllResults <= SELECT Type,
-                             OSPath AS SourceFile,
-                             Size,
-                             Btime AS Created,
-                             Ctime AS Changed,
-                             Mtime AS Modified,
-                             Atime AS LastAccessed,
-                             Accessor,
-                             Data
+    LET AllGlobs = SELECT *
     FROM foreach(row={
         SELECT _value AS Device FROM foreach(row=Devices)
     }, query={
       SELECT * FROM chain(
-      {{ range $idx, $r := .Rules -}}
-      {{- if $r.VQL -}}
-      {{ $r.Target }}_{{ $r.Name }}={
-        SELECT * FROM if(condition={
-          SELECT * FROM AllCollections
-          WHERE Rule = "{{ $r.Target }}/{{ $r.Name }}"
-        }, then={
-          SELECT "{{ $r.Target }}/{{ $r.Name }}" AS Type,
-                 "{{ $r.Target }}/{{ $r.Name }}" AS Rule,
-                 *
-          FROM Collect{{ $r.Target }}_{{ $r.Name }}
-        })
-      },
-      {{- end -}}
-      {{- end }}
       GlobNTFS={
         SELECT *,
                get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
@@ -285,7 +280,37 @@ sources:
       })
     })
     WHERE NOT IsDir
-    AND log(level="INFO", message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
+
+    LET AllResults <= SELECT Type,
+                             OSPath AS SourceFile,
+                             Size,
+                             Btime AS Created,
+                             Ctime AS Changed,
+                             Mtime AS Modified,
+                             Atime AS LastAccessed,
+                             Accessor,
+                             Data
+    FROM chain(
+      {{ range $idx, $r := .Rules -}}
+      {{- if $r.VQL -}}
+      {{ $r.Target }}_{{ $r.Name }}={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "{{ $r.Target }}/{{ $r.Name }}"
+           AND log(message="Collecting Custom VQL Rule {{ $r.Target }}/{{ $r.Name }}",
+                   dedup= -1 )
+        }, then={
+          SELECT "{{ $r.Target }}/{{ $r.Name }}" AS Type,
+                 "{{ $r.Target }}/{{ $r.Name }}" AS Rule,
+                 *
+          FROM Collect{{ $r.Target }}_{{ $r.Name }}
+        })
+      },
+      {{- end -}}
+      {{- end }}
+      Globs=AllGlobs
+    )
+    WHERE log(level="INFO", message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
     AND if(condition= Size <= MaxFileSize,
            then=TRUE,
            else=log(level="WARN", message="Skipping file %v (Size %v) Due to MaxFileSize",
@@ -308,10 +333,17 @@ sources:
 
 - name: Uploads
   query: |
+    LET UploadOrHash(SourceFile, Accessor, Modified) = if(condition=UPLOAD_IS_RESUMABLE,
+     then=dict(Path= stat(filename=SourceFile, accessor=Accessor).OSPath,
+               sha256=hash(path= SourceFile, accessor=Accessor).SHA256,
+               Upload=upload(file=SourceFile, accessor=Accessor, mtime=Modified)),
+     else=upload(file=SourceFile, accessor=Accessor, mtime=Modified))
+
     -- Upload the files. Split into workers so the files are uploaded in parallel.
     LET uploaded_files = SELECT *
     FROM foreach(row={
        SELECT * FROM AllResults
+       WHERE Size > 0 AND Size < MaxFileSize
        },
           workers=30,
           query={
@@ -322,7 +354,9 @@ sources:
                    Modified,
                    SourceFile,
                    Size,
-                   upload(file=SourceFile, accessor=Accessor, mtime=Modified) AS Upload
+                   UploadOrHash(SourceFile=SourceFile,
+                                Accessor=Accessor,
+                                Modified=Modified) AS Upload
             FROM scope()
       })
 
@@ -379,3 +413,7 @@ sources:
                      remapping=GetRemapping(FlowId=FlowId, ClientId=ClientId))
 
         // SELECT * FROM Results
+
+column_types:
+- name: CopiedOnTimestamp
+  type: timestamp

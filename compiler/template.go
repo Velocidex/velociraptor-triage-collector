@@ -201,5 +201,8 @@ var (
 )
 
 func sanitize(in string) string {
+	if len(in) > 0 && in[0] == '$' {
+		in = in[1:]
+	}
 	return sanitizeRegex.ReplaceAllString(in, "_")
 }

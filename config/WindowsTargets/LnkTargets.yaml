@@ -1,0 +1,17 @@
+Name: LnkTargets
+Description: Collect targets of Lnk Files
+Targets:
+- Name: Targets
+  VQL: |
+    SELECT * FROM foreach(row={
+      SELECT _value AS Row
+      FROM items(item={
+         SELECT * FROM Artifact.Windows.Forensics.Lnk(
+            UploadLnk=TRUE,
+            TargetGlob='''C:\{ProgramData,Users\*\AppData\*}\Microsoft\Windows\{Start Menu\Programs\StartUp,Recent\**}\*.lnk'''
+         )
+      })
+      WHERE Row.LinkTarget.LinkTarget
+    }, query= {
+      SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)
+    })

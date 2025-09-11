@@ -5,15 +5,10 @@ Targets:
   Comment: Uses PSList to get all running binaries.
   VQL: |
     SELECT * FROM foreach(row={
-      SELECT *, Name AS ProcName
-      FROM pslist()
-      WHERE Exe
+      SELECT _value AS Row
+      FROM items(item={
+        SELECT * FROM pslist()
+      })
     }, query={
-      SELECT *,
-             "auto" AS Accessor,
-             dict(Name=ProcName,
-                  ProcessCreateTime=CreateTime,
-                  OwnerSid=OwnerSid,
-                  CommandLine=CommandLine) AS Data
-      FROM stat(filename=Exe)
+       SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)
     })
