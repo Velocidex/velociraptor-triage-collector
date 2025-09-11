@@ -1,0 +1,41 @@
+Name: PrefetchBinaries
+Description: Download binaries mentioned in prefetch files.
+
+#  These functions help to resolve the Kernel Device Filenames into a
+#  regular filename with drive letter.
+Preamble: |
+  // Avoid materializing this query unless necessary
+  LET DriveReplaceLookup = SELECT
+     split(sep_string="\\", string=Name)[-1] AS Drive,
+     upcase(string=SymlinkTarget) AS Target,
+     len(list=SymlinkTarget) AS Len
+  FROM winobj()
+  WHERE Name =~ "^\\\\GLOBAL\\?\\?\\\\.:"
+
+  LET PrefetchCache <= memoize(key="Key", name="PrefetchCache",
+  query={
+    SELECT "X" AS Key, DriveReplaceLookup AS Value
+    FROM scope()
+  })
+
+  LET _DriveReplace(Path) = SELECT Drive + Path[Len:] AS ResolvedPath
+  FROM foreach(row=PrefetchCache.X.Value)
+  WHERE upcase(string=Path[:Len]) = Target
+
+  LET DriveReplace(Path) = _DriveReplace(Path=Path)[0].ResolvedPath || Path
+
+Targets:
+- Name: Executables
+  Comment: Try to download Executables mentioned in prefetch files.
+  VQL: |
+    SELECT * FROM foreach(row={
+      SELECT _value AS Row
+      FROM items(item={
+        SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath
+        FROM Artifact.Windows.Forensics.Prefetch()
+        WHERE ExecutableDosPath
+      })
+    }, query={
+      SELECT *, "auto" AS Accessor, Row AS Data
+      FROM stat(filename=Row.ExecutableDosPath)
+    })

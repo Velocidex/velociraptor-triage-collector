@@ -31,6 +31,7 @@ type RuleCSV struct {
 type TargetCSV struct {
 	Name        string
 	Description string
+	Preamble    string
 }
 
 type ArtifactContent struct {
@@ -155,6 +156,7 @@ func (self *Compiler) GetArtifact() (string, error) {
 			&TargetCSV{
 				Name:        sanitize(target_file.Name),
 				Description: target_file.Description,
+				Preamble:    target_file.Preamble,
 			})
 
 		for _, t := range target_file.Rules {

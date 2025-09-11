@@ -12585,10 +12585,25 @@
     },
     {
      "Name": "AdaptiveScheduledTasks",
-     "Comment": "Collects binaries mentioned in the scheduled tasks",
      "Ref": "AdaptiveScheduledTasks"
+    },
+    {
+     "Name": "PrefetchBinaries",
+     "Ref": "PrefetchBinaries"
     }
    ]
+  },
+  "PrefetchBinaries": {
+   "Name": "PrefetchBinaries",
+   "Description": "Download binaries mentioned in prefetch files.",
+   "Rules": [
+    {
+     "Name": "Executables",
+     "Comment": "Try to download Executables mentioned in prefetch files.",
+     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath\n    FROM Artifact.Windows.Forensics.Prefetch()\n    WHERE ExecutableDosPath\n  })\n}, query={\n  SELECT *, \"auto\" AS Accessor, Row AS Data\n  FROM stat(filename=Row.ExecutableDosPath)\n})\n"
+    }
+   ],
+   "Preamble": "// Avoid materializing this query unless necessary\nLET DriveReplaceLookup = SELECT\n   split(sep_string=\"\\\\\", string=Name)[-1] AS Drive,\n   upcase(string=SymlinkTarget) AS Target,\n   len(list=SymlinkTarget) AS Len\nFROM winobj()\nWHERE Name =~ \"^\\\\\\\\GLOBAL\\\\?\\\\?\\\\\\\\.:\"\n\nLET PrefetchCache \u003c= memoize(key=\"Key\", name=\"PrefetchCache\",\nquery={\n  SELECT \"X\" AS Key, DriveReplaceLookup AS Value\n  FROM scope()\n})\n\nLET _DriveReplace(Path) = SELECT Drive + Path[Len:] AS ResolvedPath\nFROM foreach(row=PrefetchCache.X.Value)\nWHERE upcase(string=Path[:Len]) = Target\n\nLET DriveReplace(Path) = _DriveReplace(Path=Path)[0].ResolvedPath || Path\n"
   },
   "PsList": {
    "Name": "PsList",

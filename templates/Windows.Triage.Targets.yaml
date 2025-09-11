@@ -172,6 +172,13 @@ export: |
     {{- end -}}
     {{- end }}
 
+    {{- range .TargetFiles -}}
+    {{- if .Preamble }}
+    // From {{ .Name }}
+{{ Indent .Preamble 4 -}}
+    {{- end -}}
+    {{- end }}
+
 sources:
 - name: SearchGlobs
   notebook:
@@ -247,10 +254,12 @@ sources:
       {{- if $r.VQL -}}
       {{ $r.Target }}_{{ $r.Name }}={
         SELECT * FROM if(condition={
-          SELECT *, Rule AS Type FROM AllCollections
+          SELECT * FROM AllCollections
           WHERE Rule = "{{ $r.Target }}/{{ $r.Name }}"
         }, then={
-          SELECT "{{ $r.Target }}/{{ $r.Name }}" AS Type, *
+          SELECT "{{ $r.Target }}/{{ $r.Name }}" AS Type,
+                 "{{ $r.Target }}/{{ $r.Name }}" AS Rule,
+                 *
           FROM Collect{{ $r.Target }}_{{ $r.Name }}
         })
       },

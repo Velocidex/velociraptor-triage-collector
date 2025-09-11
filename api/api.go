@@ -67,6 +67,9 @@ type TargetFile struct {
 	// Ignored
 	Version string `json:"Version,omitempty"`
 	Id      string `json:"Id,omitempty"`
+
+	// If specified we copy it into the artifact export section.
+	Preamble string `json:"Preamble,omitempty"`
 }
 
 type Config struct {
