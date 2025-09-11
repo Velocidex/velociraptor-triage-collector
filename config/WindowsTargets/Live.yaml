@@ -9,3 +9,6 @@ Targets:
 
  - Name: PrefetchBinaries
    Ref: PrefetchBinaries
+
+ - Name: LnkTargets
+   Ref: LnkTargets
