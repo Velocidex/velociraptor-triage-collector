@@ -12629,5 +12629,16 @@
      "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT * FROM pslist()\n  })\n}, query={\n   SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)\n})\n"
     }
    ]
+  },
+  "AdaptiveServices": {
+   "Name": "AdaptiveServices",
+   "Description": "Collect binaries installed as a Service",
+   "Rules": [
+    {
+     "Name": "Executables",
+     "Comment": "Includes results of Windows.System.TaskScheduler",
+     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.System.Services()\n  })\n  WHERE Row.AbsoluteExePath\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.AbsoluteExePath, Row=Row)\n})\n"
+    }
+   ]
   }
  }
