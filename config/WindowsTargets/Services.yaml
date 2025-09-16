@@ -1,0 +1,15 @@
+Name: AdaptiveServices
+Description: Collect binaries installed as a Service
+Targets:
+- Name: Executables
+  Comment: Includes results of Windows.System.TaskScheduler
+  VQL: |
+    SELECT * FROM foreach(row={
+      SELECT _value AS Row
+      FROM items(item={
+         SELECT * FROM Artifact.Windows.System.Services()
+      })
+      WHERE Row.AbsoluteExePath
+    }, query={
+      SELECT * FROM TryToDownload(OSPath=Row.AbsoluteExePath, Row=Row)
+    })

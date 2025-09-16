@@ -33,6 +33,16 @@ description: |
     This artifact was built from [The Velociraptor Triage
     Repository](https://triage.velocidex.com/docs/)
 
+  ## CollectionPolicy
+
+  The decision on whether to collect the file or simply display
+  metadata (like hash etc) is determined by the CollectionPolicy:
+
+  1. ExcludeSigned: If the file is a signed executable, we do not
+     collect it.
+  2. HashOnly: Do not collect any file - just display their hashes
+  3. AllFiles: Collect all files regardless of their types.
+
   Commit {{ .Commit }} on {{ .Time }}
 
 reference:
@@ -46,6 +56,14 @@ parameters:
       Name of the drive letter to search. You can add multiple drives
       separated with a comma.
     default: '["C:"]'
+
+  - name: CollectionPolicy
+    type: choices
+    choices:
+      - ExcludeSigned
+      - HashOnly
+      - AllFiles
+    default: ExcludeSigned
 
   - name: DropVerySlowRules
     type: bool
@@ -70,10 +88,8 @@ parameters:
 
   - name: MaxFileSize
     type: int
-    default: 100000000
     description: |
-      The max size in bytes of the individual files to collect.
-      Set to 0 to disable it (Default 100Mb).
+      The max size in bytes of the individual files to collect (Default 0 means unlimited).
 
   - name: UPLOAD_IS_RESUMABLE
     type: bool
@@ -92,6 +108,8 @@ export: |
   LET NTFS_CACHE_TIME <= 100000
   LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
   LET S = scope()
+
+  LET CollectionPolicy <= S.CollectionPolicy || "ExcludeSigned"
 
   // Helper for VQL targets - try to download the file, but if failed,
   // we return an empty row to record the filename.
@@ -181,6 +199,40 @@ export: |
      })
     })
     GROUP BY Rule, Glob
+
+    // In ExcludeSigned and HashOnly we dont upload signed binaries.
+    LET ShouldUploadSignedBinary <= dict(
+       ShouldUpload = NOT CollectionPolicy =~ "ExcludeSigned|HashOnly")
+
+    // In HashOnly mode we never upload anything.
+    LET ShouldUploadAnyFile <= dict(
+       ShouldUpload = NOT CollectionPolicy =~ "HashOnly")
+
+    LET DoNotUpload <= dict(ShouldUpload=FALSE)
+
+    // Determine if we should upload the file based on signature.
+    LET ShouldUpload(Details) = if(
+      condition=MaxFileSize > 0 AND Details.Stat.Size > MaxFileSize,
+      then= Details + DoNotUpload,
+      else=if(
+       // What to do about binaries? If they have an issuer name then
+       // they are signed.
+       condition=Details.Signatures.IssuerName,
+       then=Details + ShouldUploadSignedBinary,
+       else=Details + ShouldUploadAnyFile))
+
+    // If the file is a binary, also add authenticode information.
+    LET MaybeBinary(OSPath, Details) = ShouldUpload(Details=if(
+       condition=Details.Magic =~ "PE.+executable",
+       then=Details + dict(Signatures=authenticode(filename=OSPath)),
+       else=Details))
+
+    // Calculate the details column with hashes and magic.
+    LET GetDetails(OSPath, Accessor) = MaybeBinary(
+       OSPath=OSPath,
+       Details=dict(Hashes=hash(path=OSPath, accessor=Accessor),
+                    Stat=stat(filename=OSPath, accessor=Accessor),
+                    Magic=magic(path=OSPath, accessor=Accessor)))
 
     {{ range $idx, $r := .Rules -}}
     {{- if $r.VQL -}}
@@ -310,11 +362,8 @@ sources:
       {{- end }}
       Globs=AllGlobs
     )
-    WHERE log(level="INFO", message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
-    AND if(condition= Size <= MaxFileSize,
-           then=TRUE,
-           else=log(level="WARN", message="Skipping file %v (Size %v) Due to MaxFileSize",
-                    dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
+    WHERE log(level="INFO", message="Found %v for rule %v", args=[
+              SourceFile, Rule], dedup=10)
 
     SELECT * FROM AllResults
 {{ range $idx, $r := .Rules -}}
@@ -333,31 +382,40 @@ sources:
 
 - name: Uploads
   query: |
-    LET UploadOrHash(SourceFile, Accessor, Modified) = if(condition=UPLOAD_IS_RESUMABLE,
-     then=dict(Path= stat(filename=SourceFile, accessor=Accessor).OSPath,
-               sha256=hash(path= SourceFile, accessor=Accessor).SHA256,
-               Upload=upload(file=SourceFile, accessor=Accessor, mtime=Modified)),
-     else=upload(file=SourceFile, accessor=Accessor, mtime=Modified))
+    // Initialize libmagic before we call it from multiple threads.
+    LET _ <= magic(path="", accessor="data")
 
-    -- Upload the files. Split into workers so the files are uploaded in parallel.
+    -- Upload the files. Split into workers so the files are uploaded
+    -- in parallel.
     LET uploaded_files = SELECT *
     FROM foreach(row={
-       SELECT * FROM AllResults
-       WHERE Size > 0 AND Size < MaxFileSize
+       SELECT *
+       FROM AllResults
+       WHERE Size > 0
        },
           workers=30,
+
+          // Do the heavy lifting in a thread
           query={
-            SELECT now() AS CopiedOnTimestamp,
-                   Created,
-                   Changed,
-                   LastAccessed,
-                   Modified,
-                   SourceFile,
-                   Size,
-                   UploadOrHash(SourceFile=SourceFile,
-                                Accessor=Accessor,
-                                Modified=Modified) AS Upload
-            FROM scope()
+            SELECT * FROM foreach(row={
+              SELECT GetDetails(OSPath=SourceFile,
+                                  Accessor=Accessor) AS Details
+              FROM scope()
+            }, query={
+              SELECT timestamp(epoch=now()) AS CopiedOnTimestamp,
+                     Created,
+                     Changed,
+                     LastAccessed,
+                     Modified,
+                     SourceFile,
+                     Size,
+                     Details,
+                     if(condition=Details.ShouldUpload,
+                        then=upload(file=SourceFile,
+                                    accessor=Accessor,
+                                    mtime=Modified)) AS Upload
+              FROM scope()
+          })
       })
 
     -- Separate the hashes into their own column.
@@ -365,11 +423,13 @@ sources:
            SourceFile,
            Upload.Path AS DestinationFile,
            Size AS FileSize,
-           Upload.sha256 AS SourceFileSha256,
+           Details.Hash.SHA256 AS SourceFileSha256,
            Created,
            Changed,
            Modified,
-           LastAccessed
+           LastAccessed,
+           Details,
+           Upload
     FROM uploaded_files
 
   notebook:
