@@ -1,6 +1,8 @@
 module github.com/Velocidex/velociraptor-triage-collector
 
-go 1.23.2
+go 1.24.0
+
+toolchain go1.24.7
 
 require (
 	github.com/Velocidex/ordereddict v0.0.0-20250811072607-2630ed0484d0
@@ -31,7 +33,7 @@ require (
 	github.com/spf13/cast v1.7.0 // indirect
 	github.com/xhit/go-str2duration/v2 v2.1.0 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/sys v0.23.0 // indirect
+	golang.org/x/sys v0.36.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
