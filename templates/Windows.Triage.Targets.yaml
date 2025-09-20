@@ -91,16 +91,37 @@ parameters:
     description: |
       The max size in bytes of the individual files to collect (Default 0 means unlimited).
 
+  - name: MaxHashSize
+    type: int
+    default: "100000000"
+    description: |
+      The max size in bytes of the individual files to hash.
+
   - name: UPLOAD_IS_RESUMABLE
     type: bool
     default: Y
     description: |
       If set the uploads can be resumed if the flow times out or
       errors.
-{{ range .TargetFiles }}
-  - name: {{ .Name }}
-    description: "{{ .Description }}"
-    type: bool
+
+  - name: HighLevelTargets
+    description: A shorter list of Meta-Targets
+    type: multichoice
+    default: "[]"
+    choices:
+{{- range .TargetFiles }}
+    {{- if hasPrefix "_" .Name }}
+    - {{ .Name -}}
+    {{ end -}}
+{{ end }}
+
+  - name: Targets
+    type: multichoice
+    description: All targets available
+    default: "[]"
+    choices:
+{{- range .TargetFiles }}
+    - {{ .Name -}}
 {{ end }}
 
 export: |
@@ -227,10 +248,16 @@ export: |
        then=Details + dict(Signatures=authenticode(filename=OSPath)),
        else=Details))
 
+    // Hash the file if it is not too large
+    LET MaybeHash(OSPath, Accessor) = if(
+      condition=stat(filename=OSPath, accessor=Accessor).Size < MaxHashSize,
+      then=hash(path=OSPath, accessor=Accessor),
+      else=log(message="Skipped hashing %v", args=OSPath, dedup=-1) && dict())
+
     // Calculate the details column with hashes and magic.
     LET GetDetails(OSPath, Accessor) = MaybeBinary(
        OSPath=OSPath,
-       Details=dict(Hashes=hash(path=OSPath, accessor=Accessor),
+       Details=dict(Hashes=MaybeHash(OSPath=OSPath, Accessor=Accessor),
                     Stat=stat(filename=OSPath, accessor=Accessor),
                     Magic=magic(path=OSPath, accessor=Accessor)))
 
@@ -254,7 +281,12 @@ sources:
   notebook:
     - type: none
   query: |
-    LET AllCollections <= Collections(Targets=scope())
+    LET Targets <= to_dict(item={
+      SELECT _value AS _key, TRUE AS _value
+      FROM foreach(row=Targets + HighLevelTargets)
+    })
+
+    LET AllCollections <= Collections(Targets=Targets)
 
     SELECT * FROM AllCollections
     --WHERE Glob
@@ -399,7 +431,7 @@ sources:
           query={
             SELECT * FROM foreach(row={
               SELECT GetDetails(OSPath=SourceFile,
-                                  Accessor=Accessor) AS Details
+                                Accessor=Accessor) AS Details
               FROM scope()
             }, query={
               SELECT timestamp(epoch=now()) AS CopiedOnTimestamp,
