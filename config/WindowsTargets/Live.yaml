@@ -12,3 +12,6 @@ Targets:
 
  - Name: LnkTargets
    Ref: LnkTargets
+
+ - Name: AdaptiveServices
+   Ref: AdaptiveServices

@@ -18,6 +18,6 @@ Queries:
   # when selecting a high level rule.
   - |
     SELECT *
-    FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", _KapeTriage=TRUE)
+    FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", Targets=["_KapeTriage",])
     WHERE Glob =~ "prefetch"
     ORDER BY Glob

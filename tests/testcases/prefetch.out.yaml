@@ -122,7 +122,7 @@ Output: [
 # The artifact itself should include two glob rules for prefetch
 # when selecting a high level rule.
 Query: SELECT *
-FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", _KapeTriage=TRUE)
+FROM Artifact.Windows.Triage.Targets(source="SearchGlobs", Targets=["_KapeTriage",])
 WHERE Glob =~ "prefetch"
 ORDER BY Glob
 

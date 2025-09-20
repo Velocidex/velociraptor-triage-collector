@@ -12,6 +12,12 @@ Output: [
  },
  {
   "Target": "_Live",
+  "Rule": "AdaptiveServices",
+  "Glob": "",
+  "Ref": "AdaptiveServices"
+ },
+ {
+  "Target": "_Live",
   "Rule": "LnkTargets",
   "Glob": "",
   "Ref": "LnkTargets"
@@ -36,6 +42,10 @@ GROUP BY Rule, Glob
 Output: [
  {
   "Rule": "AdaptiveScheduledTasks/Commands",
+  "Glob": ""
+ },
+ {
+  "Rule": "AdaptiveServices/Executables",
   "Glob": ""
  },
  {

@@ -14,6 +14,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/Velocidex/velociraptor-triage-collector/api"
 )
 
@@ -121,7 +122,9 @@ func calculateTemplate(template_str string, params *ArtifactContent) (string, er
 		},
 	}
 
-	templ, err = template.New("").Funcs(funcMap).Parse(template_str)
+	templ, err = template.New("").
+		Funcs(sprig.TxtFuncMap()).
+		Funcs(funcMap).Parse(template_str)
 	if err != nil {
 		return "", err
 	}
