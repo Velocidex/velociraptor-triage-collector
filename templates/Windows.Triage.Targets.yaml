@@ -128,7 +128,12 @@ export: |
   LET VQL_MATERIALIZE_ROW_LIMIT <= 10000
   LET NTFS_CACHE_TIME <= 100000
   LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
+
   LET S = scope()
+
+  // Only enable resuming if the upload() plugin version is recent
+  // enough. Earlier versions could lead to crashes in some cases.
+  LET UPLOAD_IS_RESUMABLE <= S.UPLOAD_IS_RESUMABLE && version(function="upload") > 1
 
   LET CollectionPolicy <= S.CollectionPolicy || "ExcludeSigned"
 
