@@ -25,6 +25,9 @@ type Compiler struct {
 	template string
 
 	logger *log.Logger
+
+	// Dependent artifacts
+	deps map[string]bool
 }
 
 // Load the targets from the directory recursively.
@@ -266,6 +269,7 @@ func NewCompiler(config_path string, logger *log.Logger) (*Compiler, error) {
 	res := &Compiler{
 		targets: ordereddict.NewDict(), // make(map[string]*TargetFile),
 		logger:  logger,
+		deps:    make(map[string]bool),
 	}
 
 	return res, res.loadConfig(config_path)

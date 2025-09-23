@@ -42,6 +42,8 @@ type ArtifactContent struct {
 	TargetFiles []*TargetCSV
 
 	Config *api.Config
+
+	Dependencies map[string]bool
 }
 
 func readFile(args ...interface{}) interface{} {
@@ -148,9 +150,10 @@ func (self *Compiler) GetCommit() string {
 
 func (self *Compiler) GetArtifact() (string, error) {
 	params := &ArtifactContent{
-		Time:   time.Now().UTC().Format(time.RFC3339),
-		Commit: self.GetCommit(),
-		Config: self.config_obj,
+		Time:         time.Now().UTC().Format(time.RFC3339),
+		Commit:       self.GetCommit(),
+		Config:       self.config_obj,
+		Dependencies: self.deps,
 	}
 
 	for _, target_file_any := range self.targets.Values() {
@@ -171,6 +174,10 @@ func (self *Compiler) GetArtifact() (string, error) {
 				Ref:         sanitize(t.Ref),
 				VQL:         t.VQL,
 			})
+
+			if t.VQL != "" {
+				self.GetDependentArtifacts(t.VQL)
+			}
 		}
 	}
 
@@ -187,6 +194,17 @@ func (self *Compiler) GetArtifact() (string, error) {
 	})
 
 	return calculateTemplate(self.template, params)
+}
+
+var (
+	artifact_in_query_regex = regexp.MustCompile(`Artifact\.([^\s\(]+)\(`)
+)
+
+func (self *Compiler) GetDependentArtifacts(query string) {
+	for _, hit := range artifact_in_query_regex.FindAllStringSubmatch(query, -1) {
+		artifact_name := hit[1]
+		self.deps[artifact_name] = true
+	}
 }
 
 func indent(in string, indent int) string {
