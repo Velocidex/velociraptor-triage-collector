@@ -100,10 +100,16 @@ parameters:
     default: Y
     description: Ignore inefficient targets
 
+  - name: TrustedPathRegex
+    type: regex
+    default: ^C:\\\\Windows\\\\
+    description: |
+      Do not hash or upload any adaptive files matching this regex.
+
   - name: MaxFileSize
     type: int
     description: |
-      The max size in bytes of the individual files to collect (Default 0 means unlimited).
+      The max size in bytes of the individual files to collect (Default 100Mb).
 
   - name: MaxHashSize
     type: int
@@ -127,12 +133,21 @@ parameters:
       that when using VSS analysis we have to use the ntfs accessor
       for everything which will be much slower.
 
+  - name: Verbose
+    type: bool
+    description: |
+      Add Verbose debugging logs
+
 export: |
   LET VQL_MATERIALIZE_ROW_LIMIT <= 10000
   LET NTFS_CACHE_TIME <= 100000
   LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
 
   LET S = scope()
+  LET Verbose <= S.Verbose || FALSE
+  LET MaybeLOG(Message, Args) = if(condition=Verbose,
+     then=log(message=Message, level="DEBUG", dedup= -1, args=Args),
+     else=TRUE)
 
   // Only enable resuming if the upload() plugin version is recent
   // enough. Earlier versions could lead to crashes in some cases.
@@ -142,7 +157,9 @@ export: |
 
   // Helper for VQL targets - try to download the file, but if failed,
   // we return an empty row to record the filename.
-  LET TryToDownload(OSPath, Row) = SELECT * FROM switch(
+  LET TryToDownload(OSPath, Row) = SELECT *,
+     Data + dict(Details=GetDetails(OSPath=OSPath) || dict()) AS Data
+  FROM switch(
   a={
     SELECT *, "auto" AS Accessor, Row AS Data
     FROM stat(filename=OSPath, accessor="auto")
@@ -188,8 +205,11 @@ export: |
        SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
      })
      WHERE if(condition=Glob =~ SlowGlobRegex,
-              then=log(level="INFO", message="Dropping rule %v/%v because it is too slow: %v",
-                       dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
+              then=log(
+                level="INFO",
+                message="Dropping rule %v/%v because it is too slow: %v",
+                dedup=-1,
+                args=[Target, Rule, Glob]) AND FALSE,
               else=TRUE)
 
   LET Expand(FilteredTable) = SELECT * FROM foreach(
@@ -197,8 +217,9 @@ export: |
   query={
     -- If there is a reference, resolve it from the table recursively.
     SELECT *
-    FROM if(condition=Ref AND log(level="DEBUG", message="%v/%v: Resolving Ref %v",
-         dedup=-1, args=[Target, Rule, Ref]),
+    FROM if(condition=Ref AND MaybeLOG(
+       Message="%v/%v: Resolving Ref %v",
+       Args=[Target, Rule, Ref]),
     then={
        SELECT * FROM Expand(
           FilteredTable={
@@ -206,10 +227,9 @@ export: |
           })
     }, else={
        SELECT Target, Rule, Glob FROM scope()
-       WHERE if(condition=Glob,
-         then=log(level="DEBUG", message="%v/%v: Glob is %v",
-                  args=[Target, Rule, Glob], dedup=-1),
-         else=TRUE)
+       WHERE (Glob && MaybeLOG(
+         Message="%v/%v: Glob is %v",
+         Args=[Target, Rule, Glob])) || TRUE
     })
   })
 
@@ -223,8 +243,9 @@ export: |
      FROM flatten(query={
        SELECT * FROM TargetTable
        WHERE get(item=Targets, field=Target)
-        AND log(level="INFO", message="Collecting target %v, Rules: %v",
-             args=[Target, Rules.Rule], dedup=-1)
+       AND MaybeLOG(
+         Message="Collecting target %v, Rules: %v",
+         Args=[Target, Rules.Rule])
      })
     })
     GROUP BY Rule, Glob
@@ -241,7 +262,8 @@ export: |
 
     // Determine if we should upload the file based on signature.
     LET ShouldUpload(Details) = if(
-      condition=MaxFileSize > 0 AND Details.Stat.Size > MaxFileSize,
+      condition=OSPath =~ TrustedPathRegex AND
+                MaxFileSize > 0 AND Details.Stat.Size > MaxFileSize,
       then= Details + DoNotUpload,
       else=if(
        // What to do about binaries? If they have an issuer name then
@@ -256,18 +278,40 @@ export: |
        then=Details + dict(Signatures=authenticode(filename=OSPath)),
        else=Details))
 
+
     // Hash the file if it is not too large
-    LET MaybeHash(OSPath, Accessor) = if(
-      condition=stat(filename=OSPath, accessor=Accessor).Size < MaxHashSize,
-      then=hash(path=OSPath, accessor=Accessor),
-      else=log(message="Skipped hashing %v", args=OSPath, dedup=-1) && dict())
+    LET MaybeHash(OSPath, Details) = if(
+      condition=NOT OSPath =~ TrustedPathRegex AND
+            Details.Stat AND Details.Stat.Size < MaxHashSize,
+      then=Details + dict(Hashes=hash(path=OSPath),
+                          Magic=magic(path=OSPath)),
+      else=Details)
 
     // Calculate the details column with hashes and magic.
-    LET GetDetails(OSPath, Accessor) = MaybeBinary(
+    LET _GetDetails(OSPath) = MaybeBinary(
        OSPath=OSPath,
-       Details=dict(Hashes=MaybeHash(OSPath=OSPath, Accessor=Accessor),
-                    Stat=stat(filename=OSPath, accessor=Accessor),
-                    Magic=magic(path=OSPath, accessor=Accessor)))
+       Details=MaybeHash(
+         OSPath=OSPath,
+         Details=dict(filename=OSPath,
+                      Stat=OSPath && stat(filename=OSPath))))
+
+    // Cache the hashing for speedup.
+    LET GetDetails(OSPath) = cache(
+       func= _GetDetails(OSPath=OSPath),
+       name="GetDetails", key=OSPath.String)
+
+    LET _ExpandedTransforms <= dict(
+        `^\\\\SystemRoot\\\\`="%SystemRoot%\\",
+        `^system32\\\\`="%SystemRoot%\\System32\\",
+        `^{.+}.+`="\\$0",
+        `^C:\\\\Program Files[^\\\\]*\\\\[^ ]+`='"$0"',
+        `^%[^ ]+%[^ ]+`='"$0"'
+      )
+
+    // Extract the binary from the command line
+    LET ExpandPath(Path) = lowcase(string=commandline_split(
+    command=expand(path=regex_transform(source=Path,
+      map=_ExpandedTransforms)))[0])
 
     {{ range $idx, $r := .Rules -}}
     {{- if $r.VQL -}}
@@ -345,9 +389,9 @@ sources:
     LET AutoGlobs = SELECT * FROM AllCollections
        WHERE Glob AND ( Glob =~ "\\$Recycle.Bin" OR NOT Glob =~ "[:$]" )
 
-    LET _ <= if(condition=MaxFileSize > 0,
-                then=log(level="INFO", message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
-                         args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
+    LET _ <= MaxFileSize > 0 && MaybeLOG(
+      Message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
+      Args=[MaxFileSize, humanize(bytes=MaxFileSize)])
 
     LET PreferredAccessor <= if(
        condition=VSS_MAX_AGE_DAYS > 0,
@@ -395,8 +439,9 @@ sources:
         SELECT * FROM if(condition={
           SELECT * FROM AllCollections
           WHERE Rule = "{{ $r.Target }}/{{ $r.Name }}"
-           AND log(message="Collecting Custom VQL Rule {{ $r.Target }}/{{ $r.Name }}",
-                   dedup= -1 )
+            AND MaybeLOG(
+              Message="Collecting Custom VQL Rule %s",
+              Args="{{ $r.Target }}/{{ $r.Name }}")
         }, then={
           SELECT "{{ $r.Target }}/{{ $r.Name }}" AS Type,
                  "{{ $r.Target }}/{{ $r.Name }}" AS Rule,
@@ -444,8 +489,7 @@ sources:
           // Do the heavy lifting in a thread
           query={
             SELECT * FROM foreach(row={
-              SELECT GetDetails(OSPath=SourceFile,
-                                Accessor=Accessor) AS Details
+              SELECT GetDetails(OSPath=SourceFile) AS Details
               FROM scope()
             }, query={
               SELECT timestamp(epoch=now()) AS CopiedOnTimestamp,
@@ -523,3 +567,7 @@ sources:
 column_types:
 - name: CopiedOnTimestamp
   type: timestamp
+- name: Data
+  type: json/1
+- name: Details
+  type: json/1

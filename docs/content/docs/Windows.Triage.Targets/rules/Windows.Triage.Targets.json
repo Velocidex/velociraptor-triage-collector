@@ -12571,7 +12571,7 @@
     {
      "Name": "Commands",
      "Comment": "Includes results of Windows.System.TaskScheduler",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.System.TaskScheduler()\n  })\n  WHERE Row.Command\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.Command, Row=Row)\n})\n"
+     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n   SELECT * FROM Artifact.Windows.System.TaskScheduler()\n  })\n  WHERE Row.Command\n}, query={\n   SELECT * FROM TryToDownload(OSPath=ExpandPath(Path=Row.Command), Row=Row)\n})\n"
     }
    ]
   },
