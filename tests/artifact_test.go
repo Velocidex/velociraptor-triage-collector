@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	VelociraptorUrl        = "https://github.com/Velocidex/velociraptor/releases/download/v0.75/velociraptor-v0.75.1-linux-amd64-musl"
+	VelociraptorUrl        = "https://github.com/Velocidex/velociraptor/releases/download/v0.75/velociraptor-v0.75.2-linux-amd64-musl"
 	VelociraptorBinaryPath = "./velociraptor.bin"
 )
 
@@ -64,6 +64,8 @@ func (self *TestSuite) TestGolden() {
 
 	test_cases, err := filepath.Abs(filepath.Join(cwd, "./testcases/"))
 	assert.NoError(t, err)
+
+	os.Setenv("X", "testEnv")
 
 	argv := []string{
 		"--definitions", "../output", "-v",
