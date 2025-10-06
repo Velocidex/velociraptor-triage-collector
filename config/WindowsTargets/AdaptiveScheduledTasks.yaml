@@ -7,9 +7,9 @@ Targets:
     SELECT * FROM foreach(row={
       SELECT _value AS Row
       FROM items(item={
-         SELECT * FROM Artifact.Windows.System.TaskScheduler()
+       SELECT * FROM Artifact.Windows.System.TaskScheduler()
       })
       WHERE Row.Command
     }, query={
-      SELECT * FROM TryToDownload(OSPath=Row.Command, Row=Row)
+       SELECT * FROM TryToDownload(OSPath=ExpandPath(Path=Row.Command), Row=Row)
     })

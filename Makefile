@@ -34,4 +34,7 @@ test:
 	go test -v ./tests -test.count 1
 
 golden:
-	cd tests && ./velociraptor.bin --definitions ../output -v --config test.config.yaml golden ./testcases
+	cd tests && X=testEnv ./velociraptor.bin --definitions ../output -v --config test.config.yaml golden ./testcases --filter=${GOLDEN}
+
+verify: compile
+	./tests/velociraptor.bin artifacts verify ./output/*.yaml

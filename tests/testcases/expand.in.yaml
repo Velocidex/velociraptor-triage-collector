@@ -1,0 +1,18 @@
+Parameters:
+  Cases: |
+    [{"Path":"\\SystemRoot\\System32\\notepad.exe"},
+     {"Path":"C:\\Program Files\\Windows\\notepad.exe -foo -bar"},
+     {"Path":"C:\\Program Files\\Windows\\notepad.exe"},
+     {"Path":"%X%\\notepad.exe"},
+     {"Path":"\"%X%\\System32\\msiexec.exe\" /i \"%1\" %*"},
+     {"Path":"%X%\\notepad.exe -k -j"}
+    ]
+
+
+Queries:
+  - LET _ <= import(artifact="Windows.Triage.Targets")
+  # ExpandPath() extracts the binary which is the first element of the
+  # command line. There are some weird edge cases with that so we test
+  # it here. Command Lines may be expanded from environment variables
+  # and Windows space expansion is inconsistent and unexpected.
+  - SELECT ExpandPath(Path=Path) FROM parse_json_array(data=Cases)

@@ -29,6 +29,13 @@
 let all_data = [];
 let data_lookup = {};
 
+function trimHash(input) {
+  if(input.startsWith("#")) {
+      return input.slice(1)
+  };
+  return input;
+}
+
 $.ajax({
     url: {{ .Get 0 }},
 }).done(function( data ) {
@@ -37,6 +44,14 @@ $.ajax({
     for (const [key, value] of Object.entries(data)) {
         all_data.push(value);
     }
+
+  let input = document.getElementById('myInput');
+  if(input) {
+      input.value = trimHash(decodeURI(window.location.hash));
+      doSearch();
+      return;
+  };
+
     DrawResults(all_data);
 });
 
@@ -214,13 +229,15 @@ function doSearch() {
   let input = document.getElementById('myInput');
   let filter = input.value.toUpperCase();
 
+  window.location.hash = encodeURI(input.value);
+
   let result = [];
   for(let i=0;i<all_data.length; i++) {
       let item = all_data[i];
       if (matchItem(filter, item)) {
           result.push(item);
       };
-      if (result.length > 50) {
+      if (result.length > 500) {
           break;
       }
   };
@@ -232,9 +249,13 @@ function DrawResults(data) {
     $(".search_results").empty();
     $("span.total-count").text("Total " + data.length);
 
+    data = data.sort(function(a,b) {
+        return a.Name < b.Name ? -1 : 1;
+    });
+
     let most_results = data.length;
-    if(most_results > 50) {
-        most_results = 50;
+    if(most_results > 500) {
+        most_results = 500;
     }
 
   for(let i=0;i<most_results; i++) {
@@ -243,6 +264,9 @@ function DrawResults(data) {
 <div class="panel panel-default color">
   <div class="panel-heading color">
     <h3 class="panel-title color " >
+      <a class="new-tab" href="#" title="NewPage" target="_blank">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
       <a class="summary" href="" title="Expand Globs">
         <i class="fa-solid fa-list-check"></i>
       </a>
@@ -262,6 +286,11 @@ function DrawResults(data) {
 </div>`);
 
       template.find(".title").append(item.Name);
+      let link = new URL(window.location.href);
+      link.hash = encodeURI(item.Name);
+      template.find("a.new-tab").attr("href", link);
+
+
       template.find(".author").append(item.Author);
       template.find(".description").append(item.Description);
       template.find(".title").attr("href", item.link).click(function() {
