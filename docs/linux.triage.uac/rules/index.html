@@ -1,0 +1,67 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  Linux.Triage.UAC
+  #
+
+Search the rules incorporated into the Linux.Triage.UAC artifact below.
+
+
+
+
+  
+  
+  
+  
+    
+  
+
+
+
+
+
+
+"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://triage.velocidex.com/docs/linux.triage.uac/rules/"><meta property="og:site_name" content="Triage Artifacts"><meta property="og:title" content="Rules"><meta property="og:description" content="Linux.Triage.UAC # Search the rules incorporated into the Linux.Triage.UAC artifact below."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><title>&lt;span class="icon">
+&lt;i class="fa-solid fa-book">&lt;/i>
+&lt;/span>
+Rules
+| Triage Artifacts</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=http://triage.velocidex.com/docs/linux.triage.uac/rules/><link rel=stylesheet href=/book.min.f4bc2b0f80cbd784c51fa6123079c0ec4d90946148cb1cc5e0279ca61d81a19d.css integrity="sha256-9LwrD4DL14TFH6YSMHnA7E2QlGFIyxzF4Cecph2BoZ0=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=http://triage.velocidex.com/docs/linux.triage.uac/rules/index.xml title="Triage Artifacts"><script src=/js/jquery-3.3.1.min.js?1703133391></script><link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css?1703133392 rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css rel=stylesheet><script src=//cdn.datatables.net/2.3.0/js/dataTables.min.js></script><link href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js integrity="sha512-0UbR6HN0dY8fWN9T7fF658896tsPgnbRREHCNq46J9/JSn8GonXDZmqtTc3qS879GM0zV49b9LPhdc/maKP8Kg==" crossorigin=anonymous referrerpolicy=no-referrer></script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css integrity="sha512-56GJrpSgHk6Mc9Fltt+bQKcICJoEpxtvozXPA5n5OT0rfWiqGlJmJCI/vl16kctf/0XbBloh03vl7OF2xFnR8g==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css rel=stylesheet><script>$(document).ready(function(){$(".json-renderer").each(function(){try{data=JSON.parse($(this).text()),$(this).jsonViewer(data,{collapsed:!0,rootCollapsable:!1})}catch{}}),$(".datatable").each(function(){new DataTable(this,{paging:!0})}),$(".scroll-datatable").each(function(){let e=$(this),t=new DataTable(this,{paging:!1,scrollY:200})})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Triage Artifacts</span></a></h2><ul><li><a href=/docs/triage_artifacts/>Preservation Artifacts</a><ul></ul></li><li><a href=/docs/linux.triage.uac/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</a><ul><li><a href=/docs/linux.triage.uac/rules/ class=active><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/windows.triage.targets/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</a><ul><li><a href=/docs/windows.triage.targets/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/github/><span class=icon><i class="fa-brands fa-github"></i>
+</span>Github</a><ul></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</h3><label for=toc-control></label></div></header><article class="markdown book-article"><h1 id=linuxtriageuac>Linux.Triage.UAC
+<a class=anchor href=#linuxtriageuac>#</a></h1><p>Search the rules incorporated into the <a href=http://triage.velocidex.com/docs/linux.triage.uac/>Linux.Triage.UAC</a> artifact below.</p><script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js></script><div class=input-group><span class=input-group-addon id=clear><i class="fas fa-xmark"></i>
+</span><input type=text id=myInput onkeyup=doSearch() class=form-control placeholder="Search targets" aria-describedby=basic-addon2>
+<span class=input-group-addon id=basic-addon2><i class="fas fa-search"></i>
+<span class=total-count></span></span></div><hr><div class=search_results></div><script>$("#clear").click(function(){let e=$(this).next("input");e&&(e.val(""),doSearch())});let all_data=[],data_lookup={};function trimHash(e){return e.startsWith("#")?e.slice(1):e}$.ajax({url:"Linux.Triage.UAC.json"}).done(function(e){all_data=[],data_lookup=e;for(const[n,t]of Object.entries(e))all_data.push(t);let t=document.getElementById("myInput");if(t){t.value=trimHash(decodeURI(window.location.hash)),doSearch();return}DrawResults(all_data)});function matchItem(e,t){let s=t.Description||"",o=t.Name||"";if(o.toUpperCase().includes(e)||s.toUpperCase().includes(e))return!0;let n=[];t.Category&&n.push(t.Category);for(let t=0;t<n.length;t++)if(n[t].toUpperCase().includes(e))return!0;return!1}const linebreak=new RegExp(`[\\n\\r]`);function addRow(e,t,n){if(n||(n=""),linebreak.test(t)){let s=t.split(`
+`);for(let e=0;e<s.length;e++)s[e]=n+"  "+s[e];return`
+`+n+e+`: |
+`+n+s.join(`
+`)}return`
+`+n+e+": "+t}function buildDescript(e,t,n){let o=n+" ",s="";e.Name&&(s+=n+addRow("Name",e.Name,n)),e.Description&&(s+=n+addRow("Description",e.Description,n)),e.Author&&(s+=n+addRow("Author",e.Author,n)),e.Preamble&&(s+=n+addRow("Preamble",e.Preamble,n)),s+=n+addRow("Rules","",n);for(let i=0;i<e.Rules.length;i++){let t=e.Rules[i];t.Name&&(s+=n+addRow("Name",t.Name,o)),t.Comment&&(s+=n+addRow("Comment",t.Comment,o)),t.Category&&(s+=n+addRow("Category",t.Category,o)),t.Glob&&(s+=n+addRow("Glob",t.Glob,o)),t.Ref&&(s+=n+addRow("Reference",t.Ref,o)),t.VQL&&(s+=n+addRow("VQL",t.VQL,o)),s+=`
+`+n}return s}function buildGlobs(e,t){let n="";for(let o=0;o<e.Rules.length;o++){let s=e.Rules[o];if(s.Glob&&(n+=addRow(e.Name+"/"+s.Name,s.Glob)),s.VQL&&(n+=addRow(e.Name+"/"+s.Name,s.VQL)),s.Ref){let e=data_lookup[s.Ref];e&&(n+=buildGlobs(e,t))}}return n}function insertRule(e,t,n,s){s||(s="");let o=$(e).find("p.description");if(!o.length)return;let i=e.find("pre");if(i.length>0){i.remove(),o.show();return}o.hide();let a=buildDescript(t,n,""),r=hljs.highlight(a,{language:"yaml"}),c=$("<pre>").append($("<code>").append(r.value));return o.after(c),!1}function insertSummary(e,t,n,s){s||(s="");let o=$(e).find("p.description");if(!o.length)return;let i=e.find("pre");if(i.length>0){i.remove(),o.show();return}o.hide();let a=buildGlobs(t,n),r=hljs.highlight(a,{language:"yaml"}),c=$("<pre>").append($("<code>").append(r.value));return o.after(c),!1}function doSearch(){let t=document.getElementById("myInput"),n=t.value.toUpperCase();window.location.hash=encodeURI(t.value);let e=[];for(let t=0;t<all_data.length;t++){let s=all_data[t];if(matchItem(n,s)&&e.push(s),e.length>500)break}DrawResults(e)}function DrawResults(e){$(".search_results").empty(),$("span.total-count").text("Total "+e.length),e=e.sort(function(e,t){return e.Name<t.Name?-1:1});let t=e.length;t>500&&(t=500);for(let o=0;o<t;o++){let n=e[o],s=$(`
+<div class="panel panel-default color">
+  <div class="panel-heading color">
+    <h3 class="panel-title color " >
+      <a class="new-tab" href="#" title="NewPage" target="_blank">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+      <a class="summary" href="" title="Expand Globs">
+        <i class="fa-solid fa-list-check"></i>
+      </a>
+      <a class="title" href="" title="View Definition"></a>
+      <div class="author pull-right"></div>
+    </h3>
+  </div>
+  <div class="panel-body color">
+    <div class="border color">
+       <div class="border color">
+         <div class="idea-inner-text-main color">
+           <p class="description "></p>
+           <p class="idea-tag space"></p>
+         </div>
+       </div>
+    </div>
+</div>`);s.find(".title").append(n.Name);let i=new URL(window.location.href);i.hash=encodeURI(n.Name),s.find("a.new-tab").attr("href",i),s.find(".author").append(n.Author),s.find(".description").append(n.Description),s.find(".title").attr("href",n.link).click(function(){return insertRule(s,n,e,""),!1}),s.find(".summary").attr("href",n.link).click(function(){return insertSummary(s,n,e,""),!1});let a={};for(let e=0;e<n.Rules.length;e++){let t=n.Rules[0];t.Category&&(a[t.Category]=!0)}for(const[e,n]of Object.entries(a)){let t=$(`
+<a class="space tag"><i class="linkcolour label label-success">`+e+`</i></a>`).click(function(){document.getElementById("myInput").value=e,doSearch()});s.find(".idea-tag").append(t)}let r=$(".search_results").append(s)}}$(function(){$(document).tooltip()})</script></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div></main></body></html>
