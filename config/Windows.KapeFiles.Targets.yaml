@@ -10,8 +10,9 @@ Description: |
 
 TargetDirectories:
   - KapeFiles/Targets/
+  - config/WindowsTargets/
 
-ArtifactTemplate: templates/Windows.Triage.Targets.yaml
+ArtifactTemplate: templates/Windows.KapeFiles.Targets.yaml
 
 RegExToGlob:
   "*.+\\.(db|db-wal|db-shm)": "*.{db,db-wal,db-shm}"
