@@ -146,6 +146,9 @@ export: |
   LET NTFS_CACHE_TIME <= 100000
   LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
 
+  // Initialize libmagic before we call it from multiple threads.
+  LET _ <= magic(path="", accessor="data")
+
   LET S = scope()
   LET Verbose <= S.Verbose || FALSE
   LET MaybeLOG(Message, Args) = if(condition=Verbose,
@@ -477,9 +480,6 @@ sources:
 
 - name: Uploads
   query: |
-    // Initialize libmagic before we call it from multiple threads.
-    LET _ <= magic(path="", accessor="data")
-
     -- Upload the files. Split into workers so the files are uploaded
     -- in parallel.
     LET uploaded_files = SELECT *
@@ -487,6 +487,7 @@ sources:
        SELECT *
        FROM AllResults
        WHERE Size > 0
+       GROUP BY SourceFile
        },
           workers=30,
 
