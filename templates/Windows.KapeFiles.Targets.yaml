@@ -252,6 +252,7 @@ sources:
        SELECT *
        FROM AllResults
        WHERE Size > 0
+       GROUP BY SourceFile
        },
           workers=30,
 
