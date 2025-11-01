@@ -12571,7 +12571,7 @@
     {
      "Name": "Commands",
      "Comment": "Includes results of Windows.System.TaskScheduler",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n   SELECT * FROM Artifact.Windows.System.TaskScheduler()\n  })\n  WHERE Row.Command\n}, query={\n   SELECT * FROM TryToDownload(OSPath=ExpandPath(Path=Row.Command), Row=Row)\n})\n"
+     "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n   SELECT * FROM Artifact.Windows.System.TaskScheduler()\n  })\n  WHERE Row.Command\n}, query={\n   SELECT * FROM TryToDownload(OSPath=ExpandPath(Path=Row.Command), Row=Row)\n})\n"
     }
    ]
   },
@@ -12607,7 +12607,7 @@
    "Rules": [
     {
      "Name": "Targets",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.Forensics.Lnk(\n        UploadLnk=TRUE,\n        TargetGlob='''C:\\{ProgramData,Users\\*\\AppData\\*}\\Microsoft\\Windows\\{Start Menu\\Programs\\StartUp,Recent\\**}\\*.lnk'''\n     )\n  })\n  WHERE Row.LinkTarget.LinkTarget\n}, query= {\n  SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)\n})\n"
+     "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.Forensics.Lnk(\n        UploadLnk=TRUE,\n        TargetGlob='''C:\\{ProgramData,Users\\*\\AppData\\*}\\Microsoft\\Windows\\{Start Menu\\Programs\\StartUp,Recent\\**}\\*.lnk'''\n     )\n  })\n  WHERE Row.LinkTarget.LinkTarget\n}, query= {\n  SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)\n})\n"
     }
    ]
   },
@@ -12618,7 +12618,7 @@
     {
      "Name": "Executables",
      "Comment": "Try to download Executables mentioned in prefetch files.",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath\n    FROM Artifact.Windows.Forensics.Prefetch()\n  })\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.ExecutableDosPath, Row=Row)\n})\n"
+     "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath\n    FROM Artifact.Windows.Forensics.Prefetch()\n  })\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.ExecutableDosPath, Row=Row)\n})\n"
     }
    ],
    "Preamble": "// Avoid materializing this query unless necessary\nLET DriveReplaceLookup = SELECT\n   split(sep_string=\"\\\\\", string=Name)[-1] AS Drive,\n   upcase(string=SymlinkTarget) AS Target,\n   len(list=SymlinkTarget) AS Len\nFROM winobj()\nWHERE Name =~ \"^\\\\\\\\GLOBAL\\\\?\\\\?\\\\\\\\.:\"\n\nLET PrefetchCache \u003c= memoize(key=\"Key\", name=\"PrefetchCache\",\nquery={\n  SELECT \"X\" AS Key, DriveReplaceLookup AS Value\n  FROM scope()\n})\n\nLET _DriveReplace(Path) = SELECT Drive + Path[Len:] AS ResolvedPath\nFROM foreach(row=PrefetchCache.X.Value)\nWHERE upcase(string=Path[:Len]) = Target\n\nLET DriveReplace(Path) = _DriveReplace(Path=Path)[0].ResolvedPath || Path\n"
@@ -12630,7 +12630,7 @@
     {
      "Name": "From Pslist",
      "Comment": "Uses PSList to get all running binaries.",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT * FROM pslist()\n  })\n}, query={\n   SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)\n})\n"
+     "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT * FROM pslist()\n  })\n}, query={\n   SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)\n})\n"
     }
    ]
   },
@@ -12641,7 +12641,7 @@
     {
      "Name": "Executables",
      "Comment": "Includes results of Windows.System.TaskScheduler",
-     "VQL": "SELECT * FROM foreach(row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.System.Services()\n  })\n  WHERE Row.AbsoluteExePath\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.AbsoluteExePath, Row=Row)\n})\n"
+     "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.System.Services()\n  })\n  WHERE Row.AbsoluteExePath\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.AbsoluteExePath, Row=Row)\n})\n"
     }
    ]
   }

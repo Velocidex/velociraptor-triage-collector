@@ -28,7 +28,7 @@ Targets:
 - Name: Executables
   Comment: Try to download Executables mentioned in prefetch files.
   VQL: |
-    SELECT * FROM foreach(row={
+    SELECT * FROM foreach(workers=WORKERS, row={
       SELECT _value AS Row
       FROM items(item={
         SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath

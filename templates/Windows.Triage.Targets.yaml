@@ -139,6 +139,16 @@ parameters:
     description: |
       Add Verbose debugging logs
 
+  - name: DISABLE_DANGEROUS_API_CALLS
+    type: bool
+    default: "Y"
+
+  - name: WORKERS
+    type: int
+    default: "5"
+    description: |
+      Number of concurrent workers to use for parsing and compressing.
+
 export: |
   -- We need to materialize into a scope variable. If this is too
   -- large, VQL will use too much memory keeping these objects alive.
@@ -439,7 +449,7 @@ sources:
                              Atime AS LastAccessed,
                              Accessor,
                              Data
-    FROM chain(
+    FROM chain(async=WORKERS > 0,
       {{ range $idx, $r := .Rules -}}
       {{- if $r.VQL -}}
       {{ $r.Target }}_{{ $r.Name }}={
@@ -489,7 +499,7 @@ sources:
        WHERE Size > 0
        GROUP BY SourceFile
        },
-          workers=30,
+          workers=WORKERS,
 
           // Do the heavy lifting in a thread
           query={

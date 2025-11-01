@@ -3,7 +3,7 @@ Description: Collect targets of Lnk Files
 Targets:
 - Name: Targets
   VQL: |
-    SELECT * FROM foreach(row={
+    SELECT * FROM foreach(workers=WORKERS, row={
       SELECT _value AS Row
       FROM items(item={
          SELECT * FROM Artifact.Windows.Forensics.Lnk(

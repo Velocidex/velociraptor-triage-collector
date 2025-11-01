@@ -4,7 +4,7 @@ Targets:
 - Name: From Pslist
   Comment: Uses PSList to get all running binaries.
   VQL: |
-    SELECT * FROM foreach(row={
+    SELECT * FROM foreach(workers=WORKERS, row={
       SELECT _value AS Row
       FROM items(item={
         SELECT * FROM pslist()
