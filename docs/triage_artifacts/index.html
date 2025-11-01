@@ -1,0 +1,80 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  Velociraptor Triage Artifacts
+  #
+
+This repository contains the compiler used to assemble and manage a
+number of Velociraptor artifacts for collecting files from the
+endppoint for the purpose of preservation and triage.
+
+  What are preservation artifacts?
+  #
+
+In an incident we need to rapidly triage endpoints to establish which
+hosts were forensically relevant for the investigation. This may
+involve collecting Velociraptor artifacts such as
+Windows.Hayabusa.Rules or other VQL artifacts that parse and analyze
+the forensic artifacts on the endpoint (e.g. apply time boxing, hunt
+for common IOCs etc)."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://triage.velocidex.com/docs/triage_artifacts/"><meta property="og:site_name" content="Triage Artifacts"><meta property="og:title" content="Preservation Artifacts"><meta property="og:description" content="Velociraptor Triage Artifacts # This repository contains the compiler used to assemble and manage a number of Velociraptor artifacts for collecting files from the endppoint for the purpose of preservation and triage.
+What are preservation artifacts? # In an incident we need to rapidly triage endpoints to establish which hosts were forensically relevant for the investigation. This may involve collecting Velociraptor artifacts such as Windows.Hayabusa.Rules or other VQL artifacts that parse and analyze the forensic artifacts on the endpoint (e.g. apply time boxing, hunt for common IOCs etc)."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><title>Preservation Artifacts
+| Triage Artifacts</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=http://triage.velocidex.com/docs/triage_artifacts/><link rel=stylesheet href=/book.min.f4bc2b0f80cbd784c51fa6123079c0ec4d90946148cb1cc5e0279ca61d81a19d.css integrity="sha256-9LwrD4DL14TFH6YSMHnA7E2QlGFIyxzF4Cecph2BoZ0=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=http://triage.velocidex.com/docs/triage_artifacts/index.xml title="Triage Artifacts"><script src=/js/jquery-3.3.1.min.js?1703133391></script><link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css?1703133392 rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css rel=stylesheet><script src=//cdn.datatables.net/2.3.0/js/dataTables.min.js></script><link href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js integrity="sha512-0UbR6HN0dY8fWN9T7fF658896tsPgnbRREHCNq46J9/JSn8GonXDZmqtTc3qS879GM0zV49b9LPhdc/maKP8Kg==" crossorigin=anonymous referrerpolicy=no-referrer></script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css integrity="sha512-56GJrpSgHk6Mc9Fltt+bQKcICJoEpxtvozXPA5n5OT0rfWiqGlJmJCI/vl16kctf/0XbBloh03vl7OF2xFnR8g==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css rel=stylesheet><script>$(document).ready(function(){$(".json-renderer").each(function(){try{data=JSON.parse($(this).text()),$(this).jsonViewer(data,{collapsed:!0,rootCollapsable:!1})}catch{}}),$(".datatable").each(function(){new DataTable(this,{paging:!0})}),$(".scroll-datatable").each(function(){let e=$(this),t=new DataTable(this,{paging:!1,scrollY:200})})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Triage Artifacts</span></a></h2><ul><li><a href=/docs/triage_artifacts/ class=active>Preservation Artifacts</a><ul></ul></li><li><a href=/docs/linux.triage.uac/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</a><ul><li><a href=/docs/linux.triage.uac/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/windows.triage.targets/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</a><ul><li><a href=/docs/windows.triage.targets/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/github/><span class=icon><i class="fa-brands fa-github"></i>
+</span>Github</a><ul></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3>Preservation Artifacts</h3><label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#what-are-preservation-artifacts>What are preservation artifacts?</a><ul><li><a href=#historical-development>Historical development</a></li></ul></li><li><a href=#the-format-of-a-collection-target>The format of a collection target</a><ul><li><a href=#the-target-file-format>The Target file format</a></li></ul></li><li><a href=#triage-collection-artifacts>Triage Collection Artifacts</a></li></ul></nav></aside></header><article class="markdown book-article"><h1 id=velociraptor-triage-artifacts>Velociraptor Triage Artifacts
+<a class=anchor href=#velociraptor-triage-artifacts>#</a></h1><p>This repository contains the compiler used to assemble and manage a
+number of Velociraptor artifacts for collecting files from the
+endppoint for the purpose of preservation and triage.</p><h2 id=what-are-preservation-artifacts>What are preservation artifacts?
+<a class=anchor href=#what-are-preservation-artifacts>#</a></h2><p>In an incident we need to rapidly triage endpoints to establish which
+hosts were forensically relevant for the investigation. This may
+involve collecting Velociraptor artifacts such as
+<code>Windows.Hayabusa.Rules</code> or other VQL artifacts that parse and analyze
+the forensic artifacts on the endpoint (e.g. apply time boxing, hunt
+for common IOCs etc).</p><p>While Velociraptor excels in this rapid triaging approach, once we
+identify the relevant hosts, we often want to preserve the state of
+these endpoints as much as possible - both for evidentiary
+preservation and to facilitate future analysis.</p><p>This might be because the endpoint is about to be destroyed or
+re-imaged, or we might want to preserve critical digital forensic
+evidence on the endpoint.</p><p>This <code>Preservtion</code> or <code>Acquisition</code> phase task usually involves
+capturing raw files from the endpoint.</p><h3 id=historical-development>Historical development
+<a class=anchor href=#historical-development>#</a></h3><p>Velociraptor&rsquo;s <code>Windows.KapeFiles.Targets</code> artifact is based on the
+<a href=https://github.com/EricZimmerman/KapeFiles>KapeFiles</a> project. This
+project collects community contributed <code>Kape Targets</code> that specify and
+curate typical files relevant to the typical forensic investigation.</p><p>Since a complete bit for bit acquisition of the endpoint is no longer
+practical (with typical disk sized being too large to copy in a
+reasonable time), it becomes important to collect only relevant files
+from the endpoint. This type of acquisition is called <code>Triage Acquisition</code> - as in to say we only acquire some files to enable us to
+quickly determine if the endpoint is relevant.</p><p>When selectively collecting files from the endpoint we need to make
+compromises and choose which files are relevant to the current
+investigation.</p><p>The <code>KapeFiles</code> project defines a <code>Target</code> which identifies a set of
+files relevant to a particular collection. For example, the
+<code>BraveBrowser</code> target lists a set of glob expressions relevant to all
+the different artifacts used by the Brave Browser.</p><p>This makes it easier to collect these relevant files - one simply
+needs to collect the target <code>BraveBrowser</code> to be sure to check all
+locations where the browser keeps relevant files.</p><p>The nice thing about the <code>KapeFiles</code> Targets is that each target may
+refer to other targets. So the analyst can create higher level targets
+which focus on generic collection types.</p><p>For example, the <code>WebBrowsers</code> target specifies multiple <code>References</code>
+to other targets. When the user selects to collect this <code>WebBrowsers</code>
+target, Velociraptor will expand the target to also include the
+<code>BraveBrowser</code> target as well and other targets like <code>Chrome</code> etc.</p><p>This allows the user to select the high level target in order to
+automatically include the low level targets easily.</p><p>At the highest level the <code>SANS_Triage</code> or <code>KapeTriage</code> targets select
+many sub-targets and can be used to trigger a reasonable triage
+collection very easily.</p><h2 id=the-format-of-a-collection-target>The format of a collection target
+<a class=anchor href=#the-format-of-a-collection-target>#</a></h2><p>This project aims to build and extend on the <code>KapeFiles</code> project&rsquo;s
+definition of a <code>Target</code>.</p><h3 id=the-target-file-format>The Target file format
+<a class=anchor href=#the-target-file-format>#</a></h3><p>A target is specified in a YAML file (with the extension <code>.yaml</code> or
+<code>.tkape</code>) with the following fields:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>Name</span>: <span style=color:#ae81ff>The name of the target (If not set taken from the filename)</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Description</span>: <span style=color:#ae81ff>What the target represents</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Author</span>: <span style=color:#ae81ff>The author.</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Rules</span>:
+</span></span><span style=display:flex><span>- <span style=color:#f92672>Name</span>: <span style=color:#ae81ff>Name of the rule</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Category</span>: <span style=color:#ae81ff>The category of the rule</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Comment</span>: <span style=color:#ae81ff>Some description of this rule.</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Glob</span>: <span style=color:#ae81ff>A glob expression to find the files related to the rule.</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Ref</span>: <span style=color:#ae81ff>The name of a target to refer to instead.</span>
+</span></span></code></pre></div><p>The target specifies a list of rules; Each rule can specify either a
+<code>Glob</code> expression to indicate which files to capture, or the name of
+another target reference.</p><h2 id=triage-collection-artifacts>Triage Collection Artifacts
+<a class=anchor href=#triage-collection-artifacts>#</a></h2><p>You can view the artifacts managed by this project on the sidebar to
+the left:</p><ul><li><a href=http://triage.velocidex.com/docs/windows.triage.targets/rules/>Windows.KapeFiles.Targets</a> is the original glob based Windows file collector.</li></ul></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#what-are-preservation-artifacts>What are preservation artifacts?</a><ul><li><a href=#historical-development>Historical development</a></li></ul></li><li><a href=#the-format-of-a-collection-target>The format of a collection target</a><ul><li><a href=#the-target-file-format>The Target file format</a></li></ul></li><li><a href=#triage-collection-artifacts>Triage Collection Artifacts</a></li></ul></nav></div></aside></main></body></html>

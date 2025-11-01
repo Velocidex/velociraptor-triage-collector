@@ -1,0 +1,1158 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  Windows.Triage.Targets
+  #
+
+This artifact is built automatically from the
+KapeFiles project.
+You can download the artifact for manual import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s glob() plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://triage.velocidex.com/docs/windows.triage.targets/"><meta property="og:site_name" content="Triage Artifacts"><meta property="og:title" content="Windows.Triage.Targets"><meta property="og:description" content="Windows.Triage.Targets # This artifact is built automatically from the KapeFiles project.
+You can download the artifact for manual import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name to each glob. Velociraptor’s glob() plugin implementation is very efficient and minimizes the number of passes it needs to make over the filesystem, when using multiple glob expressions at the same time."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><title>&lt;span class="icon">
+&lt;i class="fa-solid fa-desktop">&lt;/i>
+&lt;/span>
+Windows.Triage.Targets
+| Triage Artifacts</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=http://triage.velocidex.com/docs/windows.triage.targets/><link rel=stylesheet href=/book.min.f4bc2b0f80cbd784c51fa6123079c0ec4d90946148cb1cc5e0279ca61d81a19d.css integrity="sha256-9LwrD4DL14TFH6YSMHnA7E2QlGFIyxzF4Cecph2BoZ0=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=http://triage.velocidex.com/docs/windows.triage.targets/index.xml title="Triage Artifacts"><script src=/js/jquery-3.3.1.min.js?1703133391></script><link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css?1703133392 rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css rel=stylesheet><script src=//cdn.datatables.net/2.3.0/js/dataTables.min.js></script><link href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js integrity="sha512-0UbR6HN0dY8fWN9T7fF658896tsPgnbRREHCNq46J9/JSn8GonXDZmqtTc3qS879GM0zV49b9LPhdc/maKP8Kg==" crossorigin=anonymous referrerpolicy=no-referrer></script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css integrity="sha512-56GJrpSgHk6Mc9Fltt+bQKcICJoEpxtvozXPA5n5OT0rfWiqGlJmJCI/vl16kctf/0XbBloh03vl7OF2xFnR8g==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css rel=stylesheet><script>$(document).ready(function(){$(".json-renderer").each(function(){try{data=JSON.parse($(this).text()),$(this).jsonViewer(data,{collapsed:!0,rootCollapsable:!1})}catch{}}),$(".datatable").each(function(){new DataTable(this,{paging:!0})}),$(".scroll-datatable").each(function(){let e=$(this),t=new DataTable(this,{paging:!1,scrollY:200})})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Triage Artifacts</span></a></h2><ul><li><a href=/docs/triage_artifacts/>Preservation Artifacts</a><ul></ul></li><li><a href=/docs/linux.triage.uac/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</a><ul><li><a href=/docs/linux.triage.uac/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/windows.triage.targets/ class=active><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</a><ul><li><a href=/docs/windows.triage.targets/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/github/><span class=icon><i class="fa-brands fa-github"></i>
+</span>Github</a><ul></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</h3><label for=toc-control></label></div></header><article class="markdown book-article"><h1 id=windowstriagetargets>Windows.Triage.Targets
+<a class=anchor href=#windowstriagetargets>#</a></h1><p>This artifact is built automatically from the
+<a href=https://github.com/EricZimmerman/KapeFiles>KapeFiles</a> project.</p><p>You can <a href=Windows.Triage.Targets.zip>download the artifact</a> for manual import into Velociraptor.</p><p>The description below explains how to use this artifact in practice.</p><p>The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s <code>glob()</code> plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time.</p><p>Therefore the artifact first traverses all the rules to build a large
+list of glob expressions, which it uses to search for candidate files.</p><h2 id=parameters>Parameters
+<a class=anchor href=#parameters>#</a></h2><ol><li><p><strong>Devices</strong>: This is the list of drives that should be
+considered. By default we only consider the <code>C:</code> drive but if you
+might have other drives in use, then we consider those as well. The
+drive name is prepended to each glob specified by the different
+rules to begin searching on that device.</p></li><li><p><strong>DropVerySlowRules</strong>: Some targets specify globs which need to
+examine every file on the disk. For example,
+<code>DirectoryTraversal_AudioFiles</code> has a glob similar to
+<code>C:\**\*.{3gp,aa,aac,act,aiff}</code>.</p><p>This type of search is very slow as it needs to examine every file
+on disk. By default we disable these rules because they are too
+slow to be useful. If you really want them enabled, switch this
+setting off, but collection time will increase significantly.</p></li><li><p><strong>VSS_MAX_AGE_DAYS</strong>: By default we do not consider Volume Shadow
+Copies during file collection. However, if you set this value to a
+number larger than 0, we consider this many days worth of VSS
+copies.</p><p>This setting causes Velociraptor to repeat the search on all VSS
+copies within the specified time limit, and check for changed files
+between VSS copies. If the file has changed (or maybe deleted)
+between the different VSS copies, then Velociraptor will collect
+multiple copies of the same file. Note that some files naturally
+change between VSS copies (e.g. log files) so this can end up
+collecting a lot more data than anticipated.</p><p>NOTE: Setting this will result in a slow down as we need to switch
+to using the <code>ntfs</code> accessor for all files (i.e. parse the low
+level filesystem), and inspect each VSS copy for a change in the
+file.</p></li><li><p><strong>MaxFileSize</strong>: Sometimes we encounter very large files in
+unexpected location (e.g. browser cache). This setting ensures that
+very large files will not be collected. By default the setting is
+disabled (i.e. we collect any file size), but it is a good idea to
+limit it as very large files are not often useful.</p></li><li><p><strong>UPLOAD_IS_RESUMABLE</strong>: This setting controls how uploads are send
+from the Velociraptor client to the server. When enabled, the
+client will send upload information in advance so that if the
+collection times out or the client is restarted, the uploads may be
+resumed.</p><p>The setting only has an effect when collecting this artifact
+remotely from a client (i.e. does nothing for offline collections).</p></li></ol><p>Following these parameters, there are many checkboxes for each
+possible collection target.</p><p>The most useful <code>meta-targets</code> are the <code>SANS_Triage</code>, <code>KapeTriage</code></p><h2 id=artifact>Artifact
+<a class=anchor href=#artifact>#</a></h2><div style=max-height:500px;overflow-y:auto><pre>
+<code style=margin-top:-40px;font-size:medium class=language-yaml>
+
+name: Windows.Triage.Targets
+description: |
+  This artifact aims to preserve raw files from the endpoint by
+  selectively acquiring the most important files for the investigation
+  at hand. The artfiact collates multiple rules from sources such as
+  the KapeFiles repository.
+
+  Kape is a popular bulk collector tool for triaging a system
+  quickly. While KAPE itself is not an opensource tool, the logic it
+  uses to decide which files to collect is encoded in YAML files
+  hosted on the KapeFiles project
+  (https://github.com/EricZimmerman/KapeFiles) and released under an
+  MIT license.
+
+  This artifact is automatically generated from these YAML files,
+  contributed and maintained by the community. This artifact only
+  encapsulates the KAPE &#34;Targets&#34; - basically a bunch of glob
+  expressions used for collecting files on the endpoint. We do not
+  do any post processing of these files - we just collect them.
+
+  We recommend that timeouts and upload limits be used
+  conservatively with this artifact because we can upload really
+  vast quantities of data very quickly.
+
+  NOTE:
+    This artifact was built from [The Velociraptor Triage
+    Repository](https://triage.velocidex.com/docs/)
+
+  ## DropVerySlowRules
+
+  Some rules are very slow due to a recursive search at the higher
+  levels (For example a glob such as `C:\**\*.ini` ). These rules
+  cause the collection to be very slow as the entire filesystem must
+  be searched.
+
+  By default we drop these rules but you can enable them if you
+  like. This will cause the collection to be a lot slower.
+
+  ## CollectionPolicy
+
+  The decision on whether to collect the file or simply display
+  metadata (like hash etc) is determined by the CollectionPolicy:
+
+  1. ExcludeSigned: If the file is a signed executable, we do not
+     collect it.
+  2. HashOnly: Do not collect any file - just display their hashes
+  3. AllFiles: Collect all files regardless of their types.
+
+  Commit c2a3c8d on 2025-11-01T00:19:21Z
+
+reference:
+  - https://www.kroll.com/en/insights/publications/cyber/kroll-artifact-parser-extractor-kape
+  - https://github.com/EricZimmerman/KapeFiles
+
+parameters:
+  - name: HighLevelTargets
+    description: A shorter list of Meta-Targets
+    type: multichoice
+    default: &#34;[]&#34;
+    choices:
+    - _BasicCollection
+    - _KapeTriage
+    - _Live
+    - _SANS_Triage
+
+  - name: Targets
+    type: multichoice
+    description: All targets available
+    default: &#34;[]&#34;
+    choices:
+    - _BasicCollection
+    - _KapeTriage
+    - _Live
+    - _SANS_Triage
+    - 1Password
+    - 360SecureBrowser
+    - 4KVideoDownloader
+    - AVG
+    - AceText
+    - AcronisTrueImage
+    - Action1
+    - ActiveDirectoryNTDS
+    - ActiveDirectorySysvol
+    - AdaptiveScheduledTasks
+    - AdaptiveServices
+    - AdvancedIPScanner
+    - AdvancedPortScanner
+    - AgentRansack
+    - Amcache
+    - Ammyy
+    - Antivirus
+    - AnyDesk
+    - ApacheAccessLog
+    - AppCompatPCA
+    - AppData
+    - AppXPackages
+    - ApplicationEvents
+    - Arc
+    - AsperaConnect
+    - AteraAgent
+    - Avast
+    - AviraAVLogs
+    - BCD
+    - BITS
+    - BitTorrent
+    - Bitdefender
+    - Bitmap
+    - Boot
+    - BoxDrive_Metadata
+    - BoxDrive_UserFiles
+    - BraveBrowser
+    - BrowserCache
+    - CapabilityAccessManager
+    - CertUtil
+    - ChatGPT
+    - Chrome
+    - ChromeExtensions
+    - ChromeFileSystem
+    - CiscoJabber
+    - ClipboardMaster
+    - CloudStorage_All
+    - CloudStorage_Metadata
+    - CloudStorage_OneDriveExplorer
+    - CocCoc
+    - CombinedLogs
+    - Combofix
+    - ConfluenceLogs
+    - CrowdStrikeFalcon
+    - Cybereason
+    - Cylance
+    - DC_
+    - DWAgent
+    - Debian
+    - DirectoryOpus
+    - DirectoryTraversal_AudioFiles
+    - DirectoryTraversal_ExcelDocuments
+    - DirectoryTraversal_PDFDocuments
+    - DirectoryTraversal_PictureFiles
+    - DirectoryTraversal_SQLiteDatabases
+    - DirectoryTraversal_VideoFiles
+    - DirectoryTraversal_WildCardExample
+    - DirectoryTraversal_WordDocuments
+    - Discord
+    - DoubleCommander
+    - Drivers
+    - Dropbox_Metadata
+    - Dropbox_UserFiles
+    - EFCommander
+    - ESET
+    - Edge
+    - EdgeChromium
+    - EdgeChromiumExtensions
+    - Emsisoft
+    - EncapsulationLogging
+    - EventLogs
+    - EventLogs_RDP
+    - EventTraceLogs
+    - EventTranscriptDB
+    - Evernote
+    - Everything_VoidTools_
+    - EvidenceOfExecution
+    - Exchange
+    - ExchangeClientAccess
+    - ExchangeCve_2021_26855
+    - ExchangeSetupLog
+    - ExchangeTransport
+    - FSecure
+    - FTPClients
+    - FastStoneImageViewer
+    - Fences
+    - FileExplorerReplacements
+    - FileSystem
+    - FileZillaClient
+    - FileZillaServer
+    - Firefox
+    - FreeCommander
+    - FreeDownloadManager
+    - FreeFileSync
+    - Freenet
+    - FrostWire
+    - Gigatribe
+    - GoogleDrive_Metadata
+    - GoogleDriveBackupSync_UserFiles
+    - GoogleEarth
+    - GroupPolicy
+    - HeidiSQL
+    - HexChat
+    - HitmanPro
+    - HostsFile
+    - IDrive
+    - IISConfiguration
+    - IISLogFiles
+    - IRCClients
+    - ISLOnline
+    - ITarian
+    - IceChat
+    - IconCacheDB
+    - ImgBurn
+    - InternetExplorer
+    - IrfanView
+    - J
+    - JDownloader2
+    - JavaWebCache
+    - JumpLists
+    - Kali
+    - KapeTriage
+    - Kaseya
+    - Keepass
+    - KeepassXC
+    - LNKFilesAndJumpLists
+    - Level
+    - LinuxOnWindowsProfileFiles
+    - LiveUserFiles
+    - LnkTargets
+    - LogFile
+    - LogFiles
+    - LogMeIn
+    - MFT
+    - MFTMirr
+    - MOF
+    - MSSQLErrorLog
+    - MacriumReflect
+    - Malwarebytes
+    - ManageEngineLogs
+    - Mattermost
+    - McAfee
+    - McAfee_ePO
+    - MediaMonkey
+    - Megasync
+    - MemoryFiles
+    - MeshAgent
+    - MessagingClients
+    - MicrosoftAzureCopy
+    - MicrosoftOfficeBackstage
+    - MicrosoftOneNote
+    - MicrosoftSafetyScanner
+    - MicrosoftStickyNotes
+    - MicrosoftTeams
+    - MicrosoftToDo
+    - MidnightCommander
+    - MiniTimelineCollection
+    - MobaXTerm
+    - MouseWithoutBorders
+    - MstyDatabase
+    - MultiCommander
+    - NETCLRUsageLogs
+    - NGINXLogs
+    - NZBGet
+    - Nessus
+    - NetMonitorforEmployeesProfessional
+    - NetworkScanner
+    - NewsbinPro
+    - Newsleecher
+    - Nicotine_
+    - Notepad
+    - Notepad_
+    - Notion
+    - OfficeAutosave
+    - OfficeDiagnostics
+    - OfficeDocumentCache
+    - OneCommander
+    - OneDrive_Metadata
+    - OneDrive_UserFiles
+    - OpenSSHClient
+    - OpenSSHServer
+    - OpenVPNClient
+    - Opera
+    - OutlookPSTOST
+    - P2PClients
+    - PeaZip
+    - PerfLogs
+    - PowerShell7Config
+    - PowerShellConsole
+    - PowerShellTranscripts
+    - Prefetch
+    - PrefetchBinaries
+    - ProgramData
+    - ProgramExecution
+    - ProtonVPN
+    - PsList
+    - PuffinSecureBrowser
+    - PushNotification
+    - Q_Dir
+    - QFinderPro_QNAP_
+    - QQBrowser
+    - QlikSense
+    - QuickAssist
+    - RDCMan
+    - RDPCache
+    - RDPJumplist
+    - RDPLogs
+    - Radmin
+    - RcloneConf
+    - RecentFileCache
+    - RecentFolders
+    - RecycleBin
+    - RecycleBin_DataFiles
+    - RecycleBin_InfoFiles
+    - RegistryHives
+    - RegistryHivesMSIXApps
+    - RegistryHivesOther
+    - RegistryHivesSystem
+    - RegistryHivesUser
+    - Remcos
+    - RemoteAdmin
+    - RemoteDesktopManager
+    - RemoteUtilities_app
+    - RoamingProfile
+    - Robo_FTP
+    - RogueKiller
+    - RustDesk
+    - SABnbzd
+    - SCCMClientLogs
+    - SDB
+    - SDS
+    - SOFELK
+    - SQLiteDatabases
+    - SRUM
+    - SUM
+    - SUPERAntiSpyware
+    - SUSELinuxEnterpriseServer
+    - ScheduledTasks
+    - ScreenConnect
+    - SecureAge
+    - SentinelOne
+    - ServerTriage
+    - Session
+    - ShareX
+    - Shareaza
+    - SiemensTIA
+    - Signal
+    - SignatureCatalog
+    - SimpleHelp
+    - Skype
+    - Slack
+    - Snagit
+    - SnipAndSketch
+    - SnippingTool
+    - SoftPerfectNetscan
+    - Sophos
+    - Soulseek
+    - SpeedCommander
+    - Splashtop
+    - StartupFolders
+    - StartupInfo
+    - Steam
+    - SublimeText
+    - SugarSync
+    - SumatraPDF
+    - Supermium
+    - SupremoRemoteDesktop
+    - Symantec_AV_Logs
+    - Syncthing
+    - Syscache
+    - T
+    - TablacusExplorer
+    - TeamViewerLogs
+    - Telegram
+    - TeraCopy
+    - ThumbCache
+    - Thunderbird
+    - TorrentClients
+    - Torrents
+    - TotalAV
+    - TotalCommander
+    - TreeSize
+    - TrendMicro
+    - UCBrowser
+    - UEMS
+    - USBDetective
+    - USBDevicesLogs
+    - Ubuntu
+    - Ultraviewer
+    - Usenet
+    - UsenetClients
+    - UsersFolders
+    - VIPRE
+    - VLC_Media_Player
+    - VMware
+    - VMwareInventory
+    - VMwareMemory
+    - VNCLogs
+    - Viber
+    - VirtualBox
+    - VirtualBoxConfig
+    - VirtualBoxLogs
+    - VirtualBoxMemory
+    - VirtualDisks
+    - VisualStudioCode
+    - Vivaldi
+    - WBEM
+    - WER
+    - WSL
+    - WaveBrowser
+    - WebBrowsers
+    - WebServers
+    - Webroot
+    - WhatsApp
+    - WhatsApp_Media
+    - WinDefendDetectionHist
+    - WinSCP
+    - WindowsApp
+    - WindowsCopilotRecall
+    - WindowsDefender
+    - WindowsFirewall
+    - WindowsHello
+    - WindowsIndexSearch
+    - WindowsNetwork
+    - WindowsNotificationsDB
+    - WindowsOSUpgradeArtifacts
+    - WindowsPowerDiagnostics
+    - WindowsServerDNSAndDHCP
+    - WindowsSubsystemforAndroid
+    - WindowsTelemetryDiagnosticsLegacy
+    - WindowsTimeline
+    - WindowsUpdate
+    - WindowsYourPhone
+    - XPRestorePoints
+    - XYplorer
+    - Xeox
+    - Yandex
+    - ZScaler
+    - ZohoAssist
+    - Zoom
+    - eMule
+    - iTunesBackup
+    - mIRC
+    - mRemoteNG
+    - openSUSE
+    - pCloudDatabase
+    - qBittorrent
+    - uTorrent
+
+  - name: Devices
+    type: json_array
+    description: |
+      Name of the drive letter to search. You can add multiple drives
+      separated with a comma.
+    default: &#39;[&#34;C:&#34;]&#39;
+
+  - name: CollectionPolicy
+    type: choices
+    choices:
+      - ExcludeSigned
+      - HashOnly
+      - AllFiles
+    default: ExcludeSigned
+
+  - name: DropVerySlowRules
+    type: bool
+    default: Y
+    description: Ignore inefficient targets
+
+  - name: TrustedPathRegex
+    type: regex
+    default: ^C:\\\\Windows\\\\
+    description: |
+      Do not hash or upload any adaptive files matching this regex.
+
+  - name: MaxFileSize
+    type: int
+    description: |
+      The max size in bytes of the individual files to collect
+      (Default 100Mb).
+
+  - name: MaxHashSize
+    type: int
+    default: &#34;100000000&#34;
+    description: |
+      The max size in bytes of the individual files to hash.
+
+  - name: UPLOAD_IS_RESUMABLE
+    type: bool
+    default: Y
+    description: |
+      If set the uploads can be resumed if the flow times out or
+      errors.
+
+  - name: VSS_MAX_AGE_DAYS
+    type: int
+    default: 0
+    description: |
+      If larger than zero we analyze VSS within this many days
+      ago. (e.g 7 will analyze all VSS within the last week).  Note
+      that when using VSS analysis we have to use the ntfs accessor
+      for everything which will be much slower.
+
+  - name: Verbose
+    type: bool
+    description: |
+      Add Verbose debugging logs
+
+  - name: DISABLE_DANGEROUS_API_CALLS
+    type: bool
+    default: &#34;Y&#34;
+
+  - name: WORKERS
+    type: int
+    default: &#34;5&#34;
+    description: |
+      Number of concurrent workers to use for parsing and compressing.
+
+export: |
+  -- We need to materialize into a scope variable. If this is too
+  -- large, VQL will use too much memory keeping these objects alive.
+  LET VQL_MATERIALIZE_ROW_LIMIT &lt;= 10
+  LET NTFS_CACHE_TIME &lt;= 100000
+  LET NTFS_DISABLE_FULL_PATH_RESOLUTION &lt;= TRUE
+
+  // Initialize libmagic before we call it from multiple threads.
+  LET _ &lt;= magic(path=&#34;&#34;, accessor=&#34;data&#34;)
+
+  LET S = scope()
+  LET Verbose &lt;= S.Verbose || FALSE
+  LET MaybeLOG(Message, Args) = if(condition=Verbose,
+     then=log(message=Message, level=&#34;DEBUG&#34;, dedup= -1, args=Args),
+     else=TRUE)
+
+  // Only enable resuming if the upload() plugin version is recent
+  // enough. Earlier versions could lead to crashes in some cases.
+  LET UPLOAD_IS_RESUMABLE &lt;= S.UPLOAD_IS_RESUMABLE &amp;&amp; version(function=&#34;upload&#34;) &gt; 1
+
+  LET CollectionPolicy &lt;= S.CollectionPolicy || &#34;ExcludeSigned&#34;
+
+  // Helper for VQL targets - try to download the file, but if failed,
+  // we return an empty row to record the filename.
+  LET TryToDownload(OSPath, Row) = SELECT *,
+     Data &#43; dict(Details=GetDetails(OSPath=OSPath) || dict()) AS Data
+  FROM switch(
+  a={
+    SELECT *, &#34;auto&#34; AS Accessor, Row AS Data
+    FROM stat(filename=OSPath, accessor=&#34;auto&#34;)
+  }, b={
+    SELECT OSPath,
+           0 AS Size,
+           NULL AS Btime,
+           NULL AS Ctime,
+           NULL AS Mtime,
+           NULL AS Atime,
+           &#34;&#34; AS Accessor,
+           Row AS Data
+    FROM scope()
+  })
+  LET GlobTable &lt;= gunzip(string=base64decode(string=&#34;H4sIAAAAAAAC/9T9XXPiOLc3Dp/fn4JKzVN132w31enu6ZlrnxEg3ZmGhAkk6esqV6mELcAT2/JYgoTZtb/7U3rzqyzLBHrmf5Bgy1q/35Isy/LS0tL/6fWWMN0g6tzvQuR8CfHKuUfr/9PrXc4hIS849Z3sCFxB73mXgDGkcAUJIs7FA0EpcfvuMElYqjvFHgzdy0RKuCsuQdwM4/L9gPwZBhRdOA0kCr0d3GeJHZCneGOhcog3xO0PQrzhQB8/v18gb5eiqxS/EJQ6Hz&#43;/ByIFyCRwhfFzBNNnDfo9hlEQb9yPn98T9Nlll3v8Qp8lZYJ9a64Rxs8B6sbU77tSrAPPLk1RTMECERLguBOflO1J2c6cS7giRxEyQWu2MX6JQwx9MEMUsrbUiVJJK2Fr2skrRTGrlqNuZSbdk9LWvNdwH3g47kanhOzbzdeAUJweuj4JUsyeZwrJcY2TCXZumZytc7PkVJ3a5BRvgph3gd2ImBg/sa/AGfIDeNTt4pK9znfsFtEXnD6DoUdZ65&#43;nyA88itNO3BKkJ0B6GUhnLeYoJQGhvIujkKKuHapSJMfpcRxrReYpWqMUxV7HHqAgZ831&#43;w5TCGYwhhvUrb65pBS0prtHCU5pEG8AjH1wO5l2rdwMoAdjv3c7mVpTywebgGsc&#43;h3LqmRd&#43;za92OKUejva7RZmUh2IYpiQLaZHFCwT5XVrz3iIPSZvGJCZiniIPXlsT7nECVgEtOMDscRJj0t1IEp3rD/HzyjuPJLisj0ha8/4GJCAIh9Mg7jjMFFK9rikNd8TWnV/jTyhlekl8hTEPn4hYJ5iijza2hJngZdigtfUlRJ5A/z07THwEVaDKJQ6n74BngQKaQ1j9U/Pvswz8HDkfvrW45K9XFKb1i9&#43;H1gpAI7X4L/0iSUdho9fnOHjFzB8lJ8m8xRvUhhxouHjF3cY02AfpDvCPkpU1VWkwPc5cC7G2NtFKKaEd5gLRFnnSdxhGPZECYZJEgYe5C9Na3zRDZ&#43;QJuWAVabrIEQ38RqD8ZWpDvp9V&#43;X8MPBXJYjC21xflYXXtEjLYKf8e6&#43;sUaHgJo30xQmJv/rjA/htcXdrvKXEX30Y/EHkKHTooSV6pY78BaMwSFYYpn59iJbdBbc/gNST4imOA7JMd&#43;gmghvkyATW1SHAk7KOnFd4tWAiu5sBfMURcpWEC1NvG&#43;wRGfirvjWfpvq0LPwO0AD4KMKxa4&#43;/8NIgKbwR25mkRMbB2umlI39ZlbMGVGjDIORFkB2fKzNWTQQseY/GQYrYSPRwuxwvHP4vE2RnWTMp514cyB6HzuLfi8e7aS4hzjMZHyZMauFtkb8Lkb&#43;E5Jk4IxxFMPaJc1HOhdJ9wIaVk1fk7Shc8bsts&#43;xh7CH/Zr7wYByj1FEp4GYOZBoYhoEw7/T7LlTXgwSQ8vXBKog7oDJtWatthFUZOuLOhqNGyNlwVEOb45TW8Fiiufy8R2irgXZsfS2UwBvroR29Vhcl4FJtbFBM72FMoPfs8BMgz8AIx&#43;tg02Auy17uB7oNPP52L0K5HhfOGq6BJYVkKzpaciRXEcKC8Sb20esUH1syJW7BdBxBWHwTRR70tshRv6pjGODQd7P&#43;KElGOEogH2Cxro&#43;4Mv9gu0dGnCNkAU25orxjXItXSHetBtO7L/2O8B0go8PB4f&#43;BzClHwaV3A7ueVbR6IbN3N&#43;slh49fysl7SCi/wA4ql4IUiktBCoeP7LaXMlwF1EdrFPPX00XxtJRthKMVvg5eWR51XM6Q4hd/QdPgGV3D0MMxz1lNLIscVihFkMi82VklU8i6CZGDH5YuTxaTJbvGfssXIhKw9ssvyuNShmvx5cCuy8PS5a8BjWA8TzHLkJ2Ussxg&#43;AJTtDpQ8fIqnpczesM14kziSHMRoPldnoGdlTOp7xSwgGtED6o35SLqmrgkr5TE7/Fmh74FYSgkCqelbIuH&#43;eSenS6SAysJy1tNKwvwehtuRE51UskS0yBG4V0sM2Wn5Ww42WJei&#43;KofPEQwZgij1&#43;Wx&#43;rjopRxiSkMh48snzwsX05R7PPq4jmys1Kmx5v5/YRd5welS09olWLMm5Q8LF&#43;WH5/jwvMk08bFZ&#43;owRuTZkb9gtIXy&#43;&#43;VB2Nww61mau2Yp53pbSN3&#43;gL5S2UmUYdkAGixZf7UWRlsCbmJCYRgiH0ACIJBjsErHI9GZDqK7Y&#43;I0hR7qQnW/i&#43;Mg3oAg5q93Nr4DEfYtitWFmFMVtAfsza4vT3/ArlmjxEh08pwf0FeqR63mtNeUZ29SlV9sxlkcCEWRaC5Dz8O7mBZG5QfydPf0&#43;ZMa5RCeORGtqrHW&#43;81sxVYpK7jtHrZVdhVSU9utrb9TzZcIZdW3F6L5NnCrSWH4JM4LojA&#43;&#43;Ig8C&#43;GEjQKGnocImeKNI86BSGD6ieEwP80/2NRwYj4aOtkJmI&#43;G2bekuuMwSTwx8kg8qO6kKJSjfmul7Wf5vs&#43;h9ww3iLDMbKRKAvbRB9Y4Zd&#43;Z38uNNDeYFQY&#43;uZSrwNx&#43;3&#43;WTDfm1d/0BSf06bfGxUIkN7AX0Oo54LIZJUpQuPBbyolaWVc8iQV6wDjyNDnoTm1EbSVxRRxamx80bbiGPO0YhosjvF8DUJ/5kz7/Gih/9PIm1HfAUxL&#43;Aajk/fnBfghjtqRiww1xygPb09Q0EpWH06cm&#43;z1uYZK82TBIuxBiOJbAATT1nmHom54lKS1hulSmaP7DxYcDkKaWXMPkFwufD6pMQGbE&#43;QEoPU69k4664XCgtGufiz6GDnDssO2UoTZrn6c&#43;hSnmCX&#43;nQOCt8DhVKE8lKg98Wd7fKTnkuJRYUp2zw1C9YYSW9aR7&#43;HHVQncBXetjPmZ&#43;xneon25WK8&#43;nNYnnOW&#43;XhqD9IwoCU&#43;w3j/Pk5aqM68a4UaZ1yPocylbnqTJfm&#43;eizaFGeyM60aJ86Pos21TlnpY9hXvkcelQmpJUWLVPA59CkPneslGmeHz6HHuWJ5SFJUApH4iPDEWdq8sXkoylyyp&#43;elHf3MJXTl8UpGR0F&#43;yaX39A5xQAKVM8IR1EKua3WyQ/L81ty1DlcTu6HPdlxEjfPLQDFYOjEmOsTA6q51VPhZV&#43;PWsAgDpS5txNqEAcCldtn&#43;X8wfBRG/sq3/567/OE1fYEpEqfuaIsIdQOWe/AahToozfylDqk4JVAHqE6cD20nzrtRPZBay&#43;6CcOPBdEfaSyzylefMCzCFaXje/7fi1abllZIF&#43;My0LszsfCy0D&#43;hBix6kpbn9uy/XN9PJohmM21VNYCpDi1KP89tGiMf5rRK8Go0d9ndxhTF1r0bjYqoEUJfyaY2rm&#43;XCYf8qD0rFaKA&#43;K4o&#43;LxIgoEvMXaQd&#43;Su6WwIKVxqNNnke1jlAqiCzqY3CMZjEfoID7jjeWLOF/K7K39NWdBPLTUxRGiNrljEizxQnrjRTESuSxe/TgCIwvqo4TIj&#43;qV8k6Is&#43;6X/8leOv3r3AkP2QbfS/iiCCiSN/Ln4SB&#43;ISxtTh/y5&#43;Yj8y8XWcBnuUe6Zf4Vcgkopf3s2O6&#43;KFeYVf&#43;Z8qpxaWjZq6ovaYUA2WZRc1lavL&#43;6XKx4FOpbIs16lBtMydwn3mn9ZqSeC5s76Hn72TwiYbQYmkxVBgS1H69C8TtC286EikWYuh5dN7tx9Hlvm8l5gsFlx0o9OuwShRthlTbJnKZpISRYutxJahZAUpEbTbImw5citDnaWrpcGW02hD0GrQ7pl/nAZaT/2SBhYmBVvSqrGgzLNbhQHZ8vcYd3sE/DK4Ry8w9d/MnWTwAYNXLnslFVpWBHQjrC0SKFFZrAboRqdfHVDilN7QJ7yhArFXQOzraK1MQXacY7SGu5BWTT1lwjZ7j3XxypacEkmr&#43;cSWpGIYKZFYWUdsiUp2Dw1Zm/XDlqds11B2Eu7VJJ5ofnzS1iDMLAK3aOsqkY&#43;2KY7s2L9gvAmRKyTKL3PO1Agf7CIw8Td2LPlHChOxpOHoT2jFHb0e318CH9J2AjUB9YRWErqOfB2kaI1f7VTHfwVhCF0pk39C9LVK30zA5aUAttf15hbR5nq4mYB/gcv3XUGXKEpwCtNDT30tScNKAwe3nLA6BhRFCQjUJ5b85mzw/e8L/jyhkXaEY/byHdxMfpZ2F/UtOYIJXAVhQA9i3l69lvJ0NaEvrzAtpWHZPH/egNyUrkxfI5TSBxqETnZjjrmXNxNV1Rme9C4ZpYeExog&#43;pOGo7JZZnTbVe5hw7il&#43;KdBXIZuouf&#43;KWQELF5djFODfc3Vibb1aQm8h/TJfOvIXqDbIvxpbLdt3CYqHNwMp/E6aCMCH5EP8J/Hfe7983rx3s2ZN5EHeaDNy1nMaG0k3yoI1XVlgpICrLf1XFLK&#43;&#43;B5tAkLTA/ga7C1mOuxKrxw7OIIgKtiAlAa850D&#43;&#43;OrsFZAxuVtKEwK8LaSbhA48HIH3g0Bc9VeDEO1R6K/cck1NWeoP0FL2iBSncIPcqi6suWRvaLM1ofnlXA3poIXlDhm2/XbNAm0YGRiY7awXBmyNvcJIcbZCWitispy042e2kmbwcxexQQVre00zg9ZCU2axiIfRxqIPilGmabMENaOXbT961HPdIRN3i&#43;GpGbRkatJinqs4BmZzPI&#43;2ItWCejSDn6tsNioc11OUw4g0wJ61WE3krZZJA27ZFtkEfLZimehbQqO0FU0TH6WM39XW2kxltK7qSW3Nq&#43;2kWoNqmdTCANfMU7WhNkKfq5GYFbAyoTaD14ymZXRrq2kzg95OWqaxtFg2k1SskxX0NvOkAbdskGzAPdedN7O3xmIxF04TkKVCYOs/ZyhA5gunwGTkiY8avlYDbzNPxaTbgHuu22RmNwZ5aS1YLcxLGd3KXt0MX/fMM8Cfq/ralGgzkzcjlw3jetRzlcrEvWpzEWiGrTgFNOCeq1Ba9uy7h9Q/powO2RafUqTcNbVSnavgTQoxUmGeyr5dlrPpz2K9pLR1HvtOYxg9gVHpoBf/XiwnM1D9AlPGU2Jvve34lXTC2EujgHj4N7haodThx0CctL5teGb3IQ7WAfJ7IxxFu1jeReIKDHe0uFb6556kWSybGSSUsZbP67FuZKRZQwyF33ZRwkY2VweKiFsBzM8HXhh9GqxUX9BZDx465mg1ksDLW21nbh4O6CQVIBXAO1/aJMEwDLmjVdHH6sKpe2Pp5EoJuWnoQn9BhzBOcbKqsRdTG8nFUyOdy2Q8YjZArnmMXcisPKfImOVpRL/xC7gMQyTost7FqO7hdlFObuRZ7DYwZerwRffqRJcz4Sn5k3lRSanKlFz7ijen5vzXKKnuQ1G6mtYofJ0i2TWLwhXPG4VKN7VIW7iF7dQztIH8FvPBxQiHoVjDzMM4oA0kJhWy&#43;1akryU2it97IY4Rj5wjJ58uZBpLqoop3MlrEuIUpUey12DukXfwQgSupPFkGPs38ZrHY5CXroK4FeVBhPAMIRt/ZrNKWzGrxJBECp9mYnkZIPZG2HPET/uKTpHPtXC9LAO3GIgNsLXpkjKu3aSFAV87WaDlMJkALQhyS1wJ3dpUb6DQ2&#43;pLNNa2egNNg7G&#43;xNNmrDfAVyzmJdgWi54BtTwkK4HaGK4NyHWzcR39yDZTMd2WcVtNtybgymrVMrSV9dSArjOflgi6mk8NXGb7qZbV1n5qwao3oJZYLQyoBqKaAbOEbWXANKDXLZgleGsLpoGiwYRZ4rE0YRpYqjbMMnybDdMEXDEjloEtzYiN&#43;Do7YpnB1o5oKkJ1UW2ZotV0aICuWu/KwBbWOxN23XxXgrcy3xnwNaazEn6b6cwAXbFfCdhTfv/jaBXEyOcrpkTwjiWPDSSWUF2INJ4kY4CVJOb4BaWLLQpDNtwlOEQizM5F4Yq8YBDlEa1ENNayaOFCVfxhcTVGPLKp0rScUs2v6iwLUJKXzpT9OkjRCwxDVSyZrpKrYuB2sgSj6T14IHCDFMvtZDma3mdJUgivg9dCtD91lK2QZR8L4Y711xwnPwVPwXPAY6zIL80hDSEhAYzrtrRcqhCott8Rv7IUN2PTggvsWozCQgoQSeD3HUwhD1Lny&#43;&#43;kmuMj/xhJiVuQdnOxrBHn4Q3zQzCMacCDcOLoBaa6CMReSi5Li/8agArr4UY4pikOxVvsi3ZdsJeubFAXKCZYxHfNLWcclysuQxxq8GGy/1DBF4Eb5S&#43;4S2jg6dbvygyuyFBc/luFKEaKasZRCynNINIkrFsrXgUqRB4fj4AzHuUx&#43;5r6zvHov/6rVBvjJ7GqXP5q2rFwoReX&#43;8UnYoxWAYwd8QOeFlMwTMzsxcgIQmye4j&#43;QRwfi7MvtwzSId69AWr35yM5NMaZrkkUXgAktRxio6yHdZXFMDaP/NytDEoxD10txzP8xrqxWayqtINmCrX1soM4a9fvuoEhi0CP1zqpB6jVwI&#43;qJejijEoh6LoNv10Tes7NpIfENGvjilHXZhg/gNytSpjHosybnrA&#43;ObmDfpHiXnI2doxvYt5jQGEbobAooghYdyFkVIAZ2TECKQmQZcugoFTB5JykMevDdBP2z6SDgTfxNgW5PpYDAN2hAttDHL2dTQMAb&#43;GkQob9wfL4qUARNOrzST2C/9V9PqwCDHTDYBtpz3nj2bizdeLWHxV2yI052Bvhp06T7PFvpmAn0mIC73O6iVQyDsFdctndaDl4c8ZU0u39w10HsgwTS7QAT/wfReeyFGsTkx1CmiHXXYgnfj2Xk9gnyAyuW0Z6fLkUeiumRPMo408wkvmrOWwSxJ6/wUKkXZJlCNsiCIRju/ACLzyh&#43;qBaCikg3HzeJA6EDoedAjzowWK8dGLKzKHVgghy4c&#43;DLyvEJcfz92lmzaxsSOcFzCF&#43;dYE&#43;c6BN0ok8rJ/qUOFG0dqLkoxMlnhORvRNHawdvNg7eQCfiB6zYKXTSyEnhi5OuP39ySBg7lEJnjz1nj1&#43;dF7h3XiLovOydF7SSwXc0JZu8eijMfJUcfso/w8VRGDwjkF&#43;WBX4NifMaklfHI3uHkr3zGlLnNYxYIvtHX9k/frpyXkPI/thZ6LyGLw72ibPGfuL8mbw06jUfX&#43;e08/E114n96jVK/LXzmhAHvyakGTPw6C5F4j7Kk/KdhIGzihJnlWwcz08dL/EclBAHvabOOgzWziZYO1sUrJ0gXEVOEEHnj&#43;SD88eHZ&#43;ePZO38kUTOH8mGJXjOHwn7e3WiPz78kaANu&#43;D88Ro6zyl0cAqdxHt1ks3aSTaRk8QbJ4kjJ0kiJyErJyG&#43;k5DEIfuNQzfQoaxFvaBV4rzCKHRevXVjGUWgpnxbahm4SRgh/BWvRuH9ClSh/ZUjUv63//&#43;aYHngcVFxYme4ygPwweEPQbR3IFk7cB84fuo563DvrD&#43;xv8RZf4LO&#43;tOKV&#43;EmWO&#43;d6NPeiZ73ToT3zp/UiZJPovUnGydiFRZ92DtR8oGdOFGydyJKnOgDJQ77fV07Mdk7eLPnjwZ7EqL9yknxnw7ZB84&#43;2Dt7vOJN33mJ9s5ht2&#43;ssqcg9Ecw9SevMEpC5PwnSFTJ/gqSRimc&#43;nkzZGe8bvmBvo362HN87L2yf5HjY8qOKDvyVuzIeVk9O9in7OGgTkrXzkvSd2jkK82Jh1Pfkb9qwb7et1F1r77I7HrF1bJVJN5hAuUEIVeG2iKH3J2RVBd4Sia8W4VI7s3Fwx6xc5AlgOvlXNiWG2m4hBf5&#43;VHBUtQGn8mA1yjsRJIFQmzlkPYZWwaZ3R4/2oU0gKkHgjiwIVD5s6iQrQxJ8BrBhJg3RMgJZPbMUt&#43;KT&#43;RqM8sCyOz2&#43;pNsCQTx1lYMSmBAPLF9hLS0O&#43;q37sbqS1s8f5bJQX55V/3D6g5jDXZbkc&#43;NoLcNYgTU80NTeHhH1fCfKK/RN/ME8Rrnob3fDLfFhJ5MNwn2eqqSEgpjD2VzfDWAE84f1vw0tf6c2WaV4lomPbnOG/XkutCggzhoiNugdJpcZ6NbibWYLPnmVOD2bvzxgz5mK7vO//V4pp5&#43;58&#43;OUNpglQ0Yx26d2lXxexRhisDQj4I4IDSFFKdNhRB5S1nFXnTuRAbZLagjG1z2ZcIpxfvzQewurmbnmtqppuLqU3ocVjrY7xjunwXcI&#43;KjWLL6G6TiGYmIQ63ui4ZgRhX3xTp47pZ6DHxB2vXyYzHebWQ0euoZ2LTbVGgI7LwnTcXSeE8285i84SxIMoe4OkOb26EBvex2WIducYczIJcc4erANu6HBvSa&#43;2EDw5GVXnZB1GC3uiGawMtruOvoVp6IBgKNJ2KdpKs3YvsDp/dGrDNb&#43;AYayKq&#43;gXV8S8c6A0fFsU5D0eZcZwIvO9dpwC0d7Bo5NA52GhZbJztTUcyrdeukrW53BrKK210d3Mo3zkBQ942rczyh1ZCQgNA31FoNo99MdmwfU3bGK0IXVkSK11MWFNFuDaaBtL7msVSmE47lGa5Qf223eU2GNciOuPivL&#43;j5sPro/7paveRjK7VNrDrgO6vqxqTyuqs2cyYejPONIyaxBxOyC/lodIo3myDeONrE4o7BXmXHYJ1Attdxd4rqnsfnoZOV9UbO3N/pSOIjyZSrpXQzDdnXkM2eev18czsLjPZt89rwTBvX9bMd6zJRcD&#43;edy2S&#43;gTRaGKGay/dOaF54mmB&#43;Zdk1nu8k9neLVEaBTEM5c655N39eC52qfj/fbpLUMqbGQw76/L/FX7xSS7dInMl/GSEU7RcvE2JY27IWRU6/q5wrUbZDrVy/cmPr56aZsJhQox4T6LVP/CRPEfl/6gKz1Y0OGMUBnvE59JpEAV/CT/v4iKITDXBlcV8ll9oMrk1FrAiKvJIS9oA0bCvU24So3RzALfLb9OSSuZAx3wBxWS9DrwAxd6hNw7gJsaEO30jjvgups8hY9WRLkKEkgXd&#43;QddNejbTi6Tjfe6gHYAehrfFBDApQbjaXzDKlYGuG6s3EYkfRGPQ/1ggfo/fbuyfmgoa7P87Mb&#43;FmZle5rddMOzw5ArecZXTiUF&#43;KumFi1bbkDcikz1fKA2trBjK1bE&#43;ZgzNHDHHkYE8gfRuKpgiaLELT60eU2mMabIUQdqU/pGJJUxP8gcI7gHH5TyDfC3mKIVxs9gEQdJgo7m6Q/Q62pAJEgL2ZtIMuwD3bIPl0cc&#43;EuMQwIcfaqBS2QuHKoJvw7497u42eaYzWXlZPe7WNkYBx7Zd6VbIJh6206MQuQtpGrTRiu6Qm2q6e3JPvBR7KG79eQVeTsepmMYeSKI&#43;oU6bMpY3L6f5S6cN4hwYyf1tnytoTxuyHrPPfxYlzZS6lSSGgQXB5IVQB2zrK/eFsYbJL4lxHYDjkoEntj2FIrtDUK80e&#43;FWTAWScme2M1UmMHZp3d5PVHGukfgw/sPl&#43;DD519//jnnlXuhzrDPozkBVoFBKFfldaB/vPzZvU5xTCex736lNJmn&#43;PXg4hfowh3dql1PBfhJNAtiRJPdyn15eUkxpi4kSYyorEg5Hwhe0OqHU5&#43;eT71rc6Pb7WTpXqcwQmwU2nf3/cJ2G8PFnF3PNvlo0qbIT3dJ1uj44lh5iV&#43;Z4o1WjL/wEpzSexyiUqPNAbI8WoTGVp8DFB&#43;XAoZSrFqIaVaIak7illJqT0imqU0B7Z/KMoaasi88oddiRynnGsjNqurD/Ot34lJx2WZNbOFtkb9jrYYbV6UFtQEo9yHIxJiUMrs2ceh2ly29O7WaLqX9hDisuv4ThKHa5plHhlJpIqlJQFRoSUAklQXu8QqD6&#43;Wcd9fyuJzjKYgXo7lc0L0Y8auQ0AXFMeJh3h4D9MK3DJSJIvgbEMngenHz2Dh0yGRclo3/UwOHazE/J36A2kpi4aUIxXxuqfkVuqAw9bH37AphVwbFk5NprDpUzKZ7lITQQ8LzsuoqfuGUXMmNohUvMy5c9kQziRf9efizfG0ldp2iHB98n6i4YVbCs8CPg82WlplVqh3ELqRBRZ4lWQnfxZX6uovtFP8djAMuwA9MORcJQn6Jo5xikl3CVQi9HQFZeK&#43;LiyxRpRkBMIVhuYQ8yYr9&#43;79zUnUs88vYnWLr2wv&#43;W77yG0v&#43;rZwmvzXZFXlYvj67XvK7d70spy/GC15t40U5nedWeQudUbH/4b41H4trypue10zI7avp2/xR1aN/n027Ir9GYQVVdpE5alMch97/ff318//L0dTbaloJE9GMLEcsXdXOXotF7fl2as7Q97UeN9nkZfP2a5CLyqrWoZpj0tYc7o6jMriLWZRBBQ5eqb79lOAvCO5RRqFXv9E9zAJ/LbfR8wTGyfEtcE93i01kKjTeccXwlbQZ&#43;3RFMRMWHBeOKQ3KxHPfagXd7EBn05qksFZpu412ulSSmQ6nUXOkC5vC4DRSqx7aCE5YphbWOSTkBaf&#43;UUV6RocsovNJAEmwiXHcH5xQxxBvAl3DVKCnq&#43;ofx2SuptPxaO8vSqOAHN9ZJLm8vkGyseKR0FzUgHq6mjFRmXwwbUqRojVrRRVQ7qZ1fK3n8lqlhf33uGeWixpQT9juTVSiTVGcoiOLkQM0Q7d71tkxvGsY3ZW4TlhvjWXjPQl5Q2fd0J7EtVN3eQ1kcsmmiDB&#43;TEkEwDtyiD0twxNawSQ5vnG95PJt&#43;KerskbSoiGFm1UKa65kAH1F2WjeKmJ8n&#43;Sb4l4958LZhLSRsXHta2EadO0VrKRtYCpQ&#43;U3MBj&#43;QGpZBcPASoKXOJfvUGu71y15b6qp0YbCG&#43;2w1bBdymuhXlHYjp0k2E9eBnI0sT8DOYI6hfztzkTSLdi7DH1&#43;PZ&#43;pxEDHzm5l6SranthMX/bv8GQTxGht52nze9ST9vrv2I/lwW&#43;HzZXQ&#43;pBD8FSTgqCIphCwqQGmDh/JuD41moEKu4jpClh4j6qhfg34xovlXbfGh7SAfYx8dJdj3cJSEiCJ/ELK2mylyCrBdcjzUYAWfpSAm9ClIkZMdASmTgwzW7NpLkKKf3exwkKQ4IceBBHQXI9KCoDGdZO87N8vmLrFYnVeMNP0l2ECaBivkZEcypodaAfEYEArBL&#43;BXcPm&#43;qbYWWxjyOTprVOM7WfNWznDOR1ErhHlvG/ttclSdCQEREqCvYWnYrKUKbblTNBe2Z1njNJs568JwvShzTGBKtwqan4DZAcivRVkUQ/S0KX5R8AU8NzrI70PZ/T/L13o3TuMq8X7jjmknUuQNpe7IcspyZtQp3iVzHAbewRnhKNlRlAKeCERqZfq&#43;4vfHc/ZEznzzsn4NuoRYcdHI3CF5jM5EYGkwxLL5OlK&#43;0U4X/EGCw1NR6D1E30C3oDCl7Otiu6PslQkWKt67mcWV&#43;TpVXyuZRfE6Et/c3hxRhWoMWgTnHbKuvbatHDS13K8o8IPF71NHHRR7GwLInyFoHrIpmYrPQR2TwpXwBrTAYnmz8n9Fr6MtpI78NUX9zoF4VrmkS2oU0IgHsXSyIzAMUUo17jRZjgHPUQqjocPJh&#43;kmFPTqwTBY7VJlO9VBGZRpVaMYXkOPUI9q8RUTSvhUeX5Uf&#43;xUeB9EPfdrFln3hr87nZvSGz5bVlEphsjl3lyN7mazu9t8zbdsOUohLajyQTJDEpkr&#43;17WY&#43;2iCKYHW&#43;2md1&#43;&#43;z6ZuX485ChGMjyr1MPW2wR71JIK&#43;&#43;CO&#43;snCXSmuFCTng9yh7aso4Y8Q&#43;JI7QUgjqlZu8euFO7vFVULMFm0up76syoOg6&#43;XELyAZRMAxDXuQ81FYZbQaTBPlWcDdjkXlswrtHwhDXvRKlpKsrM&#43;saefdBUBvcdHx1O3liw/5BsPJ1j6B6THIfbxPiwtuKBRsNBebXxHjPrFiWsQGIv7XGiMIgbKmz4Y5iNi7Lm/HNovwM3NwsAMyjEbHWJ5bfanqtIEaUpHu1PrcsNhCpBpZ8gMm6PHuaslwrT4p87nXXpSgFGSP&#43;C1plmFWf5D43BVfE1RodrlnBndWwmOfj4nFUdFdtR2lbYtQBURWKv&#43;kLC7COFu1Cfo8I3qUeInkMXeFlL6HQ6pjayYPqZUhfl8v55P6&#43;CHM/Uu6qanx0caEOy9dvPKSuy8Py9ejmfsQusl92ZTG9i0M2hsiOxAIz2ZvVOnv90PNmMe0JaRmlmyVMg82W9kbSC543ZtUptrASgHf0LVw3i6k4HuAdrVOCYfgCD&#43;SOb&#43;ij245GesTlVPxQSbn9Nlj9m9wKe0EhDbwSQN4/6tkmEQzCt3ASCumO8ICLJp7SLerIkEX8YSweaqvAcmuYBoQexZePDUs0vLVUi9O1tdWLsoRpAGNnhCPs49oGRzzVncR&#43;goOYZgb1NIrC3PatMNSvttCngHJl8kkUssWSfZP8bd/RSWbsyeXVRCWUvo1uPBzzWzO&#43;ykLgZGlgfNUMLvOoD7SbaHO1S2NH/pY2&#43;1Jerc1foVKKqaZqWKTkvXhMURojmrlc30zA5aV9ID71xri5RVQKZXWgh24zitaxn9CquM2CDvdf4PJ9d6UtFObA2Y7F1uHZsmqZKNmKxaORqzNFK3Dso1fgQ5pDN1o0OUeeoKDV4subyc9uwOAGPqSWbIDsVr4am7yNum9PLhY024SZEjldsWyyK0FXl4i3srLiiDmuY0gVcE8huwrPXgNPPWONCqiHqgVSfGmr5GzJR0tsL1Nhmh4Aec87cNVbSTNbuobxY4BenOyoPOhp66GVlBuAfYBePn7IBla/qa4DpR&#43;cwgn4AApdEhuGNHZ5Baneh8F711vzpbdqUpjJ5jH0jXxfUIxSGLa63zQw4nQz&#43;MPPLg2IhBlIXAWb&#43;6gatZkG8bMKT9scvbJBlzCInz0la1l8TvglhasVSk9VB5tdMGC3nAyYRhsBPoC&#43;z06JH8AQbwbT/FLHOuKLm09&#43;v9SDkMfVydTydoTiKGG03FsgV9P5zbn4ibvy&#43;&#43;5PDyT&#43;LY3D//7pN81FlTaDr4XUGXzVpmdQWQa4h2q04LAT8IRWfLpF7sYgPvUB3wXhuEDNi13sMmR3jJIQH1gXqDZvEHYx/y2q6O0Sf5da4GaiAjciH8ywj96s6BS//HBd/xn6LQ7kCb98/tQc5urp7unzp7/vZtcV/CcpZb69tlr&#43;gNtr/8z8LUqL5fFc5TFaw13YaNM6B6WmchodOc7B3228bq3BLkrEOCw7AusUR2DEX4ljRGgQw7Y1ErUvO/l1MNxRHEEaeEUcNf48L3UdRPF&#43;g2HgsH/d9qFmEnzTxsHPnz786/3o18uPH68nk277T5e5u&#43;093VUBw57TZTU67TfdRQvtPtN1bovtnY9hlTs6l/m67ivdhVi3n3Sd3XYv6a7MxT2k66wd94/uSq7ZN7qug92e0V2p872i64x2&#43;0R3Zcz3h64zWu8N3ZW0tCe0npechZQ0MHbYA7orbWXv5zq35b7PXXkL&#43;z1rOC23/O1MWtjqt85qub9zV9LCvs51Tus9nbuylvZyrvBa7&#43;NsRVrev7lMdY4bWd2z&#43;RtM0DIN4AY5WSwoHkNPnZTzjEK889WKu3yW4UJ/oSybR1q/uMhPqnnqcfR47lpyWa4Qw0VGhhJn5VzT2298hmYY&#43;/mY7uJCm16WvMUUJdBnmeVh&#43;ToPt7vYojAc4ZhgEZKmlliWuUfewQvRVRDzFUbXKuKZLr0qKRx3vwqfp4tyQjUv39lLhBnkWbOdvsoZF/cPMx4U5/5hVrkiL9TSVciwJSTPHLycUs79dDXhMOy3cmVyzy9M7ivpaHWV4hfC9yK8KJ5W8okB9TKIEJ/pFSG9ikk8P0EH6IgfwLc0A3JXGx67WeOSKfLyEGbikOVX0abzEaoGV06H2mGr3J0Rj91IriN3gbIyC9xXUH0XsqwRjvOgQWWoqfRzjJFn/oypVTqTlIJ6LWvQXZcUFCi1BFlEQb2VgS8j/TYsRxNsRDAsRbXGMDMjxIYHjvwtzWZXvfPkhPU3hOaQkJ6KIdFbwDUS8SIzr7EqrJiAAd&#43;j0BpN&#43;WRUocTXpfRfa/p&#43;lqh1mO&#43;jDEjNdzWuC5Ug30cFx/s6TD6ZFbTqU4LSvl/UQqXp7bfaXpjiktsfTG&#43;/dUAwm1gsUXM0YcsAhe6pLbo8t/z0Zije5du/dKOrxcUW1pDus8nyibXhtKeomGg6c7T0QBawyg1Z9PrlOy&#43;GNr1HHO4i1CssdHdBKsT67v2833ZHhPmO3URd22yvnJZGwOdchEXwfjaTgT5LvVFY979zuUDBDsXHtXex5JTxDYSq3cxBusHwFkfI1Zl&#43;WllDvDF4KtqTChwrTgsbUBudNPWYmGy/OUxUxe8L9nLOl6HmK03V&#43;k1NZ9hvEcy3lK8vIG4X1qw&#43;riwjbxYWWxc372U8jZ&#43;XMN0gHmdT/F6ICzJOZRav8id5VLxKnEma4pS1CbGx2Ivay&#43;P6/i5/IFTm7MDgta30apRp8dHO5WfoJnbkb&#43;kh5h9yRIZdV6kisUXSNAqkbGQjhYo&#43;f1W8wmtKM8iWuUpeg7PrpQgL&#43;tPseqlSZkGaOuqXX2FH4urdtTO7u1be29xIPru7FtcWi9&#43;n/KaxYdlswZd58POwNlbOO9De4vdpHheaY7jTuy/u5P7&#43;7n5696UdmhyNLYOGzaCXBrvoHq1D5FFHngJ1Xn77i4uuvNibwl3sbRn&#43;W6HegCB/e2rjHYUUvsAUrQ4UEUeeXLETMIxpAGSKbv&#43;cgmDphG&#43;y/U6miHYUrWD0LsSbd/lI1JK3sNlh41u2gyL9fmfye0R2ISWtNXA1nKmaFeHAuVhXxsaP30ayUFUwEQn516RwLJ7EmyAW&#43;9AUE8BwvEDhWhHOwx0phqMtZnVLWXssa2n9qJlHjcRHKKYpDBtJZD6VTT6QZR5KURphwhq8OrRZ9JrndrnHIPLHVxmoN1wj5IgfZTmQ/XOp/j24Rkhu8M7/i1ztOKYvD4PFQSC5IxxFOO5lGxbYcmtaULEEpXotifP3wj1KdrT4ytEA&#43;ZDCNMtXfr5aEd9WKT6kdsyy7eXBALXF4Zgyb561EyQvj1S6VX1LqoIBS2xO2ax8tpgg26WfK3UX&#43;meC1sPORie4ubPR9O7Lwl0MJw0ki1Fzo5wtRib9eIfjg8cg3RHWS&#43;sxRC43y9UF8RQV0IG/zKstTg6jRXgaXetfO6VVK6rlTufu0&#43;g6G0MU7H8SDs3vnPwQDBPu6tIKjEQAht5d6m0RX4iKU1cIf9AUv0ozvgJjtNptql23NdX4ypV9KsdpZXs7j5HhTU9jFUwGnD/uHpTC20sW5AdwhuNndHAKx6B4HJjsgIWMxePMJmgkkLsJGALAaWlmg/GVBN9Acog9hx3wgEstO9ujDexNgyigyHdnky9DJpxXRYTTgxjOLCIYhkCkgPEuSkBhfUm&#43;DVEc&#43;LsocfsDP0qOwih9f7bgbYMVStdBCMiBOBfqbEAOpJY1gRu&#43;Ul1kVWfarOQFJnlWdVbISrZ8lOFkR4UNkipfYYhse2JIUvKl0mFEZCuXbKs1DDaIEdkqRAI3QbxRq3tHAfEw&#43;I37sPPpWHYuTnXZx&#43;xy6ou9YPihLtfN/Qio44sLJ19MrMtcGNBeXBTOtHkz4&#43;8SwYiIDVpkEk/RCS2CTQxDPsvIj7R5ng&#43;J2G&#43;NHWhzhNB75jnYgS7HEoWI3QK&#43;FYg81uV7DGRd8wNdjqctpGSYJHxCUh6zfKqow792KRrh5ODwI8AOwTyEMQGEokIEnQH8y8PJwU3YNbc/ICqYqxmKm66keQ&#43;ExcknBVhoowpJWNevoPdMKNyg&#43;gaW&#43;aXW9UPSUt93M5kgHibJLdzLtYaVUtzF6BbTEqdIAWL&#43;OlgFYUAPoy3ynlHKP39aDZX5XmlCm4GC/PUFPR9WH/1fV6sXVLRmloFkdvfy8&#43;C926iGa12S610YLtErFdGxf2wZ&#43;q6G3V51MW2R7dEJFgjFD/dT8sP0v8U0WMtRppqcqavTrTiiJhD5sQ2pzF05VeuSLcrAH3F2tISbH1wExer2p8Ee3fg1rRdwjeiBDdZjlGYrtEUqkMmVTYTFeDUiKKX1nmlBA&#43;/5wGiLbxCRyuuAgMvP73/hwSdDSJtHQZr60JGUpjiScBeV4mh3UUuV/RfwK9fu8r1yQAWXP19e8jQE0zCwWyhZYCweD0hMy6qJt2vlbQvkNqbtPDy7q&#43;&#43;qG6BbJvGr2L4wHrwTI6F8NVsLTWb46lqW3GK2pTQhgLLUQZQ1Aw9H4P0gELn81YAvO/FXlqUX7gfKCa6janJtthB2uxJv8kZ2eQnsG76Q1zz&#43;4q7nSs4WSs0sqkMOgse4qBMGY1z9sgF4LS9Q4Sxm/WgusY&#43;JoYeS21ff82BHLmW5&#43;WOabcpt1pP3oMM9pDA9k1KfvE&#43;fPsHLX9Bq9f7Th/XqXx/89b9&#43;8d&#43;/9y&#43;9X99/gC7k7ISvFBeaDP5IVOdX2bdQs78hGIZZEJh8OXShipVILxPJ7mAcKBc5udI3wLHwzQQ6T80GAcYHGtwvG0RaXRhneAW/L1EaOdlRm2Wc5WNfHdlTg3cEPQV0i3f0Cqc&#43;SonD04BMBDJVPEC2q&#43;K5W&#43;cSH4irISgbF6wViEjAPytncBN4Ikt9ClFZOLLJvi&#43;QdxY8f&#43;9FQPaUIjlU/iq11ifdxTSIEIAeDfYBPUhfjbdXzQz7uxDxFc5rmE/cWSumFknnB&#43;yl8VbNSG3Z94zQQ2aVYSdgmPLBZyAjKoRhsEGxMf4FoewLSw2LSjuIVvcYLU2Mt9hwSkCZ70ELvnTXa93ApgIuxCw52mPl1HV3&#43;&#43;W0vK1acHUsTOnRNMOroB2dObJoH5LndrIcTe8fCNyI6URwO1mC0fQeZElAblFOPJwgP18Y3O&#43;0Nj1v6Qy8XzZAWSixY6/BTIW2p0nH8eXm9jtH50fFqdF4E8SvcpYuz/&#43;fqy&#43;IOg8ExYgqMxMQqYWWVDQbi4tu/Ndqg6gd0O1/rkgTiOx7bhEhO&#43;KIH42xeoliuAqRKzLIaHZHicbipzhdeYvoDMcBxekap5MoCfEBIe6SJcKTwdC5RRTIPMqJTg2zK87Yt4j2ZM7eGqe9DK83T7FqRG8i1pjd22hDfCynNPVXCitu4vlKKlnrXrBmTr/4zB/FWG8&#43;FhX7NsolipKsh7NnplFS4H3B6bP6yB/6exh7yAc3c/WFzz3DZPLNXCYaJOc4pTpZlt4ovWDj&#43;TlK18ijQF4rgrDr8vItosSDMcd4IauAB9eudh7iCmCXGvpCmSXzHkT&#43;wF99lHXyQkKEvC1KdcDqUuMrhWWaikxZFCEGL6M83QYepkGMgJMdXe18/8BeCoGIIbVqBo&#43;lDOu8VyUxNVAx4ZPu2KQNN2IDzY7AQqYNmdCUf952gpZCbdgvOPWPqO1MzICvhmpmf&#43;wMutLb1fHyDYX1Q&#43;UaYr5dMBNoxL2J1dZFwGI/5Aw9yMQMOpu/9DKs0qu0jvKQdCq33HrJXGpuL1hsYWp1c9iwivDMmZpyJaH8zTfhkF/C1iYIOUxUOGVbhBg6KoyvKAx2EfsWUX1IRQkV9PfatM1EVx0K9pAlXImD/mAVxA0qyO&#43;5axv3c9tqUI4q2QdeUw0IGMC1PFs1iHwNNQEyXdqsqDLff/2XfPYzP9QakryvNlDVwLk1rIeYwD3ywcQPKLFBXJU2fLjF3O4jfmTkFDAOuDUImjbVFhLuHKY0EBM/sUgRGL0cI4tLX&#43;YqmWVbeQS46p7FPMlwRzErvDN59VAI1ClHpsb6zT&#43;ZuKiqjAosN04IH7ajsHP5JoLdKgzIFqVH4ivxBvgnnPrHITPJMug4gJsYExp4xJEzzsWkhoeykMWdj54GPlrtNilKcEqzFt2IPwnRnu8ZakGk8nYglK5zYj5AFUkmNs0SNM6kiwPWQZXmZe7iwq6ZdzHSW4dTrXm4KOu2wt3RbfZR1gBYLsQwSYj7YfCex3PCMfL6BaUru7zVUoyLRArVI&#43;VKAwIb&#43;LbQjRoKkq3jq9Dka4ZKSZrqLu&#43;qd5egeLH4Kr4RHHlWHAUW/DYI2bqFRbl6URlzDIwXQzBPA9ZewTd0qMAEPvAJtICZjFqBkNcFavHNAg2QZxvA8Yeff778VwuezzN1gGvVUCDa6XjfVnupse6&#43;xfglBl/LYXO46DO/koe&#43;0cvzzttjzFX5/iDZrYqSwiyQSQ53dIvT4C/kg2G&#43;qQpOJVbRYMDgYDEPATCXfkYHYuDh&#43;66whsFrpwpLyJaXkbVWhtQGJNqYGUq0MBsw2SBa4GRzsAC8b9UtbdWsZBjT2EklnA/qPYUeqW56YhCFAP56aTF1mt9mTROzbwQ6MPDBDPchw3uc3xaa/eP8tsVUKnNVPp6tkLJ&#43;/HQQ3JSXGbT5zlMO/y/HruYJIZ6zt8BryteGyVPKLc&#43;5Vhmkim7QNrNhA7ujIcbP88XybrF0bhdLi9eoEHH7g5hQDchdNxDcBAI&#43;vL/8CHDKfj8D3VJhKdJTewk1QxmjLVRi6pvi0bdpLc7AkFLobfnocImiBKcwPTR/vhg3i&#43;BDxBGOKYrpIOPX3bx5t3pPtCWYH1PvzVAnr3dFNf8wzzyhR4B7QY9AOT3fuvriIj8p58m3db64yE/KebilCP7FY2Sp40oOvAsJQsIpWR6Xc6DZTgSU4gfsGoL/CRJH/NiNxdVTLWRUG5ijdM07f3YgFxbLpCxLFsTqF9l95SngF/US&#43;m1xd1t1Xs/zub&#43;4CTsh7GRQdfaqx84qMMgkfeyc5tgUBe754h5Bn&#43;8U1FdBHjJLgS239G7JoiN0i3rdQc/pG/Xk8Y4N2lrEQz6ztjeLCbcVLOC&#43;xdKWu2qNcMr6QW6gyVsSCAgaoFcEFjTF8eYWRohvli7B8w7m0k4rYxyiN6lUiqSUsy5TGBO5L3FBl0Jy9hFRN6rkPWpBlGaig77mdlgQ3q0IG5j5RsYP7/tnZ6012vNTlvuvYQT/wrE78T6INpGviJe7Qv/IKhC9zA&#43;ogkWewe42p2iNqLe9CmKYBog4IkIjGyaq6Ccqi5MdaJd/JfIqe2TXLYLazHn4qsZQVuqlJpLyGJPDyBOGuAt1qM2VJCMcJZDOR0MZ8SQ71&#43;UvBZksRpas5bSOH2mQLN7wknThghYhq9yL7FiXTyxSyEyPMlRlMUkntTiQrGrVsS5fJTxk/XoxSGT9qk0IyJpU3Q&#43;KB/gse0sJQYrZl5qTHYF8cxZzVHYlUPScnhO&#43;seF1iiMwJ2Eg1syxC7v1Ooj5clgkY106Io2/MvP5VsPebhoM9t2cCedzYAa2lm3edBxy1yob9JvI4CDfzBBwMa9o9zaQqPCDYBJ76SGhBsc2bXFS5KOYBjC0KVFGdo3TiHS&#43;P4kU59I2fIvdSjzRPKpjRzZSEG4j4lZyf9UFnomo&#43;bP5jmyLq7acp9uF/Tdseb0XTBJ/Vaic0yG/JLEvfX2V4r9fB7GPUr7f/u1wDpw8oYmF5XN/X6ts8ln//XdVo7//DuQhuML4OYJp8zqIJYp5iMBMmjuWii/bvpuJGyhanmAzQT/bYs7EsEtTER&#43;WmEL1m5kkSE&#43;CtLMtDTtQ2FExhGaebNO3tj00zWQKRqE0E/KNtuSWy2&#43;4ZRlMT8I0M17DfeAZtr41EylpQ8to2V/TjC&#43;FDfBTSN7Y6hhCe5PjPMe3N05ibmxTvAnM/XcLBZPnJ4bqEpEm3nRPOESv/c4o18uhGBjNU&#43;QHpt0DzawSrSfQehlaO/8cpSQglPdOFFJ0dC&#43;oVMgBexywWQU&#43;gk4Z7pHNpgDQzPL7DlMoA/YcWbscQiI0E91zl4Yg3vBFqreT6dFVmSFxS&#43;7tZNpMmu3/bZ74MFMusp3HDURbnFJvR4&#43;8VZm4iSKGCdli&#43;pbCZBi5w7ee6xB7fNVKczwZq2IdYq9X/FzWki1xAhYBPbaZL3HS4&#43;IminTHemD8jOLjBzIcpCdADFyPAQnYN8I0iI8dlkmIHodoZnpCqzd0&#43;U9ope3w1fJfGYitfeFS7t0lJAptC4yD1OH/QRAHLWu6fn83DlLxPwt6VET400/B2gKBUJjSwZ&#43;&#43;7IzC4HmBYoIcdgT4oWaeml10&#43;UUevovvxyrWJSn71JuB1LTscUBqR4z0FFpVwDLNdoH3PCTsBVVY3sxTgUw2bTtQEM9agBZRbB0CvqIwMQKKfCybwrsfj2Ywdu5CH9yPvyirPy9E6m8GOPSL2cQPf4njGIZghFL5taYakTE6AjeWFmSIOzu4pfO&#43;hs3K/zhnEWXsyeiHvdwaJCOIyluknMXKhLUakJfnwiRyP57LXRVlthNMgi5RGgUxz5zuUdoTc4tucc//Zv62yugCrvopzNtChahoFj4N6W&#43;7KOEGNsalTjo7eIu7rcJllv27syY&#43;58&#43;vcPcWYw/ZFEBxQX3Npv8SxGgvg5hmjO9ktneqlGrbmXca/KMU0Ef&#43;PrUy7LYL35dzqZAxdCA&#43;BxlO0XLxFrJSG8sZ/URAd2A8pl67sfPMeZ937mbWwHe0UmdShDtAOuJHudZ9/LAKRFxnopnSTPn8W/rxvTv6OlzyULHsjbClURtiaR8gDR6TASHemLE&#43;f9JrJyrnGO0EYlW7Kl6Ldo8BekGp0qs&#43;/cwuiOmUojpeiGN2b9aOOMym8vt9N&#43;UpfBZeZK7MZdXmtnTNN5vuy/c7qcgNVl43/CMw&#43;bj&#43;7PvpGMneupFOvsNdcbM7BqHbBC9Lb5S02T5PS3Q/Gf17NJ3cg6cg/j53LuQ5/24cV3UtyolEwFLVgOYxIBQC5&#43;IneXFwFcQM56f7kwAxnHr9FYpuKsvN7fXdB4Nol&#43;LcKB0K8Xpmi5vvwyQhWRQf4EMKWCpf1ljtC/iSkL6rMg98SI8BLbtrSIoTYbduf6NdYWnLytBHISQEkdMQFwBtuE9H2saWhenpzKhbuqlhcjhoMXxOdksLXYJGtSoQX9jkXF3dgFQBbDVtN/f1u7q6qavThqIfD3VE5I440MvCBleGWxrYwfTuS/&#43;N2N1xR2PuwRxCiqwrdTR&#43;p2TegGuu5qM5ulROgeSIWup6i23ZRnez&#43;d3t5Ha5sL0jucTRmMa7cRx&#43;x/rJITrXTod7bskyvr95nNxb3wCZ/Tg0Y9V3Re5Y6VK&#43;W110qG4b/Ml0ODumapjcEZhvwOlYuUy4Q8k7VGsr8uNidjP&#43;ZlsDIvdRWMY71A23Y&#43;0K8U610KGGLdB3BKV&#43;sF7b1rLKfySesaa7Y3eoCyXcsTY63s8WFhm7VEaKkBvI2NSUyCpj7MsgvspP/Hb5sJjcD8bD5ZsIz0XSUoMd2Y&#43;qWFMzOQVtFgmsWwWr4GL2VWxHZKzXE5J2qNZG1iMr9shGdaQa92hzBb3no/odKev2T0Zh7EMt6RbHjVYWukFGK&#43;TbYICqmvY6fiOuVcVacxx5AxeNg6JuJEcAT0YP9zfLfx/VMKTsseCnAjz2pp6K7ZQMXe6tFO56g49to3Z0d9fLp&#43;H95Kj2JGWPBT8VYJc7fCoGuxbbne3Ymy2But7sLs3XjuLfi&#43;XE/h3Dcx8HZq6P7sBdWtEp0O1aEIe6PG9BLn9cSayZjn0OOEy3JtrlGbCBFxHc1VZrRzTe8kp8i8G/FeX5aI68V038x1Vvh7v4JuJ7RChOEZjjIKakErEVfJ8D50Lk7D3icBeh3k28xmkkYgOAVEj33ft53yXSk9sF95MvN4vl/b&#43;Bbk4rIzbOZGV7rJRSHwhKHVFCMB4uwXhyPXyYLo&#43;yDwvRuoLdON6Oe2Rzk&#43;INN7k72RsJKrWjpkDz1tgVwxwh5zhcTenripoK/EDETDSf8W0octvyTIXRMOdr4DGo34W0oYBi8nyK9ihsezhZTi4eeZg7p3kY3LNWJgN6JJBumz1oUi7G/dL6xUqogHkijK7AKjqOd5cHUgWwTcguSXBq8O/JsryVoKjy20CjwEuRh1O/4kGfp78RtnF7KFUpb2SKMUWkorxIewNcq9JvYCBeilDMlyVVYgfmF94K3Kq/mQtTxANXOmIF4SWP2SEOqxmi6HAQ0T&#43;iw6F6MT6MEeEBuuRhJcNom&#43;IIqfUR0olWBghRbilip/SK4PhJ7At9caEOKxluFtO7WEW0yE6qmZYwDWDMs4jDSoZvkKADD0EmjiqXeX/GrvKD6kW8maEbDi4PKxny3a0vLvKTSqZ8fxIeYaN1t5KKeHE9ysVF8bSSMVtRwPtjueZAk0fF&#43;pDOw9UcwhuVXedH1cu8FbP2K3p9dlbPwrdnpUEY0EC9HlhalgQg3w26JLUjVLU0dVzJsuANXnogqyAkTwHh3q40xSEPZ1fKVUVIQki2soFmJ9VMuyRFEa40acXBJUWOkt94BWSJYCRcecVe2upMU&#43;MPk9mCZWK/1UshTWEOUzitZHy8HfHtuG9HGoLvCL&#43;yq&#43;y3cuk/eIvztpWfVbJF4uT2C8uVnWSZZBWoJbm5jzgpb71diVuO9jjcqf2M6zhuASdb76UlvIZ7nAaUfZDMpkfT8eX9AicLY66lm/FgttyrN&#43;Q7jftv5J2lOzOjLhF46&#43;OrVpc48NaGOi7saQoWeJca1ni3l1hFGtEyfZ9NT0VTrtRS91PrkmpBjSphc&#43;Wqt0yg9673FRMqYhulO8r3sOQu&#43;facNzGhMAzFmoHiOKJK5gYiZ/4ciEGAtAvkMbz6fVceD7Z7ZMiq&#43;1ooCxe&#43;A8oI8pXfErLjC8abELkiszHCyt8DbxfBpZlGF73lH0NlitzRzpMF7vgbSaxj0TQzKYheKRDNP4LOOvBNM50&#43;6M0/gq4tyE4zSznAzt&#43;B3hIrphm8FCHmx2PbBAZqJqgFBfq7SY7rW8phh/4e&#43;NawRgb8LKTR30lgFTOpmUMTL&#43;nv5ekamKmZ0hiU6R9MbhsSqp1cGwvqH0huEYmqma8ahepvo7CKdNVMUoty9XeyWAfTambSR9H6R9BZRu1qJqtE7PpbWdoCgxnwy0HB/iZ820hgBp4sCpgCG5A/w4Cij/9A3tZgZM18lUBkfxO&#43;RaQzA0UtxNnfyWIVSa2Zph5F7W&#43;laYvW1sxQjtT2d6Cv2sIMN8NXQgz/YHw135DFnZChsqa333TZJ/4GNU4VNgZ1yo64uD6o09/E8&#43;ZtZnWolpV57sAi/yC2N8cx&#43;ZHo7e5W/X7Zs6pVXm/&#43;rjs1NQLVFaj6FLaL6pXQ&#43;hqVwU6&#43;le7fRsK36pi/cf/nudj/WYt/su2fz4AutoDWAZs8yfr9kr&#43;Wvbi&#43;uTX4fpUBTxhi9cchv3Frbom5wuB6OXfUARij1W6jmyN0WZZ318t57&#43;Pg8oNbnM/jMo2Iv&#43;FVB6wsEqpcMig/ERqw51/m5T1rW/HnX&#43;Y9JtGoLt&#43;ZtxPkYvG1DXJaDHXaCXra0wU4rVPwbT/AMoUe6nj3CtvX1HG5W6Rtm2CZ1XSRaBKFGV0tst39K&#43;C23j4Oa3cPC7Ctt1DCdrmPJXjL2yhout3LAk/7rVyobaRsNVdbog2ICfb7bKrfkLcZWW4WmTkx1IBtMYttuQa62aFvQRii1CkcS/tZxbuxkEGEjRz6YeAhkRf0820tM2cudQDCcgxK0wr3aresMPhWwSKMorqDDTRNHXyGJMQXw6t49ZfvPBAUIyo3KiaAJf&#43;18vMpYdMeVwSuWGZRHfIke6RbCOTchWGLIYXOPfFcudXkpfKeWYxGM4HJNWSnarflKd5U4gq7o9Gs2PoX4ytnMb6q5oJJkkDqbd0R905lrVqxaQVKaxAshcHr5092AOLn8ycrJDvphcP&#43;Ln4S&#43;zaBnxbjhfbKf&#43;dX7q4n028Od2JVvpPZSfF64KPYQ3frfJM1nrOWnMuwQsj1NhcXhbM8x/T2Gy/pMPZLO&#43;rp0nOphm3thA&#43;XMk8S59M38Bj4CGdNvfnb/tOzL/MMPBy5n771uGQvl9Sm9YuDkyr90KPBnrs3iUDYzc&#43;B9M1C/hjxYLTzENI1TiOWsQwy8Fd9PZnva30GssEf/isIQ&#43;heByla41c365v6LuSisiR69KuA&#43;miNYp&#43;9QKSnXPaoVBzJCnn7IlL6//grx1&#43;9e4Eh&#43;yHb6H/1JM0mJ4tSvCC4R25mtjIW560uWCX/KzP423a6fqMK53DMsuM6W7G7a3QiNy4LlnMXuk2Xszl5NfCdze2qge9UnlEt8Oe6jVZKnMaHygx&#43;rgLaqHBiFysLlnOVtpMup3DIasM/a0FbtTid21Yrw9kKaqXH6f26Goh&#43;kG9VC/uZ/Zsa2E/qfdTOca4WZanJqV2UGmjO5jTUwHc6T5g2gnPdP0s1zu4Z00B8OteVNoJzVbClGid2bmmgObnbiQ3PuWrWWptT&#43;am0wJ&#43;rnFZKnM6bpY3gXMVsU6PpA8zCcqJ29zdaTN6AvxZJwIZHfX8ex6RseC0cKU5W&#43;LX1K1nmy2cq/NXriQCZwp7Rntcdkxxiz413Xoh2qvwfT4kNpH0&#43;M8&#43;/GZV9DZ8ObYsjdCq0LSb0hLeb3xq42aRowx/2k0FLPU&#43;kJtxDClPVLn8cKHeeu2rroguOcP6mU&#43;fI8Uc4DOVq&#43;yMYCtKulx8LJhOp0S5mJDTYdwW2nXXXxGFhTC1RmawYFjyNNgRO0mbdMxCYLWscveV73QBu/FTn2DY2LQNBqyEpJznyBpgtOAK&#43;1X5jwjcbTjiBldnEwGFhN&#43;E8Xa0mBspOZhNObmG2MPC1WQs4RetHtYGg5XNW4Nt&#43;zJp4un3Nct7Wb1kDX8tXJMe3&#43;rgzcLR/T3Gatq8pA4P5S4ajr874ktyjmC5TGBPhfOSvyj4MRUeZnGUcwE2MSUDcinz1vHGgq&#43;M9F1fzK8bmM0YKG78troMQ/YchyGnyj0VXlSbSTCjzJ2gYuF/jNFLD8OPKgNNIDeNNxRDfoVxvsKApgpHtnOI4DfZIfTFk301nIlmiKFHOZFsYswdkt17zDdrPVSwZ5PV8ZfJCvPPBJoXJtnjcRHjD5cAV9J6RDx6SilMG5xF53Jur0d1sdnfLXtjjq9vJE99jN/AbhgWF9RoxusUUgaHnsVHKKggDehhtkfeM0pvYR68dVswIp/mBgiwvmRF&#43;chRSVAGS2d3Lz4P3bqMabt&#43;yINe7MFyiV7pAMPW2P7YIfVfDbq25WEbCDtmrgIAFQvHD/ZT8MPVvsfRhlXGp9Op0Ko2oB0R&#43;bCsqc1dOm562ehG48ys7WsLNDy6BYnX702CPbvx2pRc08J4PXF0CLj&#43;//4VPBIWQHrfoTcBxtH5R5yTcRcbXS67REoMxBoXgaywDwGt5gULy3KVWl9jHxFCZnod3MSX3GFO371KWm6vZOGJgzZ1HTOObXFGcwg1qfvOK3G6MpZFHCzlHaRSIdepHvcOTXN5YyfMQekdabBMuakYXi1OOL0Uub&#43;SxW0TSt15BUsUXT/xRRSBc1Kj9ItjEx9YQEbJmfNEi&#43;UfbcSQC4B0brhmZliiFI5wcMh&#43;i/FIjr5JRJpQ8MGIj&#43;gxKK4T&#43;y7OGHMGg8UF7SHxIEX9qUe2z4mFxN0&#43;DPesVRD6ejddHo53yCa1gkvAsR7qoZvLGulZLxi7fg&#43;LrFoyv7COel9/TL0nsS/jGwp2cFCaJv8pW8C3uH2an25/IBu0ohDdtodMZs&#43;MuQAKf/asrtbh/yD57atn0PEURJvEwy1/Bkb8Suur2nZnijeiAFw&#43;zHGE&#43;uR/GNFgkhxeYIqea0LDORD031exyMYcCX0ymQbx7ncQUpUkaELTgK2UcdgXwSyC/BsRF8LSYghUk2&#43;Zv5spI4tPnf338wCAHjYylkU6KMV0zLd1BkecUOqfeubVNvbfqiagn6ve8CiPquYzhhFqvCYWrc&#43;rLCU6h6SbFu&#43;ScmnKCU2i6xYTGMELnVFZxnEpfcm5lySk0xQSkKEQGY/wp1MXknWQ5hc4JJOTFP6e&#43;guEkusoV9edUVlCcQluyhT5&#43;OaeyguEUutIgQn/h&#43;KxVqzjerO8r/QT2W//15Moy5AFDfquKZ26obGRQaqjyQ9pfcjsMj0Wy2KIwBNkV&#43;V1u&#43;4WQQ2Rf6T5DyAZ6lozgbkeTHT0FsSug8jAbHXUAi&#43;IGdLb71P2N&#43;j7dPX3&#43;ZNCaX//naP2Dq7ejdn9LZWp15Ht0GL/3eD4LaabnC375/MlewooDUlF7080DoK&#43;0QVuZY0BfaRcQG8E/8EpPKrUe/IFXFqKa7IU9eSr7&#43;BR8fIHYKKpp9ygTilrLlpvGKquuS9lZ0wLCFCrkMqPPGShYD5zF2zAR8KmSSjwPaa8tZOuJEA99d8dwxYMjoHncguEGOdkRGMZ0H6Q7Ug6SIksuM/WWyNvGOMSbQ57Ig22oVopiGsQovIsZdHYMJuN7sXNJImB9vgOazCAiYmQI7I26TAO4QQ4rYbhDscc3qsrPVDiFYt7Jq5i35pEU5HE1T8GlQIwSZCgFniaSqiJiLdAk3sjdxYrnOjXuEhQvFl8LBDJFD/&#43;EVuKcN&#43;X8jOcTXnCqMbFW0hbxSubNKnMLU/TdkT&#43;ZVOZT74orpezwL&#43;iogzY7k8yWyQcoQjFZ3gwdeQiWN0OgfPQNQCK3O9xRLDeEneOUwrDv5h7/imMTw9ARP2BIKfS2vCzA08ecyzmYhAtziUGMAzFjrINut5xLRPJn6Pqr0sRICailDgVI6REoiYvHFvxBTPHIJIp0EsmC6/BkukvRCFIY4o1TS6i/dUaQijm9fkcI/YuyBhclIfqKwsTJD0GhswG/PaUwSVCq6YfUpXdyzyPhvSDrzhK&#43;kKzp6LKL7aC8C1abMfJ&#43;MfACGLNemeCwzUSbFSVH7OUgJfbnQ4Ic/h&#43;scQrGiNBnnID9r4CvbQl2UVO4xXq0Og7TW&#43;O0J2PHujLeYpErRHsU&#43;itQ4uSBZve/guNYuGcG8sdXbn8g4cucEQxi4K94J7e//AA6TFRzACZX&#43;gzrl&#43;ezSiRPQfyLoSA8sxHAuDCpthKpGY98CgF7N8cwQlnpf3174cmn8F2/QsVv5mlrmGNmNCH0nh3&#43;v6098kyVlleU3kLa1mtyhEKrqqNMQuTRNNuizYxU6n4LIHyrzzw8jxlErkgT08ButZkXUFudHwSenFDOEGK4CagjfsAIJqwTbrQXsM5kEQV06woBl10TE7MKLkiGsb945tGf2BmQx9YNQ3X8Ypg5GF0tgPfyc3y5/UBfD&#43;jlwJ0KRWOR49IwSNxC8Lcfq0N/kMSbU/EORImEWMVNpokyCeLNEuPQKZ6Q0k6&#43;fBDjn1oNxke6KxPEYB54lWamUuQtFZsKF6Dxms5RukYevUWUeJDvast&#43;eQxCX&#43;7rjaXNqd93Y3E5/&#43;7ByRYTR/x0&#43;eYryWle7vxCFtixryFrFDKLgO9z0PhCGIZhT9Rd/cUgwMVPr6rYLiQIPTvqwNQtitahcv5Os8MeE&#43;qZcYXbTuaMwgf1vvzSIIbBe4300u3nLgoJQv4IRxGM2QdL&#43;RQEccC7VEMPyATmKf6DfR&#43;XpXuX/1JdWLZHb3ZU9BGvfnOrPPmR3HnTFR9dpQ9ZEzR/MPJGUmkxGQ17/kqYFKZ0l8iadcQQGbwEPgJEXMqi5uu99rPBNcvdm6F4p3y1ZNpD4mqp&#43;Fi1zEG6RFxvJNxVCG/iNXYKx/yZv7bw03ga3xRcIXKAws6s9hQdYRGMHP4fXKcBin0wDQjl7pwPamymHg5hkyx7znFRbmLxi8FY3X7fDdkjIj/K9v76JHy9//v66&#43;f/9xbWL4zhJoIbpFxomglgkvBXkhsGqxSmB680aLMHPQpumcIDuPFyV59mPQn/v4ERIkfC2QGJtX1qHYKhPRRvxyaI2Y0i2rvRjlgqqDWubO1gGUSIv6ZaoeUg2F1hTAlNYQJCvMlNwF2xO6OKL2q&#43;xrn9hst6KCyJ1t2uNsh2sN0qDCK0RK/UKRyDD&#43;AjjxcPFnCPmhesZq8zIdpjsgWbljIpE3EZkOLK1QbmT8fzijd2v4FuA1Pu&#43;5odZS&#43;8xne/yukS7zIPZaxBmh1AfjKWY0AVZh/oLJOzQw6U34w6cmW4YoWdSQuLp9&#43;T0jlPBGkK5&#43;NrJz8072mR53OJOEz8tVfYy0KPqVqCupOm5Y4FivzwHZEI&#43;RO1417tu8hZ/HuxnMxAlpCvGC5MTllP/GUwhhXdOXXG2RqLQI9bXWFpQu5qjjmWsCUCgR63usW4Afgk5bDiswt3oCfQRjpoJzlJ4bpym9b4mxnyFf4t8Cctl5HVOiStnkOJl6PRanisQ9HqeRrC0GqI2qJU6PErASoMuCe5Ne10LXEYjuw3reLLWpahlcwm6oYeuh5wowX&#43;JAWyZ&#43;3eA1QCfJiAT1cWM19rPJEG5CyUSN8C&#43;zSFsaC0il6ih9cFLtEwdI1boiczhyzpQHuSmj1aG9ugs43DCXPM2Q7MpxrfdFbIIpSMnqwWRcYMfpIC2nBaBbnVw9cD3GrwraPbNt6jhuC2Nlynaib2Klhulq1nqmyUbYF/kgLa0LaFN2pArkQ2MiGfpigWhDJWyDG3KJMtOMzqKGyDNTUUIovT1IXjNPVnQ90aE0qPXQ0HZUI&#43;SWFsCC1CGDf2CpoIxi0Up&#43;qP7JitYmvpOTRhtdoITlI2O962aF567EogLwPuSYrSRHfCnUcXuyRFERYzj9I/ypGJQDruBpnbSmlmUSPJRtyFnSGN4DySEg/ttUYpuIlX&#43;NWCgOdTb5lDBGOKPDB8FPplCZPYT/jOvHkwC10JZPbsoKfkermc23cLW2keS3z0nLyVily34eNx6snRF1hM5rMu/g2dSH7fwRRy/&#43;o33IIc5LiS5vLnvR1v1ZNPExldK&#43;xbRbsCe7XtovRDrM1avwQx2lMxc2YilP79A7Snr0eS6mfjT6eA5y12q8X4W30pRPfWOIriURhTV2E2VrWMFsGbEXcReI3CN/BW4XLXgUPs0W0Qb5zsSMwS8U&#43;ZRi8/1aRib5nCv3Cada4aND4vsxPcHLW8ZW4zNJc3ILd4RdaVI8K/Pju4EK2l94jDXYR6rGJS6buv8gy2e6SX1sXxsMPLI3gsnaVz8RM3N/vuT/eRMmy7Py1f1&#43;y1&#43;NMSJ&#43;S/f1ra5hb54CqE3o5MXpMQpyh1VAJQKSBFEYpWKBXNqsn9MkpKThlKKGs8FkQv/Lm87MQjZbrTHMGSkyAYPQboBaW8WeWnpdebZvflvpvnLRz2WV7WLPod4A2deB7r6C1k5YexxSW4QDW7f3DFmGqxSxKcZoshjFTacaCm1rwsK&#43;lnk8BLFCKW31EHACa5d1mzziJz5raf6VlFU7tDIF89vfksu9w3woAmAk5lkaosYlMp0e0uWol5eH4o&#43;pIuYZVUo3dpLp95yi&#43;3u9hH6SpIfUfGngKFNDD0/RQRwmeeDUrnEqWtYVcYPxdXCbWy5SuVOpMVZN2&#43;FdsIhij2YdrwjdbC50npd7xL5Q5oXYr6JcQrGIIZIgRuELGJWqbXY8OB3kUS6F15XVabGjcRTGYwCMHN7dXd987kSpx1kBzBjjQmFIZ8vZlleUcpJNue3HbdlfLLIEJ2d/oNJexeOiUMgjiwo5PeJ2QQxIEVBfeDIy0L5BoKJGTzBQltXCKaIxBtqjNbKRakHV&#43;K1qxo3amY4OAPYY5ZYu5eIDeVd64CKlPYp2Z&#43;Vs/551VAaZ61cFrPuytg7mqIxMkOLvhG1hJH6kdhOHx05G/DK09cLC3VMQryamqUyn3T&#43;SnIndOvl3PjtyAfDFFvTZPM7GKB2O7y/uXrzWI6uXdfvFfAwLP23wIurDqoeac8iUtThIJ4jfuDF88KOEV/7thX4zhIkcedEaYBYV/srUzeOEiv0z/z4YiZKfcz7Pddyi56kW9buex2SLf8UYogRT4Y71L2iSNnW5Yp3KOUQPPo9no57w9olNhQdriXQcyKkt3KFKFF8Bdy1AFYeDDOXD1mU8OC0eGMr63h8fyUuEs8GKsg9NlgPEWxz0c&#43;Dj8E/Fj3bLCrPX41ezT0snytf0APYLhhDaJ1dFoAVqI9Lsq35y&#43;bLO0oxduuM50QK7A9jK5S/EJQ6mRH7S6KWdbcVtyvuwzqoFs8qBqAqz58WmQ7H74GBp0jnYnF5EbTQpG5tujwrX3aGki0Tm06ImuntgYivVebjqnNq62BoOxnpgNu8ZhpwC05y&#43;hgbXy/GrBrbliN&#43;Ee0n7JflBa51S&#43;qCbripaQDt/JSasDXuCnpKLq6KTWwGT2DTLy2nkEtvFo3HB2vhRtOA1XVJ0aHbuUT04Bfc4rREVg7xTSQ6P1RdEyW/igNPBXPEC1Bm2dIE3TZU0MLbempoWXQuGpoOWxdNZqKUXWY0JG0Okw0gFccGLTQFg4MTeg1JwIdgZUTQQNDfTZfx9A2m98AXp5fz4FPOL/&#43;MJktnIc4WAfIB0hN9kX84Y5YX8eeXqJGlwSHO247BesUR6Ac7UlftMcgpTsYilgKugVqRRCXqSPGsNlKuMJo9HS6vlGRxdUY8WmvPXKGkZzhuVCH1RzZbCKfrOZnMhZWKdv09htXZxj7v&#43;2iJAyImN3WpVdl72XE96/BHnGhUkI1Nz/ZBx4iSqlyisqfZ1kguktgEoDQPCcaxGuXyLyDSoVZoR2D8H1eWKOlRDPB1S6mO0f88FCmw8QcGCALGzGCMY4DD4ZfUrxLpkHEnvSBQNIFMd1DsSgeJrTSXmo6iIh0KY6pYaj3JkVIgnHoeimO&#43;T/Gkz3zNXU6harvqo02Rr1eB4tI7seyy&#43;jtdd6uoeS7KqCLIa/XQt6ns2ggsQ3sdoHpj&#43;HOI9Lrme0CzR/DnEeY1zNbB44/hrwUMb6Zn5yNnBiYOwR2P4a&#43;EtFdr4NloPZj&#43;AsR2hu4LeNZH0VeCGStZ7cMpH4MeSGCup7bOjD6MeyliOgafutA59bk5Qjndcpz3ehqxPKHkKZwz50MHH6s9U2oWWMLWd086xRvBlM1eGgAlluMtaIWjpVIMaREI7yItyMGSt3CSqvPjqIWaujRwGbhjaJDIyhG2ZTa7X&#43;uviA&#43;oSaO6hnQC1kF8TzFPFN2ps0YIuRtRUjawmkt62J4Fa/&#43;8lk2eZhlccQPuP1PFhGPjwrjv1ZK&#43;5QUYw4VCi8L&#43;Hgzv584/D&#43;42pEgRoRIE399goJn66ls0qRfdLLUomU1D3YJoBjsP5liPe7iFQppPrUyjGkwg2Ft26QWqv3PYP/ZwPPl&#43;ubtHKagleW6yhCnI2nJnIfwgFKHJYj9OcMDuEtQjPw2T6Z96LG/d3/Sd0FMUbqGHspmtJoIcOrXkR8DH2HCwfoDuJcIM1YPNzH7iGSDdXEO5Fc2mEFvG8QI5Bmaq4BLSrOXOJmhqIB5veMzAE84fSZUeHHJDSGE8kC2531E4hOAoOgUmpACiBIvVMaFU6nAWmbJnOUU54Vssqa/wtQHfHtj/gEtk8cBeWafz4&#43;3I/6A3iMYPt6ONI59eq/1qhzv3PVvLpnF3cce4ZWRfW5qQYo9hbzwTr4PDBDLYLOl&#43;gKU5kZlNhUabpoH5H0MVqyds//SJdDCX4lnn4/c8jbeRSguKWMVkbYIqgqu70oBjW4C8Ap6z&#43;yjIfY7gBaEGoFbDLB10D07ai45d&#43;iLYRB20DOXydTkjfYKv8rg&#43;HkCeJyBFfSed4kMqa3eXvsVfn2XpGhvg1AXrUjxplSQuRKUooX1&#43;&#43;7jFX5ljXLQbxFkjyOKc1dtKZsl5y27EaJGWsmv&#43;qQsQRaLwGpdFFFHqgounGplNcqoHqKsa2P2QpdVUVYr0tZ1FU6dx/GNLOXj&#43;KZYSnn561hd/jrWXv6eX/&#43;uyTAbf1MZZuNvMgPh9uKdH&#43;AR9pHzuGA/wnNHtA/D65dldWWuwjiqAdM84uRYRVeoJhg1Rdg4WV5ClLnLTgtt0O2zj1qOpllHM6ndSIcTsYv5LrttFfXQOrFZAk/ynBa4SDkdtMHyDtPPfBQIjwtpQUBad2bIqyQLNPYHwbEZmw9rEujZ1bXw2VVhs2XQ6xLLHoZ&#43;4MjfdncdmdEU3quKqbyfu0AqmQZEHFPo0U5KKpkmRKPjig6w6khUhbR2v9GBV31v9BRt7jA65LIvTBWxxSdDB1hyxajitbuR6CBzHxItaFffDh2F0bGjidDWqaOhuRidOmqcmHZrj1xAfxcsnEN0iFXPkCqspSuFDrriR1FFbvUP0GFWnAOqmA/COwB6zyUv28FeXk8zF5TmB85q7l&#43;nW33ivwrdNumvQy3P&#43;D9dTWYO/6dZ9bpCEXeSIYF49zaJNKxZbRCf3Dt8wQQY76KksUJ4Fp7D7Q986QZck1Wk7VlKOpazP03umwYiTauWnib3xfIUEMyBwotyi6kzRqsAxmyELI5k8jcYBiyR/cok0&#43;6Z3DLYtBWmlJdW64sLeSSTcYJiJsouqGN2Ce6R8gSRQUsLSW8LW1oAan4lFBUoMre8cpuwq6/dRng7H94mGp0TbxuVyRGzjSdzxmwisR5ONDFp3Xmb2KxdepvY9D69TXRtA5kmlvJgpgm9ZVDzplZs4&#43;HbRFBz8TWSHNO6yn6&#43;jfCtg7RG/PJArYnAyt&#43;3iUPj8Pv/J&#43;7qehvV0fD9/ooqlxGN2tNzRrOXadrpRNO0mdBuz4wiIQechC3BCEjbaLX/feVPbGNjk3ZmbxIwr5/HYD788fp5bTx9G4Y2ys7GoYvct5HoIje2Em3kHi08G5/eyrNRePkA20haTsA2Fm9HYBuT2RPYRufZhLWRac1YK4vLJdiKr/oEW/E9/YLNNAbHYCuRr3Ow9YSEdzCHYis2Lzp5nf0BG5/WJ7DiezgNWylaXsM2Fq/eg42m3YOw0bh6EjYGrTdhQV&#43;5Rohs8NookYL/cR7KT3DFUKvg4tMZXeoGI840GOBUmsjStEzjMpatx2WsGVyW4EUBJAlmMBJEksbXJVv6YRRPkEJHUzSz64RF3k020HBIhKrkNnxfs/2SlnCN3mhcXrKpGUxxfyOHtVAvwaY8kadpee4LWAIWibcE2sH5fr1Oc0Md0ANd1fD9u2z//bvZqhGRw/0mvqMZNZ7wuMs0MSOJAdDGlCVphvJ9OxjIu5rhD5An8E0GpCnUjAcmHhdEJoNGW5Ume3EqTbxFGzXLdBoKw&#43;k05CGYVKNZGH6/ja7LEpXCmKSRpBbm3c307m9hSPbYJNITXJUI1QH757G5onZwrqcF&#43;7tFzQTa0xbU1bgoAvHMEu0mGPED3aE/hMPVkNszwRPmZEXjXPL3Arfh4S89S0CQXJJSR5bEErdSLZnrWvidn&#43;/5HFVG2oa3X0MexZbJJBhiG/a7nNR7jg07iLCI/crEwtdQq3eVoyJIy5rpO7IFHv/5d7EJdsWfQZGsg1e4Kv5Li5fmV3AN84QtoUBkEXqg7JF&#43;UOf40gnFgOUyjEFeiVkz7oWhw0mfwDQPJ/OA/pH19KRGyMwpTRQeRoyL3D3NZtdS/qsUbO5JfMmrtORlvfj0l0SOUyaoSDNUL2AMsiygf1aJJDZKiEo4ns4zUK9RuRudnS0fv801WH5NfuvFVIh5U4UnRCJrFWW658zx5aiaF6irAPJ6IZvYIPGwEaU5ZWaneqmGjdjgMbSdeoe/oAhtz6LmgoutE9khUNMIexdDu0qPAufXizxds2KySxb73L/27RVwJKBN27TjxNsKocwENzNf8QuAs/AEn/tGhJbkmZbFmm2NjmE5AvkrzDIUTMpDUaNneJCx6AMrRIHot4I9xfbuCoVafoOHSrtUlGoGqhqWz/BgKHW70xOenp/&#43;dXr&#43;mU71m/DubiY9y6zPktxtYiNyeD15XEwffkRMwPMQbdMX6KhSNqXA8/ZGfTdStICbSxA/R34FZdYfQPMh0AZdT9eFaRQ9j8b2qkobz/2Xh6fx4vqou4Tl7Y36bqQ&#43;1fduaL8bsAdNn7uEZfauvWPvEgcPnZb0rU1i3ROlu3g9EI&#43;twHdR/H9gz3/DFfHg6HM/k6yed9mx97KZY5on8I1Gew9uQL1lsrODgjahiHTnTnxVK2K4JKmg8ZWvmPZvtWwgtK&#43;vmYc4t/iMl9KcVHp7LBOHp&#43;dDP1ZD0rFn2YPjg85QYWQzbQGfuWNemPxueNU9IpIyfcH0sNbbRHeI6YZjpqtL0RI9P4vkQ73UdBVMfP2S1SgB9e&#43;lfS3yhE318NUFzPA&#43;fCw2JUjguKzTNfHGpMP2M/QCb9Emqt/q5kmdgxzfWssFyrIVfvwVW7G80I79db8D&#43;QKCBKwySOW0deyhYiMk&#43;&#43;yYs3SDC2oEo8c8QKi2RFzT3r8Ow4/q/S8D0GORgBqyMaxkpfa&#43;HsP7eZm&#43;gBouqR1VSKnwr1Yxc/QKy6sUbHJU1WlcNbMr&#43;EAkH3F4OJEMJ9frdRqnMI8PJ1Je7QGg48hXd&#43;E4T66&#43;TuYB/rG&#43;rpNtXDgB7sLoDtYZ2rjf&#43;8PhMmemIzeqtVR566z2K/rwr1E5zpMSpUkwLgqh0B0BXnvRdHIfOccYxSWeoLJALOjBdKSzfRFs0edX&#43;HxYXSSfV6tXKA80D0dpjI4s6/zu5jeXtcg3HmWN0a4AdbKyyA3/igLS4V3QcDdyxR1lbZ4Dunh0jcroKRz/ziIn0qOYoU0MZCHOjqLvK1jiN7rfuvoPvAk4cbP6nqE8wAzuYF0epLfLLdyA&#43;BDQv6hcVfShjUqYAfKJrlHEX2siP/EY8Xi9MZO0WkKykHI4KrmD1C8vkdzCPLZ06Q5maQ6DcVynL2mdworGRUlW9qF1IhUAEyaKxAfZ8YtTQxklK&#43;UVSL824hsyQbsC5TCvo0tQwYTJCuDzz5SxNtKGnFyGxF3zMmzdmhos&#43;/a1nFH5qu4r3GRPV0ShizTt6OdvOHRj8tDI92W8hSTSDCpZYbUPLJ0uokWnHwU6zQPrzE1jOH3FfkknX5qEFu4PtC/nW5Q30DglIknRmIrYk4ZY5f/YjgSo/cEkjWyY8Iv593wBSbNijlIiWUCVHWjkmEiKHNMVVIZj/WB&#43;BHwjGu9rxFZtugJm8DzLJo8dNwG1HizDikcqlbek21B8wswDiW&#43;I&#43;TQ7GvlGQBBvoxJWBVVWiwqQ&#43;9DMQQ6pc9YS52jYIHoL8E&#43;0mM0iqjGhLL3O2orOS2wvfSqoTwJ3VsCXep1mWdTlYExt2Z/J0&#43;cHOOFAkkORyuRcaOZk0fyJVHiH17ITXPcyV9Fd7spOeNVvWQV3uMk6sRVPWRXa7ejrU7dzUFU7kFurtq8XrpOz0x3XzO3rhOtzI3Q65Kr07NKwB&#43;9ISn598UfEdH09fH3dHJrTr8rg6RXrZNHcYzUSl1OsG171jlXhnS6jTnjNd1SF9/LldFK0nTpVFpcrp5NA9en8GcYgg2XwsyL/nbqWzIZV3U&#43;0ReMK3/4B3ozoNlFs4N9duTWFbWYQ1iRMHv7cYkM/oCjNI1YS6shkLaDM0ZOAO7HR0BYtQSwZ&#43;jEf1zXME5j0ZMzQ5h1nlKENb&#43;344EsX314Tx2G&#43;4yLJaggWxvqt/thq4UOJPxHaBfgnimnDKOtUb8CWWnkN&#43;UUXryviqiEgMkG3AZdE0UmVChDQlqxFtsef8vt9nSH0HHWf18mcWC&#43;HzeAG7r6l8QRlGfU36lAdNpimCf5yRGgdXb/BeE97AwNx4H4tkk35iTQH7TtQX&#43;QM0j2TsSZnfGuROb5lMset/GQMM9zCLJugvEIZcaRuJZpyLmB8iDN4meak18PWhA6M6eb8DpHlVo5w8TgjjsyLx5nxeLyFyT6DyQOongmkmmLKI0X1GwykwH4mWw&#43;h51Ye02zQwJCK834DBXwoU7CBgbRJFsfyPWx2S3SyE1DgPlL7nM1H2hmpY4uahaUJ49v8&#43;QGUG8juKbEnDEg7qY63l2kOypSi6WmSMSIO2zyQ0yCYkx1sEI7vwoid8Tiv05e03NOy8R3d6nL6EJLlBdOHUD82ydA&#43;YQ670oLQgflAKzfardIcJryW5X3d1vBMdzzqcs4vD3Mue4ifcrHXshPPf/ttINsRpc05ytKYiBdJu7pl33eGnJeGSUzzjVR2PU3PwzoIYQzynGtAyim6fd83i5rX9VZRrXeoZusIqDHZT3Zpq7r0l49yjB0yHPF4Jcn2Xa8j2Y5qEgzIf&#43;vY9YIcul60jkjLL7BFs9uy7PHaMuQTY7BNJp70j5MTONtnMCC/dH6AxJb2CXBL24EkJ//my2AFKOtoB8VQF2la48TRDtJWT/qwz2FFR8sCusNV0lyLqnCjBS5naIWxD3m8VMfc3ot8MkG7Yl/D8h0UUXofnl8oRF1F3k0XkwD/RJMtoI2b6I&#43;zs7O&#43;rTcMobQNTcD/SqsadDTE2iD0Yby7CcSWLP/bjk7uVDMTOGReFDdtRm&#43;7zM7WrWfWoIktMWpoQuON99CqezWUMIdDMiM0ojO4BFQIWPCN/sEG/vz0z4s/cNYRxxjeQlB4xxmwF8FD6v8Icibwb6btG2qgB78pyoC9EH5a/z3pG5l/O7Gf1H9P4kbl307srfTfk1sR&#43;e&#43;mr34Fd&#43;Ug7qHz35Ndk/i3F8FT5r8nvaTw30HtKf7el1vSfbeTe4r89&#43;SW9P3t1N4a/z3JFXl/C723xL8Pt6rub2b8BZWsi/sXpBcmJBLorlMygZotRcD8bpRmceMOlQdLxNwW8Gm13fmAP41vvSFfAZ3GluNZq&#43;GrIyXUta29IRkth2KO81hUWk4ZM2tUpj8O9Aaiq8sPR718YGrKDFmE/9Zgm7DgtovKLcSM9/8CAAD//wPfY0NeqQIA&#34;))
+  
+
+  LET SlowGlobRegex &lt;= if(condition=S.DropVerySlowRules,
+     then=&#34;^\\*\\*&#34;, else=&#34;RunSlowFileGlobs!!!&#34;)
+
+  -- Group the targets for faster searching.
+  LET TargetTable &lt;= SELECT Target,
+       enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
+    FROM parse_csv(accessor=&#34;data&#34;,
+  filename=GlobTable)
+  GROUP BY Target
+
+  //  Build a lookup cache on target.
+  LET Lookup &lt;= memoize(query={
+    SELECT * FROM TargetTable
+  }, key=&#34;Target&#34;)
+
+  -- Extract all rules within the required target. Uses the memoized
+  -- structure above.
+  LET FilterTable(Required) =
+     SELECT Required AS Target, *
+     FROM flatten(query={
+       SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
+     })
+     WHERE if(condition=Glob =~ SlowGlobRegex,
+              then=log(
+                level=&#34;INFO&#34;,
+                message=&#34;Dropping rule %v/%v because it is too slow: %v&#34;,
+                dedup=-1,
+                args=[Target, Rule, Glob]) AND FALSE,
+              else=TRUE)
+
+  LET Expand(FilteredTable) = SELECT * FROM foreach(
+  row=FilteredTable,
+  query={
+    -- If there is a reference, resolve it from the table recursively.
+    SELECT *
+    FROM if(condition=Ref AND MaybeLOG(
+       Message=&#34;%v/%v: Resolving Ref %v&#34;,
+       Args=[Target, Rule, Ref]),
+    then={
+       SELECT * FROM Expand(
+          FilteredTable={
+             SELECT * FROM FilterTable(Required=Ref)
+          })
+    }, else={
+       SELECT Target, Rule, Glob FROM scope()
+       WHERE (Glob &amp;&amp; MaybeLOG(
+         Message=&#34;%v/%v: Glob is %v&#34;,
+         Args=[Target, Rule, Glob])) || TRUE
+    })
+  })
+
+  -- Collect all the top level targets that the user selected.
+  LET Collections(Targets) = SELECT Target &#43; &#34;/&#34; &#43; Rule AS Rule, Glob
+    FROM Expand(FilteredTable={
+      SELECT Target,
+            Rules.Rule AS Rule,
+            Rules.Glob AS Glob,
+            Rules.Ref AS Ref
+     FROM flatten(query={
+       SELECT * FROM TargetTable
+       WHERE get(item=Targets, field=Target)
+       AND MaybeLOG(
+         Message=&#34;Collecting target %v, Rules: %v&#34;,
+         Args=[Target, Rules.Rule])
+     })
+    })
+    GROUP BY Rule, Glob
+
+    // In ExcludeSigned and HashOnly we dont upload signed binaries.
+    LET ShouldUploadSignedBinary &lt;= dict(
+       ShouldUpload = NOT CollectionPolicy =~ &#34;ExcludeSigned|HashOnly&#34;)
+
+    // In HashOnly mode we never upload anything.
+    LET ShouldUploadAnyFile &lt;= dict(
+       ShouldUpload = NOT CollectionPolicy =~ &#34;HashOnly&#34;)
+
+    LET DoNotUpload &lt;= dict(ShouldUpload=FALSE)
+
+    // Determine if we should upload the file based on signature.
+    LET ShouldUpload(Details) = if(
+      condition=OSPath =~ TrustedPathRegex AND
+                MaxFileSize &gt; 0 AND Details.Stat.Size &gt; MaxFileSize,
+      then= Details &#43; DoNotUpload,
+      else=if(
+       // What to do about binaries? If they have an issuer name then
+       // they are signed.
+       condition=Details.Signatures.IssuerName,
+       then=Details &#43; ShouldUploadSignedBinary,
+       else=Details &#43; ShouldUploadAnyFile))
+
+    // If the file is a binary, also add authenticode information.
+    LET MaybeBinary(OSPath, Details) = ShouldUpload(Details=if(
+       condition=Details.Magic =~ &#34;PE.&#43;executable&#34;,
+       then=Details &#43; dict(Signatures=authenticode(filename=OSPath)),
+       else=Details))
+
+
+    // Hash the file if it is not too large
+    LET MaybeHash(OSPath, Details) = if(
+      condition=NOT OSPath =~ TrustedPathRegex AND
+            Details.Stat AND Details.Stat.Size &lt; MaxHashSize,
+      then=Details &#43; dict(Hashes=hash(path=OSPath),
+                          Magic=magic(path=OSPath)),
+      else=Details)
+
+    // Calculate the details column with hashes and magic.
+    LET _GetDetails(OSPath) = MaybeBinary(
+       OSPath=OSPath,
+       Details=MaybeHash(
+         OSPath=OSPath,
+         Details=dict(filename=OSPath,
+                      Stat=OSPath &amp;&amp; stat(filename=OSPath))))
+
+    // Cache the hashing for speedup.
+    LET GetDetails(OSPath) = cache(
+       period=100000,
+       func= _GetDetails(OSPath=OSPath),
+       name=&#34;GetDetails&#34;, key=OSPath.String)
+
+    LET _ExpandedTransforms &lt;= dict(
+        `^\\\\SystemRoot\\\\`=&#34;%SystemRoot%\\&#34;,
+        `^system32\\\\`=&#34;%SystemRoot%\\System32\\&#34;,
+        `^{.&#43;}.&#43;`=&#34;\\$0&#34;,
+        `^C:\\\\Program Files[^\\\\]*\\\\[^ ]&#43;`=&#39;&#34;$0&#34;&#39;,
+        `^%[^ ]&#43;%[^ ]&#43;`=&#39;&#34;$0&#34;&#39;
+      )
+
+    // Extract the binary from the command line
+    LET ExpandPath(Path) = lowcase(string=commandline_split(
+    command=expand(path=regex_transform(source=Path,
+      map=_ExpandedTransforms)))[0])
+
+    // Includes results of Windows.System.TaskScheduler
+    LET CollectAdaptiveScheduledTasks_Commands =
+       SELECT * FROM foreach(workers=WORKERS, row={
+         SELECT _value AS Row
+         FROM items(item={
+          SELECT * FROM Artifact.Windows.System.TaskScheduler()
+         })
+         WHERE Row.Command
+       }, query={
+          SELECT * FROM TryToDownload(OSPath=ExpandPath(Path=Row.Command), Row=Row)
+       })
+       // Includes results of Windows.System.TaskScheduler
+    LET CollectAdaptiveServices_Executables =
+       SELECT * FROM foreach(workers=WORKERS, row={
+         SELECT _value AS Row
+         FROM items(item={
+            SELECT * FROM Artifact.Windows.System.Services()
+         })
+         WHERE Row.AbsoluteExePath
+       }, query={
+         SELECT * FROM TryToDownload(OSPath=Row.AbsoluteExePath, Row=Row)
+       })
+       // 
+    LET CollectLnkTargets_Targets =
+       SELECT * FROM foreach(workers=WORKERS, row={
+         SELECT _value AS Row
+         FROM items(item={
+            SELECT * FROM Artifact.Windows.Forensics.Lnk(
+               UploadLnk=TRUE,
+               TargetGlob=&#39;&#39;&#39;C:\{ProgramData,Users\*\AppData\*}\Microsoft\Windows\{Start Menu\Programs\StartUp,Recent\**}\*.lnk&#39;&#39;&#39;
+            )
+         })
+         WHERE Row.LinkTarget.LinkTarget
+       }, query= {
+         SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)
+       })
+       // Try to download Executables mentioned in prefetch files.
+    LET CollectPrefetchBinaries_Executables =
+       SELECT * FROM foreach(workers=WORKERS, row={
+         SELECT _value AS Row
+         FROM items(item={
+           SELECT *, DriveReplace(Path=ExecutablePath) AS ExecutableDosPath
+           FROM Artifact.Windows.Forensics.Prefetch()
+         })
+       }, query={
+         SELECT * FROM TryToDownload(OSPath=Row.ExecutableDosPath, Row=Row)
+       })
+       // Uses PSList to get all running binaries.
+    LET CollectPsList_From_Pslist =
+       SELECT * FROM foreach(workers=WORKERS, row={
+         SELECT _value AS Row
+         FROM items(item={
+           SELECT * FROM pslist()
+         })
+       }, query={
+          SELECT * FROM TryToDownload(OSPath=Row.Exe, Row=Row)
+       })
+       
+    // From PrefetchBinaries
+    // Avoid materializing this query unless necessary
+    LET DriveReplaceLookup = SELECT
+       split(sep_string=&#34;\\&#34;, string=Name)[-1] AS Drive,
+       upcase(string=SymlinkTarget) AS Target,
+       len(list=SymlinkTarget) AS Len
+    FROM winobj()
+    WHERE Name =~ &#34;^\\\\GLOBAL\\?\\?\\\\.:&#34;
+    
+    LET PrefetchCache &lt;= memoize(key=&#34;Key&#34;, name=&#34;PrefetchCache&#34;,
+    query={
+      SELECT &#34;X&#34; AS Key, DriveReplaceLookup AS Value
+      FROM scope()
+    })
+    
+    LET _DriveReplace(Path) = SELECT Drive &#43; Path[Len:] AS ResolvedPath
+    FROM foreach(row=PrefetchCache.X.Value)
+    WHERE upcase(string=Path[:Len]) = Target
+    
+    LET DriveReplace(Path) = _DriveReplace(Path=Path)[0].ResolvedPath || Path
+    
+
+sources:
+- name: SearchGlobs
+  notebook:
+    - type: none
+  query: |
+
+    // Work around bug in the artifact compiler failing to detect deps in export section
+
+    LET _ = SELECT * FROM Artifact.Windows.Forensics.Lnk()
+
+    LET _ = SELECT * FROM Artifact.Windows.Forensics.Prefetch()
+
+    LET _ = SELECT * FROM Artifact.Windows.System.Services()
+
+    LET _ = SELECT * FROM Artifact.Windows.System.TaskScheduler()
+
+
+    LET Targets &lt;= to_dict(item={
+      SELECT _value AS _key, TRUE AS _value
+      FROM foreach(row=Targets &#43; HighLevelTargets)
+    })
+
+    LET AllCollections &lt;= Collections(Targets=Targets)
+
+    SELECT * FROM AllCollections
+    --WHERE Glob
+
+- name: All Matches Metadata
+  notebook:
+    - type: vql
+      template: |
+       // This cell generates other cells to preview the collected
+       // data.  DO NOT recalculate this cell - each time new cells
+       // will be added. Instead delete the notebook and allow
+       // Velociraptor to recreate the entire notebook.
+       LET ArtifactsWithResults &lt;=
+         SELECT pathspec(accessor=&#34;fs&#34;, parse=Data.VFSPath)[4] AS Artifact ,
+           pathspec(accessor=&#34;fs&#34;, parse=Data.VFSPath)[-1][:-5] AS Source ,
+           stat(accessor=&#34;fs&#34;, filename=Data.VFSPath &#43; &#34;.index&#34;).Size / 8 AS Records
+         FROM enumerate_flow(client_id=ClientId, flow_id=FlowId)
+         WHERE Type =~ &#34;Result&#34; AND Records &gt; 0
+
+       LET _ &lt;= SELECT notebook_update_cell(notebook_id=NotebookId, type=&#34;vql&#34;,
+       input=format(format=&#39;&#39;&#39;
+       /*
+       # Results From %v
+       */
+       SELECT * FROM source(source=%q)
+       &#39;&#39;&#39;, args=[Source, Source]),
+       output=format(format=&#39;&#39;&#39;
+       &lt;i&gt;Recalculate&lt;/i&gt; to show Results from &lt;b&gt;%v&lt;/b&gt; with &lt;b&gt;%v&lt;/b&gt; rows
+       &#39;&#39;&#39;, args=[Source, Records])) AS NotebookModification
+       FROM ArtifactsWithResults
+
+       /*
+       # Results Overview
+       */
+       SELECT Source, Records FROM ArtifactsWithResults ORDER BY Source
+
+
+  query: |
+    LET GlobLookup &lt;= memoize(query=AllCollections, key=&#34;Glob&#34;)
+    LET NTFSGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND Glob =~ &#34;[:$]&#34; AND NOT Glob =~ &#34;\\$Recycle.Bin&#34;
+    LET AutoGlobs = SELECT * FROM AllCollections
+       WHERE Glob AND ( Glob =~ &#34;\\$Recycle.Bin&#34; OR NOT Glob =~ &#34;[:$]&#34; )
+
+    LET _ &lt;= MaxFileSize &gt; 0 &amp;&amp; MaybeLOG(
+      Message=&#34;Limiting file acquisition to MaxFileSize %v bytes (%v)&#34;,
+      Args=[MaxFileSize, humanize(bytes=MaxFileSize)])
+
+    LET PreferredAccessor &lt;= if(
+       condition=VSS_MAX_AGE_DAYS &gt; 0,
+       then=&#34;ntfs_vss&#34;, else=&#34;auto&#34;)
+
+    LET AllGlobs = SELECT *
+    FROM foreach(row={
+        SELECT _value AS Device FROM foreach(row=Devices)
+    }, query={
+      SELECT * FROM chain(
+      GlobNTFS={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               &#34;ntfs&#34; AS Accessor,
+               dict(Globs=Globs) AS Data,
+               &#34;Glob&#34; AS Type
+        FROM glob(globs=NTFSGlobs.Glob, accessor=&#34;ntfs&#34;, root=Device)
+      },
+      GlobAuto={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               PreferredAccessor AS Accessor,
+               dict(Globs=Globs) AS Data,
+               &#34;Glob&#34; AS Type
+        FROM glob(globs=AutoGlobs.Glob,
+                  accessor=PreferredAccessor,
+                  root=Device)
+      })
+    })
+    WHERE NOT IsDir
+
+    LET AllResults &lt;= SELECT Type,
+                             OSPath AS SourceFile,
+                             Size,
+                             Btime AS Created,
+                             Ctime AS Changed,
+                             Mtime AS Modified,
+                             Atime AS LastAccessed,
+                             Accessor,
+                             Data
+    FROM chain(async=WORKERS &gt; 0,
+      AdaptiveScheduledTasks_Commands={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;AdaptiveScheduledTasks/Commands&#34;
+            AND MaybeLOG(
+              Message=&#34;Collecting Custom VQL Rule %s&#34;,
+              Args=&#34;AdaptiveScheduledTasks/Commands&#34;)
+        }, then={
+          SELECT &#34;AdaptiveScheduledTasks/Commands&#34; AS Type,
+                 &#34;AdaptiveScheduledTasks/Commands&#34; AS Rule,
+                 *
+          FROM CollectAdaptiveScheduledTasks_Commands
+        })
+      },AdaptiveServices_Executables={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;AdaptiveServices/Executables&#34;
+            AND MaybeLOG(
+              Message=&#34;Collecting Custom VQL Rule %s&#34;,
+              Args=&#34;AdaptiveServices/Executables&#34;)
+        }, then={
+          SELECT &#34;AdaptiveServices/Executables&#34; AS Type,
+                 &#34;AdaptiveServices/Executables&#34; AS Rule,
+                 *
+          FROM CollectAdaptiveServices_Executables
+        })
+      },LnkTargets_Targets={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;LnkTargets/Targets&#34;
+            AND MaybeLOG(
+              Message=&#34;Collecting Custom VQL Rule %s&#34;,
+              Args=&#34;LnkTargets/Targets&#34;)
+        }, then={
+          SELECT &#34;LnkTargets/Targets&#34; AS Type,
+                 &#34;LnkTargets/Targets&#34; AS Rule,
+                 *
+          FROM CollectLnkTargets_Targets
+        })
+      },PrefetchBinaries_Executables={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;PrefetchBinaries/Executables&#34;
+            AND MaybeLOG(
+              Message=&#34;Collecting Custom VQL Rule %s&#34;,
+              Args=&#34;PrefetchBinaries/Executables&#34;)
+        }, then={
+          SELECT &#34;PrefetchBinaries/Executables&#34; AS Type,
+                 &#34;PrefetchBinaries/Executables&#34; AS Rule,
+                 *
+          FROM CollectPrefetchBinaries_Executables
+        })
+      },PsList_From_Pslist={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = &#34;PsList/From_Pslist&#34;
+            AND MaybeLOG(
+              Message=&#34;Collecting Custom VQL Rule %s&#34;,
+              Args=&#34;PsList/From_Pslist&#34;)
+        }, then={
+          SELECT &#34;PsList/From_Pslist&#34; AS Type,
+                 &#34;PsList/From_Pslist&#34; AS Rule,
+                 *
+          FROM CollectPsList_From_Pslist
+        })
+      },
+      Globs=AllGlobs
+    )
+    WHERE log(level=&#34;INFO&#34;, message=&#34;Found %v for rule %v&#34;, args=[
+              SourceFile, Rule], dedup=10)
+
+    SELECT * FROM AllResults
+
+- name: AdaptiveScheduledTasks_Commands
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;AdaptiveScheduledTasks/Commands&#34;
+    }, column=&#34;Data&#34;)
+- name: AdaptiveServices_Executables
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;AdaptiveServices/Executables&#34;
+    }, column=&#34;Data&#34;)
+- name: LnkTargets_Targets
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;LnkTargets/Targets&#34;
+    }, column=&#34;Data&#34;)
+- name: PrefetchBinaries_Executables
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;PrefetchBinaries/Executables&#34;
+    }, column=&#34;Data&#34;)
+- name: PsList_From_Pslist
+  notebook:
+    - type: none
+  query: |
+    SELECT * FROM foreach(row={
+      SELECT dict(SourceFile=SourceFile, Size=Size, Modified=Modified) &#43; Data AS Data
+      FROM AllResults
+      WHERE Type = &#34;PsList/From_Pslist&#34;
+    }, column=&#34;Data&#34;)
+
+- name: Uploads
+  query: |
+    -- Upload the files. Split into workers so the files are uploaded
+    -- in parallel.
+    LET uploaded_files = SELECT *
+    FROM foreach(row={
+       SELECT *
+       FROM AllResults
+       WHERE Size &gt; 0
+       GROUP BY SourceFile
+       },
+          workers=WORKERS,
+
+          // Do the heavy lifting in a thread
+          query={
+            SELECT * FROM foreach(row={
+              SELECT GetDetails(OSPath=SourceFile) AS Details
+              FROM scope()
+            }, query={
+              SELECT timestamp(epoch=now()) AS CopiedOnTimestamp,
+                     Created,
+                     Changed,
+                     LastAccessed,
+                     Modified,
+                     SourceFile,
+                     Size,
+                     Details,
+                     if(condition=Details.ShouldUpload,
+                        then=upload(file=SourceFile,
+                                    accessor=Accessor,
+                                    mtime=Modified)) AS Upload
+              FROM scope()
+          })
+      })
+
+    -- Separate the hashes into their own column.
+    SELECT CopiedOnTimestamp,
+           SourceFile,
+           Upload.Path AS DestinationFile,
+           Size AS FileSize,
+           Details.Hash.SHA256 AS SourceFileSha256,
+           Created,
+           Changed,
+           Modified,
+           LastAccessed,
+           Details,
+           Upload
+    FROM uploaded_files
+
+  notebook:
+    - type: none
+    - type: vql_suggestion
+      name: Post process collection
+      template: |
+        /*
+
+        # Post process this collection.
+
+        Uncomment the following and evaluate the cell to create new
+        collections based on the files collected from this artifact.
+
+        The below VQL will apply remapping so standard artifacts will
+        see the KapeFiles.Targets collection below as a virtual
+        Windows Client. The artifacts will be collected to a temporary
+        container and then re-imported as new collections into this
+        client.
+
+        NOTE: This is only a stop gap in case the proper artifacts
+        were not collected in the first place. Parsing artifacts
+        through a remapped collection is not as accurate as parsing
+        directly on the endpoint. See
+        https://docs.velociraptor.app/training/playbooks/preservation/
+        for more info.
+
+        */
+        LET _ &lt;= import(artifact=&#34;Windows.KapeFiles.Remapping&#34;)
+
+        LET tmp &lt;= tempfile()
+
+        LET Results = SELECT import_collection(filename=Container, client_id=ClientId) AS Import
+        FROM collect(artifacts=[
+                       &#34;Windows.Forensics.Usn&#34;,
+                       &#34;Windows.NTFS.MFT&#34;,
+                     ],
+                     args=dict(`Windows.Forensics.Usn`=dict(),
+                               `Windows.NTFS.MFT`=dict()),
+                     output=tmp,
+                     remapping=GetRemapping(FlowId=FlowId, ClientId=ClientId))
+
+        // SELECT * FROM Results
+
+column_types:
+- name: CopiedOnTimestamp
+  type: timestamp
+- name: Data
+  type: json/1
+- name: Details
+  type: json/1
+<script>hljs.highlightAll()</script>
+
+</code>
+</pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div></main></body></html>

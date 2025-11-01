@@ -1,0 +1,1133 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  Linux.Triage.UAC
+  #
+
+This artifact is built automatically from the UAC
+project project.
+You can download the artifact for manual
+import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s glob() plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://triage.velocidex.com/docs/linux.triage.uac/"><meta property="og:site_name" content="Triage Artifacts"><meta property="og:title" content="Linux.Triage.UAC"><meta property="og:description" content="Linux.Triage.UAC # This artifact is built automatically from the UAC project project.
+You can download the artifact for manual import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name to each glob. Velociraptor’s glob() plugin implementation is very efficient and minimizes the number of passes it needs to make over the filesystem, when using multiple glob expressions at the same time."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><title>&lt;span class="icon">
+&lt;i class="fa-solid fa-desktop">&lt;/i>
+&lt;/span>
+Linux.Triage.UAC
+| Triage Artifacts</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=http://triage.velocidex.com/docs/linux.triage.uac/><link rel=stylesheet href=/book.min.f4bc2b0f80cbd784c51fa6123079c0ec4d90946148cb1cc5e0279ca61d81a19d.css integrity="sha256-9LwrD4DL14TFH6YSMHnA7E2QlGFIyxzF4Cecph2BoZ0=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=http://triage.velocidex.com/docs/linux.triage.uac/index.xml title="Triage Artifacts"><script src=/js/jquery-3.3.1.min.js?1703133391></script><link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css?1703133392 rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css rel=stylesheet><script src=//cdn.datatables.net/2.3.0/js/dataTables.min.js></script><link href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js integrity="sha512-0UbR6HN0dY8fWN9T7fF658896tsPgnbRREHCNq46J9/JSn8GonXDZmqtTc3qS879GM0zV49b9LPhdc/maKP8Kg==" crossorigin=anonymous referrerpolicy=no-referrer></script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css integrity="sha512-56GJrpSgHk6Mc9Fltt+bQKcICJoEpxtvozXPA5n5OT0rfWiqGlJmJCI/vl16kctf/0XbBloh03vl7OF2xFnR8g==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css rel=stylesheet><script>$(document).ready(function(){$(".json-renderer").each(function(){try{data=JSON.parse($(this).text()),$(this).jsonViewer(data,{collapsed:!0,rootCollapsable:!1})}catch{}}),$(".datatable").each(function(){new DataTable(this,{paging:!0})}),$(".scroll-datatable").each(function(){let e=$(this),t=new DataTable(this,{paging:!1,scrollY:200})})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Triage Artifacts</span></a></h2><ul><li><a href=/docs/triage_artifacts/>Preservation Artifacts</a><ul></ul></li><li><a href=/docs/linux.triage.uac/ class=active><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</a><ul><li><a href=/docs/linux.triage.uac/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/windows.triage.targets/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</a><ul><li><a href=/docs/windows.triage.targets/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/github/><span class=icon><i class="fa-brands fa-github"></i>
+</span>Github</a><ul></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</h3><label for=toc-control></label></div></header><article class="markdown book-article"><h1 id=linuxtriageuac>Linux.Triage.UAC
+<a class=anchor href=#linuxtriageuac>#</a></h1><p>This artifact is built automatically from the <a href=https://github.com/tclahr/uac>UAC
+project</a> project.</p><p>You can <a href=Linux.Triage.UAC.zip>download the artifact</a> for manual
+import into Velociraptor.</p><p>The description below explains how to use this artifact in practice.</p><p>The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s <code>glob()</code> plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time.</p><p>Therefore the artifact first traverses all the rules to build a large
+list of glob expressions, which it uses to search for candidate files.</p><h2 id=parameters>Parameters
+<a class=anchor href=#parameters>#</a></h2><ol><li><p><strong>MaxFileSize</strong>: Sometimes we encounter very large files in
+unexpected location (e.g. browser cache). This setting ensures that
+very large files will not be collected. By default the setting is
+disabled (i.e. we collect any file size), but it is a good idea to
+limit it as very large files are not often useful.</p></li><li><p><strong>UPLOAD_IS_RESUMABLE</strong>: This setting controls how uploads are send
+from the Velociraptor client to the server. When enabled, the
+client will send upload information in advance so that if the
+collection times out or the client is restarted, the uploads may be
+resumed.</p><p>The setting only has an effect when collecting this artifact
+remotely from a client (i.e. does nothing for offline collections).</p></li></ol><p>Following these parameters, there are many checkboxes for each
+possible collection target.</p><h2 id=artifact>Artifact
+<a class=anchor href=#artifact>#</a></h2><div style=max-height:500px;overflow-y:auto><pre>
+<code style=margin-top:-40px;font-size:medium class=language-yaml>
+
+name: Linux.Triage.UAC
+description: |
+  NOTE:
+    This artifact was built from [The Velociraptor Triage
+    Repository](https://triage.velocidex.com/docs/)
+
+  Commit c2a3c8d on 2025-11-01T00:19:22Z
+
+parameters:
+  - name: MaxFileSize
+    type: int
+    default: 18446744073709551615
+    description: |
+      The max size in bytes of the individual files to collect.
+      Set to 0 to disable it.
+
+  - name: UPLOAD_IS_RESUMABLE
+    type: bool
+    default: Y
+    description: |
+      If set the uploads can be resumed if the flow times out or
+      errors.
+
+  - name: Acct
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Addressbook
+    description: &#34;Collect AddressBook&#34;
+    type: bool
+
+  - name: Advanced_log_search
+    description: &#34;Collect all log files and directories.&#34;
+    type: bool
+
+  - name: Anydesk
+    description: &#34;Collect AnyDesk&#34;
+    type: bool
+
+  - name: Apache
+    description: &#34;Collect Apache logs.&#34;
+    type: bool
+
+  - name: Apple_notes
+    description: &#34;Collect Apple Notes&#34;
+    type: bool
+
+  - name: Apt
+    description: &#34;Collect script files under /etc/apt/apt.conf.d/ directory.&#34;
+    type: bool
+
+  - name: Ark
+    description: &#34;Collect metadata about recently opened archive files in Ark, the KDE archive manager&#34;
+    type: bool
+
+  - name: Aspera_connect
+    description: &#34;Collect Aspera Client&#34;
+    type: bool
+
+  - name: Atftp
+    description: &#34;Collect atftp history files.&#34;
+    type: bool
+
+  - name: Authorized_keys
+    description: &#34;Collect authorized_keys files.&#34;
+    type: bool
+
+  - name: Aws_ssm_agent
+    description: &#34;Collect AWS Systems Manager Agent (SSM Agent)&#34;
+    type: bool
+
+  - name: Azure_vm_agent
+    description: &#34;Collect Azure Linux VM Agent&#34;
+    type: bool
+
+  - name: Biome
+    description: &#34;Collect Biome data files. Note that this artifact will only be collected if System Integrity Protection (SIP) is disabled.&#34;
+    type: bool
+
+  - name: Box
+    description: &#34;Collect Box&#34;
+    type: bool
+
+  - name: Brave
+    description: &#34;Collect Brave browser&#34;
+    type: bool
+
+  - name: Cache
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Chrome
+    description: &#34;Collect Chrome browser&#34;
+    type: bool
+
+  - name: Chromium
+    description: &#34;Collect Chromium browser&#34;
+    type: bool
+
+  - name: Config
+    description: &#34;Collect shell config files.&#34;
+    type: bool
+
+  - name: Coreanalytics
+    description: &#34;Collect information about macOS system usage and application execution history (CoreAnalytics).&#34;
+    type: bool
+
+  - name: Coredump
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Deleted
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Desktop
+    description: &#34;Collect GUI shortcut files of users.&#34;
+    type: bool
+
+  - name: Dev_db
+    description: &#34;Collect database file used for device lookups.&#34;
+    type: bool
+
+  - name: Dev_shm
+    description: &#34;Collect system temporary files.&#34;
+    type: bool
+
+  - name: Discord
+    description: &#34;Collect Discord&#34;
+    type: bool
+
+  - name: Dnf
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Dolphin
+    description: &#34;Collect session data for the Dolphin file manager in the KDE desktop environment. This file contains information about the state of the Dolphin application, such as the currently open directories and their paths and the last accessed locations&#34;
+    type: bool
+
+  - name: Dpkg
+    description: &#34;Collect dpkg packages&#34;
+    type: bool
+
+  - name: Dragon_player
+    description: &#34;Collect the paths to recently opened video files using the Dragon Player&#34;
+    type: bool
+
+  - name: Dropbox
+    description: &#34;Collect Dropbox Cloud Storage metadata.&#34;
+    type: bool
+
+  - name: Ds_store
+    description: &#34;Collect .DS_Store files.&#34;
+    type: bool
+
+  - name: Edge
+    description: &#34;Collect Edge browser&#34;
+    type: bool
+
+  - name: Etc
+    description: &#34;Collect system configuration files.&#34;
+    type: bool
+
+  - name: Facebook_messenger
+    description: &#34;Collect Facebook Messenger calls, groups, user contacted and messages files.&#34;
+    type: bool
+
+  - name: Filezilla
+    description: &#34;Collect FileZilla XML and sqlite files&#34;
+    type: bool
+
+  - name: Findmy
+    description: &#34;Collect the list of user&#39;s items/devices and items/devices info registered within the Find My application.&#34;
+    type: bool
+
+  - name: Firefox
+    description: &#34;Collect Firefox browser&#34;
+    type: bool
+
+  - name: Geany
+    description: &#34;Collect metadata about recently opened files in Geany text editor&#34;
+    type: bool
+
+  - name: Gedit
+    description: &#34;Collect metadata about recently opened files in Gedit text editor&#34;
+    type: bool
+
+  - name: Git
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Gnome_text_editor
+    description: &#34;Collect metadata about recently opened files in Gnome Text Editor&#34;
+    type: bool
+
+  - name: Google_drive
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Google_earth
+    description: &#34;Collect Google Earth KML files&#34;
+    type: bool
+
+  - name: Gvfs_metadata
+    description: &#34;Collect data from the gvfs-metadata directory to retrieve user-specific metadata, such as local and remote file access details, custom properties, and interaction history.&#34;
+    type: bool
+
+  - name: Gwenview
+    description: &#34;Collect the paths to recently viewed or edited images using Gwenview image viewer&#34;
+    type: bool
+
+  - name: History
+    description: &#34;Collect shell history files.&#34;
+    type: bool
+
+  - name: Icloud
+    description: &#34;Collect iCloud&#34;
+    type: bool
+
+  - name: Imessage
+    description: &#34;Collect iMessage&#34;
+    type: bool
+
+  - name: Installed_applications
+    description: &#34;Collect In&#34;
+    type: bool
+
+  - name: Itunes_backup
+    description: &#34;iTunes backup directory.&#34;
+    type: bool
+
+  - name: Job_scheduler
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Journal
+    description: &#34;Collect journal log files.&#34;
+    type: bool
+
+  - name: Kactivitymanagerd
+    description: &#34;Collect activity tracking data used by KActivityManager (part of KDE) to track and manage user activities, such as recently opened files, applications, and other resources.&#34;
+    type: bool
+
+  - name: Katesession
+    description: &#34;Collect metadata about recently opened files in Kwrite and Kate text editors&#34;
+    type: bool
+
+  - name: Kde_mru
+    description: &#34;Collect KDE Most Recently Used.&#34;
+    type: bool
+
+  - name: Keychain
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Knowledgec
+    description: &#34;Collect knowledgeC database file. Note that this artifact will only be collected if System Integrity Protection (SIP) is disabled.&#34;
+    type: bool
+
+  - name: Known_hosts
+    description: &#34;Collect known_hosts files.&#34;
+    type: bool
+
+  - name: Konqueror
+    description: &#34;Collect Konqueror&#34;
+    type: bool
+
+  - name: Lesshst
+    description: &#34;Collect less history file. This file is used to store search string.&#34;
+    type: bool
+
+  - name: Library_preferences
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Libreoffice_mru
+    description: &#34;Collect LibreOffice Most Recently Used&#34;
+    type: bool
+
+  - name: Linux_mru
+    description: &#34;Collect Linux Most Recently Used.&#34;
+    type: bool
+
+  - name: Locate_db
+    description: &#34;Collect database file used by locate command, representing a snapshot of the virtual file system accessible with minimal permissions.&#34;
+    type: bool
+
+  - name: Macos
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Macos_mru
+    description: &#34;Collect macOS Most Recently Used.&#34;
+    type: bool
+
+  - name: Macos_unified_logs
+    description: &#34;Collect macOS&#34;
+    type: bool
+
+  - name: Microsoft_office_mru
+    description: &#34;Collect Microsoft Office Most Recently Used.&#34;
+    type: bool
+
+  - name: Microsoft_teams
+    description: &#34;Collect Microsoft Teams&#34;
+    type: bool
+
+  - name: Nano
+    description: &#34;Collect nano history files.&#34;
+    type: bool
+
+  - name: Netscaler
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Network_application_usage
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Networkmanager
+    description: &#34;Collect Network Manager files.&#34;
+    type: bool
+
+  - name: Nginx
+    description: &#34;Collect nginx logs.&#34;
+    type: bool
+
+  - name: Okular
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Opera
+    description: &#34;Collect Opera browser&#34;
+    type: bool
+
+  - name: Photos
+    description: &#34;Collect Photos artifacts.&#34;
+    type: bool
+
+  - name: Php
+    description: &#34;Collect php history files.&#34;
+    type: bool
+
+  - name: Pkg_contents
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Powerlog
+    description: &#34;Collect Powerlog&#34;
+    type: bool
+
+  - name: Qnap_qsync
+    description: &#34;Collect QNAP Qsync application configuration and log files.&#34;
+    type: bool
+
+  - name: Quarantine_events
+    description: &#34;Collect Quarantine Events database file.&#34;
+    type: bool
+
+  - name: Rc
+    description: &#34;Collect rc files. If the file ~/.ssh/rc exists, sh runs it after reading the environment files but before starting the user&#39;s shell or command.&#34;
+    type: bool
+
+  - name: Rclone
+    description: &#34;Collect configuration and log files.&#34;
+    type: bool
+
+  - name: Recovery_account_info
+    description: &#34;Collect recovery account information files.&#34;
+    type: bool
+
+  - name: Relink
+    description: &#34;Collect kernel relink log file.&#34;
+    type: bool
+
+  - name: Rhosts
+    description: &#34;This file specifies remote users that can use a local user account on a network.&#34;
+    type: bool
+
+  - name: Run_log
+    description: &#34;Collect /run/log files.&#34;
+    type: bool
+
+  - name: Run_shm
+    description: &#34;Collect system temporary files.&#34;
+    type: bool
+
+  - name: Rustdesk
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Safari
+    description: &#34;Collect Safari&#34;
+    type: bool
+
+  - name: Saved_application_state
+    description: &#34;Collect saved application state files.&#34;
+    type: bool
+
+  - name: Security_backups
+    description: &#34;Collect file backups and hashes created by the integrated security script of BSDs.&#34;
+    type: bool
+
+  - name: Sessions
+    description: &#34;Collect shell sessions files.&#34;
+    type: bool
+
+  - name: Signal
+    description: &#34;Collect Signal&#34;
+    type: bool
+
+  - name: Skype
+    description: &#34;Collect Skype&#34;
+    type: bool
+
+  - name: Slack
+    description: &#34;Collect Slack&#34;
+    type: bool
+
+  - name: Solaris
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Splashtop
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Startup_items
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Steam
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Svc
+    description: &#34;Collect svc m&#34;
+    type: bool
+
+  - name: Synology_drive
+    description: &#34;Collect Synology Drive application&#34;
+    type: bool
+
+  - name: System_version
+    description: &#34;Collect system name and version.&#34;
+    type: bool
+
+  - name: Systemd
+    description: &#34;Collect systemd&#34;
+    type: bool
+
+  - name: Tcc
+    description: &#34;Collect information about the permissions that a user is prompted to accept or decline while using macOS applications.&#34;
+    type: bool
+
+  - name: Teamviewer
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Telegram
+    description: &#34;Collect Telegram log file&#34;
+    type: bool
+
+  - name: Thinlinc
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Thunderbird
+    description: &#34;Collect Thunderbird&#34;
+    type: bool
+
+  - name: Tmp
+    description: &#34;Collect system temporary files.&#34;
+    type: bool
+
+  - name: Tomcat
+    description: &#34;Collect Apache Tomcat logs.&#34;
+    type: bool
+
+  - name: Tracker
+    description: &#34;Collect tracker db files. Tracker provides searching and indexing functionality for the GNOME desktop environment and beyond.&#34;
+    type: bool
+
+  - name: Trash_info
+    description: &#34;Collect Trash info file.&#34;
+    type: bool
+
+  - name: Udev
+    description: &#34;Collect udev rule files.&#34;
+    type: bool
+
+  - name: Upstart
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: User_accounts
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Utmp
+    description: &#34;Collect utmp file.&#34;
+    type: bool
+
+  - name: Var_adm
+    description: &#34;Collect /var/adm logs.&#34;
+    type: bool
+
+  - name: Var_ld
+    description: &#34;Collect ld config files.&#34;
+    type: bool
+
+  - name: Var_log
+    description: &#34;Collect /&#34;
+    type: bool
+
+  - name: Var_run_log
+    description: &#34;Collect /var/run/log logs.&#34;
+    type: bool
+
+  - name: Var_spool
+    description: &#34;Collect spool files.&#34;
+    type: bool
+
+  - name: Var_tmp
+    description: &#34;Collect system temporary files.&#34;
+    type: bool
+
+  - name: Viber
+    description: &#34;Collect Viber&#34;
+    type: bool
+
+  - name: Viminfo
+    description: &#34;Collect vim info file. This file is used to store command line, search string, input-line, marks, substitute patterns history and more.&#34;
+    type: bool
+
+  - name: Vivaldi
+    description: &#34;Collect Vivaldi browser&#34;
+    type: bool
+
+  - name: Vlc
+    description: &#34;Collect VLC configuration file which contains the list of recently opened files.&#34;
+    type: bool
+
+  - name: Vyatta
+    description: &#34;Collect Vyatta/VyOS system configuration files.&#34;
+    type: bool
+
+  - name: Wget
+    description: &#34;Collect wget hsts file. This file is used to store the HSTS cache for the wget utility.&#34;
+    type: bool
+
+  - name: Whatsapp
+    description: &#34;Collect WhatsApp&#34;
+    type: bool
+
+  - name: Wps_office_mru
+    description: &#34;Collect WPS Office Most Recently Used&#34;
+    type: bool
+
+  - name: Xdg_autostart
+    description: &#34;Collect&#34;
+    type: bool
+
+  - name: Xsession_errors
+    description: &#34;Collect xsession errors file. This is the error log produced by X window system.&#34;
+    type: bool
+
+  - name: Yum
+    description: &#34;Collect&#34;
+    type: bool
+
+
+export: |
+  LET VQL_MATERIALIZE_ROW_LIMIT &lt;= 10000
+  LET S = scope()
+
+  -- Group the targets for faster searching.
+  LET TargetTable &lt;= SELECT Target,
+       enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
+    FROM parse_csv(accessor=&#34;data&#34;,
+  filename=&#39;&#39;&#39;
+  Target,Rule,Glob,Ref
+  Acct,extended_system_accounting_files_from_default_location,&#34;/var/adm/exacct/*&#34;,
+  Acct,system_accounting_command_based_summary_file,&#34;/var/account/savacct&#34;,
+  Acct,system_accounting_files,&#34;/var/adm/pacct*&#34;,
+  Acct,system_accounting_files,&#34;/var/account/acct*&#34;,
+  Acct,system_accounting_summary_files,&#34;/var/adm/acct/*&#34;,
+  Acct,system_accounting_user_based_summary_file,&#34;/var/account/usracct&#34;,
+  Addressbook,Image_files,&#34;/home/*/Library/Application Support/AddressBook/Images&#34;,
+  Addressbook,Metadata_files,&#34;/home/*/Library/Application Support/AddressBook/Metadata&#34;,
+  Addressbook,databases,&#34;/home/*/Library/Application Support/AddressBook/AddressBook*.abcddb*&#34;,
+  Advanced_log_search,,&#34;/{*.[Ll][Oo][Gg],*.[Ll][Oo][Gg].*,[Ll][Oo][Gg],[Ll][Oo][Gg][Ss]}&#34;,
+  Anydesk,configuration_session_recordings_screenshot_chat_and_trace_files,&#34;/home/*/.anydesk&#34;,
+  Anydesk,global_configuration_and_connection_trace_files,&#34;/etc/anydesk&#34;,
+  Anydesk,screenshot_files,&#34;/home/*/anydesk*.png&#34;,
+  Anydesk,session_recording_files,&#34;/home/*/*.anydesk&#34;,
+  Anydesk,session_recordings_screenshots_and_chat_log_files,&#34;/home/*/*/AnyDesk&#34;,
+  Anydesk,trace_log_file,&#34;/var/log/anydesk.trace&#34;,
+  Apache,,&#34;/var/log/apache /var/log/apache2 /var/log/httpd/*&#34;,
+  Apache,,&#34;/var/log/{access_log*,access.log*,error_log*,error.log*}&#34;,
+  Apple_notes,Voice_Memos_database_file,&#34;/home/*/Library/Application Support/com.apple.voicememos/Recordings/CloudRecordings.db*&#34;,
+  Apple_notes,database_file,&#34;/home/*/Library/Group Containers/group.com.apple.notes/NoteStore.sqlite*&#34;,
+  Apt,,&#34;/etc/apt/apt.conf.d&#34;,
+  Ark,,&#34;/home/*/.local/share/ark_recentfiles&#34;,
+  Ark,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/ark_recentfiles&#34;,
+  Aspera_connect,file_lists,&#34;/home/*/.aspera/connect/filelists&#34;,
+  Aspera_connect,logs,&#34;/home/*/.aspera/connect/var/log&#34;,
+  Aspera_connect,sqlite_database,&#34;/home/*/.aspera/connect/var/asperaconnect.data&#34;,
+  Atftp,,&#34;/home/*/.atftp_history&#34;,
+  Authorized_keys,,&#34;/home/*/.ssh/authorized_keys*&#34;,
+  Aws_ssm_agent,configuration_files,&#34;/etc/amazon/ssm&#34;,
+  Aws_ssm_agent,logs,&#34;/var/log/amazon/ssm/*.log&#34;,
+  Azure_vm_agent,advanced_troubleshooting_logs,&#34;/var/log/waagent.log&#34;,
+  Azure_vm_agent,executed_scripts_including_stderr_and_stdout,&#34;/var/lib/waagent/run-command/download&#34;,
+  Azure_vm_agent,logs,&#34;/var/log/azure&#34;,
+  Biome,,&#34;/private/var/db/biome&#34;,
+  Box,configuration_and_sqlite_database_files,&#34;/home/*/Library/Application Support/Box/Box/data&#34;,
+  Box,configuration_and_sqlite_database_files,&#34;/Library/Application Support/Box/Box/data&#34;,
+  Box,log_files,&#34;/home/*/Library/Logs/Box/Box&#34;,
+  Box,log_files,&#34;/Library/Logs/Box/Box&#34;,
+  Brave,directories,&#34;/home/*/Library/Application Support/BraveSoftware/Brave-Browser/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Brave,directories_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/BraveSoftware/Brave-Browser /home/*/.var/app/com.brave.Browser /home/*/snap/brave/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Brave,files,&#34;/home/*/Library/Application Support/BraveSoftware/Brave-Browser/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Brave,files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/BraveSoftware/Brave-Browser /home/*/.var/app/com.brave.Browser /home/*/snap/brave/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Cache,Brave_browser_cache_directory,&#34;/home/*/Library/Caches/BraveSoftware/Brave-Browser&#34;,
+  Cache,Brave_browser_cache_directory_including_Flatpak_and_Snap_versions,&#34;/home/*/.cache/BraveSoftware/Brave-Browser /home/*/.var/app/com.brave.Browser/cache/BraveSoftware/Brave-Browser /home/*/snap/brave/common/.cache/BraveSoftware/Brave-Browser&#34;,
+  Cache,Chrome_browser_cache_directory_including_Flatpak_and_Snap_versions,&#34;/home/*/.cache/google-chrome /home/*/.var/app/com.google.Chrome/cache/google-chrome /home/*/Library/Caches/Google/Chrome&#34;,
+  Cache,Chromium_browser_cache_directory_Flatpak_and_Snap_versions,&#34;/home/*/.var/app/org.chromium.Chromium/cache/chromium /home/*/snap/chromium/common/chromium/Default/Cache&#34;,
+  Cache,Edge_browser_cache_directory,&#34;/home/*/Library/Caches/Microsoft Edge&#34;,
+  Cache,Edge_browser_cache_directory_including_Flatpak_version,&#34;/home/*/.cache/microsoft-edge /home/*/.var/app/com.microsoft.Edge/cache/microsoft-edge&#34;,
+  Cache,Firefox_browser_cache_directory,&#34;/home/*/.cache/mozilla/firefox&#34;,
+  Cache,Firefox_browser_cache_directory,&#34;/home/*/Library/Caches/Firefox&#34;,
+  Cache,Firefox_browser_cache_directory_Flatpak_and_Snap_versions,&#34;/home/*/.var/app/org.mozilla.firefox/cache/mozilla/firefox /home/*/snap/firefox/common/.cache/mozilla/firefox&#34;,
+  Cache,Konqueror_browser_cache_directory,&#34;/home/*/.cache/kioexec&#34;,
+  Cache,Konqueror_browser_cache_directory,&#34;/home/*/.cache/konqueror&#34;,
+  Cache,Konqueror_browser_cache_directory,&#34;/home/*/.kde/share/apps/konqueror/cache&#34;,
+  Cache,Opera_browser_cache_directory,&#34;/home/*/Library/Caches/com.operasoftware.Opera&#34;,
+  Cache,Opera_browser_cache_directory_including_Flatpak_and_Snap_versions,&#34;/home/*/.cache/opera /home/*/.var/app/com.opera.Opera/cache/opera /home/*/snap/opera/common/.cache/opera&#34;,
+  Cache,Safari_browser_cache_directory,&#34;/home/*/Library/Containers/com.apple.Safari/Data/Library/Caches/com.apple.Safari&#34;,
+  Cache,Safari_browser_cache_directory,&#34;/home/*/Library/Caches/com.apple.Safari&#34;,
+  Cache,Vivaldi_browser_cache_directory,&#34;/home/*/Library/Caches/Vivaldi&#34;,
+  Cache,Vivaldi_browser_cache_directory_including_Flatpak_and_Snap_versions,&#34;/home/*/.cache/vivaldi /home/*/.var/app/com.vivaldi.Vivaldi/cache/vivaldi /home/*/snap/vivaldi/common/.cache/vivaldi&#34;,
+  Chrome,directories,&#34;/home/*/Library/Application Support/Google/Chrome/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Chrome,directories_including_Flatpak_version,&#34;/home/*/.config/google-chrome /home/*/.var/app/com.google.Chrome/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Chrome,files,&#34;/home/*/Library/Application Support/Google/Chrome/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Chrome,files_including_Flatpak_version,&#34;/home/*/.config/google-chrome /home/*/.var/app/com.google.Chrome/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Chromium,directories_Flatpak_and_Snap_versions,&#34;/home/*/.var/app/org.chromium.Chromium /home/*/snap/chromium/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Chromium,files_Flatpak_and_Snap_versions,&#34;/home/*/.var/app/org.chromium.Chromium /home/*/snap/chromium/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Config,,&#34;/home/*/{.*_aliases,.*_login,.*_logout,.*_profile,.*rc,.aliases,.cshdirs,.ksh,.login,.logout,.profile,.tcsh,.zlogin,.zlogout,.zprofile,.zshenv}&#34;,
+  Coreanalytics,,&#34;/Library/Logs/DiagnosticReports/*.core_analytics&#34;,
+  Coredump,ABRT_files,&#34;/var/spool/abrt /var/spool/abrt-upload /var/tmp/abrt&#34;,
+  Coredump,Apport_or_kdump_files,&#34;/var/crash&#34;,
+  Coredump,core_dump_files_from_stand_modules_coredump,&#34;/stand/*/*/modules/coredump/*&#34;,
+  Coredump,core_dump_files_from_var_core,&#34;/var/core/*&#34;,
+  Coredump,core_dump_files_from_var_lib_systemd,&#34;/var/lib/systemd/coredump/core.*&#34;,
+  Deleted,open_files_of_malicious_processes,&#34;/tmp/process/list_open_file_descriptors.txt&#34;,
+  Desktop,,&#34;/home/*/*.desktop&#34;,
+  Dev_db,,&#34;/var/run/dev.db&#34;,
+  Dev_db,,&#34;/var/run/dev.cdb&#34;,
+  Dev_shm,,&#34;/dev/shm/*&#34;,
+  Discord,cache_and_leveldb_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/discord /home/*/.var/app/com.discordapp.Discord /home/*/snap/discord/{*/Cache/*,*/Local Storage/leveldb/*}&#34;,
+  Discord,cache_files,&#34;/home/*/Library/Application Support/discord/Cache&#34;,
+  Discord,leveldb_files,&#34;/home/*/Library/Application Support/discord/Local Storage/leveldb&#34;,
+  Dnf,configuration_files_under_etc_dnf_pluginconf_d_directory,&#34;/etc/dnf/pluginconf.d&#34;,
+  Dnf,script_files_under_dnf_plugins_directories,&#34;/dnf-plugins&#34;,
+  Dolphin,,&#34;/home/*/.config/dolphin_dolphin_dolphin&#34;,
+  Dolphin,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/dolphin_dolphin_dolphin&#34;,
+  Dpkg,log_file,&#34;/var/log/dpkg.log&#34;,
+  Dpkg,status_file,&#34;/var/lib/dpkg/status&#34;,
+  Dragon_player,,&#34;/home/*/.config/dragonplayerrc&#34;,
+  Dragon_player,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/dragonplayerrc&#34;,
+  Dropbox,,&#34;/home/*/.dropbox&#34;,
+  Ds_store,,&#34;/.DS_Store&#34;,
+  Edge,directories,&#34;/home/*/Library/Application Support/Microsoft Edge/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Edge,directories_including_Flatpak_version,&#34;/home/*/.config/microsoft-edge /home/*/.var/app/com.microsoft.Edge/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Edge,files,&#34;/home/*/Library/Application Support/Microsoft Edge/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Edge,files_including_Flatpak_version,&#34;/home/*/.config/microsoft-edge /home/*/.var/app/com.microsoft.Edge/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Etc,,&#34;/etc&#34;,
+  Etc,,&#34;/usr/local/etc&#34;,
+  Etc,,&#34;/private/etc&#34;,
+  Facebook_messenger,,&#34;/home/*/Library/Application Support/Messenger/*.db*&#34;,
+  Filezilla,,&#34;/home/*/.config/filezilla/{*.xml*,*.sqlite3*}&#34;,
+  Filezilla,Flatpak_version,&#34;/home/*/.var/app/org.filezillaproject.Filezilla/{*.xml*,*.sqlite3*}&#34;,
+  Findmy,,&#34;/home/*/Library/Caches/com.apple.findmy.*/Devices.data&#34;,
+  Firefox,directories,&#34;/home/*/.mozilla/firefox/{bookmarkbackups,sessionstore*}&#34;,
+  Firefox,directories,&#34;/home/*/Library/Application Support/Firefox/{bookmarkbackups,sessionstore*}&#34;,
+  Firefox,directories_Flatpak_and_Snap_versions,&#34;/home/*/.var/app/org.mozilla.firefox /home/*/snap/firefox/{bookmarkbackups,sessionstore*}&#34;,
+  Firefox,files,&#34;/home/*/Library/Application Support/Firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}&#34;,
+  Firefox,files,&#34;/home/*/.mozilla/firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.rdf,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}&#34;,
+  Firefox,files_Flatpak_and_Snap_versions,&#34;/home/*/.var/app/org.mozilla.firefox /home/*/snap/firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}&#34;,
+  Geany,,&#34;/home/*/.config/geany/session.conf&#34;,
+  Geany,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/*/config/geany/*&#34;,
+  Gedit,,&#34;/home/*/.local/share/gedit-metadata.xml&#34;,
+  Gedit,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/gedit-metadata.xml&#34;,
+  Git,Git_hooks_under_git_hooks_directory,&#34;/*/.git/hooks/*&#34;,
+  Git,config_git_gitconfig_file,&#34;/home/*/.config/git/config&#34;,
+  Git,etc_gitconfig_file,&#34;/etc/gitconfig&#34;,
+  Git,gitconfig_file,&#34;/home/*/.gitconfig&#34;,
+  Gnome_text_editor,,&#34;/home/*/.local/share/session.gvariant&#34;,
+  Gnome_text_editor,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/session.gvariant&#34;,
+  Google_drive,Google_Drive_logs,&#34;/home/*/Library/Application Support/Google/DriveFS/Logs&#34;,
+  Google_drive,the_database_that_contains_information_about_all_of_the_devices_that_have_been_partially_or_completely_backed_to_Google_Drive_or_any_device_that_has_been_connected_to_the_computer_while_Google_Drive_App_was_running_The_database_also_stores_information_about_the_root_folders_synced_to_the_cloud_using_Google_Drive_desktop_app,&#34;/home/*/Library/Application Support/Google/DriveFS/root_preference_sqlite.db*&#34;,
+  Google_drive,the_database_that_contains_information_about_all_of_the_items_root_folders_sub_folders_or_files_synced_to_the_cloud_using_Google_Drive_desktop_app,&#34;/home/*/Library/Application Support/Google/DriveFS/*/mirror_sqlite.db*&#34;,
+  Google_drive,the_databases_that_contain_information_about_the_items_stored_in_the_cloud_using_Google_Drive_deleted_items_as_well_as_information_related_to_the_user_s_account,&#34;/home/*/Library/Application Support/Google/DriveFS/*/metadata_sqlite_db* /Library/Application\ Support/Google/DriveFS/*/mirror_metadata_sqlite.db*&#34;,
+  Google_earth,,&#34;/home/*/Library/Application Support/Google Earth/*.kml&#34;,
+  Google_earth,including_Flatpak_version,&#34;/home/*/.googleearth /home/*/snap/*.kml&#34;,
+  Gvfs_metadata,,&#34;/home/*/.local/share/gvfs-metadata&#34;,
+  Gwenview,,&#34;/home/*/.config/gwenviewrc&#34;,
+  Gwenview,Flatpak_version,&#34;/home/*/.var/app /home/*/snap/gwenviewrc&#34;,
+  History,,&#34;/home/*/{.*_history,.*history,.cosh_history,.dash_history,.esh_history,.lesshst,.nash_history,.sash_history,.scsh_history,.xonsh_history,.zhistory,*.historynew,fish_history}&#34;,
+  Icloud,accounts_information_files,&#34;/home/*/Library/Application Support/iCloud/Accounts&#34;,
+  Icloud,local_databases_that_contain_information_about_files_that_have_been_imported_from_the_local_computer_or_synced_remotely_from_the_iCloud,&#34;/home/*/Library/Application Support/CloudDocs/session/db/{client.db*,server.db*}&#34;,
+  Imessage,attachments,&#34;/home/*/Library/Messages/Attachments&#34;,
+  Imessage,chat_database,&#34;/home/*/Library/Messages/chat.db*&#34;,
+  Installed_applications,fo_plist_from_installed_applications,&#34;/Applications /Library /opt/*/Contents/Info.plist&#34;,
+  Installed_applications,fo_plist_from_installed_applications,&#34;/home/*/Applications /home/*/Library/*/Contents/Info.plist&#34;,
+  Installed_applications,stallHistory_plist_file,&#34;/Library/Receipts/InstallHistory.plist&#34;,
+  Itunes_backup,,&#34;/home/*/Library/Application Support/MobileSync/Backup&#34;,
+  Job_scheduler,anacron_files,&#34;/var/spool/anacron&#34;,
+  Job_scheduler,at_files,&#34;/var/spool/at&#34;,
+  Job_scheduler,at_files,&#34;/private/var/at&#34;,
+  Job_scheduler,cron_files,&#34;/var/cron /var/adm/cron /var/spool/cron&#34;,
+  Job_scheduler,tabs_files,&#34;/var/at/tabs&#34;,
+  Journal,,&#34;/{*.journal,*.journal~}&#34;,
+  Kactivitymanagerd,,&#34;/home/*/.local/share/kactivitymanagerd/resources&#34;,
+  Katesession,,&#34;/home/*/.local/share/anonymous.katesession&#34;,
+  Katesession,Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/anonymous.katesession&#34;,
+  Kde_mru,,&#34;/home/*/.local/share/RecentDocuments&#34;,
+  Keychain,system_keychain_file,&#34;/Library/Keychains/System.keychain&#34;,
+  Keychain,user_s_keychain_file,&#34;/home/*/Library/Keychains&#34;,
+  Knowledgec,,&#34;/private/var/db/CoreDuet/Knowledge/knowledgeC.db&#34;,
+  Knowledgec,Collect_knowledgeC_database_file,&#34;/home/*/Library/Application Support/Knowledge/knowledgeC.db&#34;,
+  Known_hosts,,&#34;/home/*/.ssh/known_hosts*&#34;,
+  Konqueror,browser_directories,&#34;/home/*/.kde/share/apps/konqueror/{bookmarkbackups,sessionstore*}&#34;,
+  Konqueror,browser_directories,&#34;/home/*/.local/share/konqueror/{Local Storage,Session Storage,sessions}&#34;,
+  Konqueror,browser_files,&#34;/home/*/.local/share/konqueror/{bookmarks.xml,closeditems_saved,cookies*,extensions*,konq_history*,Network Persistent State,user_prefs.json,Visited Links}&#34;,
+  Konqueror,browser_files,&#34;/home/*/.kde/share/apps/konqueror/{addons.*,bookmarks.xml,cookies*,konq_history*,extensions*}&#34;,
+  Konqueror,config_file,&#34;/home/*/.kde/share/config/konquerorrc&#34;,
+  Konqueror,cookies,&#34;/home/*/.kde/share/apps/kcookiejar&#34;,
+  Lesshst,,&#34;/home/*/.local/share/lesshst&#34;,
+  Lesshst,,&#34;/home/*/.local/state/lesshst&#34;,
+  Lesshst,,&#34;/home/*/.lesshst&#34;,
+  Library_preferences,system_preferences_and_configuration_plist_files,&#34;/Library/Preferences/{*.plist,.*.plist}&#34;,
+  Library_preferences,user_s_preferences_and_configuration_plist_files,&#34;/home/*/Library/Preferences/{*.plist,.*.plist}&#34;,
+  Libreoffice_mru,,&#34;/home/*/Library/Application Support/LibreOffice/{recently-used.xbel,registrymodifications.xcu}&#34;,
+  Libreoffice_mru,including_Flatpak_and_Snap_versions,&#34;/home/*/.config/libreoffice /home/*/.var/app/org.libreoffice.LibreOffice /home/*/snap/libreoffice/{recently-used.xbel,registrymodifications.xcu}&#34;,
+  Linux_mru,,&#34;/home/*/recently-used.xbel&#34;,
+  Locate_db,,&#34;/var/db/locate.database&#34;,
+  Macos_mru,,&#34;/home/*/Library/Preferences/{*.LSSharedFileList.plist,com.apple.finder.plist,com.apple.recentitems.plist}&#34;,
+  Macos_mru,,&#34;/home/*/Library/Application Support/com.apple.spotlight.Shortcuts&#34;,
+  Macos_mru,,&#34;/home/*/Library/Preferences/{*.LSSharedFileList.plist,com.apple.finder.plist,com.apple.recentitems.plist,com.apple.sidebarlists.plist}&#34;,
+  Macos_mru,,&#34;/home/*/Library/Application Support/com.apple.sharedfilelist&#34;,
+  Macos_unified_logs,Apple_System_Logs_ASL_files,&#34;/private/var/log/asl.db /private/var/log/asl.log /private/var/log/asl/*/*&#34;,
+  Macos_unified_logs,Unified_Logs_UUID_files,&#34;/private/var/db/uuidtext&#34;,
+  Macos_unified_logs,Unified_Logs_timesync_files,&#34;/private/var/db/diagnostics/timesync&#34;,
+  Macos_unified_logs,Unified_Logs_tracev3_files,&#34;/private/var/db/diagnostics/*.tracev3&#34;,
+  Macos,auditd_logs,&#34;/var/audit/*&#34;,
+  Macos,fseventsd_system_logs,&#34;/.fseventsd /System/Volumes/*/.fseventsd/*&#34;,
+  Macos,system_logs,&#34;/Library/Logs/*&#34;,
+  Macos,user_applications_logs,&#34;/home/*/Library/Logs/*&#34;,
+  Microsoft_office_mru,,&#34;/home/*/Library/Containers/com.microsoft.*/Data/Library/Preferences/com.microsoft.*.securebookmarks.plist&#34;,
+  Microsoft_office_mru,,&#34;/home/*/Library/Preferences/com.microsoft.office.plist&#34;,
+  Microsoft_teams,cache_files,&#34;/home/*/Library/Application Support/Microsoft/Teams/Cache&#34;,
+  Microsoft_teams,cache_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/Cache/*&#34;,
+  Microsoft_teams,chat_log_files,&#34;/home/*/Library/Application Support/Microsoft/Teams/IndexedDB/*.log&#34;,
+  Microsoft_teams,chat_log_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/IndexedDB/*&#34;,
+  Microsoft_teams,config_file,&#34;/home/*/Library/Application Support/Microsoft/Teams/desktop-config.json&#34;,
+  Microsoft_teams,config_file_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/desktop-config.json&#34;,
+  Microsoft_teams,leveldb_files,&#34;/home/*/Library/Application Support/Microsoft/Teams/Local Storage/leveldb&#34;,
+  Microsoft_teams,leveldb_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/Local Storage/leveldb/*&#34;,
+  Microsoft_teams,log_file,&#34;/home/*/Library/Application Support/Microsoft/Teams/logs.txt&#34;,
+  Microsoft_teams,log_file_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/logs.txt&#34;,
+  Microsoft_teams,logs_directory,&#34;/home/*/Library/Application Support/Microsoft/Teams/logs&#34;,
+  Microsoft_teams,logs_directory_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/logs/*&#34;,
+  Nano,,&#34;/home/*/.nano_history&#34;,
+  Netscaler,files_from_netscaler_ns_gui,&#34;/netscaler/ns_gui/*&#34;,
+  Netscaler,files_from_var_netscaler_logon,&#34;/var/netscaler/logon/*&#34;,
+  Netscaler,files_from_var_vpn,&#34;/var/vpn/*&#34;,
+  Netscaler,system_configuration_files,&#34;/flash/nsconfig&#34;,
+  Network_application_usage,DataUsage_sqlite_database_file_Network_Usage_Application_Data_contains_information_about_how_an_application_sends_or_receives_data_over_the_network,&#34;/private/var/wireless/Library/Databases/DataUsage.sqlite&#34;,
+  Network_application_usage,netusage_sqlite_database_file_Network_Usage_Application_Data_contains_information_about_how_an_application_sends_or_receives_data_over_the_network,&#34;/private/var/networkd/db/netusage.sqlite&#34;,
+  Networkmanager,,&#34;/var/lib/NetworkManager&#34;,
+  Nginx,,&#34;/var/log/{*access_log*,*access.log*,*error_log*,*error.log*}&#34;,
+  Nginx,,&#34;/var/log/nginx/*&#34;,
+  Okular,Okular_configuration_file,&#34;/home/*/.config/okularrc&#34;,
+  Okular,Okular_configuration_file_Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/okularrc&#34;,
+  Okular,metadata_related_to_documents_that_have_been_opened_or_interacted_with_using_Okular_a_document_viewer_for_KDE,&#34;/home/*/.local/share/*/okular/docdata/*&#34;,
+  Okular,metadata_related_to_documents_that_have_been_opened_or_interacted_with_using_Okular_a_document_viewer_for_KDE_Flatpak_and_Snap_versions,&#34;/home/*/.var/app /home/*/snap/*/okular/docdata/*&#34;,
+  Opera,directories,&#34;/home/*/Library/Application Support/*Opera/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Opera,directories_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/opera /home/*/.var/app/com.opera.Opera /home/*/snap/opera/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Opera,files,&#34;/home/*/Library/Application Support/*Opera/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Opera,files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/opera /home/*/.var/app/com.opera.Opera /home/*/snap/opera/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Photos,,&#34;/home/*/Pictures/Photos Library.photoslibrary/Photos.sqlite*&#34;,
+  Php,,&#34;/home/*/.php_history&#34;,
+  Pkg_contents,installed_packages_database,&#34;/var/db/pkg/local.sqlite&#34;,
+  Pkg_contents,package_table_of_contents_files,&#34;/var/pkg/publisher/*/pkg&#34;,
+  Pkg_contents,package_table_of_contents_files_including_NetBSD_10_and_later,&#34;/var/db/pkg /usr/pkg/pkgdb/*/&#43;CONTENTS&#34;,
+  Powerlog,archive_files,&#34;/private/var/db/powerlog/Library/BatteryLife/Archives/*.PLSQL.gz&#34;,
+  Powerlog,files,&#34;/private/var/db/powerlog/Library/BatteryLife/CurrentPowerlog.PLSQL*&#34;,
+  Qnap_qsync,,&#34;/home/*/.local/share/QNAP/Qsync&#34;,
+  Qnap_qsync,,&#34;/home/*/.Qsync&#34;,
+  Quarantine_events,,&#34;/home/*/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2&#34;,
+  Rc,,&#34;/home/*/.ssh/rc&#34;,
+  Rclone,,&#34;/home/*/.config/rclone&#34;,
+  Recovery_account_info,,&#34;/System/Volumes/Preboot/{AdminUserRecoveryInfo.plist,CryptoUserInfo.plist}&#34;,
+  Relink,,&#34;/usr/share/relink/kernel/relink.log&#34;,
+  Rhosts,,&#34;/home/*/.rhosts&#34;,
+  Run_log,,&#34;/run/log/*&#34;,
+  Run_shm,,&#34;/run/shm/*&#34;,
+  Rustdesk,access_logs,&#34;/home/*/.local/share/logs/RustDesk&#34;,
+  Rustdesk,access_logs,&#34;/home/*/Library/Logs/RustDesk&#34;,
+  Rustdesk,session_recording_files,&#34;/home/*/Videos/RustDesk&#34;,
+  Safari,browser_directories,&#34;/home/*/Library/Safari*/{Favicon Cache,Form Values}&#34;,
+  Safari,browser_files,&#34;/home/*/Library/Safari*/{AutoFillCorrections*,AutoFillQuirks.plist,AutomaticBookmarksBackup.html,Bookmarks.plist,CloudAutoFillCorrections*,CloudExtensions.db*,CloudTabs*,ContentBlockerStatistics*,Cookies.plist,Downloads.plist,Extensions.plist,History*,LastSession.plist,PerSitePreferences*,RecentlyClosedTabs.plist,SafariTabs.db*,TopSites.plist}&#34;,
+  Safari,browser_files,&#34;/home/*/Library/Containers/com.apple.Safari*/Data/Library/Safari*/{AutoFillCorrections*,AutoFillQuirks.plist,AutomaticBookmarksBackup.html,Bookmarks.plist,com.apple.Safari.plist,CloudAutoFillCorrections*,CloudExtensions.db*,CloudTabs*,ContentBlockerStatistics*,Cookies.plist,Downloads.plist,Extensions.plist,History*,LastSession.plist,PerSitePreferences*,RecentlyClosedTabs.plist,SafariTabs.db*,TopSites.plist}&#34;,
+  Safari,cookies_files,&#34;/home/*/Library/Cookies&#34;,
+  Saved_application_state,,&#34;/home/*/Library/Saved Application State/{data.data,windows.plist,window_*.data}&#34;,
+  Security_backups,,&#34;/var/backups/{*.backup,*.backup.sha256,*.current,*.current.sha256}&#34;,
+  Sessions,,&#34;/home/*/{*.session,*.sessions,.*_sessions}&#34;,
+  Signal,attachments_cache_files,&#34;/home/*/Library/Application Support/Signal/attachments.noindex&#34;,
+  Signal,attachments_cache_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/*/attachments.noindex/*&#34;,
+  Signal,cache_files,&#34;/home/*/Library/Application Support/Signal/Cache&#34;,
+  Signal,cache_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/*/Cache/*&#34;,
+  Signal,config_json_file,&#34;/home/*/Library/Application Support/Signal/config.json&#34;,
+  Signal,config_json_file_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/config.json&#34;,
+  Signal,database_files,&#34;/home/*/Library/Application Support/Signal/sql/db.sqlite*&#34;,
+  Signal,database_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/db.sqlite*&#34;,
+  Signal,log_files,&#34;/home/*/Library/Application Support/Signal/logs&#34;,
+  Signal,log_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/*/logs/*&#34;,
+  Skype,cache_and_leveldb_files,&#34;/home/*/Library/Application Support/Microsoft/Skype for Desktop/{*/Cache/*,*/Local Storage/leveldb/*}&#34;,
+  Skype,cache_and_leveldb_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/skypeforlinux /home/*/.var/app/com.skype.Client /home/*/snap/skype/{*/Cache/*,*/Local Storage/leveldb/*}&#34;,
+  Skype,database_files,&#34;/home/*/Library/Application Support/Microsoft/Skype for Desktop/*.db*&#34;,
+  Skype,database_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/skypeforlinux /home/*/.var/app/com.skype.Client /home/*/snap/skype/*.db*&#34;,
+  Slack,cache_files,&#34;/home/*/Library/Application Support/Slack/Cache&#34;,
+  Slack,cache_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/Cache/*&#34;,
+  Slack,chat_log_files,&#34;/home/*/Library/Application Support/Slack/IndexedDB/*.log&#34;,
+  Slack,chat_log_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/IndexedDB/*&#34;,
+  Slack,config_file,&#34;/home/*/Library/Application Support/Slack/desktop-config.json&#34;,
+  Slack,config_file_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/desktop-config.json&#34;,
+  Slack,leveldb_files,&#34;/home/*/Library/Application Support/Slack/Local Storage/leveldb&#34;,
+  Slack,leveldb_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/Local Storage/leveldb/*&#34;,
+  Slack,log_file,&#34;/home/*/Library/Application Support/Slack/logs.txt&#34;,
+  Slack,log_file_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/logs.txt&#34;,
+  Slack,logs_directory,&#34;/home/*/Library/Application Support/Slack/logs&#34;,
+  Slack,logs_directory_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/logs/*&#34;,
+  Slack,storage_files,&#34;/home/*/Library/Application Support/Slack/storage&#34;,
+  Slack,storage_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/storage/*&#34;,
+  Solaris,lastlog_log_file,&#34;/var/share/adm/lastlog&#34;,
+  Solaris,svc_log_files,&#34;/var/svc/log/*&#34;,
+  Solaris,utmpx_log_file,&#34;/system/volatile/utmpx&#34;,
+  Solaris,webui_log_files,&#34;/var/webui/logs/*&#34;,
+  Solaris,wtmpx_log_file,&#34;/var/share/adm/wtmpx&#34;,
+  Splashtop,STServerList_file,&#34;/home/*/Library/Application Support/Splashtop*/STServerList&#34;,
+  Splashtop,config_files,&#34;/opt/splashtop*/config&#34;,
+  Splashtop,diagnostic_report_files,&#34;/Library/Logs/DiagnosticReports/Splashtop*&#34;,
+  Splashtop,log_files,&#34;/Library/Application Support/Splashtop*/Logs /home/*/Library/Application Support/Splashtop*/Logs&#34;,
+  Splashtop,log_files,&#34;/opt/splashtop*/log&#34;,
+  Startup_items,Agents_configuration_files,&#34;/Library/LaunchAgents /System/Library/LaunchAgents&#34;,
+  Startup_items,Agents_configuration_files,&#34;/home/*/Library/LaunchAgents&#34;,
+  Startup_items,Daemons_configuration_files,&#34;/Library/LaunchDaemons /System/Library/LaunchDaemons&#34;,
+  Startup_items,Startup_Items_configuration_files,&#34;/Library/StartupItems&#34;,
+  Startup_items,login_items_installed_using_the_Service_Management_framework,&#34;/private/var/db/com.apple.xpc.launchd/loginitems.*.plist&#34;,
+  Steam,Steam_browser_directories,&#34;/home/*/.local/share/Steam/config/htmlcache/{Extensions,File System,Sessions}&#34;,
+  Steam,Steam_browser_directories,&#34;/home/*/Library/Application Support/Steam/config/htmlcache/{Extensions,File System,Sessions}&#34;,
+  Steam,Steam_browser_files,&#34;/home/*/.local/share/Steam/config/htmlcache/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,Web Data*}&#34;,
+  Steam,Steam_browser_files,&#34;/home/*/Library/Application Support/Steam/config/htmlcache/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,Web Data*}&#34;,
+  Steam,avatar_pictures,&#34;/home/*/Library/Application Support/Steam/config/avatarcache&#34;,
+  Steam,avatar_pictures,&#34;/home/*/.local/share/Steam/config/avatarcache&#34;,
+  Steam,game_icons,&#34;/home/*/Library/Application Support/Steam/steam/games&#34;,
+  Steam,game_icons,&#34;/home/*/.local/share/Steam/steam/games&#34;,
+  Steam,image_resources_of_installed_uninstalled_games,&#34;/home/*/.local/share/Steam/appcache/librarycache&#34;,
+  Steam,image_resources_of_installed_uninstalled_games,&#34;/home/*/Library/Application Support/Steam/appcache/librarycache&#34;,
+  Steam,log_files,&#34;/home/*/.local/share/Steam/logs&#34;,
+  Steam,log_files,&#34;/home/*/Library/Application Support/Steam/logs&#34;,
+  Steam,multiple_configuration_files,&#34;/home/*/Library/Application Support/Steam/*.vdf&#34;,
+  Steam,multiple_configuration_files,&#34;/home/*/.steam /home/*/.local/share/Steam/*.vdf&#34;,
+  Svc,anifest_files,&#34;/lib/svc/manifest /var/svc/manifest&#34;,
+  Svc,ethod_service_start_files,&#34;/lib/svc/method&#34;,
+  Synology_drive,database_and_data_files,&#34;/home/*/Library/Application Support/SynologyDrive/data&#34;,
+  Synology_drive,database_and_data_files,&#34;/home/*/.SynologyDrive/data&#34;,
+  Synology_drive,log_files,&#34;/home/*/Library/Application Support/SynologyDrive/log&#34;,
+  Synology_drive,log_files,&#34;/home/*/.SynologyDrive/log&#34;,
+  System_version,,&#34;/System/Library/CoreServices/SystemVersion.plist&#34;,
+  Systemd,configuration_files,&#34;/etc/systemd /lib/systemd/system /usr/lib/systemd /usr/local/lib/systemd/system /usr/local/lib/systemd/user /usr/local/share/systemd/user /usr/share/systemd/user&#34;,
+  Systemd,files,&#34;/run/systemd/system&#34;,
+  Systemd,per_user_configuration,&#34;/home/*/.config/systemd /home/*/.local/share/systemd&#34;,
+  Systemd,per_user_transient_timers,&#34;/run/user/*/systemd/transient/{*.scope,*.service,*.timer}&#34;,
+  Systemd,scope_and_transient_timer_files,&#34;/run/systemd/transient/{*.scope,*.service,*.timer}&#34;,
+  Systemd,sessions_files,&#34;/run/systemd/sessions&#34;,
+  Tcc,,&#34;/home/*/Library/Application Support/com.apple.TCC/TCC.db&#34;,
+  Tcc,,&#34;/Library/Application Support/com.apple.TCC/TCC.db&#34;,
+  Teamviewer,log_files_from_user_s_home_directory,&#34;/home/*/.local/share/teamviewer*/logfiles/*.log&#34;,
+  Teamviewer,network_and_connections_logs,&#34;/home/*/Library/Logs/TeamViewer/{Connections_incoming.txt,install_teamviewerd.log,signaturekey.log,TeamViewer*_Logfile.log,TV*Install.log,TV*Network.log}&#34;,
+  Teamviewer,network_and_connections_logs,&#34;/var/log/teamviewer*/{Connections_incoming.txt,install_teamviewerd.log,signaturekey.log,TeamViewer*_Logfile.log,TV*Install.log,TV*Network.log}&#34;,
+  Teamviewer,sqlite3_database_storing_TeamViewer_print_jobs,&#34;/home/*/Library/Caches/TeamViewer/tvprint.db*&#34;,
+  Teamviewer,sqlite3_database_storing_TeamViewer_print_jobs,&#34;/home/*/.local/share/teamviewer*/tvprint.db*&#34;,
+  Teamviewer,sqlite3_database_storing_cache_about_TeamViewer_chat,&#34;/home/*/.local/share/teamviewer*/tvchatfilecache.db*&#34;,
+  Teamviewer,sqlite3_database_storing_cache_about_TeamViewer_chat,&#34;/home/*/Library/Caches/TeamViewer/tvchatfilecache.db*&#34;,
+  Telegram,,&#34;/home/*/Library/Application Support/Telegram Desktop/log.txt&#34;,
+  Telegram,including_Flatpak_and_Snap_versions,&#34;/home/*/.local/share/TelegramDesktop /home/*/.var/app/org.telegram.desktop /home/*/snap/telegram-desktop/log.txt&#34;,
+  Thinlinc,VSM_server_agent_and_Web_Administration_Interface_logs,&#34;/var/log/{tlwebaccess.log,tlwebadm.log,vsmagent.log,vsmserver.log}&#34;,
+  Thinlinc,client_logs_and_configuration_files,&#34;/home/*/.thinlinc&#34;,
+  Thinlinc,server_configuration_files,&#34;/opt/thinlinc/etc&#34;,
+  Thinlinc,server_per_session_logs,&#34;/var/opt/thinlinc/sessions&#34;,
+  Thunderbird,Attachments_ImapMail_and_Mail_files,&#34;/home/*/Library/Thunderbird/{*/Attachments/*,*/ImapMail/*,*/Mail/*}&#34;,
+  Thunderbird,Attachments_ImapMail_and_Mail_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.thunderbird /home/*/.var/app/org.mozilla.Thunderbird /home/*/snap/thunderbird/{*/Attachments/*,*/ImapMail/*,*/Mail/*}&#34;,
+  Thunderbird,configuration_and_preference_files,&#34;/home/*/Library/Thunderbird/{*.ini,InstallTime*,logins.json,prefs.js}&#34;,
+  Thunderbird,configuration_and_preference_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.thunderbird /home/*/.var/app/org.mozilla.Thunderbird /home/*/snap/thunderbird/{*.ini,InstallTime*,logins.json,prefs.js}&#34;,
+  Thunderbird,sqlite_database_files,&#34;/home/*/Library/Thunderbird/{abook.sqlite*,global-messages-db.sqlite*,places.sqlite*}&#34;,
+  Thunderbird,sqlite_database_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.thunderbird /home/*/.var/app/org.mozilla.Thunderbird /home/*/snap/thunderbird/{abook.sqlite*,global-messages-db.sqlite*,places.sqlite*}&#34;,
+  Tmp,,&#34;/private/tmp/*&#34;,
+  Tmp,,&#34;/tmp/*&#34;,
+  Tomcat,,&#34;/{access_log*,error_log*,httpd-access.log*,httpd-error.log*,catalina.out}&#34;,
+  Tracker,,&#34;/home/*/.cache/tracker3/files/{*Audio.db*,*Documents.db*,*FileSystem.db*,*Pictures.db*,*Software.db*,*Video.db*,meta.db*}&#34;,
+  Trash_info,,&#34;/home/*/.local/share/Trash/info/*.trashinfo&#34;,
+  Udev,,&#34;/*/udev/rules.d/*&#34;,
+  Upstart,system_wide_Upstart_configuration_files,&#34;/etc/init /etc/xdg/upstart /usr/share/upstart/sessions&#34;,
+  Upstart,user_session_Upstart_configuration_files,&#34;/home/*/.config/upstart&#34;,
+  User_accounts,Apple_Accounts_database_files,&#34;/home/*/Library/Accounts/Accounts*.sqlite*&#34;,
+  User_accounts,information_about_the_users_that_have_logged_in_to_the_macOS_computer_as_recovered_from_the_settings_plist_files,&#34;/private/var/db/dslocal/nodes/Default/users/*.plist&#34;,
+  Utmp,,&#34;/var/run/utmp&#34;,
+  Var_adm,,&#34;/var/adm/*&#34;,
+  Var_ld,,&#34;/var/ld&#34;,
+  Var_log,private_var_log_logs,&#34;/private/var/log/*&#34;,
+  Var_log,var_log_logs,&#34;/var/log/*&#34;,
+  Var_run_log,,&#34;/var/run/log/*&#34;,
+  Var_spool,,&#34;/private/var/spool&#34;,
+  Var_spool,,&#34;/var/spool&#34;,
+  Var_tmp,,&#34;/private/var/tmp/*&#34;,
+  Var_tmp,,&#34;/var/tmp/*&#34;,
+  Viber,avatar_files,&#34;/home/*/Library/Application Support/ViberPC/*/Avatars/*&#34;,
+  Viber,avatar_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.ViberPC /home/*/.var/app/com.viber.Viber /home/*/snap/viber/*/Avatars/*&#34;,
+  Viber,database_files,&#34;/home/*/Library/Application Support/ViberPC/{config.db*,viber.db*}&#34;,
+  Viber,database_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.ViberPC /home/*/.var/app/com.viber.Viber /home/*/snap/viber/{config.db*,viber.db*}&#34;,
+  Viber,thumbnails_files,&#34;/home/*/Library/Application Support/ViberPC/*/Thumbnails/*&#34;,
+  Viber,thumbnails_files_including_Flatpak_and_Snap_versions,&#34;/home/*/.ViberPC /home/*/.var/app/com.viber.Viber /home/*/snap/viber/*/Thumbnails/*&#34;,
+  Viminfo,,&#34;/home/*/.viminfo&#34;,
+  Vivaldi,directories,&#34;/home/*/Library/Application Support/Vivaldi/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Vivaldi,directories_including_Flatpak_version,&#34;/home/*/.config/vivaldi /home/*/.var/app/com.vivaldi.Vivaldi/{Extensions,File System,IndexedDB,Local Storage,Sessions}&#34;,
+  Vivaldi,files,&#34;/home/*/Library/Application Support/Vivaldi/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Vivaldi,files_including_Flatpak_version,&#34;/home/*/.config/vivaldi /home/*/.var/app/com.vivaldi.Vivaldi/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}&#34;,
+  Vlc,,&#34;/home/*/.config/vlc /home/*/.var/app/org.videolan.VLC /home/*/snap/vlc/vlc-qt-interface.conf&#34;,
+  Vyatta,,&#34;/opt/vyatta/etc/config&#34;,
+  Wget,,&#34;/home/*/.wget-hsts&#34;,
+  Whatsapp,Desktop_files,&#34;/home/*/Library/Group Containers/group.net.whatsapp.WhatsApp.shared&#34;,
+  Whatsapp,cache_files,&#34;/home/*/Library/Application Support/WhatsApp/Cache&#34;,
+  Whatsapp,leveldb_files,&#34;/home/*/Library/Application Support/WhatsApp/Local Storage/leveldb&#34;,
+  Wps_office_mru,,&#34;/home/*/Library/Group Containers/*.wpsoffice/recentlocalfile.xml&#34;,
+  Wps_office_mru,including_Flatpak_and_Snap_versions,&#34;/home/*/.config/Kingsoft /home/*/.var/app/com.wps.Office /home/*/snap/wps-office/{Office.conf,recently-used.xbel,workarea.cfg}&#34;,
+  Xdg_autostart,system_wide_XDG_autostart_files,&#34;/etc/xdg/autostart /usr/share/autostart&#34;,
+  Xdg_autostart,user_specific_XDG_autostart_files,&#34;/home/*/.config/autostart /home/*/.local/share/autostart&#34;,
+  Xdg_autostart,user_specific_XDG_autostart_files_not_part_of_XDG_standard_but_used_by_KDE,&#34;/home/*/.config/autostart-scripts&#34;,
+  Xsession_errors,,&#34;/home/*/.xsession-errors&#34;,
+  Yum,configuration_files_under_etc_yum_pluginconf_d_directory,&#34;/etc/yum/pluginconf.d&#34;,
+  Yum,script_files_under_usr_lib_yum_plugins_directory,&#34;/usr/lib/yum-plugins&#34;,
+  &#39;&#39;&#39;)
+  GROUP BY Target
+
+  //  Build a lookup cache on target.
+  LET Lookup &lt;= memoize(query={
+    SELECT * FROM TargetTable
+  }, key=&#34;Target&#34;)
+
+  -- Extract all rules within the required target. Uses the memoized
+  -- structure above.
+  LET FilterTable(Required) =
+     SELECT Required AS Target, *
+     FROM flatten(query={
+       SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
+     })
+     WHERE if(condition=Glob =~ SlowGlobRegex,
+              then=log(message=&#34;Dropping rule %v/%v because it is too slow: %v&#34;,
+                       dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
+              else=TRUE)
+
+  LET Expand(FilteredTable) = SELECT * FROM foreach(
+  row=FilteredTable,
+  query={
+    -- If there is a reference, resolve it from the table recursively.
+    SELECT *
+    FROM if(condition=Ref AND log(message=&#34;%v/%v: Resolving Ref %v&#34;, dedup=-1, args=[Target, Rule, Ref]),
+    then={
+       SELECT * FROM Expand(
+          FilteredTable={
+             SELECT * FROM FilterTable(Required=Ref)
+          })
+    }, else={
+       SELECT Target, Rule, Glob FROM scope()
+    })
+  })
+
+sources:
+- name: SearchGlobs
+  query: |
+    -- Collect all the top level targets that the user selected.
+    LET Collections &lt;= SELECT Target &#43; &#34;/&#34; &#43; Rule AS Rule, Glob
+    FROM Expand(FilteredTable={
+      SELECT Target,
+            Rules.Rule AS Rule,
+            Rules.Glob AS Glob,
+            Rules.Ref AS Ref
+     FROM flatten(query={
+       SELECT * FROM TargetTable
+       WHERE get(field=Target)
+        AND log(message=&#34;Collecting target %v: %v&#34;, args=[Target, Rule], dedup=-1)
+     })
+    })
+    GROUP BY Rule, Glob
+
+    SELECT * FROM Collections
+
+- name: All Matches Metadata
+  query: |
+    LET GlobLookup &lt;= memoize(query=Collections, key=&#34;Glob&#34;)
+    LET _ &lt;= if(condition=MaxFileSize &gt; 0,
+                then=log(message=&#34;Limiting file acquisition to MaxFileSize %v bytes (%v)&#34;,
+                         args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
+
+    LET AllResults &lt;= SELECT OSPath AS SourceFile,
+                             Size,
+                             Btime AS Created,
+                             Ctime AS Changed,
+                             Mtime AS Modified,
+                             Atime AS LastAccessed,
+                             Accessor
+    FROM foreach(row={
+        SELECT _value AS Device FROM foreach(row=Devices)
+    }, query={
+      SELECT * FROM chain(async=TRUE,
+      a={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+               &#34;ntfs&#34; AS Accessor
+        FROM glob(globs=NTFSGlobs.Glob, accessor=&#34;ntfs&#34;, root=Device)
+      }, b={
+        SELECT *,
+               get(item=GlobLookup, field=Globs[0]).Rule AS Rule
+        FROM glob(globs=AutoGlobs.Glob,
+                  accessor=&#34;auto&#34;)
+      })
+    })
+    WHERE NOT IsDir
+    AND log(message=&#34;Found %v for rule %v&#34;, args=[SourceFile, Rule], dedup=10)
+    AND if(condition= Size &lt;= MaxFileSize,
+           then=TRUE,
+           else=log(message=&#34;Skipping file %v (Size %v) Due to MaxFileSize&#34;,
+                    dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
+
+    SELECT * FROM AllResults
+
+- name: Uploads
+  query: |
+    -- Upload the files. Split into workers so the files are uploaded in parallel.
+    LET uploaded_files = SELECT *
+    FROM foreach(row={
+       SELECT * FROM AllResults
+       },
+          workers=30,
+          query={
+            SELECT now() AS CopiedOnTimestamp,
+                   Created,
+                   Changed,
+                   LastAccessed,
+                   Modified,
+                   SourceFile,
+                   Size,
+                   upload(file=SourceFile, accessor=Accessor, mtime=Modified) AS Upload
+            FROM scope()
+      })
+
+    -- Separate the hashes into their own column.
+    SELECT CopiedOnTimestamp,
+           SourceFile,
+           Upload.Path AS DestinationFile,
+           Size AS FileSize,
+           Upload.sha256 AS SourceFileSha256,
+           Created,
+           Changed,
+           Modified,
+           LastAccessed
+    FROM uploaded_files
+<script>hljs.highlightAll()</script>
+
+</code>
+</pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div></main></body></html>
