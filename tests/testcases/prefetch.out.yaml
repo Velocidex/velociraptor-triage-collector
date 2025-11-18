@@ -3,24 +3,19 @@ Output: []
 
 # The prefetch target should contain two rules with the same name
 # but different globs.
-Query: SELECT get(item=Lookup, field="Prefetch") FROM scope()
+Query: SELECT *, get(item=Lookup, field="Prefetch").Target AS Target FROM foreach(row=get(item=Lookup, field="Prefetch").Rules) ORDER BY Glob
 Output: [
  {
-  "get(item=Lookup, field=\"Prefetch\")": {
-   "Target": "Prefetch",
-   "Rules": [
-    {
-     "Rule": "Prefetch",
-     "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
-     "Ref": ""
-    },
-    {
-     "Rule": "Prefetch",
-     "Glob": "Windows\\prefetch\\*.pf",
-     "Ref": ""
-    }
-   ]
-  }
+  "Rule": "Prefetch",
+  "Glob": "Windows.old\\Windows\\prefetch\\*.pf",
+  "Ref": "",
+  "Target": "Prefetch"
+ },
+ {
+  "Rule": "Prefetch",
+  "Glob": "Windows\\prefetch\\*.pf",
+  "Ref": "",
+  "Target": "Prefetch"
  }
 ]
 

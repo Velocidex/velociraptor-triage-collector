@@ -24,6 +24,12 @@ Output: [
  },
  {
   "Target": "_Live",
+  "Rule": "Netstat",
+  "Glob": "",
+  "Ref": "Netstat"
+ },
+ {
+  "Target": "_Live",
   "Rule": "PrefetchBinaries",
   "Glob": "",
   "Ref": "PrefetchBinaries"
@@ -50,6 +56,10 @@ Output: [
  },
  {
   "Rule": "LnkTargets/Targets",
+  "Glob": ""
+ },
+ {
+  "Rule": "Netstat/NetstatEnriched",
   "Glob": ""
  },
  {

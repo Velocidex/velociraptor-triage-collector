@@ -3,7 +3,9 @@ Queries:
 
   # The prefetch target should contain two rules with the same name
   # but different globs.
-  - SELECT get(item=Lookup, field="Prefetch") FROM scope()
+  - SELECT *, get(item=Lookup, field="Prefetch").Target AS Target
+    FROM foreach(row=get(item=Lookup, field="Prefetch").Rules)
+    ORDER BY Glob
 
   # The EvidenceOfExecution target has only Ref rules - without globs.
   - SELECT * FROM FilterTable(
