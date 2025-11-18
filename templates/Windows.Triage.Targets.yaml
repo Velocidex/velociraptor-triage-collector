@@ -167,7 +167,8 @@ export: |
 
   // Only enable resuming if the upload() plugin version is recent
   // enough. Earlier versions could lead to crashes in some cases.
-  LET UPLOAD_IS_RESUMABLE <= S.UPLOAD_IS_RESUMABLE && version(function="upload") > 1
+  LET UPLOAD_IS_RESUMABLE <= S.UPLOAD_IS_RESUMABLE && version(
+     function="upload") > 2
 
   LET CollectionPolicy <= S.CollectionPolicy || "ExcludeSigned"
 
@@ -321,7 +322,7 @@ export: |
         `^\\\\SystemRoot\\\\`="%SystemRoot%\\",
         `^system32\\\\`="%SystemRoot%\\System32\\",
         `^{.+}.+`="\\$0",
-        `^C:\\\\Program Files[^\\\\]*\\\\[^ ]+`='"$0"',
+        `^.:\\\\Program Files[^\\\\]*\\\\[^ ]+`='"$0"',
         `^%[^ ]+%[^ ]+`='"$0"'
       )
 
