@@ -1,0 +1,20 @@
+Name: Netstat
+Description: Capture state of network connections.
+
+Targets:
+- Name: NetstatEnriched
+  VQL: |
+    SELECT * FROM foreach(workers=WORKERS, row={
+      SELECT _value AS Row
+      FROM items(item={
+        SELECT Pid, TypeString AS Type, Status,
+               Laddr.IP AS Laddr,
+               Laddr.Port AS Lport,
+               Raddr.IP AS Raddr,
+               Raddr.Port AS Rport,
+               process_tracker_get(id=Pid).Data AS ProcessInfo
+        FROM netstat()
+      })
+    }, query={
+      SELECT * FROM TryToDownload(OSPath=Row.ProcessInfo.Exe, Row=Row)
+    })

@@ -15,3 +15,6 @@ Targets:
 
  - Name: AdaptiveServices
    Ref: AdaptiveServices
+
+ - Name: Netstat
+   Ref: Netstat

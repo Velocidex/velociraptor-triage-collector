@@ -12598,6 +12598,10 @@
     {
      "Name": "AdaptiveServices",
      "Ref": "AdaptiveServices"
+    },
+    {
+     "Name": "Netstat",
+     "Ref": "Netstat"
     }
    ]
   },
@@ -12608,6 +12612,16 @@
     {
      "Name": "Targets",
      "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n     SELECT * FROM Artifact.Windows.Forensics.Lnk(\n        UploadLnk=TRUE,\n        TargetGlob='''C:\\{ProgramData,Users\\*\\AppData\\*}\\Microsoft\\Windows\\{Start Menu\\Programs\\StartUp,Recent\\**}\\*.lnk'''\n     )\n  })\n  WHERE Row.LinkTarget.LinkTarget\n}, query= {\n  SELECT * FROM TryToDownload(OSPath=Row.LinkTarget.LinkTarget, Row=Row)\n})\n"
+    }
+   ]
+  },
+  "Netstat": {
+   "Name": "Netstat",
+   "Description": "Capture state of network connections.",
+   "Rules": [
+    {
+     "Name": "NetstatEnriched",
+     "VQL": "SELECT * FROM foreach(workers=WORKERS, row={\n  SELECT _value AS Row\n  FROM items(item={\n    SELECT Pid, TypeString AS Type, Status,\n           Laddr.IP AS Laddr,\n           Laddr.Port AS Lport,\n           Raddr.IP AS Raddr,\n           Raddr.Port AS Rport,\n           process_tracker_get(id=Pid).Data AS ProcessInfo\n    FROM netstat()\n  })\n}, query={\n  SELECT * FROM TryToDownload(OSPath=Row.ProcessInfo.Exe, Row=Row)\n})\n"
     }
    ]
   },
