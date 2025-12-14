@@ -208,6 +208,21 @@ func (self *Compiler) loadConfig(path string) error {
 		}
 	}
 
+	if self.config_obj.MakeAllTarget {
+		new_target := &api.TargetFile{Name: "_All"}
+		for _, item := range self.targets.Items() {
+			tf, ok := item.Value.(*api.TargetFile)
+			if !ok {
+				continue
+			}
+			new_target.Targets = append(new_target.Targets, &api.TargetRule{
+				Name: tf.Name,
+				Ref:  tf.Name,
+			})
+		}
+		self.targets.Set("_All", new_target)
+	}
+
 	// Load the template
 	fd, err := os.Open(self.config_obj.ArtifactTemplate)
 	if err != nil {

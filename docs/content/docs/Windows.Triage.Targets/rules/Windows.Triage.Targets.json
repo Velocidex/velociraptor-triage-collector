@@ -1640,6 +1640,25 @@
     }
    ]
   },
+  "FortiClientVPN": {
+   "Name": "FortiClientVPN",
+   "Description": "Forti Client VPN",
+   "Author": "Paul CABON - CERT Cwatch Almond",
+   "Rules": [
+    {
+     "Name": "FortiClient trace logs in AppData",
+     "Category": "Apps",
+     "Comment": "Trace Logs for Forti Client VPN",
+     "Glob": "Users\\*\\AppData\\Local\\FortiClient\\logs\\trace\\**"
+    },
+    {
+     "Name": "FortiClient trace logs in Program Files",
+     "Category": "Apps",
+     "Comment": "Trace Logs for Forti Client VPN",
+     "Glob": "Program Files\\Fortinet\\FortiClient\\logs\\trace\\**"
+    }
+   ]
+  },
   "FreeCommander": {
    "Name": "FreeCommander",
    "Description": "FreeCommander XE",
@@ -2714,17 +2733,12 @@
   "OneDrive_Metadata": {
    "Name": "OneDrive_Metadata",
    "Description": "Microsoft OneDrive Storage Metadata",
-   "Author": "Chad Tilbury",
+   "Author": "Chad Tilbury, Brian Maloney",
    "Rules": [
     {
-     "Name": "OneDrive Metadata Logs",
+     "Name": "OneDrive User Profile",
      "Category": "Apps",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\OneDrive\\logs\\**"
-    },
-    {
-     "Name": "OneDrive Metadata Settings",
-     "Category": "Apps",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\OneDrive\\settings\\**"
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\OneDrive\\**"
     }
    ]
   },
@@ -2939,6 +2953,37 @@
     }
    ]
   },
+  "PDQDeploy": {
+   "Name": "PDQDeploy",
+   "Description": "PDQ Deploy database",
+   "Author": "Paul Cabon - Cwatch CERT Almond",
+   "Rules": [
+    {
+     "Name": "PDQ Deploy database",
+     "Category": "Database",
+     "Glob": "ProgramData\\Admin Arsenal\\PDQ Deploy\\*.db"
+    }
+   ]
+  },
+  "PaloAlto": {
+   "Name": "PaloAlto",
+   "Description": "Palo Alto Networks GlobalProtect VPN logs",
+   "Author": "Evangelos Dragonas",
+   "Rules": [
+    {
+     "Name": "Palo Alto GlobalProtect VPN",
+     "Category": "Apps",
+     "Comment": "Authentication, portal/gateway connection, and user-side events (login/logout attempts)",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\GlobalProtect\\**\\PanGP*.log*"
+    },
+    {
+     "Name": "Palo Alto GlobalProtect VPN",
+     "Category": "Apps",
+     "Comment": "Multiple logs like PanGPS.log that stores authentication, portal/gateway connection, and user-side events (login/logout attempts)",
+     "Glob": "Program Files*\\Palo Alto Networks\\GlobalProtect\\**\\*.log*"
+    }
+   ]
+  },
   "PeaZip": {
    "Name": "PeaZip",
    "Description": "PeaZip",
@@ -2961,6 +3006,37 @@
      "Category": "ApplicationLogs",
      "Comment": "Locates ProtonVPN connection logs.",
      "Glob": "Users\\*\\AppData\\Local\\ProtonVPN\\Logs\\*"
+    }
+   ]
+  },
+  "PulseSecure": {
+   "Name": "PulseSecure",
+   "Description": "Pulse Secure",
+   "Author": "Paul CABON CERT Cwatch Almond",
+   "Rules": [
+    {
+     "Name": "Pulse Secure logs in Programmes Files",
+     "Category": "Apps",
+     "Comment": "Logs for Pule Secure",
+     "Glob": "Program Files (x86)\\Pulse Secure\\Logging\\**"
+    },
+    {
+     "Name": "Pulse Secure logs in ProgramData",
+     "Category": "Apps",
+     "Comment": "Logs for Pule Secure",
+     "Glob": "ProgramData\\Pulse Secure\\Logging\\**"
+    },
+    {
+     "Name": "Pulse Secure setup logs",
+     "Category": "Apps",
+     "Comment": "Setup logs for Pule Secure",
+     "Glob": "Users\\*\\AppData\\Roaming\\Pulse Secure\\Setup Client\\**\\*.log"
+    },
+    {
+     "Name": "Pulse Secure PSAL logs",
+     "Category": "Apps",
+     "Comment": "PSAL logs",
+     "Glob": "Users\\*\\AppData\\Local\\Pulse Secure\\Logging\\PulseClient.log"
     }
    ]
   },
@@ -3591,7 +3667,7 @@
   "Splashtop": {
    "Name": "Splashtop",
    "Description": "Splashtop",
-   "Author": "Andrew Rathbun, Yogesh Khatri",
+   "Author": "Andrew Rathbun, Yogesh Khatri, Evangelos Dragonas",
    "Rules": [
     {
      "Name": "Splashtop Log Files",
@@ -3604,6 +3680,18 @@
      "Category": "Software",
      "Comment": "Collects logs for Splashtop",
      "Glob": "ProgramData\\Splashtop\\Temp\\log\\**"
+    },
+    {
+     "Name": "Splashtop Gateway Log Files",
+     "Category": "Software",
+     "Comment": "Collects logs for Splashtop Gateway",
+     "Glob": "Program Files*\\Splashtop\\Splashtop Remote\\Splashtop Gateway\\log\\**"
+    },
+    {
+     "Name": "Splashtop Enterprise/Business(legacy) Log Files in ProgramData",
+     "Category": "Software",
+     "Comment": "Collects logs for Splashtop Enterprise/Business(legacy)",
+     "Glob": "ProgramData\\Splashtop\\Splashtop Remote Client for ST*\\*\\log\\**"
     }
    ]
   },
@@ -4120,13 +4208,19 @@
   "VNCLogs": {
    "Name": "VNCLogs",
    "Description": "VNC Logs",
-   "Author": "Phill Moore",
+   "Author": "Phill Moore, Evangelos Dragonas",
    "Rules": [
     {
      "Name": "RealVNC Log",
      "Category": "ApplicationLogs",
      "Comment": "https://www.realvnc.com/en/connect/docs/logging.html#logging",
      "Glob": "Users\\*\\AppData\\Local\\RealVNC\\vncserver.log"
+    },
+    {
+     "Name": "RealVNC Viewer Log",
+     "Category": "ApplicationLogs",
+     "Comment": "https://help.realvnc.com/hc/en-us/articles/360002254238-All-About-Logging#realvnc-server-0-1",
+     "Glob": "Users\\*\\AppData\\Local\\RealVNC\\vncviewer.log"
     },
     {
      "Name": "RealVNC Log",
@@ -4984,7 +5078,7 @@
   "Chrome": {
    "Name": "Chrome",
    "Description": "Chrome",
-   "Author": "Eric Zimmerman and Andrew Rathbun",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino",
    "Rules": [
     {
      "Name": "Chrome bookmarks XP",
@@ -5177,6 +5271,18 @@
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Web Data*"
     },
     {
+     "Name": "Chrome IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Chrome Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
      "Name": "Windows Protect Folder",
      "Category": "FileSystem",
      "Comment": "Required for offline decryption",
@@ -5192,6 +5298,23 @@
      "Name": "SYSTEM Chrome History",
      "Category": "Communications",
      "Glob": "Windows\\system32\\config\\systemprofile\\AppData\\Local\\Google\\Chrome\\User Data\\*\\History*"
+    }
+   ]
+  },
+  "ChromeExtension_Metadata": {
+   "Name": "ChromeExtension_Metadata",
+   "Description": "Chrome Browser Extension Metadata",
+   "Author": "Bruce Breuer",
+   "Rules": [
+    {
+     "Name": "Chrome Browser Extension manifest.json (Extension ID, Version, Permissions)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Extensions\\**\\manifest.json"
+    },
+    {
+     "Name": "Chrome Browser Extension messages.json (Friendly Name and Description)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Extensions\\*\\*\\_locales\\en\\**\\messages.json"
     }
    ]
   },
@@ -5776,6 +5899,225 @@
      "Category": "Communications",
      "Comment": "Grabs entire contents of the Opera AppData\\Roaming folder",
      "Glob": "Users\\*\\AppData\\Roaming\\Opera Software\\Opera Stable\\**"
+    }
+   ]
+  },
+  "PrismaAccessBrowser": {
+   "Name": "PrismaAccessBrowser",
+   "Description": "Prisma Access Browser",
+   "Author": "Cassie Doemel and Andrew Rathbun",
+   "Rules": [
+    {
+     "Name": "Prisma Access Browser bookmarks XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Prisma Access Browser Cookies XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Cookies*"
+    },
+    {
+     "Name": "Prisma Access Browser Current Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Prisma Access Browser Current Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Prisma Access Browser Favicons XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Prisma Access Browser History XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Prisma Access Browser Last Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Prisma Access Browser Last Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Prisma Access Browser Login Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Login Data"
+    },
+    {
+     "Name": "Prisma Access Browser Preferences XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Prisma Access Browser Shortcuts XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Prisma Access Browser Top Sites XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Prisma Access Browser Visited Links XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Prisma Access Browser Web Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Prisma Access Browser bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Prisma Access Browser Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\**\\Cookies*"
+    },
+    {
+     "Name": "Prisma Access Browser Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Prisma Access Browser Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Prisma Access Browser Download Metadata",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\DownloadMetadata"
+    },
+    {
+     "Name": "Prisma Access Browser Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Extension Cookies"
+    },
+    {
+     "Name": "Prisma Access Browser Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Prisma Access Browser History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Prisma Access Browser Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Prisma Access Browser Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Prisma Access Browser Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Prisma Access Browser Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Login Data"
+    },
+    {
+     "Name": "Prisma Access Browser Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Prisma Access Browser Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Network Action Predictor"
+    },
+    {
+     "Name": "Prisma Access Browser Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Prisma Access Browser Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Prisma Access Browser Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\QuotaManager"
+    },
+    {
+     "Name": "Prisma Access Browser Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Reporting and NEL"
+    },
+    {
+     "Name": "Prisma Access Browser Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Prisma Access Browser Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Prisma Access Browser Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Prisma Access Browser SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Prisma Access Browser Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Prisma Access Browser Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Prisma Access Browser Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Chrome SQLite DBs organized by version #.",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\Snapshots\\*\\**"
+    },
+    {
+     "Name": "SYSTEM Chrome History",
+     "Category": "Communications",
+     "Glob": "Windows\\system32\\config\\systemprofile\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Prisma Access Browser User Data Backup Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data Backup\\**"
     }
    ]
   },
@@ -8594,6 +8936,38 @@
     }
    ]
   },
+  "VPNClients": {
+   "Name": "VPNClients",
+   "Description": "VPN Clients",
+   "Author": "Evangelos Dragonas - Paul CABON CERT Almond",
+   "Rules": [
+    {
+     "Name": "Proton VPN",
+     "Category": "VPN",
+     "Ref": "ProtonVPN"
+    },
+    {
+     "Name": "OpenVPN",
+     "Category": "VPN",
+     "Ref": "OpenVPNClient"
+    },
+    {
+     "Name": "Palo Alto GlobalProtect VPN",
+     "Category": "VPN",
+     "Ref": "PaloAlto"
+    },
+    {
+     "Name": "Forti Client VPN",
+     "Category": "VPN",
+     "Ref": "FortiClientVPN"
+    },
+    {
+     "Name": "Ivanti Pulse Secure",
+     "Category": "VPN",
+     "Ref": "PulseSecure"
+    }
+   ]
+  },
   "VirtualBox": {
    "Name": "VirtualBox",
    "Description": "Runs all VirtualBox modules to collect Virtualbox VM config files, logs and Virtual Hard Disks",
@@ -8709,6 +9083,11 @@
      "Ref": "Opera"
     },
     {
+     "Name": "Prisma Access Browser",
+     "Category": "Communications",
+     "Ref": "PrismaAccessBrowser"
+    },
+    {
      "Name": "Puffin Secure Browser",
      "Category": "Communications",
      "Ref": "PuffinSecureBrowser"
@@ -8818,6 +9197,16 @@
      "Name": "IIS log files",
      "Category": "Logs",
      "Glob": "Windows\\system32\\LogFiles\\HTTPERR\\*.log"
+    },
+    {
+     "Name": "IIS log files",
+     "Category": "Logs",
+     "Glob": "inetpub\\logs\\LogFiles\\FTPSVC*\\*.log"
+    },
+    {
+     "Name": "IIS log files",
+     "Category": "Logs",
+     "Glob": "inetpub\\logs\\LogFiles\\*\\**\\*.log"
     }
    ]
   },

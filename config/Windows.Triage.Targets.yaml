@@ -28,3 +28,5 @@ Output:
 
 StateFile: docs/content/docs/Windows.Triage.Targets/rules/Windows.Triage.Targets.json
 PathSep: "\\"
+
+Debug: false

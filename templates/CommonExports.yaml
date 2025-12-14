@@ -1,0 +1,188 @@
+{{ define "GlobTable" }}
+  Target,Rule,Glob,Ref
+  {{- range .Rules }}
+  {{ .Target}},{{ .Name }},"{{ .Glob }}",{{ .Ref -}}
+  {{ end }}
+{{ end -}}
+
+-- We need to materialize into a scope variable. If this is too
+-- large, VQL will use too much memory keeping these objects alive.
+LET VQL_MATERIALIZE_ROW_LIMIT <= 10
+LET NTFS_CACHE_TIME <= 100000
+LET NTFS_DISABLE_FULL_PATH_RESOLUTION <= TRUE
+
+// Initialize libmagic before we call it from multiple threads.
+LET _ <= magic(path="", accessor="data")
+
+LET S = scope()
+LET Verbose <= S.Verbose || FALSE
+LET MaybeLOG(Message, Args) = if(condition=Verbose,
+  then=log(message=Message, level="DEBUG", dedup= -1, args=Args),
+  else=TRUE)
+
+// Only enable resuming if the upload() plugin version is recent
+// enough. Earlier versions could lead to crashes in some cases.
+LET UPLOAD_IS_RESUMABLE <= S.UPLOAD_IS_RESUMABLE && version(
+  function="upload") > 2
+
+LET CollectionPolicy <= S.CollectionPolicy || "ExcludeSigned"
+
+// Helper for VQL targets - try to download the file, but if failed,
+// we return an empty row to record the filename.
+LET TryToDownload(OSPath, Row) = SELECT *,
+  Data + dict(Details=GetDetails(OSPath=OSPath) || dict()) AS Data
+FROM switch(
+a={
+    SELECT *, "auto" AS Accessor, Row AS Data
+    FROM stat(filename=OSPath, accessor="auto")
+  }, b={
+    SELECT OSPath,
+           0 AS Size,
+           NULL AS Btime,
+           NULL AS Ctime,
+           NULL AS Mtime,
+           NULL AS Atime,
+           "" AS Accessor,
+           Row AS Data
+    FROM scope()
+})
+
+{{- if .Config.Debug }}
+LET GlobTable <= '''{{ template "GlobTable" . }}
+'''
+{{ else }}
+LET GlobTable <= gunzip(string=base64decode(string="{{ Compress "GlobTable" . }}"))
+{{ end }}
+
+LET SlowGlobRegex <= if(condition=S.DropVerySlowRules,
+  then=SlowGlobRegex, else="RunSlowFileGlobs!!!")
+
+-- Group the targets for faster searching.
+LET TargetTable <= SELECT Target,
+  enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
+FROM parse_csv(accessor="data",
+filename=GlobTable)
+GROUP BY Target
+
+//  Build a lookup cache on target.
+LET Lookup <= memoize(query={
+  SELECT * FROM TargetTable
+}, key="Target")
+
+-- Extract all rules within the required target. Uses the memoized
+-- structure above.
+LET FilterTable(Required) =
+  SELECT Required AS Target, *
+  FROM flatten(query={
+    SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
+  })
+  WHERE if(condition=Glob =~ SlowGlobRegex,
+           then=log(level="INFO",
+                    message="Dropping rule %v/%v because it is too slow: %v",
+                    dedup=-1,
+                    args=[Target, Rule, Glob]) AND FALSE,
+           else=TRUE)
+
+LET Expand(FilteredTable) = SELECT * FROM foreach(
+row=FilteredTable,
+query={
+    -- If there is a reference, resolve it from the table recursively.
+    SELECT *
+    FROM if(condition=Ref AND MaybeLOG(
+       Message="%v/%v: Resolving Ref %v",
+       Args=[Target, Rule, Ref]),
+    then={
+       SELECT * FROM Expand(
+          FilteredTable={
+             SELECT * FROM FilterTable(Required=Ref)
+          })
+    }, else={
+       SELECT Target, Rule, Glob FROM scope()
+       WHERE (Glob && MaybeLOG(
+         Message="%v/%v: Glob is %v",
+         Args=[Target, Rule, Glob])) || TRUE
+    })
+})
+
+-- Collect all the top level targets that the user selected.
+LET Collections(Targets) = SELECT Target + "/" + Rule AS Rule, Glob
+FROM Expand(FilteredTable={
+      SELECT Target,
+            Rules.Rule AS Rule,
+            Rules.Glob AS Glob,
+            Rules.Ref AS Ref
+     FROM flatten(query={
+       SELECT * FROM TargetTable
+       WHERE get(item=Targets, field=Target)
+       AND MaybeLOG(
+         Message="Collecting target %v, Rules: %v",
+         Args=[Target, Rules.Rule])
+     })
+})
+GROUP BY Rule, Glob
+
+// In ExcludeSigned and HashOnly we dont upload signed binaries.
+LET ShouldUploadSignedBinary <= dict(
+  ShouldUpload = NOT CollectionPolicy =~ "ExcludeSigned|HashOnly")
+
+// In HashOnly mode we never upload anything.
+LET ShouldUploadAnyFile <= dict(
+  ShouldUpload = NOT CollectionPolicy =~ "HashOnly")
+
+LET DoNotUpload <= dict(ShouldUpload=FALSE)
+
+// Determine if we should upload the file based on signature.
+LET ShouldUpload(Details) = if(
+  condition=OSPath =~ TrustedPathRegex AND
+    MaxFileSize > 0 AND Details.Stat.Size > MaxFileSize,
+  then= Details + DoNotUpload,
+  else=if(
+       // What to do about binaries? If they have an issuer name then
+       // they are signed.
+       condition=Details.Signatures.IssuerName,
+       then=Details + ShouldUploadSignedBinary,
+       else=Details + ShouldUploadAnyFile))
+
+// If the file is a binary, also add authenticode information.
+LET MaybeBinary(OSPath, Details) = ShouldUpload(Details=if(
+  condition=Details.Magic =~ "PE.+executable",
+  then=Details + dict(Signatures=authenticode(filename=OSPath)),
+  else=Details))
+
+
+// Hash the file if it is not too large
+LET MaybeHash(OSPath, Details) = if(
+  condition=NOT OSPath =~ TrustedPathRegex AND
+    Details.Stat AND Details.Stat.Size < MaxHashSize,
+  then=Details + dict(Hashes=hash(path=OSPath),
+                      Magic=magic(path=OSPath)),
+  else=Details)
+
+// Calculate the details column with hashes and magic.
+LET _GetDetails(OSPath) = MaybeBinary(
+  OSPath=OSPath,
+  Details=MaybeHash(
+     OSPath=OSPath,
+     Details=dict(filename=OSPath,
+                  Stat=OSPath && stat(filename=OSPath))))
+
+// Cache the hashing for speedup.
+LET GetDetails(OSPath) = cache(
+       period=100000,
+       func= _GetDetails(OSPath=OSPath),
+       name="GetDetails", key=OSPath.String)
+
+{{ range $idx, $r := .Rules -}}
+{{- if $r.VQL -}}
+// {{ .Description }}
+LET Collect{{ $r.Target }}_{{ $r.Name }} =
+{{ Indent .VQL 7 -}}
+{{- end -}}
+{{- end }}
+
+{{- range .TargetFiles -}}
+{{- if .Preamble }}
+// From {{ .Name }}
+{{ Indent .Preamble 4 -}}
+{{- end -}}
+{{- end }}

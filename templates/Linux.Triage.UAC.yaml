@@ -7,6 +7,32 @@ description: |
   Commit {{ .Commit }} on {{ .Time }}
 
 parameters:
+  - name: HighLevelTargets
+    description: A shorter list of Meta-Targets
+    type: multichoice
+    default: "[]"
+    choices:
+{{- range .TargetFiles }}
+    {{- if hasPrefix "_" .Name }}
+    - {{ .Name -}}
+    {{ end -}}
+{{ end }}
+
+  - name: Targets
+    type: multichoice
+    description: All targets available
+    default: "[]"
+    choices:
+{{- range .TargetFiles }}
+    - {{ .Name -}}
+{{ end }}
+
+  - name: TrustedPathRegex
+    type: regex
+    default: "^/usr/bin/"
+    description: |
+      Do not hash or upload any adaptive files matching this regex.
+
   - name: MaxFileSize
     type: int
     default: 18446744073709551615
@@ -14,154 +40,122 @@ parameters:
       The max size in bytes of the individual files to collect.
       Set to 0 to disable it.
 
+  - name: MaxHashSize
+    type: int
+    default: "100000000"
+    description: |
+      The max size in bytes of the individual files to hash.
+
+  - name: DropVerySlowRules
+    type: bool
+    default: Y
+    description: Ignore inefficient targets
+
+  - name: SlowGlobRegex
+    type: hidden
+    default: "^/**"
+    description: A regex to eliminate slow globs.
+
+  - name: WORKERS
+    type: int
+    default: "5"
+    description: |
+      Number of concurrent workers to use for parsing and compressing.
+
   - name: UPLOAD_IS_RESUMABLE
     type: bool
     default: Y
     description: |
       If set the uploads can be resumed if the flow times out or
       errors.
-{{ range .TargetFiles }}
-  - name: {{ .Name }}
-    description: "{{ .Description }}"
-    type: bool
-{{ end }}
+
+  - name: PreferredAccessor
+    default: auto
+    description: The accessor to use.
+
+  - name: RootDirectory
+    default: /
+    description: The root directory to start searching from (can use a mount point for deaddisk analysis).
 
 export: |
-  LET VQL_MATERIALIZE_ROW_LIMIT <= 10000
-  LET S = scope()
+{{ Indent ( Template "templates/CommonExports.yaml" ) 2 }}
 
-  -- Group the targets for faster searching.
-  LET TargetTable <= SELECT Target,
-       enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
-    FROM parse_csv(accessor="data",
-  filename='''
-  Target,Rule,Glob,Ref
-  {{- range .Rules }}
-  {{ .Target}},{{ .Name }},"{{ .Glob }}",{{ .Ref -}}
-  {{ end }}
-  ''')
-  GROUP BY Target
-
-  //  Build a lookup cache on target.
-  LET Lookup <= memoize(query={
-    SELECT * FROM TargetTable
-  }, key="Target")
-
-  -- Extract all rules within the required target. Uses the memoized
-  -- structure above.
-  LET FilterTable(Required) =
-     SELECT Required AS Target, *
-     FROM flatten(query={
-       SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
-     })
-     WHERE if(condition=Glob =~ SlowGlobRegex,
-              then=log(message="Dropping rule %v/%v because it is too slow: %v",
-                       dedup=-1, args=[Target, Rule, Glob]) AND FALSE,
-              else=TRUE)
-
-  LET Expand(FilteredTable) = SELECT * FROM foreach(
-  row=FilteredTable,
-  query={
-    -- If there is a reference, resolve it from the table recursively.
-    SELECT *
-    FROM if(condition=Ref AND log(message="%v/%v: Resolving Ref %v", dedup=-1, args=[Target, Rule, Ref]),
-    then={
-       SELECT * FROM Expand(
-          FilteredTable={
-             SELECT * FROM FilterTable(Required=Ref)
-          })
-    }, else={
-       SELECT Target, Rule, Glob FROM scope()
-    })
-  })
+    // Extract the binary from the command line
+    LET ExpandPath(Path) = expand(path=Path)
 
 sources:
-- name: SearchGlobs
-  query: |
-    -- Collect all the top level targets that the user selected.
-    LET Collections <= SELECT Target + "/" + Rule AS Rule, Glob
-    FROM Expand(FilteredTable={
-      SELECT Target,
-            Rules.Rule AS Rule,
-            Rules.Glob AS Glob,
-            Rules.Ref AS Ref
-     FROM flatten(query={
-       SELECT * FROM TargetTable
-       WHERE get(field=Target)
-        AND log(message="Collecting target %v: %v", args=[Target, Rule], dedup=-1)
-     })
-    })
-    GROUP BY Rule, Glob
-
-    SELECT * FROM Collections
+{{ Template "templates/SearchGlob.yaml" }}
 
 - name: All Matches Metadata
   query: |
-    LET GlobLookup <= memoize(query=Collections, key="Glob")
-    LET _ <= if(condition=MaxFileSize > 0,
-                then=log(message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
-                         args=[MaxFileSize, humanize(bytes=MaxFileSize)]))
+    LET AutoGlobs = SELECT * FROM AllCollections
+       WHERE Glob
 
-    LET AllResults <= SELECT OSPath AS SourceFile,
-                             Size,
-                             Btime AS Created,
-                             Ctime AS Changed,
-                             Mtime AS Modified,
-                             Atime AS LastAccessed,
-                             Accessor
+    // UAC globs may be directories in which case we fetch all the files in them.
+    LET AllGlobs = SELECT Type,
+        Size,
+        OSPath AS SourceFile,
+        Btime AS Created,
+        Ctime AS Changed,
+        Mtime AS Modified,
+        Atime AS LastAccessed,
+        Data,
+        get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+        PreferredAccessor AS Accessor,
+        dict(Globs=Globs) AS Data,
+        "Glob" AS Type
     FROM foreach(row={
-        SELECT _value AS Device FROM foreach(row=Devices)
-    }, query={
-      SELECT * FROM chain(async=TRUE,
-      a={
-        SELECT *,
-               get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
-               "ntfs" AS Accessor
-        FROM glob(globs=NTFSGlobs.Glob, accessor="ntfs", root=Device)
-      }, b={
-        SELECT *,
-               get(item=GlobLookup, field=Globs[0]).Rule AS Rule
+        SELECT *
         FROM glob(globs=AutoGlobs.Glob,
-                  accessor="auto")
-      })
+                  accessor=PreferredAccessor,
+                  root=RootDirectory)
+    }, query={
+        SELECT * FROM if(condition=IsDir,
+        then={
+            SELECT *
+            FROM glob(globs="**", root=OSPath,
+                      accessor=PreferredAccessor)
+        }, else={
+            SELECT *, Globs
+            FROM stat(accessor=PreferredAccessor, filename=OSPath)
+        })
     })
-    WHERE NOT IsDir
-    AND log(message="Found %v for rule %v", args=[SourceFile, Rule], dedup=10)
-    AND if(condition= Size <= MaxFileSize,
-           then=TRUE,
-           else=log(message="Skipping file %v (Size %v) Due to MaxFileSize",
-                    dedup=-1, args=[SourceFile, humanize(bytes=Size)]) AND FALSE)
+
+    LET AllResults <= SELECT Type,
+                             SourceFile,
+                             Size,
+                             Created,
+                             Changed,
+                             Modified,
+                             LastAccessed,
+                             Accessor,
+                             Data
+    FROM chain(async=WORKERS > 0,
+      {{ range $idx, $r := .Rules -}}
+      {{- if $r.VQL -}}
+      {{ $r.Target }}_{{ $r.Name }}={
+        SELECT * FROM if(condition={
+          SELECT * FROM AllCollections
+          WHERE Rule = "{{ $r.Target }}/{{ $r.Name }}"
+            AND MaybeLOG(
+              Message="Collecting Custom VQL Rule %s",
+              Args="{{ $r.Target }}/{{ $r.Name }}")
+        }, then={
+          SELECT "{{ $r.Target }}/{{ $r.Name }}" AS Type,
+                 "{{ $r.Target }}/{{ $r.Name }}" AS Rule,
+                 *
+          FROM Collect{{ $r.Target }}_{{ $r.Name }}
+        })
+      },
+      {{- end -}}
+      {{- end }}
+      Globs=AllGlobs
+    )
+    WHERE log(level="INFO", message="Found %v for rule %v", args=[
+              SourceFile, Rule], dedup=10)
 
     SELECT * FROM AllResults
 
-- name: Uploads
-  query: |
-    -- Upload the files. Split into workers so the files are uploaded in parallel.
-    LET uploaded_files = SELECT *
-    FROM foreach(row={
-       SELECT * FROM AllResults
-       },
-          workers=30,
-          query={
-            SELECT now() AS CopiedOnTimestamp,
-                   Created,
-                   Changed,
-                   LastAccessed,
-                   Modified,
-                   SourceFile,
-                   Size,
-                   upload(file=SourceFile, accessor=Accessor, mtime=Modified) AS Upload
-            FROM scope()
-      })
+{{ Template "templates/CommonSources.yaml" }}
 
-    -- Separate the hashes into their own column.
-    SELECT CopiedOnTimestamp,
-           SourceFile,
-           Upload.Path AS DestinationFile,
-           Size AS FileSize,
-           Upload.sha256 AS SourceFileSha256,
-           Created,
-           Changed,
-           Modified,
-           LastAccessed
-    FROM uploaded_files
+{{ Template "templates/ColumnTypes.yaml" }}

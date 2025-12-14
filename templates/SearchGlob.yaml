@@ -1,0 +1,25 @@
+- name: SearchGlobs
+  notebook:
+    - type: none
+  query: |
+{{ if .Dependencies }}
+    // Work around bug in the artifact compiler failing to detect deps in export section
+{{ range $k, $v := .Dependencies }}
+    LET _ = SELECT * FROM Artifact.{{ $k }}()
+{{ end }}
+{{ end }}
+    LET Targets <= to_dict(item={
+      SELECT _value AS _key, TRUE AS _value
+      FROM foreach(row=Targets + HighLevelTargets)
+    })
+
+    LET AllCollections <= Collections(Targets=Targets)
+
+    LET GlobLookup <= memoize(query=AllCollections, key="Glob")
+
+    LET _ <= MaxFileSize > 0 && MaybeLOG(
+      Message="Limiting file acquisition to MaxFileSize %v bytes (%v)",
+      Args=[MaxFileSize, humanize(bytes=MaxFileSize)])
+
+    SELECT * FROM AllCollections
+    --WHERE Glob

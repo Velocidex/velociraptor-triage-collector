@@ -100,6 +100,9 @@ type Config struct {
 
 	// Set to build artifact in debug mode
 	Debug bool `json:"Debug"`
+
+	// Create a _All target with all the targets enabled.
+	MakeAllTarget bool `json:"MakeAllTarget"`
 }
 
 type Transformer func(

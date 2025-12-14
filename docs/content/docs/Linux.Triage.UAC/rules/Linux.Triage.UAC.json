@@ -2219,5 +2219,558 @@
      "Glob": "/stand/*/*/modules/coredump/*"
     }
    ]
+  },
+  "_All": {
+   "Name": "_All",
+   "Rules": [
+    {
+     "Name": "Addressbook",
+     "Ref": "Addressbook"
+    },
+    {
+     "Name": "Anydesk",
+     "Ref": "Anydesk"
+    },
+    {
+     "Name": "Apple_notes",
+     "Ref": "Apple_notes"
+    },
+    {
+     "Name": "Ark",
+     "Ref": "Ark"
+    },
+    {
+     "Name": "Aspera_connect",
+     "Ref": "Aspera_connect"
+    },
+    {
+     "Name": "Atftp",
+     "Ref": "Atftp"
+    },
+    {
+     "Name": "Box",
+     "Ref": "Box"
+    },
+    {
+     "Name": "Discord",
+     "Ref": "Discord"
+    },
+    {
+     "Name": "Dolphin",
+     "Ref": "Dolphin"
+    },
+    {
+     "Name": "Dragon_player",
+     "Ref": "Dragon_player"
+    },
+    {
+     "Name": "Dropbox",
+     "Ref": "Dropbox"
+    },
+    {
+     "Name": "Facebook_messenger",
+     "Ref": "Facebook_messenger"
+    },
+    {
+     "Name": "Filezilla",
+     "Ref": "Filezilla"
+    },
+    {
+     "Name": "Geany",
+     "Ref": "Geany"
+    },
+    {
+     "Name": "Gedit",
+     "Ref": "Gedit"
+    },
+    {
+     "Name": "Git",
+     "Ref": "Git"
+    },
+    {
+     "Name": "Gnome_text_editor",
+     "Ref": "Gnome_text_editor"
+    },
+    {
+     "Name": "Google_drive",
+     "Ref": "Google_drive"
+    },
+    {
+     "Name": "Google_earth",
+     "Ref": "Google_earth"
+    },
+    {
+     "Name": "Gwenview",
+     "Ref": "Gwenview"
+    },
+    {
+     "Name": "Icloud",
+     "Ref": "Icloud"
+    },
+    {
+     "Name": "Imessage",
+     "Ref": "Imessage"
+    },
+    {
+     "Name": "Itunes_backup",
+     "Ref": "Itunes_backup"
+    },
+    {
+     "Name": "Katesession",
+     "Ref": "Katesession"
+    },
+    {
+     "Name": "Kde_mru",
+     "Ref": "Kde_mru"
+    },
+    {
+     "Name": "Lesshst",
+     "Ref": "Lesshst"
+    },
+    {
+     "Name": "Libreoffice_mru",
+     "Ref": "Libreoffice_mru"
+    },
+    {
+     "Name": "Microsoft_office_mru",
+     "Ref": "Microsoft_office_mru"
+    },
+    {
+     "Name": "Microsoft_teams",
+     "Ref": "Microsoft_teams"
+    },
+    {
+     "Name": "Nano",
+     "Ref": "Nano"
+    },
+    {
+     "Name": "Okular",
+     "Ref": "Okular"
+    },
+    {
+     "Name": "Photos",
+     "Ref": "Photos"
+    },
+    {
+     "Name": "Php",
+     "Ref": "Php"
+    },
+    {
+     "Name": "Qnap_qsync",
+     "Ref": "Qnap_qsync"
+    },
+    {
+     "Name": "Rclone",
+     "Ref": "Rclone"
+    },
+    {
+     "Name": "Rustdesk",
+     "Ref": "Rustdesk"
+    },
+    {
+     "Name": "Signal",
+     "Ref": "Signal"
+    },
+    {
+     "Name": "Skype",
+     "Ref": "Skype"
+    },
+    {
+     "Name": "Slack",
+     "Ref": "Slack"
+    },
+    {
+     "Name": "Splashtop",
+     "Ref": "Splashtop"
+    },
+    {
+     "Name": "Steam",
+     "Ref": "Steam"
+    },
+    {
+     "Name": "Synology_drive",
+     "Ref": "Synology_drive"
+    },
+    {
+     "Name": "Teamviewer",
+     "Ref": "Teamviewer"
+    },
+    {
+     "Name": "Telegram",
+     "Ref": "Telegram"
+    },
+    {
+     "Name": "Thinlinc",
+     "Ref": "Thinlinc"
+    },
+    {
+     "Name": "Thunderbird",
+     "Ref": "Thunderbird"
+    },
+    {
+     "Name": "Viber",
+     "Ref": "Viber"
+    },
+    {
+     "Name": "Viminfo",
+     "Ref": "Viminfo"
+    },
+    {
+     "Name": "Vlc",
+     "Ref": "Vlc"
+    },
+    {
+     "Name": "Wget",
+     "Ref": "Wget"
+    },
+    {
+     "Name": "Whatsapp",
+     "Ref": "Whatsapp"
+    },
+    {
+     "Name": "Wps_office_mru",
+     "Ref": "Wps_office_mru"
+    },
+    {
+     "Name": "Brave",
+     "Ref": "Brave"
+    },
+    {
+     "Name": "Cache",
+     "Ref": "Cache"
+    },
+    {
+     "Name": "Chrome",
+     "Ref": "Chrome"
+    },
+    {
+     "Name": "Chromium",
+     "Ref": "Chromium"
+    },
+    {
+     "Name": "Edge",
+     "Ref": "Edge"
+    },
+    {
+     "Name": "Firefox",
+     "Ref": "Firefox"
+    },
+    {
+     "Name": "Konqueror",
+     "Ref": "Konqueror"
+    },
+    {
+     "Name": "Opera",
+     "Ref": "Opera"
+    },
+    {
+     "Name": "Safari",
+     "Ref": "Safari"
+    },
+    {
+     "Name": "Vivaldi",
+     "Ref": "Vivaldi"
+    },
+    {
+     "Name": "Advanced_log_search",
+     "Ref": "Advanced_log_search"
+    },
+    {
+     "Name": "Apache",
+     "Ref": "Apache"
+    },
+    {
+     "Name": "Journal",
+     "Ref": "Journal"
+    },
+    {
+     "Name": "Macos",
+     "Ref": "Macos"
+    },
+    {
+     "Name": "Macos_unified_logs",
+     "Ref": "Macos_unified_logs"
+    },
+    {
+     "Name": "Nginx",
+     "Ref": "Nginx"
+    },
+    {
+     "Name": "Relink",
+     "Ref": "Relink"
+    },
+    {
+     "Name": "Run_log",
+     "Ref": "Run_log"
+    },
+    {
+     "Name": "Solaris",
+     "Ref": "Solaris"
+    },
+    {
+     "Name": "Tomcat",
+     "Ref": "Tomcat"
+    },
+    {
+     "Name": "Var_adm",
+     "Ref": "Var_adm"
+    },
+    {
+     "Name": "Var_log",
+     "Ref": "Var_log"
+    },
+    {
+     "Name": "Var_run_log",
+     "Ref": "Var_run_log"
+    },
+    {
+     "Name": "Apt",
+     "Ref": "Apt"
+    },
+    {
+     "Name": "Dnf",
+     "Ref": "Dnf"
+    },
+    {
+     "Name": "Dpkg",
+     "Ref": "Dpkg"
+    },
+    {
+     "Name": "Installed_applications",
+     "Ref": "Installed_applications"
+    },
+    {
+     "Name": "Pkg_contents",
+     "Ref": "Pkg_contents"
+    },
+    {
+     "Name": "Yum",
+     "Ref": "Yum"
+    },
+    {
+     "Name": "Config",
+     "Ref": "Config"
+    },
+    {
+     "Name": "History",
+     "Ref": "History"
+    },
+    {
+     "Name": "Sessions",
+     "Ref": "Sessions"
+    },
+    {
+     "Name": "Authorized_keys",
+     "Ref": "Authorized_keys"
+    },
+    {
+     "Name": "Known_hosts",
+     "Ref": "Known_hosts"
+    },
+    {
+     "Name": "Rc",
+     "Ref": "Rc"
+    },
+    {
+     "Name": "Acct",
+     "Ref": "Acct"
+    },
+    {
+     "Name": "Aws_ssm_agent",
+     "Ref": "Aws_ssm_agent"
+    },
+    {
+     "Name": "Azure_vm_agent",
+     "Ref": "Azure_vm_agent"
+    },
+    {
+     "Name": "Biome",
+     "Ref": "Biome"
+    },
+    {
+     "Name": "Coreanalytics",
+     "Ref": "Coreanalytics"
+    },
+    {
+     "Name": "Desktop",
+     "Ref": "Desktop"
+    },
+    {
+     "Name": "Dev_db",
+     "Ref": "Dev_db"
+    },
+    {
+     "Name": "Dev_shm",
+     "Ref": "Dev_shm"
+    },
+    {
+     "Name": "Ds_store",
+     "Ref": "Ds_store"
+    },
+    {
+     "Name": "Etc",
+     "Ref": "Etc"
+    },
+    {
+     "Name": "Findmy",
+     "Ref": "Findmy"
+    },
+    {
+     "Name": "Gvfs_metadata",
+     "Ref": "Gvfs_metadata"
+    },
+    {
+     "Name": "Job_scheduler",
+     "Ref": "Job_scheduler"
+    },
+    {
+     "Name": "Kactivitymanagerd",
+     "Ref": "Kactivitymanagerd"
+    },
+    {
+     "Name": "Keychain",
+     "Ref": "Keychain"
+    },
+    {
+     "Name": "Knowledgec",
+     "Ref": "Knowledgec"
+    },
+    {
+     "Name": "Library_preferences",
+     "Ref": "Library_preferences"
+    },
+    {
+     "Name": "Linux_mru",
+     "Ref": "Linux_mru"
+    },
+    {
+     "Name": "Locate_db",
+     "Ref": "Locate_db"
+    },
+    {
+     "Name": "Macos_mru",
+     "Ref": "Macos_mru"
+    },
+    {
+     "Name": "Netscaler",
+     "Ref": "Netscaler"
+    },
+    {
+     "Name": "Network_application_usage",
+     "Ref": "Network_application_usage"
+    },
+    {
+     "Name": "Networkmanager",
+     "Ref": "Networkmanager"
+    },
+    {
+     "Name": "Powerlog",
+     "Ref": "Powerlog"
+    },
+    {
+     "Name": "Quarantine_events",
+     "Ref": "Quarantine_events"
+    },
+    {
+     "Name": "Recovery_account_info",
+     "Ref": "Recovery_account_info"
+    },
+    {
+     "Name": "Rhosts",
+     "Ref": "Rhosts"
+    },
+    {
+     "Name": "Run_shm",
+     "Ref": "Run_shm"
+    },
+    {
+     "Name": "Saved_application_state",
+     "Ref": "Saved_application_state"
+    },
+    {
+     "Name": "Security_backups",
+     "Ref": "Security_backups"
+    },
+    {
+     "Name": "Startup_items",
+     "Ref": "Startup_items"
+    },
+    {
+     "Name": "Svc",
+     "Ref": "Svc"
+    },
+    {
+     "Name": "System_version",
+     "Ref": "System_version"
+    },
+    {
+     "Name": "Systemd",
+     "Ref": "Systemd"
+    },
+    {
+     "Name": "Tcc",
+     "Ref": "Tcc"
+    },
+    {
+     "Name": "Tmp",
+     "Ref": "Tmp"
+    },
+    {
+     "Name": "Tracker",
+     "Ref": "Tracker"
+    },
+    {
+     "Name": "Trash_info",
+     "Ref": "Trash_info"
+    },
+    {
+     "Name": "Udev",
+     "Ref": "Udev"
+    },
+    {
+     "Name": "Upstart",
+     "Ref": "Upstart"
+    },
+    {
+     "Name": "User_accounts",
+     "Ref": "User_accounts"
+    },
+    {
+     "Name": "Utmp",
+     "Ref": "Utmp"
+    },
+    {
+     "Name": "Var_ld",
+     "Ref": "Var_ld"
+    },
+    {
+     "Name": "Var_spool",
+     "Ref": "Var_spool"
+    },
+    {
+     "Name": "Var_tmp",
+     "Ref": "Var_tmp"
+    },
+    {
+     "Name": "Vyatta",
+     "Ref": "Vyatta"
+    },
+    {
+     "Name": "Xdg_autostart",
+     "Ref": "Xdg_autostart"
+    },
+    {
+     "Name": "Xsession_errors",
+     "Ref": "Xsession_errors"
+    },
+    {
+     "Name": "Deleted",
+     "Ref": "Deleted"
+    },
+    {
+     "Name": "Coredump",
+     "Ref": "Coredump"
+    }
+   ]
   }
  }

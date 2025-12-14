@@ -90,6 +90,25 @@ func indentTemplate(args ...interface{}) interface{} {
 	return indent(template, indent_size)
 }
 
+func expandTemplate(template_path string, params *ArtifactContent) string {
+	fd, err := os.Open(template_path)
+	if err != nil {
+		return fmt.Sprintf("Unable to open %v: %v", template_path, err)
+	}
+
+	data, err := ioutil.ReadAll(fd)
+	if err != nil {
+		return fmt.Sprintf("Unable to open %v: %v", template_path, err)
+	}
+
+	res, err := calculateTemplate(string(data), params)
+
+	if err != nil {
+		return fmt.Sprintf("Expanding template %v: %v", template_path, err)
+	}
+	return res
+}
+
 func calculateTemplate(template_str string, params *ArtifactContent) (string, error) {
 	var templ *template.Template
 	var err error
@@ -97,6 +116,10 @@ func calculateTemplate(template_str string, params *ArtifactContent) (string, er
 	funcMap := template.FuncMap{
 		"Indent":   indentTemplate,
 		"ReadFile": readFile,
+
+		"Template": func(template string) string {
+			return expandTemplate(template, params)
+		},
 
 		// Compress a template into base64
 		"Compress": func(name string, args interface{}) string {

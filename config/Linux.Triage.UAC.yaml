@@ -26,5 +26,9 @@ SkipFiles:
   - virt-top.yaml
 
 PathSep: /
+
 Transformer: uac
 TargetRegex: ".yaml$"
+
+Debug: false
+MakeAllTarget: true
