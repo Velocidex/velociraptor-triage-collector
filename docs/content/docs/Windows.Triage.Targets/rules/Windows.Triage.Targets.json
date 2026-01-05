@@ -763,7 +763,7 @@
   "TrendMicro": {
    "Name": "TrendMicro",
    "Description": "Trend Micro Data",
-   "Author": "Drew Ervin",
+   "Author": "Drew Ervin, Paul Cabon CERT Almond",
    "Rules": [
     {
      "Name": "Trend Micro Logs",
@@ -779,6 +779,11 @@
      "Name": "Trend Micro Security Agent Connection Logs",
      "Category": "Antivirus",
      "Glob": "Program Files*\\Trend Micro\\Security Agent\\ConnLog\\*.log"
+    },
+    {
+     "Name": "Trend Micro Quarantine",
+     "Category": "Antivirus",
+     "Glob": "Program Files*\\Trend Micro\\*\\Quarantine\\*"
     }
    ]
   },
@@ -986,19 +991,149 @@
    "Author": "Reece394",
    "Rules": [
     {
-     "Name": "Advanced IP Scanner Aliases",
+     "Name": "Advanced IP Scanner Aliases - User Folder",
      "Category": "Apps",
-     "Glob": "**\\advanced_ip_scanner_Aliases.bin"
+     "Glob": "Users\\*\\advanced_ip_scanner_Aliases.bin"
     },
     {
-     "Name": "Advanced IP Scanner Comments",
+     "Name": "Advanced IP Scanner Aliases - User Temp Folder",
      "Category": "Apps",
-     "Glob": "**\\advanced_ip_scanner_Comments.bin"
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_Aliases.bin"
     },
     {
-     "Name": "Advanced IP Scanner MAC",
+     "Name": "Advanced IP Scanner Aliases - Windows Temp Folder",
      "Category": "Apps",
-     "Glob": "**\\advanced_ip_scanner_MAC.bin"
+     "Glob": "Windows\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Aliases - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_ip_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Aliases - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_ip_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Aliases - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_ip_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Aliases - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_ip_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - User Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - User Temp Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - Windows Temp Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Comments - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_ip_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - User Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - User Temp Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - Windows Temp Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner MAC - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_ip_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - User Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - User Temp Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - Windows Temp Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\Temp\\Advanced IP Scanner 2\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_ip_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced IP Scanner Favorites",
+     "Category": "Apps",
+     "Glob": "**\\advanced_ip_scanner_Favorites.bin"
     }
    ]
   },
@@ -1008,19 +1143,149 @@
    "Author": "Reece394",
    "Rules": [
     {
-     "Name": "Advanced Port Scanner Aliases",
+     "Name": "Advanced Port Scanner Aliases - User Folder",
      "Category": "Apps",
-     "Glob": "**\\advanced_port_scanner_Aliases.bin"
+     "Glob": "Users\\*\\advanced_port_scanner_Aliases.bin"
     },
     {
-     "Name": "Advanced Port Scanner Comments",
+     "Name": "Advanced Port Scanner Aliases - User Temp Folder",
      "Category": "Apps",
-     "Glob": "**\\advanced_port_scanner_Comments.bin"
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_Aliases.bin"
     },
     {
-     "Name": "Advanced Port Scanner MAC",
+     "Name": "Advanced Port Scanner Aliases - Windows Temp Folder",
      "Category": "Apps",
-     "Glob": "**\\advanced_port_scanner_MAC.bin"
+     "Glob": "Windows\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Aliases - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_port_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Aliases - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_port_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Aliases - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_port_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Aliases - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_port_scanner_Aliases.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - User Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - User Temp Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - Windows Temp Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Comments - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_port_scanner_Comments.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - User Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - User Temp Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - Windows Temp Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner MAC - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_port_scanner_MAC.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - User Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - User Temp Folder",
+     "Category": "Apps",
+     "Glob": "Users\\*\\AppData\\Local\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - Windows Temp Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\Temp\\Advanced Port Scanner 2\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - SYSTEM User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\System32\\config\\systemprofile\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - LocalService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites - NetworkService User Folder",
+     "Category": "Apps",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\advanced_port_scanner_Favorites.bin"
+    },
+    {
+     "Name": "Advanced Port Scanner Favorites",
+     "Category": "Apps",
+     "Glob": "**\\advanced_port_scanner_Favorites.bin"
     }
    ]
   },
@@ -3174,12 +3439,157 @@
   "RcloneConf": {
    "Name": "RcloneConf",
    "Description": "Rclone config file",
-   "Author": "Eric Capuano",
+   "Author": "Eric Capuano, Reece394",
    "Rules": [
     {
-     "Name": "Rclone Config",
+     "Name": "Rclone config - User Folder",
      "Category": "Apps",
+     "Comment": "Collects .rclone.conf from a user profile - v0.96",
+     "Glob": "Users\\*\\.rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM SysWOW64 User Folder",
+     "Category": "Apps",
+     "Comment": "Collects .rclone.conf from SYSTEM SysWOW64 user profile - v0.96",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\.rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM User Folder",
+     "Category": "Apps",
+     "Comment": "Collects .rclone.conf from SYSTEM user profile - v0.96",
+     "Glob": "Windows\\System32\\config\\systemprofile\\.rclone.conf"
+    },
+    {
+     "Name": "Rclone config - LocalService User Folder",
+     "Category": "Apps",
+     "Comment": "Collects .rclone.conf from LocalService user profile - v0.96",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\.rclone.conf"
+    },
+    {
+     "Name": "Rclone config - NetworkService User Folder",
+     "Category": "Apps",
+     "Comment": "Collects .rclone.conf from NetworkService user profile - v0.96",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\.rclone.conf"
+    },
+    {
+     "Name": "Rclone config - User .config Folder",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the .config folder in a user profile - v1.55.1",
+     "Glob": "Users\\*\\.config\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM SysWOW64 User .config Folder",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the .config folder in SYSTEM SysWOW64 user profile - v1.55.1",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\.config\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM User .config Folder",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the .config folder in SYSTEM user profile - v1.55.1",
+     "Glob": "Windows\\System32\\config\\systemprofile\\.config\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - LocalService User .config Folder",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the .config folder in LocalService user profile - v1.55.1",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\.config\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - NetworkService User .config Folder",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the .config folder in NetworkService user profile - v1.55.1",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\.config\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - User config Folder - XDG_CONFIG_HOME Default",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in a user profile - v1.55.1. Default for XDG_CONFIG_HOME indicates LOCALAPPDATA",
+     "Glob": "Users\\*\\AppData\\Local\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM SysWOW64 User config Folder - XDG_CONFIG_HOME Default",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in SYSTEM SysWOW64 user profile - v1.55.1. Default for XDG_CONFIG_HOME indicates LOCALAPPDATA",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\AppData\\Local\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM User config Folder - XDG_CONFIG_HOME Default",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in SYSTEM user profile - v1.55.1. Default for XDG_CONFIG_HOME indicates LOCALAPPDATA",
+     "Glob": "Windows\\System32\\config\\systemprofile\\AppData\\Local\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - LocalService User config Folder - XDG_CONFIG_HOME Default",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in LocalService user profile - v1.55.1. Default for XDG_CONFIG_HOME indicates LOCALAPPDATA",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\AppData\\Local\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - NetworkService User config Folder - XDG_CONFIG_HOME Default",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in NetworkService user profile - v1.55.1. Default for XDG_CONFIG_HOME indicates LOCALAPPDATA",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\AppData\\Local\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - User config Folder - Roaming",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in a user profile - v1.56+",
+     "Glob": "Users\\*\\AppData\\Roaming\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM SysWOW64 User config Folder - Roaming",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in SYSTEM SysWOW64 user profile - v1.56+",
+     "Glob": "Windows\\SysWOW64\\config\\systemprofile\\AppData\\Roaming\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SYSTEM User config Folder - Roaming",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in SYSTEM user profile - v1.56+",
+     "Glob": "Windows\\System32\\config\\systemprofile\\AppData\\Roaming\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - LocalService User config Folder - Roaming",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in LocalService user profile - v1.56+",
+     "Glob": "Windows\\ServiceProfiles\\LocalService\\AppData\\Roaming\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - NetworkService User config Folder - Roaming",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the config folder in NetworkService user profile - v1.56+",
+     "Glob": "Windows\\ServiceProfiles\\NetworkService\\AppData\\Roaming\\rclone\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - SysWOW64 Sideloaded Config",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the SysWOW64 Folder",
+     "Glob": "Windows\\SysWOW64\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - System32 Sideloaded Config",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the System32 Folder",
+     "Glob": "Windows\\System32\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - Windows Sideloaded Config",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf from the Windows Folder",
+     "Glob": "Windows\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config - Recursive",
+     "Category": "Apps",
+     "Comment": "Collects rclone.conf recursively. Needed if rclone.conf is sideloaded beside binary - portable mode or specifying custom path",
      "Glob": "**\\rclone.conf"
+    },
+    {
+     "Name": "Rclone config fallback - Recursive",
+     "Category": "Apps",
+     "Comment": "Collects .rclone.conf recursively. This is a fallback in the Rclone code for writing config to current working directory if all other methods fail",
+     "Glob": "**\\.rclone.conf"
     }
    ]
   },
@@ -5031,7 +5441,7 @@
   "BrowserCache": {
    "Name": "BrowserCache",
    "Description": "Browser Caches",
-   "Author": "Bjorn Vanhaeren",
+   "Author": "Bjorn Vanhaeren, Reece394",
    "Rules": [
     {
      "Name": "Chrome Cache Folder",
@@ -5039,9 +5449,44 @@
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Cache\\**"
     },
     {
+     "Name": "Chrome Beta Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Cache\\**"
+    },
+    {
+     "Name": "Chrome Dev Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Cache\\**"
+    },
+    {
+     "Name": "Chrome SxS - Canary Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Cache\\**"
+    },
+    {
      "Name": "Chromium Edge Cache Folder",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Cache\\**"
+    },
+    {
+     "Name": "Chromium Edge Beta Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Cache\\**"
+    },
+    {
+     "Name": "Chromium Edge Dev Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Cache\\**"
+    },
+    {
+     "Name": "Chromium Edge SxS - Canary Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Cache\\**"
+    },
+    {
+     "Name": "Chromium Cache Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Cache\\**"
     },
     {
      "Name": "Firefox Cache Folder",
@@ -5078,10 +5523,10 @@
   "Chrome": {
    "Name": "Chrome",
    "Description": "Chrome",
-   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394",
    "Rules": [
     {
-     "Name": "Chrome bookmarks XP",
+     "Name": "Chrome Bookmarks XP",
      "Category": "Communications",
      "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome\\User Data\\*\\Bookmarks*"
     },
@@ -5151,7 +5596,7 @@
      "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome\\User Data\\*\\Web Data*"
     },
     {
-     "Name": "Chrome bookmarks",
+     "Name": "Chrome Bookmarks",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Bookmarks*"
     },
@@ -5178,7 +5623,7 @@
     {
      "Name": "Chrome Extension Cookies",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Extension Cookies"
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Extension Cookies*"
     },
     {
      "Name": "Chrome Favicons",
@@ -5208,7 +5653,7 @@
     {
      "Name": "Chrome Login Data",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Login Data"
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Login Data*"
     },
     {
      "Name": "Chrome Media History",
@@ -5218,12 +5663,17 @@
     {
      "Name": "Chrome Network Action Predictor",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Network Action Predictor"
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Network Action Predictor*"
     },
     {
      "Name": "Chrome Network Persistent State",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Network\\Network Persistent State"
     },
     {
      "Name": "Chrome Preferences",
@@ -5233,12 +5683,22 @@
     {
      "Name": "Chrome Quota Manager",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\QuotaManager"
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\WebStorage\\QuotaManager*"
     },
     {
      "Name": "Chrome Reporting and NEL",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Reporting and NEL"
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Network\\Reporting and NEL*"
     },
     {
      "Name": "Chrome Shortcuts",
@@ -5254,6 +5714,11 @@
      "Name": "Chrome Trust Tokens",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Network\\Trust Tokens*"
     },
     {
      "Name": "Chrome SyncData Database",
@@ -5301,10 +5766,502 @@
     }
    ]
   },
+  "ChromeBeta": {
+   "Name": "ChromeBeta",
+   "Description": "Chrome Beta",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394",
+   "Rules": [
+    {
+     "Name": "Chrome Beta Bookmarks XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chrome Beta Cookies XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Cookies*"
+    },
+    {
+     "Name": "Chrome Beta Current Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chrome Beta Current Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chrome Beta Favicons XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chrome Beta History XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chrome Beta Last Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chrome Beta Last Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chrome Beta Login Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Login Data"
+    },
+    {
+     "Name": "Chrome Beta Preferences XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chrome Beta Shortcuts XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chrome Beta Top Sites XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chrome Beta Visited Links XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chrome Beta Web Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chrome Beta Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chrome Beta Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\**\\Cookies*"
+    },
+    {
+     "Name": "Chrome Beta Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chrome Beta Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chrome Beta Download Metadata",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\DownloadMetadata"
+    },
+    {
+     "Name": "Chrome Beta Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Chrome Beta Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chrome Beta History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chrome Beta Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chrome Beta Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chrome Beta Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Chrome Beta Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Chrome Beta Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Chrome Beta Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Chrome Beta Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome Beta Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome Beta Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chrome Beta Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome Beta Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome Beta Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome Beta Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome Beta Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chrome Beta Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chrome Beta Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome Beta Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome Beta SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Chrome Beta Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chrome Beta Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chrome Beta IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Chrome Beta Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Chrome Beta Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Chrome SQLite DBs organized by version #.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\Snapshots\\*\\**"
+    },
+    {
+     "Name": "SYSTEM Chrome Beta History",
+     "Category": "Communications",
+     "Glob": "Windows\\system32\\config\\systemprofile\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\History*"
+    }
+   ]
+  },
+  "ChromeDev": {
+   "Name": "ChromeDev",
+   "Description": "Chrome Dev",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394",
+   "Rules": [
+    {
+     "Name": "Chrome Dev Bookmarks XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chrome Dev Cookies XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Cookies*"
+    },
+    {
+     "Name": "Chrome Dev Current Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chrome Dev Current Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chrome Dev Favicons XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chrome Dev History XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chrome Dev Last Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chrome Dev Last Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chrome Dev Login Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Login Data"
+    },
+    {
+     "Name": "Chrome Dev Preferences XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chrome Dev Shortcuts XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chrome Dev Top Sites XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chrome Dev Visited Links XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chrome Dev Web Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chrome Dev Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chrome Dev Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\**\\Cookies*"
+    },
+    {
+     "Name": "Chrome Dev Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chrome Dev Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chrome Dev Download Metadata",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\DownloadMetadata"
+    },
+    {
+     "Name": "Chrome Dev Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Chrome Dev Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chrome Dev History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chrome Dev Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chrome Dev Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chrome Dev Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Chrome Dev Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Chrome Dev Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Chrome Dev Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Chrome Dev Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome Dev Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome Dev Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chrome Dev Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome Dev Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome Dev Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome Dev Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome Dev Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chrome Dev Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chrome Dev Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome Dev Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome Dev SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Chrome Dev Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chrome Dev Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chrome Dev IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Chrome Dev Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Chrome Dev Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Chrome SQLite DBs organized by version #.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\Snapshots\\*\\**"
+    },
+    {
+     "Name": "SYSTEM Chrome Dev History",
+     "Category": "Communications",
+     "Glob": "Windows\\system32\\config\\systemprofile\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\History*"
+    }
+   ]
+  },
   "ChromeExtension_Metadata": {
    "Name": "ChromeExtension_Metadata",
    "Description": "Chrome Browser Extension Metadata",
-   "Author": "Bruce Breuer",
+   "Author": "Bruce Breuer, Reece394",
    "Rules": [
     {
      "Name": "Chrome Browser Extension manifest.json (Extension ID, Version, Permissions)",
@@ -5315,13 +6272,43 @@
      "Name": "Chrome Browser Extension messages.json (Friendly Name and Description)",
      "Category": "Browser Extensions",
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\Extensions\\*\\*\\_locales\\en\\**\\messages.json"
+    },
+    {
+     "Name": "Chrome Beta Browser Extension manifest.json (Extension ID, Version, Permissions)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Extensions\\**\\manifest.json"
+    },
+    {
+     "Name": "Chrome Beta Browser Extension messages.json (Friendly Name and Description)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Extensions\\*\\*\\_locales\\en\\**\\messages.json"
+    },
+    {
+     "Name": "Chrome Dev Browser Extension manifest.json (Extension ID, Version, Permissions)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Extensions\\**\\manifest.json"
+    },
+    {
+     "Name": "Chrome Dev Browser Extension messages.json (Friendly Name and Description)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Extensions\\*\\*\\_locales\\en\\**\\messages.json"
+    },
+    {
+     "Name": "Chrome SxS - Canary Browser Extension manifest.json (Extension ID, Version, Permissions)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Extensions\\**\\manifest.json"
+    },
+    {
+     "Name": "Chrome SxS - Canary Browser Extension messages.json (Friendly Name and Description)",
+     "Category": "Browser Extensions",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Extensions\\*\\*\\_locales\\en\\**\\messages.json"
     }
    ]
   },
   "ChromeExtensions": {
    "Name": "ChromeExtensions",
    "Description": "Chrome Extension Files",
-   "Author": "piesecurity",
+   "Author": "piesecurity, Reece394",
    "Rules": [
     {
      "Name": "Chrome Extension Files",
@@ -5332,18 +6319,555 @@
      "Name": "Chrome Extension Files XP",
      "Category": "Communications",
      "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Chrome Beta Extension Files",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Chrome Beta Extension Files XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Beta\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Chrome Dev Extension Files",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Chrome Dev Extension Files XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome Dev\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Chrome SxS - Canary Extension Files",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Chrome SxS - Canary Extension Files XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Extensions\\**"
     }
    ]
   },
   "ChromeFileSystem": {
    "Name": "ChromeFileSystem",
    "Description": "Chrome HTML5 File System Contents",
-   "Author": "Chad Tilbury",
+   "Author": "Chad Tilbury, Reece394",
    "Rules": [
     {
      "Name": "Chrome HTML5 File System Folder",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome\\User Data\\*\\File System\\**"
+    },
+    {
+     "Name": "Chrome Beta HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Beta\\User Data\\*\\File System\\**"
+    },
+    {
+     "Name": "Chrome Dev HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome Dev\\User Data\\*\\File System\\**"
+    },
+    {
+     "Name": "Chrome SxS - Canary HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\File System\\**"
+    }
+   ]
+  },
+  "ChromeSxS": {
+   "Name": "ChromeSxS",
+   "Description": "Chrome SxS - Canary",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394",
+   "Rules": [
+    {
+     "Name": "Chrome SxS Bookmarks XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chrome SxS Cookies XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Cookies*"
+    },
+    {
+     "Name": "Chrome SxS Current Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chrome SxS Current Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chrome SxS Favicons XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chrome SxS History XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chrome SxS Last Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chrome SxS Last Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chrome SxS Login Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Login Data"
+    },
+    {
+     "Name": "Chrome SxS Preferences XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chrome SxS Shortcuts XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chrome SxS Top Sites XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chrome SxS Visited Links XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chrome SxS Web Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Google\\Chrome SxS\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chrome SxS Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chrome SxS Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\**\\Cookies*"
+    },
+    {
+     "Name": "Chrome SxS Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chrome SxS Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chrome SxS Download Metadata",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\DownloadMetadata"
+    },
+    {
+     "Name": "Chrome SxS Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Chrome SxS Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chrome SxS History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chrome SxS Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chrome SxS Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chrome SxS Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Chrome SxS Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Chrome SxS Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Chrome SxS Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Chrome SxS Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome SxS Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Chrome SxS Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chrome SxS Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome SxS Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Chrome SxS Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome SxS Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chrome SxS Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chrome SxS Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chrome SxS Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome SxS Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Chrome SxS SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Chrome SxS Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chrome SxS Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chrome SxS IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Chrome SxS Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Chrome SxS Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Chrome SQLite DBs organized by version #.",
+     "Glob": "Users\\*\\AppData\\Local\\Google\\Chrome SxS\\User Data\\Snapshots\\*\\**"
+    },
+    {
+     "Name": "SYSTEM Chrome SxS History",
+     "Category": "Communications",
+     "Glob": "Windows\\system32\\config\\systemprofile\\AppData\\Local\\Google\\Chrome SxS\\User Data\\*\\History*"
+    }
+   ]
+  },
+  "Chromium": {
+   "Name": "Chromium",
+   "Description": "Chromium",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394",
+   "Rules": [
+    {
+     "Name": "Chromium Bookmarks XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chromium Cookies XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Cookies*"
+    },
+    {
+     "Name": "Chromium Current Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chromium Current Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chromium Favicons XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chromium History XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chromium Last Session XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chromium Last Tabs XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chromium Login Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Login Data"
+    },
+    {
+     "Name": "Chromium Preferences XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chromium Shortcuts XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chromium Top Sites XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chromium Visited Links XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chromium Web Data XP",
+     "Category": "Communications",
+     "Glob": "Documents and Settings\\*\\Local Settings\\Application Data\\Chromium\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chromium Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Chromium Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\**\\Cookies*"
+    },
+    {
+     "Name": "Chromium Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Chromium Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Chromium Download Metadata",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\DownloadMetadata"
+    },
+    {
+     "Name": "Chromium Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Chromium Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Chromium History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Chromium Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Chromium Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Chromium Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Chromium Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Chromium Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Chromium Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Chromium Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Chromium Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Chromium Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chromium Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Chromium Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Chromium Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chromium Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Chromium Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Chromium Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Chromium Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Chromium Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Chromium SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Chromium Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Chromium Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Chromium IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Chromium Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Chromium Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Chrome SQLite DBs organized by version #.",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\Snapshots\\*\\**"
+    },
+    {
+     "Name": "SYSTEM Chromium History",
+     "Category": "Communications",
+     "Glob": "Windows\\system32\\config\\systemprofile\\AppData\\Local\\Chromium\\User Data\\*\\History*"
     }
    ]
   },
@@ -5498,15 +7022,196 @@
     }
    ]
   },
+  "EdgeBetaChromium": {
+   "Name": "EdgeBetaChromium",
+   "Description": "Microsoft Edge Beta Chromium Artifacts",
+   "Author": "Chad Tilbury, Andrew Rathbun, Reece394",
+   "Rules": [
+    {
+     "Name": "Edge Beta Collections",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Collections\\collectionsSQLite*"
+    },
+    {
+     "Name": "Edge Beta Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Edge Beta Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Network\\Cookies*"
+    },
+    {
+     "Name": "Edge Beta Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Edge Beta Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Edge Beta Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Edge Beta Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Edge Beta History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Edge Beta Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Edge Beta Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Edge Beta Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Edge Beta Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Edge Beta Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Edge Beta Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Edge Beta Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Edge Beta Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Edge Beta Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Edge Beta Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Edge Beta Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Edge Beta Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge Beta Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge Beta Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Edge Beta Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Edge Beta Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge Beta Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge Beta SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Edge Beta Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Edge Beta Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Edge Beta IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Edge Beta Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Edge Beta WebAssistDatabase",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\WebAssistDatabase*"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline DPAPI decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Edge Beta Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Edge Chromium SQLite DBs organized by version #. In testing, there were 3 previous versions of Edge Chromium separated into different folders",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\Snapshots\\*\\**"
+    }
+   ]
+  },
   "EdgeChromium": {
    "Name": "EdgeChromium",
    "Description": "Microsoft Edge Chromium Artifacts",
-   "Author": "Chad Tilbury and Andrew Rathbun",
+   "Author": "Chad Tilbury, Andrew Rathbun, Reece394",
    "Rules": [
     {
      "Name": "Edge Collections",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Collections\\collectionsSQLite"
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Collections\\collectionsSQLite*"
+    },
+    {
+     "Name": "Edge Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Bookmarks*"
     },
     {
      "Name": "Edge Cookies",
@@ -5522,6 +7227,11 @@
      "Name": "Edge Current Tabs",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Edge Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Extension Cookies*"
     },
     {
      "Name": "Edge Favicons",
@@ -5551,7 +7261,7 @@
     {
      "Name": "Edge Login Data",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Login Data"
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Login Data*"
     },
     {
      "Name": "Edge Media History",
@@ -5561,12 +7271,42 @@
     {
      "Name": "Edge Network Action Predictor",
      "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Network Action Predictor"
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Edge Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Edge Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Network\\Network Persistent State"
     },
     {
      "Name": "Edge Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Edge Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Edge Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Edge Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Network\\Reporting and NEL*"
     },
     {
      "Name": "Edge Shortcuts",
@@ -5579,14 +7319,19 @@
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Top Sites*"
     },
     {
+     "Name": "Edge Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
      "Name": "Edge SyncData Database",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Sync Data\\SyncData.sqlite3"
-    },
-    {
-     "Name": "Edge Bookmarks",
-     "Category": "Communications",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Bookmarks*"
     },
     {
      "Name": "Edge Visited Links",
@@ -5597,6 +7342,18 @@
      "Name": "Edge Web Data",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Edge IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Edge Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Local Storage\\leveldb\\**"
     },
     {
      "Name": "Edge WebAssistDatabase",
@@ -5620,12 +7377,406 @@
   "EdgeChromiumExtensions": {
    "Name": "EdgeChromiumExtensions",
    "Description": "Edge Chromium Extension Files",
-   "Author": "cardinsou",
+   "Author": "cardinsou, Reece394",
    "Rules": [
     {
      "Name": "Edge Chromium Extension Files",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Edge Beta Chromium Extension Files",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Edge Dev Chromium Extension Files",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Extensions\\**"
+    },
+    {
+     "Name": "Edge SxS - Canary Chromium Extension Files",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Extensions\\**"
+    }
+   ]
+  },
+  "EdgeDevChromium": {
+   "Name": "EdgeDevChromium",
+   "Description": "Microsoft Edge Dev Chromium Artifacts",
+   "Author": "Chad Tilbury, Andrew Rathbun, Reece394",
+   "Rules": [
+    {
+     "Name": "Edge Dev Collections",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Collections\\collectionsSQLite*"
+    },
+    {
+     "Name": "Edge Dev Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Edge Dev Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Network\\Cookies*"
+    },
+    {
+     "Name": "Edge Dev Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Edge Dev Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Edge Dev Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Edge Dev Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Edge Dev History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Edge Dev Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Edge Dev Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Edge Dev Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Edge Dev Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Edge Dev Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Edge Dev Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Edge Dev Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Edge Dev Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Edge Dev Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Edge Dev Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Edge Dev Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Edge Dev Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge Dev Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge Dev Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Edge Dev Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Edge Dev Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge Dev Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge Dev SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Edge Dev Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Edge Dev Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Edge Dev IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Edge Dev Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Edge Dev WebAssistDatabase",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\WebAssistDatabase*"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline DPAPI decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Edge Dev Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Edge Chromium SQLite DBs organized by version #. In testing, there were 3 previous versions of Edge Chromium separated into different folders",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\Snapshots\\*\\**"
+    }
+   ]
+  },
+  "EdgeFileSystem": {
+   "Name": "EdgeFileSystem",
+   "Description": "Edge HTML5 File System Contents",
+   "Author": "Chad Tilbury, Reece394",
+   "Rules": [
+    {
+     "Name": "Edge HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\File System\\**"
+    },
+    {
+     "Name": "Edge Beta HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Beta\\User Data\\*\\File System\\**"
+    },
+    {
+     "Name": "Edge Dev HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge Dev\\User Data\\*\\File System\\**"
+    },
+    {
+     "Name": "Edge SxS - Canary HTML5 File System Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\File System\\**"
+    }
+   ]
+  },
+  "EdgeSxSChromium": {
+   "Name": "EdgeSxSChromium",
+   "Description": "Microsoft Edge SxS - Canary Chromium Artifacts",
+   "Author": "Chad Tilbury, Andrew Rathbun, Reece394",
+   "Rules": [
+    {
+     "Name": "Edge SxS Collections",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Collections\\collectionsSQLite*"
+    },
+    {
+     "Name": "Edge SxS Bookmarks",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Bookmarks*"
+    },
+    {
+     "Name": "Edge SxS Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Network\\Cookies*"
+    },
+    {
+     "Name": "Edge SxS Current Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Current Session"
+    },
+    {
+     "Name": "Edge SxS Current Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Current Tabs"
+    },
+    {
+     "Name": "Edge SxS Extension Cookies",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Extension Cookies*"
+    },
+    {
+     "Name": "Edge SxS Favicons",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Favicons*"
+    },
+    {
+     "Name": "Edge SxS History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\History*"
+    },
+    {
+     "Name": "Edge SxS Last Session",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Last Session"
+    },
+    {
+     "Name": "Edge SxS Last Tabs",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Last Tabs"
+    },
+    {
+     "Name": "Edge SxS Sessions Folder",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Sessions\\*"
+    },
+    {
+     "Name": "Edge SxS Login Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Login Data*"
+    },
+    {
+     "Name": "Edge SxS Media History",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Media History*"
+    },
+    {
+     "Name": "Edge SxS Network Action Predictor",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Network Action Predictor*"
+    },
+    {
+     "Name": "Edge SxS Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Network Persistent State"
+    },
+    {
+     "Name": "Edge SxS Network Persistent State",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Network\\Network Persistent State"
+    },
+    {
+     "Name": "Edge SxS Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Edge SxS Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\QuotaManager*"
+    },
+    {
+     "Name": "Edge SxS Quota Manager",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\WebStorage\\QuotaManager*"
+    },
+    {
+     "Name": "Edge SxS Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge SxS Reporting and NEL",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Network\\Reporting and NEL*"
+    },
+    {
+     "Name": "Edge SxS Shortcuts",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Shortcuts*"
+    },
+    {
+     "Name": "Edge SxS Top Sites",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Top Sites*"
+    },
+    {
+     "Name": "Edge SxS Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge SxS Trust Tokens",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Network\\Trust Tokens*"
+    },
+    {
+     "Name": "Edge SxS SyncData Database",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Sync Data\\SyncData.sqlite3"
+    },
+    {
+     "Name": "Edge SxS Visited Links",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Visited Links"
+    },
+    {
+     "Name": "Edge SxS Web Data",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Web Data*"
+    },
+    {
+     "Name": "Edge SxS IndexedDB",
+     "Category": "Communications",
+     "Comment": "Collects IndexedDB (LevelDB) databases used by modern web applications to store data.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\IndexedDB\\**"
+    },
+    {
+     "Name": "Edge SxS Local Storage",
+     "Category": "Communications",
+     "Comment": "Collects Local Storage (LevelDB) databases, another form of persistent client-side storage.",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\Local Storage\\leveldb\\**"
+    },
+    {
+     "Name": "Edge SxS WebAssistDatabase",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\*\\WebAssistDatabase*"
+    },
+    {
+     "Name": "Windows Protect Folder",
+     "Category": "FileSystem",
+     "Comment": "Required for offline DPAPI decryption",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Protect\\*\\**"
+    },
+    {
+     "Name": "Edge SxS Snapshots Folder",
+     "Category": "Communications",
+     "Comment": "Grabs folder that appears to have snapshots of Edge Chromium SQLite DBs organized by version #. In testing, there were 3 previous versions of Edge Chromium separated into different folders",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge SxS\\User Data\\Snapshots\\*\\**"
     }
    ]
   },
@@ -8807,6 +10958,11 @@
      "Ref": "WebServers"
     },
     {
+     "Name": "MongoDB Logs",
+     "Category": "Logs",
+     "Ref": "MongoDBLogs"
+    },
+    {
      "Name": "Exchange",
      "Category": "Compound",
      "Ref": "Exchange"
@@ -9053,6 +11209,26 @@
      "Ref": "Chrome"
     },
     {
+     "Name": "Chrome Beta",
+     "Category": "Communications",
+     "Ref": "ChromeBeta"
+    },
+    {
+     "Name": "Chrome Dev",
+     "Category": "Communications",
+     "Ref": "ChromeDev"
+    },
+    {
+     "Name": "Chrome SxS - Canary",
+     "Category": "Communications",
+     "Ref": "ChromeSxS"
+    },
+    {
+     "Name": "Chromium",
+     "Category": "Communications",
+     "Ref": "Chromium"
+    },
+    {
      "Name": "CocCoc Browser",
      "Category": "Communications",
      "Ref": "CocCoc"
@@ -9063,9 +11239,24 @@
      "Ref": "Edge"
     },
     {
+     "Name": "Edge Beta Chromium",
+     "Category": "Communications",
+     "Ref": "EdgeBetaChromium"
+    },
+    {
      "Name": "Edge Chromium",
      "Category": "Communications",
      "Ref": "EdgeChromium"
+    },
+    {
+     "Name": "Edge Dev Chromium",
+     "Category": "Communications",
+     "Ref": "EdgeDevChromium"
+    },
+    {
+     "Name": "Edge SxS - Canary Chromium",
+     "Category": "Communications",
+     "Ref": "EdgeSxSChromium"
     },
     {
      "Name": "Firefox",
@@ -9241,6 +11432,43 @@
      "Name": "ManageEngine ADSelfService Plus Log Files",
      "Category": "Logs",
      "Glob": "ManageEngine\\ADSelfService Plus\\logs\\**"
+    }
+   ]
+  },
+  "MongoDBLogs": {
+   "Name": "MongoDBLogs",
+   "Description": "MongoDB Log Files (Windows)",
+   "Author": "Eric Capuano",
+   "Rules": [
+    {
+     "Name": "MongoDB Logs (Program Files)",
+     "Category": "Logs",
+     "Comment": "MongoDB log files in default MSI install log directory",
+     "Glob": "Program Files\\MongoDB\\Server\\*\\log\\**\\*.log*"
+    },
+    {
+     "Name": "MongoDB Logs (Program Files - logs folder)",
+     "Category": "Logs",
+     "Comment": "MongoDB log files when folder is named 'logs'",
+     "Glob": "Program Files\\MongoDB\\Server\\*\\logs\\**\\*.log*"
+    },
+    {
+     "Name": "MongoDB Logs (C:\\data\\log)",
+     "Category": "Logs",
+     "Comment": "Common default MongoDB log directory for manual installations",
+     "Glob": "data\\log\\**\\*.log*"
+    },
+    {
+     "Name": "MongoDB Logs (ProgramData)",
+     "Category": "Logs",
+     "Comment": "Log directory for MongoDB Windows service installations",
+     "Glob": "ProgramData\\MongoDB\\log\\**\\*.log*"
+    },
+    {
+     "Name": "MongoDB Logs (Alternate Install)",
+     "Category": "Logs",
+     "Comment": "Common non-default install log directory",
+     "Glob": "MongoDB\\log\\**\\*.log*"
     }
    ]
   },
