@@ -94,6 +94,17 @@ parameters:
     description: |
       Add Verbose debugging logs
 
+  - name: WORKERS
+    type: int
+    default: "5"
+    description: |
+      Number of concurrent workers to use for parsing and compressing.
+
+  - name: SlowGlobRegex
+    type: hidden
+    default: "^\\*\\*"
+    description: A regex to eliminate slow globs.
+
 imports:
   - Windows.Triage.Targets
 

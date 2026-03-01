@@ -7,7 +7,7 @@ TargetDirectories:
 
 ArtifactTemplate: templates/Linux.Triage.UAC.yaml
 RegExToGlob:
-  "%user_home%": "/home/*"
+  "%user_home%": "{/home/*,/Users/*}"
   "%temp_directory%": "/tmp/"
 Output:
   - output/Linux.Triage.UAC.yaml
