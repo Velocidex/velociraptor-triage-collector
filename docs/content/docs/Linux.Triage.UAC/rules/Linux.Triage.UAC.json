@@ -5,15 +5,15 @@
    "Rules": [
     {
      "Name": "databases",
-     "Glob": "/home/*/Library/Application Support/AddressBook/AddressBook*.abcddb*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/AddressBook/AddressBook*.abcddb*"
     },
     {
      "Name": "Metadata_files",
-     "Glob": "/home/*/Library/Application Support/AddressBook/Metadata"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/AddressBook/Metadata"
     },
     {
      "Name": "Image_files",
-     "Glob": "/home/*/Library/Application Support/AddressBook/Images"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/AddressBook/Images"
     }
    ]
   },
@@ -23,19 +23,19 @@
    "Rules": [
     {
      "Name": "configuration_session_recordings_screenshot_chat_and_trace_files",
-     "Glob": "/home/*/.anydesk"
+     "Glob": "/{/home/*,/Users/*}/.anydesk"
     },
     {
      "Name": "session_recordings_screenshots_and_chat_log_files",
-     "Glob": "/home/*/*/AnyDesk"
+     "Glob": "/{/home/*,/Users/*}/*/AnyDesk"
     },
     {
      "Name": "screenshot_files",
-     "Glob": "/home/*/anydesk*.png"
+     "Glob": "/{/home/*,/Users/*}/anydesk*.png"
     },
     {
      "Name": "session_recording_files",
-     "Glob": "/home/*/*.anydesk"
+     "Glob": "/{/home/*,/Users/*}/*.anydesk"
     },
     {
      "Name": "global_configuration_and_connection_trace_files",
@@ -53,11 +53,11 @@
    "Rules": [
     {
      "Name": "database_file",
-     "Glob": "/home/*/Library/Group Containers/group.com.apple.notes/NoteStore.sqlite*"
+     "Glob": "/{/home/*,/Users/*}/Library/Group Containers/group.com.apple.notes/NoteStore.sqlite*"
     },
     {
      "Name": "Voice_Memos_database_file",
-     "Glob": "/home/*/Library/Application Support/com.apple.voicememos/Recordings/CloudRecordings.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/com.apple.voicememos/Recordings/CloudRecordings.db*"
     }
    ]
   },
@@ -66,11 +66,11 @@
    "Description": "Collect metadata about recently opened archive files in Ark, the KDE archive manager",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/ark_recentfiles"
+     "Glob": "/{/home/*,/Users/*}/.local/share/ark_recentfiles"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/ark_recentfiles"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/ark_recentfiles"
     }
    ]
   },
@@ -80,15 +80,15 @@
    "Rules": [
     {
      "Name": "file_lists",
-     "Glob": "/home/*/.aspera/connect/filelists"
+     "Glob": "/{/home/*,/Users/*}/.aspera/connect/filelists"
     },
     {
      "Name": "logs",
-     "Glob": "/home/*/.aspera/connect/var/log"
+     "Glob": "/{/home/*,/Users/*}/.aspera/connect/var/log"
     },
     {
      "Name": "sqlite_database",
-     "Glob": "/home/*/.aspera/connect/var/asperaconnect.data"
+     "Glob": "/{/home/*,/Users/*}/.aspera/connect/var/asperaconnect.data"
     }
    ]
   },
@@ -97,7 +97,7 @@
    "Description": "Collect atftp history files.",
    "Rules": [
     {
-     "Glob": "/home/*/.atftp_history"
+     "Glob": "/{/home/*,/Users/*}/.atftp_history"
     }
    ]
   },
@@ -111,7 +111,7 @@
     },
     {
      "Name": "configuration_and_sqlite_database_files",
-     "Glob": "/home/*/Library/Application Support/Box/Box/data"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Box/Box/data"
     },
     {
      "Name": "log_files",
@@ -119,7 +119,7 @@
     },
     {
      "Name": "log_files",
-     "Glob": "/home/*/Library/Logs/Box/Box"
+     "Glob": "/{/home/*,/Users/*}/Library/Logs/Box/Box"
     }
    ]
   },
@@ -129,15 +129,15 @@
    "Rules": [
     {
      "Name": "cache_and_leveldb_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/discord /home/*/.var/app/com.discordapp.Discord /home/*/snap/discord/{*/Cache/*,*/Local Storage/leveldb/*}"
+     "Glob": "/{/home/*,/Users/*}/.config/discord /{/home/*,/Users/*}/.var/app/com.discordapp.Discord /{/home/*,/Users/*}/snap/discord/{*/Cache/*,*/Local Storage/leveldb/*}"
     },
     {
      "Name": "cache_files",
-     "Glob": "/home/*/Library/Application Support/discord/Cache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/discord/Cache"
     },
     {
      "Name": "leveldb_files",
-     "Glob": "/home/*/Library/Application Support/discord/Local Storage/leveldb"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/discord/Local Storage/leveldb"
     }
    ]
   },
@@ -146,11 +146,11 @@
    "Description": "Collect session data for the Dolphin file manager in the KDE desktop environment. This file contains information about the state of the Dolphin application, such as the currently open directories and their paths and the last accessed locations",
    "Rules": [
     {
-     "Glob": "/home/*/.config/dolphin_dolphin_dolphin"
+     "Glob": "/{/home/*,/Users/*}/.config/dolphin_dolphin_dolphin"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/dolphin_dolphin_dolphin"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/dolphin_dolphin_dolphin"
     }
    ]
   },
@@ -159,11 +159,11 @@
    "Description": "Collect the paths to recently opened video files using the Dragon Player",
    "Rules": [
     {
-     "Glob": "/home/*/.config/dragonplayerrc"
+     "Glob": "/{/home/*,/Users/*}/.config/dragonplayerrc"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/dragonplayerrc"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/dragonplayerrc"
     }
    ]
   },
@@ -172,7 +172,7 @@
    "Description": "Collect Dropbox Cloud Storage metadata.",
    "Rules": [
     {
-     "Glob": "/home/*/.dropbox"
+     "Glob": "/{/home/*,/Users/*}/.dropbox"
     }
    ]
   },
@@ -181,7 +181,7 @@
    "Description": "Collect Facebook Messenger calls, groups, user contacted and messages files.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Application Support/Messenger/*.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Messenger/*.db*"
     }
    ]
   },
@@ -190,11 +190,11 @@
    "Description": "Collect FileZilla XML and sqlite files",
    "Rules": [
     {
-     "Glob": "/home/*/.config/filezilla/{*.xml*,*.sqlite3*}"
+     "Glob": "/{/home/*,/Users/*}/.config/filezilla/{*.xml*,*.sqlite3*}"
     },
     {
      "Name": "Flatpak_version",
-     "Glob": "/home/*/.var/app/org.filezillaproject.Filezilla/{*.xml*,*.sqlite3*}"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.filezillaproject.Filezilla/{*.xml*,*.sqlite3*}"
     }
    ]
   },
@@ -203,11 +203,11 @@
    "Description": "Collect metadata about recently opened files in Geany text editor",
    "Rules": [
     {
-     "Glob": "/home/*/.config/geany/session.conf"
+     "Glob": "/{/home/*,/Users/*}/.config/geany/session.conf"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/*/config/geany/*"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/*/config/geany/*"
     }
    ]
   },
@@ -216,11 +216,11 @@
    "Description": "Collect metadata about recently opened files in Gedit text editor",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/gedit-metadata.xml"
+     "Glob": "/{/home/*,/Users/*}/.local/share/gedit-metadata.xml"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/gedit-metadata.xml"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/gedit-metadata.xml"
     }
    ]
   },
@@ -238,11 +238,11 @@
     },
     {
      "Name": "gitconfig_file",
-     "Glob": "/home/*/.gitconfig"
+     "Glob": "/{/home/*,/Users/*}/.gitconfig"
     },
     {
      "Name": "config_git_gitconfig_file",
-     "Glob": "/home/*/.config/git/config"
+     "Glob": "/{/home/*,/Users/*}/.config/git/config"
     }
    ]
   },
@@ -251,11 +251,11 @@
    "Description": "Collect metadata about recently opened files in Gnome Text Editor",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/session.gvariant"
+     "Glob": "/{/home/*,/Users/*}/.local/share/session.gvariant"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/session.gvariant"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/session.gvariant"
     }
    ]
   },
@@ -265,19 +265,19 @@
    "Rules": [
     {
      "Name": "the_database_that_contains_information_about_all_of_the_devices_that_have_been_partially_or_completely_backed_to_Google_Drive_or_any_device_that_has_been_connected_to_the_computer_while_Google_Drive_App_was_running_The_database_also_stores_information_about_the_root_folders_synced_to_the_cloud_using_Google_Drive_desktop_app",
-     "Glob": "/home/*/Library/Application Support/Google/DriveFS/root_preference_sqlite.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google/DriveFS/root_preference_sqlite.db*"
     },
     {
      "Name": "the_database_that_contains_information_about_all_of_the_items_root_folders_sub_folders_or_files_synced_to_the_cloud_using_Google_Drive_desktop_app",
-     "Glob": "/home/*/Library/Application Support/Google/DriveFS/*/mirror_sqlite.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google/DriveFS/*/mirror_sqlite.db*"
     },
     {
      "Name": "the_databases_that_contain_information_about_the_items_stored_in_the_cloud_using_Google_Drive_deleted_items_as_well_as_information_related_to_the_user_s_account",
-     "Glob": "/home/*/Library/Application Support/Google/DriveFS/*/metadata_sqlite_db* /Library/Application\\ Support/Google/DriveFS/*/mirror_metadata_sqlite.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google/DriveFS/*/metadata_sqlite_db* /Library/Application\\ Support/Google/DriveFS/*/mirror_metadata_sqlite.db*"
     },
     {
      "Name": "Google_Drive_logs",
-     "Glob": "/home/*/Library/Application Support/Google/DriveFS/Logs"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google/DriveFS/Logs"
     }
    ]
   },
@@ -287,10 +287,10 @@
    "Rules": [
     {
      "Name": "including_Flatpak_version",
-     "Glob": "/home/*/.googleearth /home/*/snap/*.kml"
+     "Glob": "/{/home/*,/Users/*}/.googleearth /{/home/*,/Users/*}/snap/*.kml"
     },
     {
-     "Glob": "/home/*/Library/Application Support/Google Earth/*.kml"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google Earth/*.kml"
     }
    ]
   },
@@ -299,11 +299,11 @@
    "Description": "Collect the paths to recently viewed or edited images using Gwenview image viewer",
    "Rules": [
     {
-     "Glob": "/home/*/.config/gwenviewrc"
+     "Glob": "/{/home/*,/Users/*}/.config/gwenviewrc"
     },
     {
      "Name": "Flatpak_version",
-     "Glob": "/home/*/.var/app /home/*/snap/gwenviewrc"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/gwenviewrc"
     }
    ]
   },
@@ -313,11 +313,11 @@
    "Rules": [
     {
      "Name": "accounts_information_files",
-     "Glob": "/home/*/Library/Application Support/iCloud/Accounts"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/iCloud/Accounts"
     },
     {
      "Name": "local_databases_that_contain_information_about_files_that_have_been_imported_from_the_local_computer_or_synced_remotely_from_the_iCloud",
-     "Glob": "/home/*/Library/Application Support/CloudDocs/session/db/{client.db*,server.db*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/CloudDocs/session/db/{client.db*,server.db*}"
     }
    ]
   },
@@ -327,11 +327,11 @@
    "Rules": [
     {
      "Name": "chat_database",
-     "Glob": "/home/*/Library/Messages/chat.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Messages/chat.db*"
     },
     {
      "Name": "attachments",
-     "Glob": "/home/*/Library/Messages/Attachments"
+     "Glob": "/{/home/*,/Users/*}/Library/Messages/Attachments"
     }
    ]
   },
@@ -340,7 +340,7 @@
    "Description": "iTunes backup directory.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Application Support/MobileSync/Backup"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/MobileSync/Backup"
     }
    ]
   },
@@ -349,11 +349,11 @@
    "Description": "Collect metadata about recently opened files in Kwrite and Kate text editors",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/anonymous.katesession"
+     "Glob": "/{/home/*,/Users/*}/.local/share/anonymous.katesession"
     },
     {
      "Name": "Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/anonymous.katesession"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/anonymous.katesession"
     }
    ]
   },
@@ -362,7 +362,7 @@
    "Description": "Collect KDE Most Recently Used.",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/RecentDocuments"
+     "Glob": "/{/home/*,/Users/*}/.local/share/RecentDocuments"
     }
    ]
   },
@@ -371,13 +371,13 @@
    "Description": "Collect less history file. This file is used to store search string.",
    "Rules": [
     {
-     "Glob": "/home/*/.lesshst"
+     "Glob": "/{/home/*,/Users/*}/.lesshst"
     },
     {
-     "Glob": "/home/*/.local/state/lesshst"
+     "Glob": "/{/home/*,/Users/*}/.local/state/lesshst"
     },
     {
-     "Glob": "/home/*/.local/share/lesshst"
+     "Glob": "/{/home/*,/Users/*}/.local/share/lesshst"
     }
    ]
   },
@@ -387,10 +387,10 @@
    "Rules": [
     {
      "Name": "including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/libreoffice /home/*/.var/app/org.libreoffice.LibreOffice /home/*/snap/libreoffice/{recently-used.xbel,registrymodifications.xcu}"
+     "Glob": "/{/home/*,/Users/*}/.config/libreoffice /{/home/*,/Users/*}/.var/app/org.libreoffice.LibreOffice /{/home/*,/Users/*}/snap/libreoffice/{recently-used.xbel,registrymodifications.xcu}"
     },
     {
-     "Glob": "/home/*/Library/Application Support/LibreOffice/{recently-used.xbel,registrymodifications.xcu}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/LibreOffice/{recently-used.xbel,registrymodifications.xcu}"
     }
    ]
   },
@@ -399,10 +399,10 @@
    "Description": "Collect Microsoft Office Most Recently Used.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Preferences/com.microsoft.office.plist"
+     "Glob": "/{/home/*,/Users/*}/Library/Preferences/com.microsoft.office.plist"
     },
     {
-     "Glob": "/home/*/Library/Containers/com.microsoft.*/Data/Library/Preferences/com.microsoft.*.securebookmarks.plist"
+     "Glob": "/{/home/*,/Users/*}/Library/Containers/com.microsoft.*/Data/Library/Preferences/com.microsoft.*.securebookmarks.plist"
     }
    ]
   },
@@ -412,51 +412,51 @@
    "Rules": [
     {
      "Name": "cache_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/Cache/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Microsoft/Microsoft Teams /{/home/*,/Users/*}/.var/app/com.microsoft.Teams /{/home/*,/Users/*}/snap/teams/*/Cache/*"
     },
     {
      "Name": "chat_log_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/IndexedDB/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Microsoft/Microsoft Teams /{/home/*,/Users/*}/.var/app/com.microsoft.Teams /{/home/*,/Users/*}/snap/teams/*/IndexedDB/*"
     },
     {
      "Name": "leveldb_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/Local Storage/leveldb/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Microsoft/Microsoft Teams /{/home/*,/Users/*}/.var/app/com.microsoft.Teams /{/home/*,/Users/*}/snap/teams/*/Local Storage/leveldb/*"
     },
     {
      "Name": "config_file_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/desktop-config.json"
+     "Glob": "/{/home/*,/Users/*}/.config/Microsoft/Microsoft Teams /{/home/*,/Users/*}/.var/app/com.microsoft.Teams /{/home/*,/Users/*}/snap/teams/desktop-config.json"
     },
     {
      "Name": "logs_directory_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/*/logs/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Microsoft/Microsoft Teams /{/home/*,/Users/*}/.var/app/com.microsoft.Teams /{/home/*,/Users/*}/snap/teams/*/logs/*"
     },
     {
      "Name": "log_file_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Microsoft/Microsoft Teams /home/*/.var/app/com.microsoft.Teams /home/*/snap/teams/logs.txt"
+     "Glob": "/{/home/*,/Users/*}/.config/Microsoft/Microsoft Teams /{/home/*,/Users/*}/.var/app/com.microsoft.Teams /{/home/*,/Users/*}/snap/teams/logs.txt"
     },
     {
      "Name": "cache_files",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Teams/Cache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Teams/Cache"
     },
     {
      "Name": "chat_log_files",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Teams/IndexedDB/*.log"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Teams/IndexedDB/*.log"
     },
     {
      "Name": "leveldb_files",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Teams/Local Storage/leveldb"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Teams/Local Storage/leveldb"
     },
     {
      "Name": "config_file",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Teams/desktop-config.json"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Teams/desktop-config.json"
     },
     {
      "Name": "logs_directory",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Teams/logs"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Teams/logs"
     },
     {
      "Name": "log_file",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Teams/logs.txt"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Teams/logs.txt"
     }
    ]
   },
@@ -465,7 +465,7 @@
    "Description": "Collect nano history files.",
    "Rules": [
     {
-     "Glob": "/home/*/.nano_history"
+     "Glob": "/{/home/*,/Users/*}/.nano_history"
     }
    ]
   },
@@ -475,19 +475,19 @@
    "Rules": [
     {
      "Name": "metadata_related_to_documents_that_have_been_opened_or_interacted_with_using_Okular_a_document_viewer_for_KDE",
-     "Glob": "/home/*/.local/share/*/okular/docdata/*"
+     "Glob": "/{/home/*,/Users/*}/.local/share/*/okular/docdata/*"
     },
     {
      "Name": "Okular_configuration_file",
-     "Glob": "/home/*/.config/okularrc"
+     "Glob": "/{/home/*,/Users/*}/.config/okularrc"
     },
     {
      "Name": "metadata_related_to_documents_that_have_been_opened_or_interacted_with_using_Okular_a_document_viewer_for_KDE_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/*/okular/docdata/*"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/*/okular/docdata/*"
     },
     {
      "Name": "Okular_configuration_file_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app /home/*/snap/okularrc"
+     "Glob": "/{/home/*,/Users/*}/.var/app /{/home/*,/Users/*}/snap/okularrc"
     }
    ]
   },
@@ -496,7 +496,7 @@
    "Description": "Collect Photos artifacts.",
    "Rules": [
     {
-     "Glob": "/home/*/Pictures/Photos Library.photoslibrary/Photos.sqlite*"
+     "Glob": "/{/home/*,/Users/*}/Pictures/Photos Library.photoslibrary/Photos.sqlite*"
     }
    ]
   },
@@ -505,7 +505,7 @@
    "Description": "Collect php history files.",
    "Rules": [
     {
-     "Glob": "/home/*/.php_history"
+     "Glob": "/{/home/*,/Users/*}/.php_history"
     }
    ]
   },
@@ -514,10 +514,10 @@
    "Description": "Collect QNAP Qsync application configuration and log files.",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/QNAP/Qsync"
+     "Glob": "/{/home/*,/Users/*}/.local/share/QNAP/Qsync"
     },
     {
-     "Glob": "/home/*/.Qsync"
+     "Glob": "/{/home/*,/Users/*}/.Qsync"
     }
    ]
   },
@@ -526,7 +526,7 @@
    "Description": "Collect configuration and log files.",
    "Rules": [
     {
-     "Glob": "/home/*/.config/rclone"
+     "Glob": "/{/home/*,/Users/*}/.config/rclone"
     }
    ]
   },
@@ -536,15 +536,15 @@
    "Rules": [
     {
      "Name": "access_logs",
-     "Glob": "/home/*/.local/share/logs/RustDesk"
+     "Glob": "/{/home/*,/Users/*}/.local/share/logs/RustDesk"
     },
     {
      "Name": "session_recording_files",
-     "Glob": "/home/*/Videos/RustDesk"
+     "Glob": "/{/home/*,/Users/*}/Videos/RustDesk"
     },
     {
      "Name": "access_logs",
-     "Glob": "/home/*/Library/Logs/RustDesk"
+     "Glob": "/{/home/*,/Users/*}/Library/Logs/RustDesk"
     }
    ]
   },
@@ -554,43 +554,43 @@
    "Rules": [
     {
      "Name": "cache_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/*/Cache/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Signal /{/home/*,/Users/*}/.var/app/org.signal.Signal /{/home/*,/Users/*}/snap/signal-desktop/*/Cache/*"
     },
     {
      "Name": "attachments_cache_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/*/attachments.noindex/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Signal /{/home/*,/Users/*}/.var/app/org.signal.Signal /{/home/*,/Users/*}/snap/signal-desktop/*/attachments.noindex/*"
     },
     {
      "Name": "log_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/*/logs/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Signal /{/home/*,/Users/*}/.var/app/org.signal.Signal /{/home/*,/Users/*}/snap/signal-desktop/*/logs/*"
     },
     {
      "Name": "config_json_file_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/config.json"
+     "Glob": "/{/home/*,/Users/*}/.config/Signal /{/home/*,/Users/*}/.var/app/org.signal.Signal /{/home/*,/Users/*}/snap/signal-desktop/config.json"
     },
     {
      "Name": "database_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Signal /home/*/.var/app/org.signal.Signal /home/*/snap/signal-desktop/db.sqlite*"
+     "Glob": "/{/home/*,/Users/*}/.config/Signal /{/home/*,/Users/*}/.var/app/org.signal.Signal /{/home/*,/Users/*}/snap/signal-desktop/db.sqlite*"
     },
     {
      "Name": "cache_files",
-     "Glob": "/home/*/Library/Application Support/Signal/Cache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Signal/Cache"
     },
     {
      "Name": "attachments_cache_files",
-     "Glob": "/home/*/Library/Application Support/Signal/attachments.noindex"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Signal/attachments.noindex"
     },
     {
      "Name": "log_files",
-     "Glob": "/home/*/Library/Application Support/Signal/logs"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Signal/logs"
     },
     {
      "Name": "config_json_file",
-     "Glob": "/home/*/Library/Application Support/Signal/config.json"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Signal/config.json"
     },
     {
      "Name": "database_files",
-     "Glob": "/home/*/Library/Application Support/Signal/sql/db.sqlite*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Signal/sql/db.sqlite*"
     }
    ]
   },
@@ -600,19 +600,19 @@
    "Rules": [
     {
      "Name": "database_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/skypeforlinux /home/*/.var/app/com.skype.Client /home/*/snap/skype/*.db*"
+     "Glob": "/{/home/*,/Users/*}/.config/skypeforlinux /{/home/*,/Users/*}/.var/app/com.skype.Client /{/home/*,/Users/*}/snap/skype/*.db*"
     },
     {
      "Name": "cache_and_leveldb_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/skypeforlinux /home/*/.var/app/com.skype.Client /home/*/snap/skype/{*/Cache/*,*/Local Storage/leveldb/*}"
+     "Glob": "/{/home/*,/Users/*}/.config/skypeforlinux /{/home/*,/Users/*}/.var/app/com.skype.Client /{/home/*,/Users/*}/snap/skype/{*/Cache/*,*/Local Storage/leveldb/*}"
     },
     {
      "Name": "database_files",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Skype for Desktop/*.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Skype for Desktop/*.db*"
     },
     {
      "Name": "cache_and_leveldb_files",
-     "Glob": "/home/*/Library/Application Support/Microsoft/Skype for Desktop/{*/Cache/*,*/Local Storage/leveldb/*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft/Skype for Desktop/{*/Cache/*,*/Local Storage/leveldb/*}"
     }
    ]
   },
@@ -622,59 +622,59 @@
    "Rules": [
     {
      "Name": "cache_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/Cache/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/*/Cache/*"
     },
     {
      "Name": "chat_log_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/IndexedDB/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/*/IndexedDB/*"
     },
     {
      "Name": "leveldb_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/Local Storage/leveldb/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/*/Local Storage/leveldb/*"
     },
     {
      "Name": "config_file_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/desktop-config.json"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/desktop-config.json"
     },
     {
      "Name": "logs_directory_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/logs/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/*/logs/*"
     },
     {
      "Name": "log_file_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/logs.txt"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/logs.txt"
     },
     {
      "Name": "storage_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Slack /home/*/.var/app/com.slack.Slack /home/*/snap/slack/*/storage/*"
+     "Glob": "/{/home/*,/Users/*}/.config/Slack /{/home/*,/Users/*}/.var/app/com.slack.Slack /{/home/*,/Users/*}/snap/slack/*/storage/*"
     },
     {
      "Name": "cache_files",
-     "Glob": "/home/*/Library/Application Support/Slack/Cache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/Cache"
     },
     {
      "Name": "chat_log_files",
-     "Glob": "/home/*/Library/Application Support/Slack/IndexedDB/*.log"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/IndexedDB/*.log"
     },
     {
      "Name": "leveldb_files",
-     "Glob": "/home/*/Library/Application Support/Slack/Local Storage/leveldb"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/Local Storage/leveldb"
     },
     {
      "Name": "config_file",
-     "Glob": "/home/*/Library/Application Support/Slack/desktop-config.json"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/desktop-config.json"
     },
     {
      "Name": "logs_directory",
-     "Glob": "/home/*/Library/Application Support/Slack/logs"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/logs"
     },
     {
      "Name": "log_file",
-     "Glob": "/home/*/Library/Application Support/Slack/logs.txt"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/logs.txt"
     },
     {
      "Name": "storage_files",
-     "Glob": "/home/*/Library/Application Support/Slack/storage"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Slack/storage"
     }
    ]
   },
@@ -692,11 +692,11 @@
     },
     {
      "Name": "log_files",
-     "Glob": "/Library/Application Support/Splashtop*/Logs /home/*/Library/Application Support/Splashtop*/Logs"
+     "Glob": "/Library/Application Support/Splashtop*/Logs /{/home/*,/Users/*}/Library/Application Support/Splashtop*/Logs"
     },
     {
      "Name": "STServerList_file",
-     "Glob": "/home/*/Library/Application Support/Splashtop*/STServerList"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Splashtop*/STServerList"
     },
     {
      "Name": "diagnostic_report_files",
@@ -710,59 +710,59 @@
    "Rules": [
     {
      "Name": "image_resources_of_installed_uninstalled_games",
-     "Glob": "/home/*/.local/share/Steam/appcache/librarycache"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Steam/appcache/librarycache"
     },
     {
      "Name": "multiple_configuration_files",
-     "Glob": "/home/*/.steam /home/*/.local/share/Steam/*.vdf"
+     "Glob": "/{/home/*,/Users/*}/.steam /{/home/*,/Users/*}/.local/share/Steam/*.vdf"
     },
     {
      "Name": "avatar_pictures",
-     "Glob": "/home/*/.local/share/Steam/config/avatarcache"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Steam/config/avatarcache"
     },
     {
      "Name": "game_icons",
-     "Glob": "/home/*/.local/share/Steam/steam/games"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Steam/steam/games"
     },
     {
      "Name": "log_files",
-     "Glob": "/home/*/.local/share/Steam/logs"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Steam/logs"
     },
     {
      "Name": "Steam_browser_files",
-     "Glob": "/home/*/.local/share/Steam/config/htmlcache/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Steam/config/htmlcache/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,Web Data*}"
     },
     {
      "Name": "Steam_browser_directories",
-     "Glob": "/home/*/.local/share/Steam/config/htmlcache/{Extensions,File System,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Steam/config/htmlcache/{Extensions,File System,Sessions}"
     },
     {
      "Name": "image_resources_of_installed_uninstalled_games",
-     "Glob": "/home/*/Library/Application Support/Steam/appcache/librarycache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/appcache/librarycache"
     },
     {
      "Name": "multiple_configuration_files",
-     "Glob": "/home/*/Library/Application Support/Steam/*.vdf"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/*.vdf"
     },
     {
      "Name": "avatar_pictures",
-     "Glob": "/home/*/Library/Application Support/Steam/config/avatarcache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/config/avatarcache"
     },
     {
      "Name": "game_icons",
-     "Glob": "/home/*/Library/Application Support/Steam/steam/games"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/steam/games"
     },
     {
      "Name": "log_files",
-     "Glob": "/home/*/Library/Application Support/Steam/logs"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/logs"
     },
     {
      "Name": "Steam_browser_files",
-     "Glob": "/home/*/Library/Application Support/Steam/config/htmlcache/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/config/htmlcache/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,Web Data*}"
     },
     {
      "Name": "Steam_browser_directories",
-     "Glob": "/home/*/Library/Application Support/Steam/config/htmlcache/{Extensions,File System,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Steam/config/htmlcache/{Extensions,File System,Sessions}"
     }
    ]
   },
@@ -772,19 +772,19 @@
    "Rules": [
     {
      "Name": "database_and_data_files",
-     "Glob": "/home/*/.SynologyDrive/data"
+     "Glob": "/{/home/*,/Users/*}/.SynologyDrive/data"
     },
     {
      "Name": "log_files",
-     "Glob": "/home/*/.SynologyDrive/log"
+     "Glob": "/{/home/*,/Users/*}/.SynologyDrive/log"
     },
     {
      "Name": "database_and_data_files",
-     "Glob": "/home/*/Library/Application Support/SynologyDrive/data"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/SynologyDrive/data"
     },
     {
      "Name": "log_files",
-     "Glob": "/home/*/Library/Application Support/SynologyDrive/log"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/SynologyDrive/log"
     }
    ]
   },
@@ -798,27 +798,27 @@
     },
     {
      "Name": "log_files_from_user_s_home_directory",
-     "Glob": "/home/*/.local/share/teamviewer*/logfiles/*.log"
+     "Glob": "/{/home/*,/Users/*}/.local/share/teamviewer*/logfiles/*.log"
     },
     {
      "Name": "sqlite3_database_storing_cache_about_TeamViewer_chat",
-     "Glob": "/home/*/.local/share/teamviewer*/tvchatfilecache.db*"
+     "Glob": "/{/home/*,/Users/*}/.local/share/teamviewer*/tvchatfilecache.db*"
     },
     {
      "Name": "sqlite3_database_storing_TeamViewer_print_jobs",
-     "Glob": "/home/*/.local/share/teamviewer*/tvprint.db*"
+     "Glob": "/{/home/*,/Users/*}/.local/share/teamviewer*/tvprint.db*"
     },
     {
      "Name": "network_and_connections_logs",
-     "Glob": "/home/*/Library/Logs/TeamViewer/{Connections_incoming.txt,install_teamviewerd.log,signaturekey.log,TeamViewer*_Logfile.log,TV*Install.log,TV*Network.log}"
+     "Glob": "/{/home/*,/Users/*}/Library/Logs/TeamViewer/{Connections_incoming.txt,install_teamviewerd.log,signaturekey.log,TeamViewer*_Logfile.log,TV*Install.log,TV*Network.log}"
     },
     {
      "Name": "sqlite3_database_storing_cache_about_TeamViewer_chat",
-     "Glob": "/home/*/Library/Caches/TeamViewer/tvchatfilecache.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/TeamViewer/tvchatfilecache.db*"
     },
     {
      "Name": "sqlite3_database_storing_TeamViewer_print_jobs",
-     "Glob": "/home/*/Library/Caches/TeamViewer/tvprint.db*"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/TeamViewer/tvprint.db*"
     }
    ]
   },
@@ -828,10 +828,10 @@
    "Rules": [
     {
      "Name": "including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.local/share/TelegramDesktop /home/*/.var/app/org.telegram.desktop /home/*/snap/telegram-desktop/log.txt"
+     "Glob": "/{/home/*,/Users/*}/.local/share/TelegramDesktop /{/home/*,/Users/*}/.var/app/org.telegram.desktop /{/home/*,/Users/*}/snap/telegram-desktop/log.txt"
     },
     {
-     "Glob": "/home/*/Library/Application Support/Telegram Desktop/log.txt"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Telegram Desktop/log.txt"
     }
    ]
   },
@@ -841,7 +841,7 @@
    "Rules": [
     {
      "Name": "client_logs_and_configuration_files",
-     "Glob": "/home/*/.thinlinc"
+     "Glob": "/{/home/*,/Users/*}/.thinlinc"
     },
     {
      "Name": "VSM_server_agent_and_Web_Administration_Interface_logs",
@@ -863,27 +863,27 @@
    "Rules": [
     {
      "Name": "configuration_and_preference_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.thunderbird /home/*/.var/app/org.mozilla.Thunderbird /home/*/snap/thunderbird/{*.ini,InstallTime*,logins.json,prefs.js}"
+     "Glob": "/{/home/*,/Users/*}/.thunderbird /{/home/*,/Users/*}/.var/app/org.mozilla.Thunderbird /{/home/*,/Users/*}/snap/thunderbird/{*.ini,InstallTime*,logins.json,prefs.js}"
     },
     {
      "Name": "sqlite_database_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.thunderbird /home/*/.var/app/org.mozilla.Thunderbird /home/*/snap/thunderbird/{abook.sqlite*,global-messages-db.sqlite*,places.sqlite*}"
+     "Glob": "/{/home/*,/Users/*}/.thunderbird /{/home/*,/Users/*}/.var/app/org.mozilla.Thunderbird /{/home/*,/Users/*}/snap/thunderbird/{abook.sqlite*,global-messages-db.sqlite*,places.sqlite*}"
     },
     {
      "Name": "Attachments_ImapMail_and_Mail_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.thunderbird /home/*/.var/app/org.mozilla.Thunderbird /home/*/snap/thunderbird/{*/Attachments/*,*/ImapMail/*,*/Mail/*}"
+     "Glob": "/{/home/*,/Users/*}/.thunderbird /{/home/*,/Users/*}/.var/app/org.mozilla.Thunderbird /{/home/*,/Users/*}/snap/thunderbird/{*/Attachments/*,*/ImapMail/*,*/Mail/*}"
     },
     {
      "Name": "configuration_and_preference_files",
-     "Glob": "/home/*/Library/Thunderbird/{*.ini,InstallTime*,logins.json,prefs.js}"
+     "Glob": "/{/home/*,/Users/*}/Library/Thunderbird/{*.ini,InstallTime*,logins.json,prefs.js}"
     },
     {
      "Name": "sqlite_database_files",
-     "Glob": "/home/*/Library/Thunderbird/{abook.sqlite*,global-messages-db.sqlite*,places.sqlite*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Thunderbird/{abook.sqlite*,global-messages-db.sqlite*,places.sqlite*}"
     },
     {
      "Name": "Attachments_ImapMail_and_Mail_files",
-     "Glob": "/home/*/Library/Thunderbird/{*/Attachments/*,*/ImapMail/*,*/Mail/*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Thunderbird/{*/Attachments/*,*/ImapMail/*,*/Mail/*}"
     }
    ]
   },
@@ -893,27 +893,27 @@
    "Rules": [
     {
      "Name": "database_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.ViberPC /home/*/.var/app/com.viber.Viber /home/*/snap/viber/{config.db*,viber.db*}"
+     "Glob": "/{/home/*,/Users/*}/.ViberPC /{/home/*,/Users/*}/.var/app/com.viber.Viber /{/home/*,/Users/*}/snap/viber/{config.db*,viber.db*}"
     },
     {
      "Name": "avatar_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.ViberPC /home/*/.var/app/com.viber.Viber /home/*/snap/viber/*/Avatars/*"
+     "Glob": "/{/home/*,/Users/*}/.ViberPC /{/home/*,/Users/*}/.var/app/com.viber.Viber /{/home/*,/Users/*}/snap/viber/*/Avatars/*"
     },
     {
      "Name": "thumbnails_files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.ViberPC /home/*/.var/app/com.viber.Viber /home/*/snap/viber/*/Thumbnails/*"
+     "Glob": "/{/home/*,/Users/*}/.ViberPC /{/home/*,/Users/*}/.var/app/com.viber.Viber /{/home/*,/Users/*}/snap/viber/*/Thumbnails/*"
     },
     {
      "Name": "database_files",
-     "Glob": "/home/*/Library/Application Support/ViberPC/{config.db*,viber.db*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/ViberPC/{config.db*,viber.db*}"
     },
     {
      "Name": "avatar_files",
-     "Glob": "/home/*/Library/Application Support/ViberPC/*/Avatars/*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/ViberPC/*/Avatars/*"
     },
     {
      "Name": "thumbnails_files",
-     "Glob": "/home/*/Library/Application Support/ViberPC/*/Thumbnails/*"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/ViberPC/*/Thumbnails/*"
     }
    ]
   },
@@ -922,7 +922,7 @@
    "Description": "Collect vim info file. This file is used to store command line, search string, input-line, marks, substitute patterns history and more.",
    "Rules": [
     {
-     "Glob": "/home/*/.viminfo"
+     "Glob": "/{/home/*,/Users/*}/.viminfo"
     }
    ]
   },
@@ -931,7 +931,7 @@
    "Description": "Collect VLC configuration file which contains the list of recently opened files.",
    "Rules": [
     {
-     "Glob": "/home/*/.config/vlc /home/*/.var/app/org.videolan.VLC /home/*/snap/vlc/vlc-qt-interface.conf"
+     "Glob": "/{/home/*,/Users/*}/.config/vlc /{/home/*,/Users/*}/.var/app/org.videolan.VLC /{/home/*,/Users/*}/snap/vlc/vlc-qt-interface.conf"
     }
    ]
   },
@@ -940,7 +940,7 @@
    "Description": "Collect wget hsts file. This file is used to store the HSTS cache for the wget utility.",
    "Rules": [
     {
-     "Glob": "/home/*/.wget-hsts"
+     "Glob": "/{/home/*,/Users/*}/.wget-hsts"
     }
    ]
   },
@@ -950,15 +950,15 @@
    "Rules": [
     {
      "Name": "cache_files",
-     "Glob": "/home/*/Library/Application Support/WhatsApp/Cache"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/WhatsApp/Cache"
     },
     {
      "Name": "leveldb_files",
-     "Glob": "/home/*/Library/Application Support/WhatsApp/Local Storage/leveldb"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/WhatsApp/Local Storage/leveldb"
     },
     {
      "Name": "Desktop_files",
-     "Glob": "/home/*/Library/Group Containers/group.net.whatsapp.WhatsApp.shared"
+     "Glob": "/{/home/*,/Users/*}/Library/Group Containers/group.net.whatsapp.WhatsApp.shared"
     }
    ]
   },
@@ -968,10 +968,10 @@
    "Rules": [
     {
      "Name": "including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/Kingsoft /home/*/.var/app/com.wps.Office /home/*/snap/wps-office/{Office.conf,recently-used.xbel,workarea.cfg}"
+     "Glob": "/{/home/*,/Users/*}/.config/Kingsoft /{/home/*,/Users/*}/.var/app/com.wps.Office /{/home/*,/Users/*}/snap/wps-office/{Office.conf,recently-used.xbel,workarea.cfg}"
     },
     {
-     "Glob": "/home/*/Library/Group Containers/*.wpsoffice/recentlocalfile.xml"
+     "Glob": "/{/home/*,/Users/*}/Library/Group Containers/*.wpsoffice/recentlocalfile.xml"
     }
    ]
   },
@@ -981,19 +981,19 @@
    "Rules": [
     {
      "Name": "files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/BraveSoftware/Brave-Browser /home/*/.var/app/com.brave.Browser /home/*/snap/brave/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.config/BraveSoftware/Brave-Browser /{/home/*,/Users/*}/.var/app/com.brave.Browser /{/home/*,/Users/*}/snap/brave/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/BraveSoftware/Brave-Browser /home/*/.var/app/com.brave.Browser /home/*/snap/brave/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.config/BraveSoftware/Brave-Browser /{/home/*,/Users/*}/.var/app/com.brave.Browser /{/home/*,/Users/*}/snap/brave/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     },
     {
      "Name": "files",
-     "Glob": "/home/*/Library/Application Support/BraveSoftware/Brave-Browser/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/BraveSoftware/Brave-Browser/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/Library/Application Support/BraveSoftware/Brave-Browser/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/BraveSoftware/Brave-Browser/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     }
    ]
   },
@@ -1003,75 +1003,75 @@
    "Rules": [
     {
      "Name": "Brave_browser_cache_directory_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.cache/BraveSoftware/Brave-Browser /home/*/.var/app/com.brave.Browser/cache/BraveSoftware/Brave-Browser /home/*/snap/brave/common/.cache/BraveSoftware/Brave-Browser"
+     "Glob": "/{/home/*,/Users/*}/.cache/BraveSoftware/Brave-Browser /{/home/*,/Users/*}/.var/app/com.brave.Browser/cache/BraveSoftware/Brave-Browser /{/home/*,/Users/*}/snap/brave/common/.cache/BraveSoftware/Brave-Browser"
     },
     {
      "Name": "Brave_browser_cache_directory",
-     "Glob": "/home/*/Library/Caches/BraveSoftware/Brave-Browser"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/BraveSoftware/Brave-Browser"
     },
     {
      "Name": "Chrome_browser_cache_directory_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.cache/google-chrome /home/*/.var/app/com.google.Chrome/cache/google-chrome /home/*/Library/Caches/Google/Chrome"
+     "Glob": "/{/home/*,/Users/*}/.cache/google-chrome /{/home/*,/Users/*}/.var/app/com.google.Chrome/cache/google-chrome /{/home/*,/Users/*}/Library/Caches/Google/Chrome"
     },
     {
      "Name": "Chromium_browser_cache_directory_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app/org.chromium.Chromium/cache/chromium /home/*/snap/chromium/common/chromium/Default/Cache"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.chromium.Chromium/cache/chromium /{/home/*,/Users/*}/snap/chromium/common/chromium/Default/Cache"
     },
     {
      "Name": "Edge_browser_cache_directory_including_Flatpak_version",
-     "Glob": "/home/*/.cache/microsoft-edge /home/*/.var/app/com.microsoft.Edge/cache/microsoft-edge"
+     "Glob": "/{/home/*,/Users/*}/.cache/microsoft-edge /{/home/*,/Users/*}/.var/app/com.microsoft.Edge/cache/microsoft-edge"
     },
     {
      "Name": "Edge_browser_cache_directory",
-     "Glob": "/home/*/Library/Caches/Microsoft Edge"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/Microsoft Edge"
     },
     {
      "Name": "Firefox_browser_cache_directory",
-     "Glob": "/home/*/.cache/mozilla/firefox"
+     "Glob": "/{/home/*,/Users/*}/.cache/mozilla/firefox"
     },
     {
      "Name": "Firefox_browser_cache_directory_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app/org.mozilla.firefox/cache/mozilla/firefox /home/*/snap/firefox/common/.cache/mozilla/firefox"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.mozilla.firefox/cache/mozilla/firefox /{/home/*,/Users/*}/snap/firefox/common/.cache/mozilla/firefox"
     },
     {
      "Name": "Firefox_browser_cache_directory",
-     "Glob": "/home/*/Library/Caches/Firefox"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/Firefox"
     },
     {
      "Name": "Konqueror_browser_cache_directory",
-     "Glob": "/home/*/.cache/kioexec"
+     "Glob": "/{/home/*,/Users/*}/.cache/kioexec"
     },
     {
      "Name": "Konqueror_browser_cache_directory",
-     "Glob": "/home/*/.cache/konqueror"
+     "Glob": "/{/home/*,/Users/*}/.cache/konqueror"
     },
     {
      "Name": "Konqueror_browser_cache_directory",
-     "Glob": "/home/*/.kde/share/apps/konqueror/cache"
+     "Glob": "/{/home/*,/Users/*}/.kde/share/apps/konqueror/cache"
     },
     {
      "Name": "Opera_browser_cache_directory_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.cache/opera /home/*/.var/app/com.opera.Opera/cache/opera /home/*/snap/opera/common/.cache/opera"
+     "Glob": "/{/home/*,/Users/*}/.cache/opera /{/home/*,/Users/*}/.var/app/com.opera.Opera/cache/opera /{/home/*,/Users/*}/snap/opera/common/.cache/opera"
     },
     {
      "Name": "Opera_browser_cache_directory",
-     "Glob": "/home/*/Library/Caches/com.operasoftware.Opera"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/com.operasoftware.Opera"
     },
     {
      "Name": "Safari_browser_cache_directory",
-     "Glob": "/home/*/Library/Caches/com.apple.Safari"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/com.apple.Safari"
     },
     {
      "Name": "Safari_browser_cache_directory",
-     "Glob": "/home/*/Library/Containers/com.apple.Safari/Data/Library/Caches/com.apple.Safari"
+     "Glob": "/{/home/*,/Users/*}/Library/Containers/com.apple.Safari/Data/Library/Caches/com.apple.Safari"
     },
     {
      "Name": "Vivaldi_browser_cache_directory_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.cache/vivaldi /home/*/.var/app/com.vivaldi.Vivaldi/cache/vivaldi /home/*/snap/vivaldi/common/.cache/vivaldi"
+     "Glob": "/{/home/*,/Users/*}/.cache/vivaldi /{/home/*,/Users/*}/.var/app/com.vivaldi.Vivaldi/cache/vivaldi /{/home/*,/Users/*}/snap/vivaldi/common/.cache/vivaldi"
     },
     {
      "Name": "Vivaldi_browser_cache_directory",
-     "Glob": "/home/*/Library/Caches/Vivaldi"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/Vivaldi"
     }
    ]
   },
@@ -1081,19 +1081,19 @@
    "Rules": [
     {
      "Name": "files_including_Flatpak_version",
-     "Glob": "/home/*/.config/google-chrome /home/*/.var/app/com.google.Chrome/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.config/google-chrome /{/home/*,/Users/*}/.var/app/com.google.Chrome/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories_including_Flatpak_version",
-     "Glob": "/home/*/.config/google-chrome /home/*/.var/app/com.google.Chrome/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.config/google-chrome /{/home/*,/Users/*}/.var/app/com.google.Chrome/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     },
     {
      "Name": "files",
-     "Glob": "/home/*/Library/Application Support/Google/Chrome/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google/Chrome/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/Library/Application Support/Google/Chrome/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Google/Chrome/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     }
    ]
   },
@@ -1103,11 +1103,11 @@
    "Rules": [
     {
      "Name": "files_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app/org.chromium.Chromium /home/*/snap/chromium/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.chromium.Chromium /{/home/*,/Users/*}/snap/chromium/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app/org.chromium.Chromium /home/*/snap/chromium/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.chromium.Chromium /{/home/*,/Users/*}/snap/chromium/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     }
    ]
   },
@@ -1117,19 +1117,19 @@
    "Rules": [
     {
      "Name": "files_including_Flatpak_version",
-     "Glob": "/home/*/.config/microsoft-edge /home/*/.var/app/com.microsoft.Edge/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.config/microsoft-edge /{/home/*,/Users/*}/.var/app/com.microsoft.Edge/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories_including_Flatpak_version",
-     "Glob": "/home/*/.config/microsoft-edge /home/*/.var/app/com.microsoft.Edge/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.config/microsoft-edge /{/home/*,/Users/*}/.var/app/com.microsoft.Edge/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     },
     {
      "Name": "files",
-     "Glob": "/home/*/Library/Application Support/Microsoft Edge/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft Edge/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/Library/Application Support/Microsoft Edge/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Microsoft Edge/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     }
    ]
   },
@@ -1139,27 +1139,27 @@
    "Rules": [
     {
      "Name": "files",
-     "Glob": "/home/*/.mozilla/firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.rdf,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}"
+     "Glob": "/{/home/*,/Users/*}/.mozilla/firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.rdf,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/.mozilla/firefox/{bookmarkbackups,sessionstore*}"
+     "Glob": "/{/home/*,/Users/*}/.mozilla/firefox/{bookmarkbackups,sessionstore*}"
     },
     {
      "Name": "files_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app/org.mozilla.firefox /home/*/snap/firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.mozilla.firefox /{/home/*,/Users/*}/snap/firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}"
     },
     {
      "Name": "directories_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.var/app/org.mozilla.firefox /home/*/snap/firefox/{bookmarkbackups,sessionstore*}"
+     "Glob": "/{/home/*,/Users/*}/.var/app/org.mozilla.firefox /{/home/*,/Users/*}/snap/firefox/{bookmarkbackups,sessionstore*}"
     },
     {
      "Name": "files",
-     "Glob": "/home/*/Library/Application Support/Firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Firefox/{addons.*,bookmarks.sqlite*,cookies.sqlite*,downloads.sqlite*,extensions.json,favicons.sqlite*,firefox_cookies.sqlite*,formhistory.sqlite*,key*.db,logins.json,permissions.sqlite*,places.sqlite*,prefs.js,protections.sqlite*,search.sqlite*,signon*.*,signons.sqlite*,storage-sync*.sqlite*,webappstore.sqlite*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/Library/Application Support/Firefox/{bookmarkbackups,sessionstore*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Firefox/{bookmarkbackups,sessionstore*}"
     }
    ]
   },
@@ -1169,27 +1169,27 @@
    "Rules": [
     {
      "Name": "browser_files",
-     "Glob": "/home/*/.local/share/konqueror/{bookmarks.xml,closeditems_saved,cookies*,extensions*,konq_history*,Network Persistent State,user_prefs.json,Visited Links}"
+     "Glob": "/{/home/*,/Users/*}/.local/share/konqueror/{bookmarks.xml,closeditems_saved,cookies*,extensions*,konq_history*,Network Persistent State,user_prefs.json,Visited Links}"
     },
     {
      "Name": "browser_directories",
-     "Glob": "/home/*/.local/share/konqueror/{Local Storage,Session Storage,sessions}"
+     "Glob": "/{/home/*,/Users/*}/.local/share/konqueror/{Local Storage,Session Storage,sessions}"
     },
     {
      "Name": "browser_files",
-     "Glob": "/home/*/.kde/share/apps/konqueror/{addons.*,bookmarks.xml,cookies*,konq_history*,extensions*}"
+     "Glob": "/{/home/*,/Users/*}/.kde/share/apps/konqueror/{addons.*,bookmarks.xml,cookies*,konq_history*,extensions*}"
     },
     {
      "Name": "browser_directories",
-     "Glob": "/home/*/.kde/share/apps/konqueror/{bookmarkbackups,sessionstore*}"
+     "Glob": "/{/home/*,/Users/*}/.kde/share/apps/konqueror/{bookmarkbackups,sessionstore*}"
     },
     {
      "Name": "cookies",
-     "Glob": "/home/*/.kde/share/apps/kcookiejar"
+     "Glob": "/{/home/*,/Users/*}/.kde/share/apps/kcookiejar"
     },
     {
      "Name": "config_file",
-     "Glob": "/home/*/.kde/share/config/konquerorrc"
+     "Glob": "/{/home/*,/Users/*}/.kde/share/config/konquerorrc"
     }
    ]
   },
@@ -1199,19 +1199,19 @@
    "Rules": [
     {
      "Name": "files_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/opera /home/*/.var/app/com.opera.Opera /home/*/snap/opera/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.config/opera /{/home/*,/Users/*}/.var/app/com.opera.Opera /{/home/*,/Users/*}/snap/opera/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories_including_Flatpak_and_Snap_versions",
-     "Glob": "/home/*/.config/opera /home/*/.var/app/com.opera.Opera /home/*/snap/opera/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.config/opera /{/home/*,/Users/*}/.var/app/com.opera.Opera /{/home/*,/Users/*}/snap/opera/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     },
     {
      "Name": "files",
-     "Glob": "/home/*/Library/Application Support/*Opera/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/*Opera/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/Library/Application Support/*Opera/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/*Opera/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     }
    ]
   },
@@ -1221,19 +1221,19 @@
    "Rules": [
     {
      "Name": "browser_files",
-     "Glob": "/home/*/Library/Safari*/{AutoFillCorrections*,AutoFillQuirks.plist,AutomaticBookmarksBackup.html,Bookmarks.plist,CloudAutoFillCorrections*,CloudExtensions.db*,CloudTabs*,ContentBlockerStatistics*,Cookies.plist,Downloads.plist,Extensions.plist,History*,LastSession.plist,PerSitePreferences*,RecentlyClosedTabs.plist,SafariTabs.db*,TopSites.plist}"
+     "Glob": "/{/home/*,/Users/*}/Library/Safari*/{AutoFillCorrections*,AutoFillQuirks.plist,AutomaticBookmarksBackup.html,Bookmarks.plist,CloudAutoFillCorrections*,CloudExtensions.db*,CloudTabs*,ContentBlockerStatistics*,Cookies.plist,Downloads.plist,Extensions.plist,History*,LastSession.plist,PerSitePreferences*,RecentlyClosedTabs.plist,SafariTabs.db*,TopSites.plist}"
     },
     {
      "Name": "browser_files",
-     "Glob": "/home/*/Library/Containers/com.apple.Safari*/Data/Library/Safari*/{AutoFillCorrections*,AutoFillQuirks.plist,AutomaticBookmarksBackup.html,Bookmarks.plist,com.apple.Safari.plist,CloudAutoFillCorrections*,CloudExtensions.db*,CloudTabs*,ContentBlockerStatistics*,Cookies.plist,Downloads.plist,Extensions.plist,History*,LastSession.plist,PerSitePreferences*,RecentlyClosedTabs.plist,SafariTabs.db*,TopSites.plist}"
+     "Glob": "/{/home/*,/Users/*}/Library/Containers/com.apple.Safari*/Data/Library/Safari*/{AutoFillCorrections*,AutoFillQuirks.plist,AutomaticBookmarksBackup.html,Bookmarks.plist,com.apple.Safari.plist,CloudAutoFillCorrections*,CloudExtensions.db*,CloudTabs*,ContentBlockerStatistics*,Cookies.plist,Downloads.plist,Extensions.plist,History*,LastSession.plist,PerSitePreferences*,RecentlyClosedTabs.plist,SafariTabs.db*,TopSites.plist}"
     },
     {
      "Name": "browser_directories",
-     "Glob": "/home/*/Library/Safari*/{Favicon Cache,Form Values}"
+     "Glob": "/{/home/*,/Users/*}/Library/Safari*/{Favicon Cache,Form Values}"
     },
     {
      "Name": "cookies_files",
-     "Glob": "/home/*/Library/Cookies"
+     "Glob": "/{/home/*,/Users/*}/Library/Cookies"
     }
    ]
   },
@@ -1243,19 +1243,19 @@
    "Rules": [
     {
      "Name": "files_including_Flatpak_version",
-     "Glob": "/home/*/.config/vivaldi /home/*/.var/app/com.vivaldi.Vivaldi/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/.config/vivaldi /{/home/*,/Users/*}/.var/app/com.vivaldi.Vivaldi/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories_including_Flatpak_version",
-     "Glob": "/home/*/.config/vivaldi /home/*/.var/app/com.vivaldi.Vivaldi/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/.config/vivaldi /{/home/*,/Users/*}/.var/app/com.vivaldi.Vivaldi/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     },
     {
      "Name": "files",
-     "Glob": "/home/*/Library/Application Support/Vivaldi/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Vivaldi/{Bookmarks*,Cookies*,DownloadMetadata,Extension Cookies*,Favicons*,History*,Login Data*,Media History*,Network Action Predictor*,Network Persistent State,Preferences,QuotaManager*,Reporting and NEL*,SecurePreferences,Shortcuts*,SyncData.sqlite3,Top Sites*,Trust Tokens*,Visited Links,WebAssistDatabase*,Web Data*}"
     },
     {
      "Name": "directories",
-     "Glob": "/home/*/Library/Application Support/Vivaldi/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Vivaldi/{Extensions,File System,IndexedDB,Local Storage,Sessions}"
     }
    ]
   },
@@ -1303,7 +1303,7 @@
     },
     {
      "Name": "user_applications_logs",
-     "Glob": "/home/*/Library/Logs/*"
+     "Glob": "/{/home/*,/Users/*}/Library/Logs/*"
     },
     {
      "Name": "auditd_logs",
@@ -1481,7 +1481,7 @@
     },
     {
      "Name": "fo_plist_from_installed_applications",
-     "Glob": "/home/*/Applications /home/*/Library/*/Contents/Info.plist"
+     "Glob": "/{/home/*,/Users/*}/Applications /{/home/*,/Users/*}/Library/*/Contents/Info.plist"
     }
    ]
   },
@@ -1522,7 +1522,7 @@
    "Description": "Collect shell config files.",
    "Rules": [
     {
-     "Glob": "/home/*/{.*_aliases,.*_login,.*_logout,.*_profile,.*rc,.aliases,.cshdirs,.ksh,.login,.logout,.profile,.tcsh,.zlogin,.zlogout,.zprofile,.zshenv}"
+     "Glob": "/{/home/*,/Users/*}/{.*_aliases,.*_login,.*_logout,.*_profile,.*rc,.aliases,.cshdirs,.ksh,.login,.logout,.profile,.tcsh,.zlogin,.zlogout,.zprofile,.zshenv}"
     }
    ]
   },
@@ -1531,7 +1531,7 @@
    "Description": "Collect shell history files.",
    "Rules": [
     {
-     "Glob": "/home/*/{.*_history,.*history,.cosh_history,.dash_history,.esh_history,.lesshst,.nash_history,.sash_history,.scsh_history,.xonsh_history,.zhistory,*.historynew,fish_history}"
+     "Glob": "/{/home/*,/Users/*}/{.*_history,.*history,.cosh_history,.dash_history,.esh_history,.lesshst,.nash_history,.sash_history,.scsh_history,.xonsh_history,.zhistory,*.historynew,fish_history}"
     }
    ]
   },
@@ -1540,7 +1540,7 @@
    "Description": "Collect shell sessions files.",
    "Rules": [
     {
-     "Glob": "/home/*/{*.session,*.sessions,.*_sessions}"
+     "Glob": "/{/home/*,/Users/*}/{*.session,*.sessions,.*_sessions}"
     }
    ]
   },
@@ -1549,7 +1549,7 @@
    "Description": "Collect authorized_keys files.",
    "Rules": [
     {
-     "Glob": "/home/*/.ssh/authorized_keys*"
+     "Glob": "/{/home/*,/Users/*}/.ssh/authorized_keys*"
     }
    ]
   },
@@ -1558,7 +1558,7 @@
    "Description": "Collect known_hosts files.",
    "Rules": [
     {
-     "Glob": "/home/*/.ssh/known_hosts*"
+     "Glob": "/{/home/*,/Users/*}/.ssh/known_hosts*"
     }
    ]
   },
@@ -1567,7 +1567,7 @@
    "Description": "Collect rc files. If the file ~/.ssh/rc exists, sh runs it after reading the environment files but before starting the user's shell or command.",
    "Rules": [
     {
-     "Glob": "/home/*/.ssh/rc"
+     "Glob": "/{/home/*,/Users/*}/.ssh/rc"
     }
    ]
   },
@@ -1656,7 +1656,7 @@
    "Description": "Collect GUI shortcut files of users.",
    "Rules": [
     {
-     "Glob": "/home/*/*.desktop"
+     "Glob": "/{/home/*,/Users/*}/*.desktop"
     }
    ]
   },
@@ -1710,7 +1710,7 @@
    "Description": "Collect the list of user's items/devices and items/devices info registered within the Find My application.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Caches/com.apple.findmy.*/Devices.data"
+     "Glob": "/{/home/*,/Users/*}/Library/Caches/com.apple.findmy.*/Devices.data"
     }
    ]
   },
@@ -1719,7 +1719,7 @@
    "Description": "Collect data from the gvfs-metadata directory to retrieve user-specific metadata, such as local and remote file access details, custom properties, and interaction history.",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/gvfs-metadata"
+     "Glob": "/{/home/*,/Users/*}/.local/share/gvfs-metadata"
     }
    ]
   },
@@ -1754,7 +1754,7 @@
    "Description": "Collect activity tracking data used by KActivityManager (part of KDE) to track and manage user activities, such as recently opened files, applications, and other resources.",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/kactivitymanagerd/resources"
+     "Glob": "/{/home/*,/Users/*}/.local/share/kactivitymanagerd/resources"
     }
    ]
   },
@@ -1768,7 +1768,7 @@
     },
     {
      "Name": "user_s_keychain_file",
-     "Glob": "/home/*/Library/Keychains"
+     "Glob": "/{/home/*,/Users/*}/Library/Keychains"
     }
    ]
   },
@@ -1781,7 +1781,7 @@
     },
     {
      "Name": "Collect_knowledgeC_database_file",
-     "Glob": "/home/*/Library/Application Support/Knowledge/knowledgeC.db"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/Knowledge/knowledgeC.db"
     }
    ]
   },
@@ -1795,7 +1795,7 @@
     },
     {
      "Name": "user_s_preferences_and_configuration_plist_files",
-     "Glob": "/home/*/Library/Preferences/{*.plist,.*.plist}"
+     "Glob": "/{/home/*,/Users/*}/Library/Preferences/{*.plist,.*.plist}"
     }
    ]
   },
@@ -1804,7 +1804,7 @@
    "Description": "Collect Linux Most Recently Used.",
    "Rules": [
     {
-     "Glob": "/home/*/recently-used.xbel"
+     "Glob": "/{/home/*,/Users/*}/recently-used.xbel"
     }
    ]
   },
@@ -1822,16 +1822,16 @@
    "Description": "Collect macOS Most Recently Used.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Preferences/{*.LSSharedFileList.plist,com.apple.finder.plist,com.apple.recentitems.plist,com.apple.sidebarlists.plist}"
+     "Glob": "/{/home/*,/Users/*}/Library/Preferences/{*.LSSharedFileList.plist,com.apple.finder.plist,com.apple.recentitems.plist,com.apple.sidebarlists.plist}"
     },
     {
-     "Glob": "/home/*/Library/Application Support/com.apple.sharedfilelist"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/com.apple.sharedfilelist"
     },
     {
-     "Glob": "/home/*/Library/Application Support/com.apple.spotlight.Shortcuts"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/com.apple.spotlight.Shortcuts"
     },
     {
-     "Glob": "/home/*/Library/Preferences/{*.LSSharedFileList.plist,com.apple.finder.plist,com.apple.recentitems.plist}"
+     "Glob": "/{/home/*,/Users/*}/Library/Preferences/{*.LSSharedFileList.plist,com.apple.finder.plist,com.apple.recentitems.plist}"
     }
    ]
   },
@@ -1899,7 +1899,7 @@
    "Description": "Collect Quarantine Events database file.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2"
+     "Glob": "/{/home/*,/Users/*}/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2"
     }
    ]
   },
@@ -1917,7 +1917,7 @@
    "Description": "This file specifies remote users that can use a local user account on a network.",
    "Rules": [
     {
-     "Glob": "/home/*/.rhosts"
+     "Glob": "/{/home/*,/Users/*}/.rhosts"
     }
    ]
   },
@@ -1935,7 +1935,7 @@
    "Description": "Collect saved application state files.",
    "Rules": [
     {
-     "Glob": "/home/*/Library/Saved Application State/{data.data,windows.plist,window_*.data}"
+     "Glob": "/{/home/*,/Users/*}/Library/Saved Application State/{data.data,windows.plist,window_*.data}"
     }
    ]
   },
@@ -1962,7 +1962,7 @@
     },
     {
      "Name": "Agents_configuration_files",
-     "Glob": "/home/*/Library/LaunchAgents"
+     "Glob": "/{/home/*,/Users/*}/Library/LaunchAgents"
     },
     {
      "Name": "Daemons_configuration_files",
@@ -2019,7 +2019,7 @@
     },
     {
      "Name": "per_user_configuration",
-     "Glob": "/home/*/.config/systemd /home/*/.local/share/systemd"
+     "Glob": "/{/home/*,/Users/*}/.config/systemd /{/home/*,/Users/*}/.local/share/systemd"
     },
     {
      "Name": "per_user_transient_timers",
@@ -2035,7 +2035,7 @@
      "Glob": "/Library/Application Support/com.apple.TCC/TCC.db"
     },
     {
-     "Glob": "/home/*/Library/Application Support/com.apple.TCC/TCC.db"
+     "Glob": "/{/home/*,/Users/*}/Library/Application Support/com.apple.TCC/TCC.db"
     }
    ]
   },
@@ -2056,7 +2056,7 @@
    "Description": "Collect tracker db files. Tracker provides searching and indexing functionality for the GNOME desktop environment and beyond.",
    "Rules": [
     {
-     "Glob": "/home/*/.cache/tracker3/files/{*Audio.db*,*Documents.db*,*FileSystem.db*,*Pictures.db*,*Software.db*,*Video.db*,meta.db*}"
+     "Glob": "/{/home/*,/Users/*}/.cache/tracker3/files/{*Audio.db*,*Documents.db*,*FileSystem.db*,*Pictures.db*,*Software.db*,*Video.db*,meta.db*}"
     }
    ]
   },
@@ -2065,7 +2065,7 @@
    "Description": "Collect Trash info file.",
    "Rules": [
     {
-     "Glob": "/home/*/.local/share/Trash/info/*.trashinfo"
+     "Glob": "/{/home/*,/Users/*}/.local/share/Trash/info/*.trashinfo"
     }
    ]
   },
@@ -2088,7 +2088,7 @@
     },
     {
      "Name": "user_session_Upstart_configuration_files",
-     "Glob": "/home/*/.config/upstart"
+     "Glob": "/{/home/*,/Users/*}/.config/upstart"
     }
    ]
   },
@@ -2098,7 +2098,7 @@
    "Rules": [
     {
      "Name": "Apple_Accounts_database_files",
-     "Glob": "/home/*/Library/Accounts/Accounts*.sqlite*"
+     "Glob": "/{/home/*,/Users/*}/Library/Accounts/Accounts*.sqlite*"
     },
     {
      "Name": "information_about_the_users_that_have_logged_in_to_the_macOS_computer_as_recovered_from_the_settings_plist_files",
@@ -2167,11 +2167,11 @@
     },
     {
      "Name": "user_specific_XDG_autostart_files",
-     "Glob": "/home/*/.config/autostart /home/*/.local/share/autostart"
+     "Glob": "/{/home/*,/Users/*}/.config/autostart /{/home/*,/Users/*}/.local/share/autostart"
     },
     {
      "Name": "user_specific_XDG_autostart_files_not_part_of_XDG_standard_but_used_by_KDE",
-     "Glob": "/home/*/.config/autostart-scripts"
+     "Glob": "/{/home/*,/Users/*}/.config/autostart-scripts"
     }
    ]
   },
@@ -2180,7 +2180,7 @@
    "Description": "Collect xsession errors file. This is the error log produced by X window system.",
    "Rules": [
     {
-     "Glob": "/home/*/.xsession-errors"
+     "Glob": "/{/home/*,/Users/*}/.xsession-errors"
     }
    ]
   },

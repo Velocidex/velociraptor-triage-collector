@@ -34,7 +34,7 @@ LET TryToDownload(OSPath, Row) = SELECT *,
 FROM switch(
 a={
     SELECT *, "auto" AS Accessor, Row AS Data
-    FROM stat(filename=OSPath, accessor="auto")
+    FROM stat(filename=OSPath || "", accessor="auto")
   }, b={
     SELECT OSPath,
            0 AS Size,
