@@ -387,6 +387,28 @@
     }
    ]
   },
+  "ElasticDefend": {
+   "Name": "ElasticDefend",
+   "Description": "Elastic Defend Data",
+   "Author": "AlliedPterodactyl",
+   "Rules": [
+    {
+     "Name": "Elastic Defend Logs",
+     "Category": "Antivirus",
+     "Glob": "Program Files\\Elastic\\Endpoint\\state\\log\\*.log"
+    },
+    {
+     "Name": "Elastic Defend Quarantine",
+     "Category": "Antivirus",
+     "Glob": ".equarantine\\*"
+    },
+    {
+     "Name": "Elastic Defend Quarantine",
+     "Category": "Antivirus",
+     "Glob": "Program Files\\Elastic\\Endpoint\\state\\.equarantine\\*"
+    }
+   ]
+  },
   "Emsisoft": {
    "Name": "Emsisoft",
    "Description": "Emsisoft Antivirus Logs",
@@ -1528,6 +1550,18 @@
     }
    ]
   },
+  "Chocolatey": {
+   "Name": "Chocolatey",
+   "Description": "Chocolatey",
+   "Author": "Paul CABON (CERT CWATCH - ALMOND)",
+   "Rules": [
+    {
+     "Name": "Chocolatey logs",
+     "Category": "Apps",
+     "Glob": "ProgramData\\chocolatey\\logs\\**\\*.log"
+    }
+   ]
+  },
   "CiscoJabber": {
    "Name": "CiscoJabber",
    "Description": "Jabber",
@@ -1592,6 +1626,67 @@
      "Name": "DWAgent Log Files",
      "Category": "Logs",
      "Glob": "ProgramData\\DWAgent*\\*.log*"
+    }
+   ]
+  },
+  "DeveloperCloudCredentials": {
+   "Name": "DeveloperCloudCredentials",
+   "Description": "Collect common developer and cloud credential artifacts useful during incident response",
+   "Author": "Aashiq Ahmed",
+   "Rules": [
+    {
+     "Name": "AWS CLI Credentials",
+     "Category": "Credentials",
+     "Comment": "Collects AWS CLI credential file",
+     "Glob": "Users\\*\\.aws\\credentials"
+    },
+    {
+     "Name": "AWS CLI Config",
+     "Category": "Credentials",
+     "Comment": "Collects AWS CLI config file",
+     "Glob": "Users\\*\\.aws\\config"
+    },
+    {
+     "Name": "Kubernetes Config",
+     "Category": "Credentials",
+     "Comment": "Collects Kubernetes client config",
+     "Glob": "Users\\*\\.kube\\config"
+    },
+    {
+     "Name": "Docker Config",
+     "Category": "Credentials",
+     "Comment": "Collects Docker client configuration",
+     "Glob": "Users\\*\\.docker\\config.json"
+    },
+    {
+     "Name": "Git Credentials",
+     "Category": "Credentials",
+     "Comment": "Collects Git stored credentials",
+     "Glob": "Users\\*\\.git-credentials"
+    },
+    {
+     "Name": "Git Config",
+     "Category": "Credentials",
+     "Comment": "Collects Git user configuration",
+     "Glob": "Users\\*\\.gitconfig"
+    },
+    {
+     "Name": "SSH Config",
+     "Category": "Credentials",
+     "Comment": "Collects SSH client configuration",
+     "Glob": "Users\\*\\.ssh\\config"
+    },
+    {
+     "Name": "SSH Known Hosts",
+     "Category": "Credentials",
+     "Comment": "Collects SSH known_hosts file",
+     "Glob": "Users\\*\\.ssh\\known_hosts"
+    },
+    {
+     "Name": "npm User Config",
+     "Category": "Credentials",
+     "Comment": "Collects npm user configuration",
+     "Glob": "Users\\*\\.npmrc"
     }
    ]
   },
@@ -3264,13 +3359,31 @@
   "ProtonVPN": {
    "Name": "ProtonVPN",
    "Description": "ProtonVPN",
-   "Author": "Andrew Rathbun",
+   "Author": "Andrew Rathbun, AlliedPterodactyl",
    "Rules": [
     {
      "Name": "ProtonVPN - Connection Logs",
      "Category": "ApplicationLogs",
      "Comment": "Locates ProtonVPN connection logs.",
      "Glob": "Users\\*\\AppData\\Local\\ProtonVPN\\Logs\\*"
+    },
+    {
+     "Name": "ProtonVPN - Connection Logs",
+     "Category": "ApplicationLogs",
+     "Comment": "Locates ProtonVPN client logs.",
+     "Glob": "Users\\*\\AppData\\Local\\Proton\\Proton VPN\\Logs\\*"
+    },
+    {
+     "Name": "ProtonVPN - Service Logs",
+     "Category": "ApplicationLogs",
+     "Comment": "Locates ProtonVPN service logs.",
+     "Glob": "Program Files\\Proton\\VPN\\v*\\ServiceData\\Logs\\*"
+    },
+    {
+     "Name": "ProtonVPN - Configuration",
+     "Category": "ApplicationLogs",
+     "Comment": "Proton VPN configs including settings, recently connected server list and Proton VPN server IPs.",
+     "Glob": "Users\\*\\AppData\\Local\\Proton\\Proton VPN\\Storage\\*"
     }
    ]
   },
@@ -3703,6 +3816,31 @@
     }
    ]
   },
+  "RemoteManipulatorSystem": {
+   "Name": "RemoteManipulatorSystem",
+   "Description": "Remote Manipulator System (RMS)",
+   "Author": "raggadhub based on RemoteUtilities_App.tkape by Ryan McVicar",
+   "Rules": [
+    {
+     "Name": "Remote Manipulator System Connection Logs",
+     "Category": "Remote Access",
+     "Comment": "Includes connection log files",
+     "Glob": "Program Files*\\Remote Manipulator System - Host\\Logs\\rms_log_*.html"
+    },
+    {
+     "Name": "Remote Manipulator System Connection Logs in ProgramData",
+     "Category": "Remote Access",
+     "Comment": "Includes connection log files",
+     "Glob": "ProgramData\\Remote Manipulator System\\Logs\\rms_log_*.html"
+    },
+    {
+     "Name": "Remote Manipulator System Install Log",
+     "Category": "Remote Access",
+     "Comment": "Includes Install log file",
+     "Glob": "ProgramData\\Remote Manipulator System\\install.log"
+    }
+   ]
+  },
   "RemoteUtilities_app": {
    "Name": "RemoteUtilities_app",
    "Description": "Remote Utilities",
@@ -3713,6 +3851,12 @@
      "Category": "Remote Access",
      "Comment": "Includes connection log files",
      "Glob": "Program Files*\\Remote Utilities - Host\\Logs\\rut_log_*.html"
+    },
+    {
+     "Name": "RemoteUtilities Connection Logs in ProgramData",
+     "Category": "Remote Access",
+     "Comment": "Includes connection log files",
+     "Glob": "ProgramData\\Remote Utilities\\Logs\\rut_log_*.html"
     },
     {
      "Name": "RemoteUtilities Install Log",
@@ -3829,6 +3973,73 @@
      "Category": "Communications",
      "Comment": "Collects all log files related to RustDesk",
      "Glob": "Windows\\ServiceProfiles\\LocalService\\AppData\\Roaming\\RustDesk\\log\\server\\*"
+    }
+   ]
+  },
+  "SSHTunnelCommandArtifacts": {
+   "Name": "SSHTunnelCommandArtifacts",
+   "Description": "Collect command history, scripts, and SSH client artifacts useful for identifying SSH tunneling and pivoting commands",
+   "Author": "Aashiq Ahmed",
+   "Rules": [
+    {
+     "Name": "PowerShell ConsoleHost history",
+     "Category": "CommandHistory",
+     "Comment": "PowerShell command history may contain ssh, plink, and pivot tool commands",
+     "Glob": "Users\\*\\AppData\\Roaming\\Microsoft\\Windows\\PowerShell\\PSReadLine\\**\\ConsoleHost_history.txt"
+    },
+    {
+     "Name": "Bash history in user profiles",
+     "Category": "CommandHistory",
+     "Comment": "Bash history may contain ssh tunneling and pivot commands",
+     "Glob": "Users\\*\\**\\.bash_history"
+    },
+    {
+     "Name": "Zsh history in user profiles",
+     "Category": "CommandHistory",
+     "Comment": "Zsh history may contain ssh tunneling and pivot commands",
+     "Glob": "Users\\*\\**\\.zsh_history"
+    },
+    {
+     "Name": "User PowerShell scripts",
+     "Category": "Scripts",
+     "Comment": "User-created PowerShell scripts may contain pivoting commands",
+     "Glob": "Users\\*\\**\\*.ps1"
+    },
+    {
+     "Name": "User batch scripts",
+     "Category": "Scripts",
+     "Comment": "Batch scripts may contain ssh, plink, or netsh portproxy commands",
+     "Glob": "Users\\*\\**\\*.bat"
+    },
+    {
+     "Name": "User command scripts",
+     "Category": "Scripts",
+     "Comment": "CMD scripts may contain ssh, plink, or netsh portproxy commands",
+     "Glob": "Users\\*\\**\\*.cmd"
+    },
+    {
+     "Name": "User shell scripts",
+     "Category": "Scripts",
+     "Comment": "Shell scripts may contain ssh tunneling and proxy commands",
+     "Glob": "Users\\*\\**\\*.sh"
+    },
+    {
+     "Name": "SSH known_hosts",
+     "Category": "SSH",
+     "Comment": "known_hosts records SSH servers previously connected to",
+     "Glob": "Users\\*\\.ssh\\known_hosts"
+    },
+    {
+     "Name": "SSH config",
+     "Category": "SSH",
+     "Comment": "SSH config may contain port forwarding or tunneling settings",
+     "Glob": "Users\\*\\.ssh\\config"
+    },
+    {
+     "Name": "SSH directory artifacts",
+     "Category": "SSH",
+     "Comment": "SSH directory may contain keys, configs, and other connection artifacts",
+     "Glob": "Users\\*\\.ssh\\**"
     }
    ]
   },
@@ -4308,6 +4519,31 @@
      "Name": "Tablacus Explorer - window1.xml",
      "Category": "Logs",
      "Glob": "Users\\*\\AppData\\Local\\Temp\\*\\config\\**\\window1.xml"
+    }
+   ]
+  },
+  "Tailscale": {
+   "Name": "Tailscale",
+   "Description": "A Target to collect files from Tailscale",
+   "Author": "ogmini",
+   "Rules": [
+    {
+     "Name": "Temp Install Files",
+     "Category": "Network",
+     "Comment": "Tailscale Installation Log Files",
+     "Glob": "Users\\*\\AppData\\Local\\temp\\Tailscale*.log"
+    },
+    {
+     "Name": "Local App Data Files",
+     "Category": "Network",
+     "Comment": "Local App Data Files and Avatars",
+     "Glob": "Users\\*\\AppData\\Local\\Tailscale\\**"
+    },
+    {
+     "Name": "Tailscale Program Data",
+     "Category": "Network",
+     "Comment": "Tailscale Configuration and Log files. Partial file transfers.",
+     "Glob": "ProgramData\\Tailscale\\**"
     }
    ]
   },
@@ -9396,6 +9632,11 @@
      "Ref": "Cylance"
     },
     {
+     "Name": "Elastic Defend",
+     "Category": "Antivirus",
+     "Ref": "ElasticDefend"
+    },
+    {
      "Name": "Emsisoft",
      "Category": "Antivirus",
      "Ref": "Emsisoft"
@@ -10092,6 +10333,18 @@
     }
    ]
   },
+  "PackageManagers": {
+   "Name": "PackageManagers",
+   "Description": "Compound Target for files related to package managers",
+   "Author": "Paul CABON (CERT CWATCH - ALMOND)",
+   "Rules": [
+    {
+     "Name": "Chocolatey",
+     "Category": "ApplicationLogs",
+     "Ref": "Chocolatey"
+    }
+   ]
+  },
   "ProgramExecution": {
    "Name": "ProgramExecution",
    "Description": "Program Execution Triage Collection",
@@ -10296,6 +10549,12 @@
      "Category": "ApplicationLogs",
      "Comment": "Contains logs related to Remcos RAT",
      "Ref": "Remcos"
+    },
+    {
+     "Name": "Remote Manipulator System",
+     "Category": "ApplicationLogs",
+     "Comment": "Contains logs related to Remote Manipulator System",
+     "Ref": "RemoteManipulatorSystem"
     },
     {
      "Name": "Remote Utilities",
@@ -15038,7 +15297,7 @@
     {
      "Name": "Windows 10 Notification DB",
      "Category": "Notifications",
-     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Windows\\Notifications\\wpndatabase.db"
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Windows\\Notifications\\wpndatabase.db*"
     },
     {
      "Name": "Windows 10 Notification DB",
