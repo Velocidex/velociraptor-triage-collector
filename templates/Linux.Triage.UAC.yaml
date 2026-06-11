@@ -85,6 +85,16 @@ export: |
 
 sources:
 {{ Template "templates/SearchGlob.yaml" }}
+    name: quick_link
+    env:
+    - key: text
+      value: Triage Files
+    - key: icon
+      value: folder
+    - key: os_filter
+      value: linux
+    - key: weight
+      value: "15"
 
 - name: All Matches Metadata
   query: |
