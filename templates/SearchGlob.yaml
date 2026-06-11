@@ -1,6 +1,4 @@
 - name: SearchGlobs
-  notebook:
-    - type: none
   query: |
 {{ if .Dependencies }}
     // Work around bug in the artifact compiler failing to detect deps in export section
@@ -23,3 +21,6 @@
 
     SELECT * FROM AllCollections
     --WHERE Glob
+
+  notebook:
+  - type: none

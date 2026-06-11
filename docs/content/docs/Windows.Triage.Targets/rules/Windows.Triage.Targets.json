@@ -2610,6 +2610,19 @@
     }
    ]
   },
+  "Kopia": {
+   "Name": "Kopia",
+   "Description": "Kopia config file",
+   "Author": "Szymon Andrzejewski",
+   "Rules": [
+    {
+     "Name": "Kopia config file",
+     "Category": "Apps",
+     "Comment": "Collects all repository configurations, often including e.g. S3 API keys",
+     "Glob": "Users\\*\\AppData\\Roaming\\kopia\\*.config"
+    }
+   ]
+  },
   "Level": {
    "Name": "Level",
    "Description": "Level.io Application Logs",
@@ -5347,7 +5360,7 @@
   "360SecureBrowser": {
    "Name": "360SecureBrowser",
    "Description": "360 Secure Browser",
-   "Author": "Reece394",
+   "Author": "Reece394, Yogesh Khatri",
    "Rules": [
     {
      "Name": "360 Secure Browser Bookmarks",
@@ -5430,6 +5443,11 @@
      "Glob": "Users\\*\\AppData\\Roaming\\360se6\\User Data\\*\\Preferences"
     },
     {
+     "Name": "360 Secure Browser Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Roaming\\360se6\\User Data\\*\\Secure Preferences"
+    },
+    {
      "Name": "360 Secure Browser Quota Manager",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Roaming\\360se6\\User Data\\*\\QuotaManager"
@@ -5486,7 +5504,7 @@
   "Arc": {
    "Name": "Arc",
    "Description": "Arc Browser",
-   "Author": "Reece394",
+   "Author": "Reece394, Yogesh Khatri",
    "Rules": [
     {
      "Name": "Arc Cookies",
@@ -5522,6 +5540,11 @@
      "Name": "Arc Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Packages\\TheBrowserCompany.Arc_ttt1ap7aakyb4\\LocalCache\\Local\\Arc\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Arc Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Packages\\TheBrowserCompany.Arc_ttt1ap7aakyb4\\LocalCache\\Local\\Arc\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "Arc Shortcuts",
@@ -6864,7 +6887,7 @@
   "Chromium": {
    "Name": "Chromium",
    "Description": "Chromium",
-   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394",
+   "Author": "Eric Zimmerman, Andrew Rathbun, Hernan Filannino, Reece394, Yogesh Khatri",
    "Rules": [
     {
      "Name": "Chromium Bookmarks XP",
@@ -7020,6 +7043,11 @@
      "Name": "Chromium Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Chromium Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Chromium\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "Chromium Quota Manager",
@@ -7437,7 +7465,7 @@
   "EdgeChromium": {
    "Name": "EdgeChromium",
    "Description": "Microsoft Edge Chromium Artifacts",
-   "Author": "Chad Tilbury, Andrew Rathbun, Reece394",
+   "Author": "Chad Tilbury, Andrew Rathbun, Reece394, Yogesh Khatri",
    "Rules": [
     {
      "Name": "Edge Collections",
@@ -7523,6 +7551,11 @@
      "Name": "Edge Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Edge Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Microsoft\\Edge\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "Edge Quota Manager",
@@ -8292,7 +8325,7 @@
   "PrismaAccessBrowser": {
    "Name": "PrismaAccessBrowser",
    "Description": "Prisma Access Browser",
-   "Author": "Cassie Doemel and Andrew Rathbun",
+   "Author": "Cassie Doemel and Andrew Rathbun, Yogesh Khatri",
    "Rules": [
     {
      "Name": "Prisma Access Browser bookmarks XP",
@@ -8443,6 +8476,11 @@
      "Name": "Prisma Access Browser Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Prisma Access Browser Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Palo Alto Networks\\PrismaAccessBrowser\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "Prisma Access Browser Quota Manager",
@@ -8699,7 +8737,7 @@
   "Supermium": {
    "Name": "Supermium",
    "Description": "Supermium",
-   "Author": "Reece394",
+   "Author": "Reece394, Yogesh Khatri",
    "Rules": [
     {
      "Name": "Supermium Bookmarks XP",
@@ -8880,6 +8918,11 @@
      "Name": "Supermium Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Supermium\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Supermium Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Supermium\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "Supermium Quota Manager",
@@ -9082,7 +9125,7 @@
   "Vivaldi": {
    "Name": "Vivaldi",
    "Description": "Vivaldi Artifacts",
-   "Author": "Sebastian Søgaard",
+   "Author": "Sebastian Søgaard, Yogesh Khatri",
    "Rules": [
     {
      "Name": "Vivaldi Cookies",
@@ -9123,6 +9166,11 @@
      "Name": "Vivaldi Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\Vivaldi\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "Vivaldi Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\Vivaldi\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "Vivaldi Top Sites",
@@ -9174,7 +9222,7 @@
   "WaveBrowser": {
    "Name": "WaveBrowser",
    "Description": "WaveBrowser",
-   "Author": "Kalil Olsen",
+   "Author": "Kalil Olsen, Yogesh Khatri",
    "Rules": [
     {
      "Name": "WaveBrowser bookmarks",
@@ -9255,6 +9303,11 @@
      "Name": "WaveBrowser Preferences",
      "Category": "Communications",
      "Glob": "Users\\*\\AppData\\Local\\WaveBrowser\\User Data\\*\\Preferences"
+    },
+    {
+     "Name": "WaveBrowser Secure Preferences",
+     "Category": "Communications",
+     "Glob": "Users\\*\\AppData\\Local\\WaveBrowser\\User Data\\*\\Secure Preferences"
     },
     {
      "Name": "WaveBrowser Quota Manager",
@@ -9783,7 +9836,7 @@
   "CloudStorage_Metadata": {
    "Name": "CloudStorage_Metadata",
    "Description": "Cloud Storage Metadata",
-   "Author": "Chad Tilbury and Andrew Rathbun, Eric Capuano",
+   "Author": "Chad Tilbury and Andrew Rathbun, Eric Capuano, Szymon Andrzejewski",
    "Rules": [
     {
      "Name": "Box Metadata",
@@ -9819,6 +9872,11 @@
      "Name": "FreeFileSync",
      "Category": "Apps",
      "Ref": "FreeFileSync"
+    },
+    {
+     "Name": "Kopia config file",
+     "Category": "Apps",
+     "Ref": "Kopia"
     }
    ]
   },
