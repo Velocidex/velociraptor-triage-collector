@@ -96,3 +96,26 @@ another target reference.
 
 You can view the targets used in this artifact [here]({{< ref
 "docs/rules/" >}}).
+
+## Running on the command line / Testing
+
+It is easiest to run this artifact on the command line. For newer
+binaries (Velociraptor versions >= 0.76) you can use the new "run"
+mode CLI (Assume `f:\artifacts_definition` is the directory containing
+custom artifacts):
+
+```bash
+velociraptor.exe -v -D f:\artifacts_definitions\ -r Windows.Triage.Targets \
+  --MaxFileSize 10 --Targets _Live --output test.zip
+```
+
+For older Velociraptor versions use the classing CLI
+
+```bash
+velociraptor.exe -v --definitions f:\artifacts_definitions\ \
+   artifacts collect  Windows.Triage.Targets \
+   --args MaxFileSize=10 --args Targets=["""_Live"""] \
+   --output test.zip
+```
+
+The triple quote is needed on the cmd.exe console.
