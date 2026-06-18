@@ -24,8 +24,8 @@ jobs:
       id: velociraptor
       with:
         repository: velocidex/velociraptor
-        tag: v0.74
-        fileName: "velociraptor-v0.74.5-linux-amd64-musl"
+        tag: v0.76.6
+        fileName: "velociraptor-v0.76.6-linux-amd64-musl"
         out-file-path: tests
 
     - name: Build Artifacts
