@@ -1,0 +1,662 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  Linux.Triage.UAC
+  #
+
+This artifact is built automatically from the UAC
+project project.
+You can download the artifact for manual
+import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s glob() plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="http://triage.velocidex.com/docs/linux.triage.uac/"><meta property="og:site_name" content="Triage Artifacts"><meta property="og:title" content="Linux.Triage.UAC"><meta property="og:description" content="Linux.Triage.UAC # This artifact is built automatically from the UAC project project.
+You can download the artifact for manual import into Velociraptor.
+The description below explains how to use this artifact in practice.
+The artifact will generate a list of globs and prepend the device name to each glob. Velociraptor’s glob() plugin implementation is very efficient and minimizes the number of passes it needs to make over the filesystem, when using multiple glob expressions at the same time."><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><title>&lt;span class="icon">
+&lt;i class="fa-solid fa-desktop">&lt;/i>
+&lt;/span>
+Linux.Triage.UAC
+| Triage Artifacts</title><link rel=icon href=/favicon.png><link rel=manifest href=/manifest.json><link rel=canonical href=http://triage.velocidex.com/docs/linux.triage.uac/><link rel=stylesheet href=/book.min.f4bc2b0f80cbd784c51fa6123079c0ec4d90946148cb1cc5e0279ca61d81a19d.css integrity="sha256-9LwrD4DL14TFH6YSMHnA7E2QlGFIyxzF4Cecph2BoZ0=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=http://triage.velocidex.com/docs/linux.triage.uac/index.xml title="Triage Artifacts"><script src=/js/jquery-3.3.1.min.js?1703133391></script><link href=https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css?1703133392 rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=//cdn.datatables.net/2.3.0/css/dataTables.dataTables.min.css rel=stylesheet><script src=//cdn.datatables.net/2.3.0/js/dataTables.min.js></script><link href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css rel=stylesheet><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/yaml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.js integrity="sha512-0UbR6HN0dY8fWN9T7fF658896tsPgnbRREHCNq46J9/JSn8GonXDZmqtTc3qS879GM0zV49b9LPhdc/maKP8Kg==" crossorigin=anonymous referrerpolicy=no-referrer></script><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/featherlight/1.7.13/featherlight.min.css integrity="sha512-56GJrpSgHk6Mc9Fltt+bQKcICJoEpxtvozXPA5n5OT0rfWiqGlJmJCI/vl16kctf/0XbBloh03vl7OF2xFnR8g==" crossorigin=anonymous referrerpolicy=no-referrer><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css rel=stylesheet><script>$(document).ready(function(){$(".json-renderer").each(function(){try{data=JSON.parse($(this).text()),$(this).jsonViewer(data,{collapsed:!0,rootCollapsable:!1})}catch{}}),$(".datatable").each(function(){new DataTable(this,{paging:!0})}),$(".scroll-datatable").each(function(){let e=$(this),t=new DataTable(this,{paging:!1,scrollY:200})})})</script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>Triage Artifacts</span></a></h2><ul><li><a href=/docs/triage_artifacts/>Preservation Artifacts</a><ul></ul></li><li><span><span class=icon><i class="fa-solid fa-blog"></i>
+</span>Blog</span><ul><li><a href=/docs/blog/developing/><span class=icon><i class="fa-solid fa-code"></i>
+</span>Developing Targets</a><ul></ul></li></ul></li><li><a href=/docs/linux.triage.uac/ class=active><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</a><ul><li><a href=/docs/linux.triage.uac/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/windows.triage.targets/><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Windows.Triage.Targets</a><ul><li><a href=/docs/windows.triage.targets/rules/><span class=icon><i class="fa-solid fa-book"></i>
+</span>Rules</a><ul></ul></li></ul></li><li><a href=/docs/github/><span class=icon><i class="fa-brands fa-github"></i>
+</span>Github</a><ul></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label><h3><span class=icon><i class="fa-solid fa-desktop"></i>
+</span>Linux.Triage.UAC</h3><label for=toc-control></label></div></header><article class="markdown book-article"><h1 id=linuxtriageuac>Linux.Triage.UAC
+<a class=anchor href=#linuxtriageuac>#</a></h1><p>This artifact is built automatically from the <a href=https://github.com/tclahr/uac>UAC
+project</a> project.</p><p>You can <a href=Linux.Triage.UAC.zip>download the artifact</a> for manual
+import into Velociraptor.</p><p>The description below explains how to use this artifact in practice.</p><p>The artifact will generate a list of globs and prepend the device name
+to each glob. Velociraptor&rsquo;s <code>glob()</code> plugin implementation is very
+efficient and minimizes the number of passes it needs to make over the
+filesystem, when using multiple glob expressions at the same time.</p><p>Therefore the artifact first traverses all the rules to build a large
+list of glob expressions, which it uses to search for candidate files.</p><h2 id=parameters>Parameters
+<a class=anchor href=#parameters>#</a></h2><ol><li><p><strong>MaxFileSize</strong>: Sometimes we encounter very large files in
+unexpected location (e.g. browser cache). This setting ensures that
+very large files will not be collected. By default the setting is
+disabled (i.e. we collect any file size), but it is a good idea to
+limit it as very large files are not often useful.</p></li><li><p><strong>UPLOAD_IS_RESUMABLE</strong>: This setting controls how uploads are send
+from the Velociraptor client to the server. When enabled, the
+client will send upload information in advance so that if the
+collection times out or the client is restarted, the uploads may be
+resumed.</p><p>The setting only has an effect when collecting this artifact
+remotely from a client (i.e. does nothing for offline collections).</p></li></ol><p>Following these parameters, there are many checkboxes for each
+possible collection target.</p><h2 id=artifact>Artifact
+<a class=anchor href=#artifact>#</a></h2><div style=max-height:500px;overflow-y:auto><pre>
+<code style=margin-top:-40px;font-size:medium class=language-yaml>
+
+name: Linux.Triage.UAC
+description: |
+  NOTE:
+    This artifact was built from [The Velociraptor Triage
+    Repository](https://triage.velocidex.com/docs/)
+
+  Commit cd5eaba on 2026-06-18T17:04:14Z
+
+parameters:
+  - name: HighLevelTargets
+    description: A shorter list of Meta-Targets
+    type: multichoice
+    default: &#34;[]&#34;
+    choices:
+    - _All
+
+  - name: Targets
+    type: multichoice
+    description: All targets available
+    default: &#34;[]&#34;
+    choices:
+    - _All
+    - Acct
+    - Addressbook
+    - Advanced_log_search
+    - Anydesk
+    - Apache
+    - Apple_notes
+    - Apt
+    - Ark
+    - Aspera_connect
+    - Atftp
+    - Authorized_keys
+    - Aws_ssm_agent
+    - Azure_vm_agent
+    - Biome
+    - Box
+    - Brave
+    - Cache
+    - Chrome
+    - Chromium
+    - Config
+    - Coreanalytics
+    - Coredump
+    - Deleted
+    - Desktop
+    - Dev_db
+    - Dev_shm
+    - Discord
+    - Dnf
+    - Dolphin
+    - Dpkg
+    - Dragon_player
+    - Dropbox
+    - Ds_store
+    - Edge
+    - Etc
+    - Facebook_messenger
+    - Filezilla
+    - Findmy
+    - Firefox
+    - Geany
+    - Gedit
+    - Git
+    - Gnome_text_editor
+    - Google_drive
+    - Google_earth
+    - Gvfs_metadata
+    - Gwenview
+    - History
+    - Icloud
+    - Imessage
+    - Installed_applications
+    - Itunes_backup
+    - Job_scheduler
+    - Journal
+    - Kactivitymanagerd
+    - Katesession
+    - Kde_mru
+    - Keychain
+    - Knowledgec
+    - Known_hosts
+    - Konqueror
+    - Lesshst
+    - Library_preferences
+    - Libreoffice_mru
+    - Linux_mru
+    - Locate_db
+    - Macos
+    - Macos_mru
+    - Macos_unified_logs
+    - Microsoft_office_mru
+    - Microsoft_teams
+    - Nano
+    - Netscaler
+    - Network_application_usage
+    - Networkmanager
+    - Nginx
+    - Okular
+    - Opera
+    - Photos
+    - Php
+    - Pkg_contents
+    - Powerlog
+    - Qnap_qsync
+    - Quarantine_events
+    - Rc
+    - Rclone
+    - Recovery_account_info
+    - Relink
+    - Rhosts
+    - Run_log
+    - Run_shm
+    - Rustdesk
+    - Safari
+    - Saved_application_state
+    - Security_backups
+    - Sessions
+    - Signal
+    - Skype
+    - Slack
+    - Solaris
+    - Splashtop
+    - Startup_items
+    - Steam
+    - Svc
+    - Synology_drive
+    - System_version
+    - Systemd
+    - Tcc
+    - Teamviewer
+    - Telegram
+    - Thinlinc
+    - Thunderbird
+    - Tmp
+    - Tomcat
+    - Tracker
+    - Trash_info
+    - Udev
+    - Upstart
+    - User_accounts
+    - Utmp
+    - Var_adm
+    - Var_ld
+    - Var_log
+    - Var_run_log
+    - Var_spool
+    - Var_tmp
+    - Viber
+    - Viminfo
+    - Vivaldi
+    - Vlc
+    - Vyatta
+    - Wget
+    - Whatsapp
+    - Wps_office_mru
+    - Xdg_autostart
+    - Xsession_errors
+    - Yum
+
+  - name: TrustedPathRegex
+    type: regex
+    default: &#34;^/usr/bin/&#34;
+    description: |
+      Do not hash or upload any adaptive files matching this regex.
+
+  - name: MaxFileSize
+    type: int
+    default: 18446744073709551615
+    description: |
+      The max size in bytes of the individual files to collect.
+      Set to 0 to disable it.
+
+  - name: MaxHashSize
+    type: int
+    default: &#34;100000000&#34;
+    description: |
+      The max size in bytes of the individual files to hash.
+
+  - name: DropVerySlowRules
+    type: bool
+    default: Y
+    description: Ignore inefficient targets
+
+  - name: SlowGlobRegex
+    type: hidden
+    default: &#34;^/**&#34;
+    description: A regex to eliminate slow globs.
+
+  - name: WORKERS
+    type: int
+    default: &#34;5&#34;
+    description: |
+      Number of concurrent workers to use for parsing and compressing.
+
+  - name: UPLOAD_IS_RESUMABLE
+    type: bool
+    default: Y
+    description: |
+      If set the uploads can be resumed if the flow times out or
+      errors.
+
+  - name: PreferredAccessor
+    default: auto
+    description: The accessor to use.
+
+  - name: RootDirectory
+    default: /
+    description: The root directory to start searching from (can use a mount point for deaddisk analysis).
+
+export: |
+  -- We need to materialize into a scope variable. If this is too
+  -- large, VQL will use too much memory keeping these objects alive.
+  LET VQL_MATERIALIZE_ROW_LIMIT &lt;= 10
+  LET NTFS_CACHE_TIME &lt;= 100000
+  LET NTFS_DISABLE_FULL_PATH_RESOLUTION &lt;= TRUE
+  
+  // Initialize libmagic before we call it from multiple threads.
+  LET _ &lt;= magic(path=&#34;&#34;, accessor=&#34;data&#34;)
+  
+  LET S = scope()
+  LET Verbose &lt;= S.Verbose || FALSE
+  LET MaybeLOG(Message, Args) = if(condition=Verbose,
+    then=log(message=Message, level=&#34;DEBUG&#34;, dedup= -1, args=Args),
+    else=TRUE)
+  
+  // Only enable resuming if the upload() plugin version is recent
+  // enough. Earlier versions could lead to crashes in some cases.
+  LET UPLOAD_IS_RESUMABLE &lt;= S.UPLOAD_IS_RESUMABLE &amp;&amp; version(
+    function=&#34;upload&#34;) &gt; 2
+  
+  LET CollectionPolicy &lt;= S.CollectionPolicy || &#34;ExcludeSigned&#34;
+  
+  // Helper for VQL targets - try to download the file, but if failed,
+  // we return an empty row to record the filename.
+  LET TryToDownload(OSPath, Row) = SELECT *,
+    Data &#43; dict(Details=GetDetails(OSPath=OSPath) || dict()) AS Data
+  FROM switch(
+  a={
+      SELECT *, &#34;auto&#34; AS Accessor, Row AS Data
+      FROM stat(filename=OSPath || &#34;&#34;, accessor=&#34;auto&#34;)
+    }, b={
+      SELECT OSPath,
+             0 AS Size,
+             NULL AS Btime,
+             NULL AS Ctime,
+             NULL AS Mtime,
+             NULL AS Atime,
+             &#34;&#34; AS Accessor,
+             Row AS Data
+      FROM scope()
+  })
+  LET GlobTable &lt;= gunzip(string=base64decode(string=&#34;H4sIAAAAAAAC/&#43;x93XPcuPHge/6KqXnkUeRdUnfvsmT7fCt7vZbWSSqXQmFIDAc7IMAFwJHGKt/ffoXGB0EOOZ9Koq2fH6QBuhvdjQ/is9H402z2gGVFdPqlZSR9z8Qi/UKWf5rNrotCp&#43;RJE16SEqmt0qRGuChEyzXlFVpSRhRaSlGjkixxyzRiosCaCp7O8w2WOS7rnDzhotB5Mk89y11OhahrzEu0wMpIausayy3w94wsba7wxnDbxwu0GiQzaZKjE5V13hxMESsZpzyc2VYReTinrZJdTstSEqUWQqzTDzWuSJD6nK9ETfIkzX9VRKo8&#43;Z7f0YXEcptfNw2jtjZm923TCKlzx&#43;iNEOscGKkd/h&#43;JxiXW&#43;CVEeF47QgzQlMCF/KNwkuFFUZYLV/LlBvOClIiJCimCZbFKjagk&#43;8cd&#43;&#43;c/fhb//Mf76p9pP5olaQ8bR/5xr/753bLm25KodVoIvqRVK0E7pIhS5leSQsiS8kohVUhCuFoJjYoV1si0by1xsbfyMmzZ90RVTCwwQ32Jhl0hOCcFRPuciS7yMU6RTnuUcCmTrOFVP/kwl/u4JKN52VtQyubKlJapuH3M82u&#43;vR0yt4Xgk7oPionK5ygDApukwcWKpBHNMy4KopRJnqQ2nEGYSCkk6oIA/T7BBQNkNoj/uQOstG5K30E0DSOIC01U&#43;lXQgqCPpBYK&#43;c/DZ&#43;PET6QQdYYN62xjmNaGZ/4lFHh&#43;w0RbdvEsfDWROieo8F6KtpndCK4x5QZXGUDWaQEc809Ck3stJMnU74xq4mXq1DfYRpu/zLTzrLRYuU4nPhQz0rBcrbAkOZZr06AI19BkQtJ3DOsGr6FV3XPcoA2RpvVNfXzQ/zbNbAypOG7GBamGSOy/xdQgEKNKT37hQJ87&#43;tzQA/kYMyaqI9m45jXGxBZ3aFTH87MgB8m6jlwvdTNVLdgg0YoqLeTWkrd6JST9Rkq0Jls1lVCpVY77pK6FPCqkVI1wRbgedLu9/q7G3wTPlapHkrmCDF9loM2TLBTbt1YStPFJsB9DtBTtghG1EgLG7wGvRwz0U2zIEylabcb6QtJGK0R5wVroPJUuiZTQOpUuRas9V7rwXHPZ8is3O8pL8ciZwOWYmGEGDRbo3lBRQw/VSLrBmgBJucgXBm4pxFO6O7YMWk0o6n0dzxvxBH&#43;hqZzG&#43;sRublRaPG74xHeiUp56lHCP4N20Em9IWlJJCi0kPUtxw&#43;JeLPWj6bwgdvVGikdFZP781sy3bSf1jjIyu4f5Y/qBl&#43;SJlLdv0jvT8c1MT4orkt7b8VR9H1cuam2ndoa23vYpO9vXicIotDDk2T5y6FaB7EWyfm5T2lcjZnpZY7lWSXojxJoSlaS37lP0M9w06D4LNO/whhaCqyT937Y7TNI7UVE&#43;u8UaJ&#43;lHUlI8C6hPRD8KuZ5dw3xu9lmSkppK7DCfTX0pTbie3WusSfpZkiWRhBdEpb&#43;0QuOPmOOKyCT9Qky2KK9mmJezT2/vkvSeFK0kcZL7lZC6aLVK0vstL4xWbmj&#43;S/ogmtk91SYbD7JVevYg1sRk5StVVJNydkf5WqV/JYtrZZS6dd9yYkA2gzvV8odqiz8q/YJKv4FZMdQPWtgCR4WBId81bfd/o8BA7avvY&#43;Vc0ugMpxdsc/l5DKNWaSYCgh&#43;hWVQ6Nysp6n9d8VRCVIxcFSDlcIFY8swqlR/LYtAs3kOC3DIZZpW29WRmz1wP5EJWWeGYZ16K097Dp&#43;uuCAls9YX4rd00s9mK8vG2rC77bj7SQgollnpmWB3JeaQpuOLZ2wBqL&#43;uKlNURLSDQZ0aZfIxJpPA7KslSPJ1WGl4z8Y0yhvOl5XEp10EZvzuV60Wtz&#43;Ulc3nJR3M43QRDsl4HMl1APwn&#43;e0ukkGcV/JoKs&#43;p5OX4&#43;9QtwXJfEbxo0jepY2xKNBPwMa&#43;hLWohp7cJwUa6PzoDnsTIu7ppB9uEPEsisavmhhNCYhNsoiJuSGOTsHi&#43;xpGcWX7eT1O0hWYa5mWSMlXNM9FJqHOT&#43;lW4wKy9j73gcz/XiZrGx/A83DEeYOYXyw8mheWw8ea&#43;BbOJ8wsB92Rq6Nwe4cOm4q8/pY6FdoFw0G3qRTJy5AB4U54/VzyWrn6gm/jMN6Uf1XVp9tK17/cGLrhyOWCq8QF9gsmDb4L9d&#43;R/t75L2Bz3AxDHJc5YgzCgcnWcJYqZ0XEC02oQaKeDILktkkWaBtlCrkkqVZmu1SjOXzqcKaXRhsN8c&#43;pvHfwsE39SK8I1XVBLMMdtqWsCxTm/P/JbiigulaWGLVuVJVghJUEgSmJRt3aTXb7489IwpVCMEy/FC6tkgftU2piVZsK4bAA64wbCGhERrE&#43;8xLiRWqz45KNYRWpsWpc0HU4uyNaDC085zQORJnuQOmXukO9fdz3eDJXDz6ghJjk7H6MIZ4pTRYZGDdGqYQGZ53hJGNClT0RB3XobEEtWY0YKKVpn2UhBlTTFMWbp4zqjSKCRCJbHnV0KqTD9px1qttZg6Ckyy0uId7QaVC39SLluel2STFeViDzZCqlVtsCXZ5GpVu&#43;K6paoQskztDNlUFiMbwsoFeqH95tIKODz&#43;OkLcNNntnjTQTTra/Dmxa4A8SZO815vnLhu56xH6&#43;TxzhufFdptNnm2v0M5nPJoFK4gvx85tUctLIhHRBSr5EjWsrSg3dKjsLaKILvKSL/OOwFkHGL62VfYYdswU6q8xSr68chjLQLBmRXl6oBVYKjT47XF4cUuDvUKbdZWOWLmUzboKx9BApDTWrerR0QXQ5RZlSSWuBEcNw1siDxUG0FpSWYwkf/mSGJMomoV4mlK1tGhLqpCZLsAJeHZ7j8ACBTBvy&#43;rCNWh/m/XCOdtQnXNXDhfux75AJs7sR4al&#43;WMSecEksquI/1Q7&#43;lF9l1SfLmKTHaKLGNwq098XmA0RPvoOF2QhxBrVZmbHq8lefe/36NOamZyzEDQ9ApwZHBgllp4uf06yp5olaeILyeWw43Rcq4zXpIF7I8VvpNDZuyPE8bLepifu&#43;C4hVZbkt2RDC6I6Gzh31nN4/MgGhyz588J9GAtcrNtGeYtYGKWCtkdy31d/7y4T&#43;JLHVYcPpk5R8szxJZQHLkvBVZakXqbyFqlpYXuhEPcWdx2EhOEx&#43;00Jni5ddxUIXI7QkNVSyNqZRQbYmmzNt5XCetsxbIisqc17oGsYLiJWjSRLQ502Umhr/90hrbV7F6UVFzzJfCgitCP4ldryIgnQR7LATaNiO92jS3&#43;3rZ9V1LJc/ij4iYL/N3&#43;VPz6Vc2rsPcF8e2CErAxN7no5AEZJX3wNleQ9sYmTVVJ9jHl9ZQivajdpMwNslP7FdZ2SRnX6nmq0EmLtV/pViMf7BUmeVVTngPBZpd5yHNJUVLvY9O2GUFFUu8ILnIgudlkQXeQBGEiPkjRIxkVNkCZPGpmSEPKYKvINqdpgSTHXE5xevLLG5cJpFCol3ZDURW5NBE3fZzjicBJYvLuH7eVdOXoVWZTrFdaosHYEZgVkehRnf74QrUaYMSSWCNLYqZ1NsgJLQkI4arDUFDO2RUKiQtQNI5qwLTLzE1IiLVAvY0IizLeOmeelLCt3gcKmMiINu1YTiR5XlJE&#43;o&#43;umQY9YIdlybtZsD3G2MFPCbmeMZcqwlkJotBSsJFIh011FUploS9Qqw7Un0m3TItw0F9cNyG/CcsmZ&#43;of1w4vUGNWkVoOctosQFtLtBv4Hsp/kNYXbYsfmW/UyPlGpNsNQ7yWi/FB2YL/fJcIKPRLGzG/MWxKGowYJN1KVv6P6EqXgL5H6qx6LZDbG4f8eLMgBp2GJEiz1Kj1X49lbkzxPsrUfZGKup26c2EN4SLtnJO5kbZYqZO&#43;oYXizVGFctCweCd9Q8nhoruHI3O5pSHXSynvPgN1n7/Zm9hxgurldmiUhVAi16uAljmMkjjCi1ErpNOM9GtWPFXHsSfA4&#43;s2HksyFOHlMl7SjsbO4D/CJpe6j6H8/Zy5BKdy8zK8dy1gMVPTx3YLt4QZjFq2NFFLa40LzYVuuYbwxHZPtFCWpBYxngdTqdnqeINmtKJSfC&#43;TlIn8uGCVcm681VURuiDRBV641UQpXJMVa42JVE64PFOVHm0Dl112KPiu4Mrz/guMOM5MmdCcfuNKYMVKaYcDnUaVLgRo4CIViouNE87hcVOjnZrlodJ6AOaPROP/AlyIDdi8gciSHfS32FMHJOgHQfddeOzud9Sy/kILQBhjGxDFr3XKikN3fOWc7UiwoI/dbXuRvgAdw/T9igVSxImXLiEwxx4WMPs/IbMBixtJ0V&#43;HjG5JY76eNWI9R7qhhALPgJKKLWR4Tumm8UH0HEzo3MEfaSo6Z82vwm4uF0P&#43;zX9tPuNB0Q/W2trvc5TEjzXqYKJdEiVYW7srzT1gT97UfdT2bC76tRauydZdwh9HLX9aeFlsSVMv2GN2/wG3vW1G0XbfzE9kWK0y59&#43;2xdvHhR&#43;HpVG4P0TJP2OfiZl9DLnu&#43;j8DYMuLikZGyIsXINd8bIcltS3QeqPK1D914C4uIw41gjBQadUSXeiM4JJijlVB6773wdUdmu&#43;tg/Z96K&#43;nDG/G9Bh7M/p9HjzNDXPWON88RO3nh4Jgt712B&#43;7Zfp0WN7OM91czv4SWpIfWzn3jj7iw1Jgp6IJoJRUq3ssEbUnbKROIHik2e6cEn5Pf6BO&#43;ftw3zcHhDpitIN4MO2XBz3JgZaH1kjVjq37C9yXLn5rJT5WjRR5HaIjdlkZ&#43;eDBTsJbOfc7SQV76vi0DeBU1k19PNDeL799HxqRmqgCjNXOD7pETXL54icU/XdKQSRCyXtNg3POzr64DDz8Ahf7aOQtj2qlWkzJ4WhKWSVFRpua1FSZd&#43;epU9Fe24AhcbsLGO4ezg8UBEnEUZmR5gowTn5Za3T3sKepejTSYKDFsK3lywXMBpuCaZH6mA7iMuhDqzHrsjYPg4Su&#43;k5SUZN0IzWq10FiwKTuI&#43;aM939/eg6TvKyB1V2jXw/lk2kTtgW8jQD&#43;/gFC3JAkvwThN/J/9pFWMtWk6X1Dr6Uql1YGQnW&#43;hOVApd39&#43;NTu/BR4piWbmYjcKZqEYReeJOFEak/&#43;oiIPjXXz/cjkouF3nb0lKTJ30UI01rYhbtU8zKYGetck97HGOJC7L5yzF8k8wRd4xT3JZUl7EzHIDExZMuFdmYWXNwHuios4CYualx/lWwtiYqTyJkj1efQ8/UPCaDQSNevB5x5hAz8VZM6OhxIG7lfUMo15d2a&#43;AzuA8uQ3bMk/5dyGktkkyBEVM3/xpTSBNcq8ssjAOz/MEwiyyN94i53Ei7E9tZEIICp9isTSeAkQ7UzoPB9nimjnBbd0rxBYvLyEXVfpl/rLKM8jeet0PT9FMK0x3yXFmmsEg4JPSPVJrHZu9CU/9hqU6b/O8V/MdqpxNXM8azKV6qwZpRK1y0mRLzRyrIQxlSx16cP7b0jhD0x2qIrJumfMJcTC3qOeai54DxE9GqwIzINLpMxj0QcYWqlqbzPIByC/KyxpJvsIxYMFEFl88dF4AeYrJpfMJNs0vsJn3jTh&#43;XDKtVzlVkO&#43;M2iOIJIGrhhMhMln41oVHvg8gntCRRE0Mm4T7DhJV4RJj3JCrCS7BDMCsXuiHWoSsSGyLhqI1bYYM59yOVhBGlQkP31uEqD8o7O7MDeeVEt686qw5amnWGV3Yka&#43;70IY2uLjmMM9m3xBXlTz1HvknsyTeJXfkmkS/fZOjMd4cRNwDXJn9etwzL1P6MNMj93YSAZG7z8BAr9OInIWPig2FFZAtS&#43;mOO4cmyaAgnpalnyjWRGKyZHqleOQsUlxccOKANJY9EoqWQ6Kfbt0fsPyZOy7wUhdGrX&#43;7/Vm3Rv8D&#43;cjxzDZH4Miv/xDruueza1o4elw&#43;MpzsfOuRw6CWyeOa81xfyjztNF9xpimrgVTavH5V7QeV&#43;Xgktps5wP9NCt5Ko3FL5w56sgSjzO1gQ6zmH/7ya9DPerPpexj&#43;vK5i6gDVRZzXT4GKNK6Ji4yC3wdmsK3uLLp559Ni4xEjjBSNILAOmZ5Nh&#43;DTtglG1IjJPTPxkVtEH8YnoN/e36H/8d&#43;vQAGsiezrP4PofCF1XZiGa/7ebnz89vP30cG/FikcimahSLIsV3ZCp/d3G0YWO7w3WmsjtHV2S/NqmVXmSfb67/&#43;Uuq771mZ/D9KaVknDteVjOtqJ/MV/&#43;72rLi6n6/iXsax&#43;mjacVv3y6/pxHiVssMdeUE2Q3mU/c3LUnEne45cXqnkh7K7Bj&#43;hZ4fv0zyPpS7LNpcLOxLwUTnBww4JRAZOlJYSbXW2&#43;sC9N0k3ywj/4ZNnx1/nxd1pQbjj5lZ/KV3shto4VBdsDvTgyjfO0vm9qilADL10Rywlws7Ex&#43;2WvEIQFrCVtu5t&#43;GUrYc5tlJQDg3HwbRufn40ioNz3t00/pjNvRNsvBCyPE8&#43;ofi04xOegvlKy2JGHCy7gSPtyTxmbPpkvzZDTze&#43;6iQ9ewrZi1xM54B/yOmPnscLw5OG4IO160W7yhjN0JKd70qST3wl5aG4wYAmtVkEcZZa8aXrXTN0jf9w4l0KN83WCbaclQmYLoZIlieAuwBL2BEh&#43;72DRPFmkgzrlI42gpjvRNwG26x2XjE0QK6MR4r7aaYDvWZSDOWRl2GGaHtGfYNmLsYXRyxzRYAjKoPooFxOP4GT6/Af3m1/Fcsf2fhc9wHBKQu9aZvRovAPCc9VIMbUs56axAw6nmGu3AwBX2kvBSPPh82hhLAOb3NFJDqLfKGZW7&#43;4KL5c5I5K1wfyNQK//l//q80yQo7Rnchh/Kc7ZJqyrY/ybwxZwiBm7K&#43;Fd09rThmsfk3uujc0fLLI34ZF9SsCo8Qd/lSxPI/bF6jgC7bQ25v1AH&#43;yp3o5MlYvtzA6HL2EoXXndXuMn39RRQfy3r97UHeb0rwM09kXMkMj9Qm&#43;L/2QprIxqVv8LhCUr&#43;zvFz01m6jAl57KY3n4YJDfVc&#43;4TxqyPH1f1vRqdP9etuQKW97lxzaAePZUkjvUvAE53h7lbq8eJVhvxSSUd4&#43;Hd5wAvLsBm4/7SlkQ3VyHi/9VveVd&#43;fiZ0zWqy7GSHWGi/WFw6FhEY&#43;GQ5Yv8MEalkcUgSHLpoltCYC6gwHQqnyhNZItiDEbpDH&#43;r7NUhhZGTvNL7IpssUyZ2&#43;wIeI3lsl/5C/t0Wz7TdkEjQl5n29ln9eMyIS5rRD2DmD7L11gk4&#43;peZLXTlcMk09fZOOI5ESjtHARd9tU4JlNsX2dROBV9aQiGJVUpw0qbxjxwUuuuQpV17gh6idSm6I1YkGJTRFvEnrLVdfMUM7d2QvlGMKwpIzkQ9JI8kkVLd9gDtFednnwooa/&#43;Y8e/YVittGjS&#43;4d7uOl&#43;F12PPrUdeGZJHnMbCIrGF5MP0ehcdQkja6guSWfMjyScGY6/kbrrs73TaMBx7J3VA1kyImYXFEnw&#43;zOuxaAcQuvSWOq2sf5Q0uvKbgCNGpSFsoDjHUsaLiiMIU8VsO/IYj/bW0xqwY9T3NFOaO6wIzJ87ANcytwvydEC6Qgr8NLmXNB0h7HW&#43;kavCHJHZ8ieZIMJzlLimozYipWL6DDiqSkyBtkoc5BhbwUl0ZWGe01wncJ/dPLZymgLNKz8RdCVrpl90GjKHKVvdnKWNr0jqBcXf&#43;4YNaHHD7OJfWYTsY3EiZVxVCv4UfqnlT7eYI0lapxFyqklb5N3TwWewPTob2tcRoVrgqDKjtZZwX&#43;TUJ3A6LCe43xpbWaqwU8IEsu45&#43;ddGBKeKxs3jW35zmpoWEwvocVIUR4Se8lGCwjoFkHH8BvRcMCgbpmmDSPHT0QyqNbZkeKSbFMuL5J3uEwiGZsixZwuSXTVH9692RR57RCzsF7wkJCU6JUokXJzDmVmKrtsgMgm2XLBRLV17vo674u8tNbt&#43;0rRJwZHdnnw1HYJz70ldZS4S5pnT0CYVJ/EP5tiApc7vPe5zoapO06XxBtZOdxXSxzP99xrSOMNj&#43;jCv4406z2VZH&#43;tMV0En0XO9SfJd7AtvN3d4ZxP1h3sLryXBa80mD/1BPfIGiKtx8Zelg/sv/vsHXQkawnHBWqJuaJmtq5pTaTX1eDyJKgcqMAgoBANAXMAqMc0ySDp954AIIJvYSABjRXJGfzdpHiUnUdCioeiSA&#43;saLvVyMPNTf5wE5wZubRne4QYsiO4tvcSouNCuDflHKMYMQffO47rVgeOsDwGjtHGfiSQ&#43;7tF1t8Kd2Y&#43;x5reGU5fgVP&#43;fBMlp7wQNeVVpp&#43;0N9JFnValUQWcb2MzkVqTLQA6bgm6s2pb&#43;NfEeZvzUTcbNdHvJ2bJ3/mJy&#43;jV6O5mvt1FLjMvB&#43;/AgT1qJOUa/SYW6qhHLqIq0htIG47RXljwZBM8R64754XraJEOxQrrk6WbRKZCgOe/Vot9hT&#43;lBiOVxPUZPYpPGg53majCzn3ge/5uclyinp0TddgMQbsE/nHAfddeLWWwRehlY0U5o7xIv95/RNbDKMKVGTdMLv5KFgjsnqnSbkLwgWsil7ggww/&#43;WbNHsuguCaY2XtYQ2aga2PqIc2bafaReD&#43;vwFJiPeKnaNznSjkWfn8vTOBvR6NwnC4/&#43;DJOaUdsbKUd57qXtj30r8Kq/oLJMI0&#43;r6EONm4&#43;YMsgXBI6YS0bM8uck9twK5g6eJ0Rs4Ps5SlxwKKI7SbOjn854OJDIttwXyHu/4k2eIq/qJ5d/RjlN3YDzQGuS9N/RcI7zztHiD1AB52Z&#43;7Pb0KaWOF0Ksw2shFRMLzK6cx2J11ZmaDd4sOVKR11/wl&#43;W/hqtfOryp6wD&#43;aCBCiLrA1sVhfO87uum90ropr&#43;J74BbSXQBPC6wxoxxnonXW3w8SF&#43;s9z2HCdpC2RH/J7Vz6ObluSyrAojwJPmNt9B14LwY3sBD3l&#43;Js7F4s9SOWxMbguggEa6Jx5zr7QWK1Cjd&#43;Do7Nhjo31NaBl1qZMDD6tSSbFJ5KaUuyyWXLjCKuQH9tYIvEO194pCVBDoamV9mUUz2D0FNZ5a2lj5e9DtQfc7wsu6Rxo9V&#43;YXtWuU6E5QyOwJyndecZzjteP&#43;mb9olCIOnZiPbljD/gYHIX31JnoqrcUw72AYYaFz/fd37asYJrRRsiY2fuimhNeaUGPi&#43;HftuUbQNclETlt2SJW6ZhiW7Wet2&#43;ya/aflD&#43;weVW19al9lcsES5rj8Olv4dlEKwMDhLKDiiq1GlhH6m2J/9jPveSXqIB8S6R7C6LeT37BOA&#43;O439ce&#43;iYh36JFERdP1JhIhTRgR0QaTf9D9zWw14fL7Jk/wa&#43;KhJ3hf0807IYYuPjSG05NN9OxBNKHypaaovjmdnlGa6PqtU6PvGBL2ysjmovV619YJjytTl7eYh8OrVxFDEq2s&#43;I3rX&#43;0a0jUU70g1mJb3MY4ZjcqE/iRFVzn1pd2NZHVPOQJi9bA7ObolOiR9H0Bf4TehVwr&#43;/Af2ou0vqjhUH7u1vWHF4gbUxk32Gefb17mZP98kK83f1u76ifiurezby6xZr&#43;4iUaHS&#43;gRjMxSNrwL9WZNIR/GNF9NXKX9H/6wprhZsmdbt6xwxW76Vom1l0g7wygIwTnT06dhnwvW4a51S7L&#43;uiaxuec3RzIzC&#43;0KI9sJ42av9ro4536LtTUEn22CjnRd25PDeS4KjAP345kHCxJfBPZh0hlvpwl/HYqOyQH/jHRl15N/CWFuSkIy7hzdeOJcFZsXQ7qH8rK4RbLXbXnH&#43;7fd9hemtNs8IMmHiNGYAjrO0SsyEFXdJigvmeIovkHXzv5hItEBcaXp9EYgl4pTEvsSzRotVmJVmixXaPT7WhuleqkLRxX/bf/BIbtj4m3XU8OTK7Q2KT/r2tx87Y3UusRBdo29aoYW1FuaFDZe9s0lTbtq3zjiArA1&#43;rYo9hqyRidBEx7V818Of227a&#43;cnhgh64ZS6&#43;LQqfzOfwGWFlKotRCiDWgumhHscHwOJpZktq3gS3lDjik4FvwBWKobDBgGnDKYRAQ6uANI6aKTXObx9GOwqredJpLK0F23FVDJPbHmIDsQQKdXuoG0CYQoK1eCUm/kRKtydbq0QcFykeFlKrtyQrQxYBA9a2VBG1ish7E072hooYigUCAiieAiacAkXhj6UzAQ298gd7E5Xmzko6pDfXgtK0DhrZ1wEErBgyEOrgkmGO21bRQFh0BYqqyrRtPYMIed2vf3jQoF&#43;wwMJJaDAQ7zAaVC4swoRiuVrVHqFXQ/5aqQkgrxQYDhi8BypcBIlizohygNhgwzRrKwPwGmMQVvKmCt0QCMgZ0VKJZ2FpzwYBxr5QCyoU97m1ZAdz8BpguAKQLD3mHC3BUj2qiFOGVVWMXGugpI7A/DWQ&#43;0mF5WW8tyoQ6uH1SHRAQ9Bj7/vZ8bgMdtKTaQksa2vN7B4sgOw8uG/wQGKjjR2ENYRQf0NgHSTsaiAea3kOihigGBCr/6qchcGGP8092zuc&#43;6DHudcr53IUC3L&#43;8aDAuHHATbxbOJzAhXe&#43;FQEMeAzxV/4W8&#43;bwP6Kjsc3iAh6DH7D6IN5/vAjvq7oE6oAvRQOHekjNYGwwY/8CbQblwwHUvrhlsiMV4/zCaI3DRQBGeoDJ4H/FY//DTfO6DATPy0pKh2gXHKeJXiRx1BOoo/Ys&#43;QOMiARse7jFYH/FY&#43;3zHfG4DPajnGCJ9bO&#43;Jk0AWQwP92PsbJsUIfDeN9SDeIweQpwSn3PM5/AZYcGVtED4SYSdcOFvqceQgtfeS3CVxkEAHfo0N2gQ81DnWnc9dKMDBTacBm4CHOv&#43;O87kLdfDGAsP32XN7aFBRPNB4N4IG78IeF7n3m8&#43;jWMDvePAzZEOgp/4CXL4UXRzc7QHMhAJ81K2eIRtDdKnASx6QmVCAhw/3S&#43;&#43;b9b7vDMIGY4wb7V2wwziHc4CyYY9zHqrmcxfq4OO&#43;p4BwFBVSDn1HmSQDWEfrPDwBjQ0HnPVzYjAQCnDwLmHAJhCgcNvVQE0gQN1dTAO3wYAJFwANzkcCtncVzVDEgI6K4NpiCQ6lfb&#43;BBnO/CS1mYOpskD1IR9ezZga6GNKnKzuCMNY8FCD7oQiyI1s0gwixDu&#43;MuQBrwwHnzYEMzoU7XGdcAOgQDRR2gvvQzW3dMbsBQijA3Tm5QdhghPGn1RbpYh4Ph9DzOfwGmDsPNmAbDJjeOavBx4BApa3i5tfD/IHmfO6DMYaVHsHKHtx&#43;py4YY2T3FUfRmMIePTo8RGKsU9EFAwaObwzcBDpo7QvQBTuM3TkGDAQDhkGlf2Whvt32oAFCyMNhS3A&#43;h98A8/tmBu7CAdffhjIUPYin6295zOd9QKAabEYYuj7IU/7dLuT&#43;3tZ/&#43;v8BAAD//7G/sauuvAAA&#34;))
+  
+  
+  LET SlowGlobRegex &lt;= if(condition=S.DropVerySlowRules,
+    then=SlowGlobRegex, else=&#34;RunSlowFileGlobs!!!&#34;)
+  
+  -- Group the targets for faster searching.
+  LET TargetTable &lt;= SELECT Target,
+    enumerate(items=dict(Rule=Rule, Glob=Glob, Ref=Ref)) AS Rules
+  FROM parse_csv(accessor=&#34;data&#34;,
+  filename=GlobTable)
+  GROUP BY Target
+  
+  //  Build a lookup cache on target.
+  LET Lookup &lt;= memoize(query={
+    SELECT * FROM TargetTable
+  }, key=&#34;Target&#34;)
+  
+  -- Extract all rules within the required target. Uses the memoized
+  -- structure above.
+  LET FilterTable(Required) =
+    SELECT Required AS Target, *
+    FROM flatten(query={
+      SELECT * FROM foreach(row=get(item=Lookup, field=Required).Rules)
+    })
+    WHERE if(condition=Glob =~ SlowGlobRegex,
+             then=log(level=&#34;INFO&#34;,
+                      message=&#34;Dropping rule %v/%v because it is too slow: %v&#34;,
+                      dedup=-1,
+                      args=[Target, Rule, Glob]) AND FALSE,
+             else=TRUE)
+  
+  LET Expand(FilteredTable) = SELECT * FROM foreach(
+  row=FilteredTable,
+  query={
+      -- If there is a reference, resolve it from the table recursively.
+      SELECT *
+      FROM if(condition=Ref AND MaybeLOG(
+         Message=&#34;%v/%v: Resolving Ref %v&#34;,
+         Args=[Target, Rule, Ref]),
+      then={
+         SELECT * FROM Expand(
+            FilteredTable={
+               SELECT * FROM FilterTable(Required=Ref)
+            })
+      }, else={
+         SELECT Target, Rule, Glob FROM scope()
+         WHERE (Glob &amp;&amp; MaybeLOG(
+           Message=&#34;%v/%v: Glob is %v&#34;,
+           Args=[Target, Rule, Glob])) || TRUE
+      })
+  })
+  
+  -- Collect all the top level targets that the user selected.
+  LET Collections(Targets) = SELECT Target &#43; &#34;/&#34; &#43; Rule AS Rule, Glob
+  FROM Expand(FilteredTable={
+        SELECT Target,
+              Rules.Rule AS Rule,
+              Rules.Glob AS Glob,
+              Rules.Ref AS Ref
+       FROM flatten(query={
+         SELECT * FROM TargetTable
+         WHERE get(item=Targets, field=Target)
+         AND MaybeLOG(
+           Message=&#34;Collecting target %v, Rules: %v&#34;,
+           Args=[Target, Rules.Rule])
+       })
+  })
+  GROUP BY Rule, Glob
+  
+  // In ExcludeSigned and HashOnly we dont upload signed binaries.
+  LET ShouldUploadSignedBinary &lt;= dict(
+    ShouldUpload = NOT CollectionPolicy =~ &#34;ExcludeSigned|HashOnly&#34;)
+  
+  // In HashOnly mode we never upload anything.
+  LET ShouldUploadAnyFile &lt;= dict(
+    ShouldUpload = NOT CollectionPolicy =~ &#34;HashOnly&#34;)
+  
+  LET DoNotUpload &lt;= dict(ShouldUpload=FALSE)
+  
+  // Determine if we should upload the file based on signature.
+  LET ShouldUpload(Details) = if(
+    condition=OSPath =~ TrustedPathRegex OR
+      ( MaxFileSize &gt; 0 AND Details.Stat.Size &gt; MaxFileSize ),
+    then= log(dedup=-1,
+              message=&#34;Skipped upload of %v because it too large: %d&#34;,
+              args=[OSPath, Details.Stat.Size]) &amp;&amp;
+          ( Details &#43; DoNotUpload ) ,
+    else=if(
+         // What to do about binaries? If they have an issuer name then
+         // they are signed.
+         condition=Details.Signatures.IssuerName,
+         then=Details &#43; ShouldUploadSignedBinary,
+         else=Details &#43; ShouldUploadAnyFile))
+  
+  // If the file is a binary, also add authenticode information.
+  LET MaybeBinary(OSPath, Details) = ShouldUpload(Details=if(
+    condition=Details.Magic =~ &#34;PE.&#43;executable&#34;,
+    then=Details &#43; dict(Signatures=authenticode(filename=OSPath)),
+    else=Details))
+  
+  
+  // Hash the file if it is not too large
+  LET MaybeHash(OSPath, Details) = if(
+    condition=NOT OSPath =~ TrustedPathRegex AND
+      Details.Stat AND Details.Stat.Size &lt; MaxHashSize,
+    then=Details &#43; dict(Hashes=hash(path=OSPath),
+                        Magic=magic(path=OSPath)),
+    else=Details)
+  
+  // Calculate the details column with hashes and magic.
+  LET _GetDetails(OSPath) = MaybeBinary(
+    OSPath=OSPath,
+    Details=MaybeHash(
+       OSPath=OSPath,
+       Details=dict(filename=OSPath,
+                    Stat=OSPath &amp;&amp; stat(filename=OSPath))))
+  
+  // Cache the hashing for speedup on newer binaries.
+  LET GetDetails(OSPath) = if(condition=version(function=&#34;cache&#34;) &gt;= 2,
+  then = cache(period=100000,
+               lambda=&#34;OSPath=&gt;_GetDetails(OSPath=OSPath)&#34;,
+               name=&#34;GetDetails&#34;, key=OSPath),
+  
+  // Older versions can work without a cache.
+  else = _GetDetails(OSPath=OSPath))
+  
+  LET GetDetails(OSPath) = cache(
+         period=100000,
+         func= _GetDetails(OSPath=OSPath),
+         name=&#34;GetDetails&#34;, key=OSPath.String)
+  
+  
+  
+
+    // Extract the binary from the command line
+    LET ExpandPath(Path) = expand(path=Path)
+
+sources:
+- name: SearchGlobs
+  query: |
+
+    LET Targets &lt;= to_dict(item={
+      SELECT _value AS _key, TRUE AS _value
+      FROM foreach(row=Targets &#43; HighLevelTargets)
+    })
+
+    LET AllCollections &lt;= Collections(Targets=Targets)
+
+    LET GlobLookup &lt;= memoize(query=AllCollections, key=&#34;Glob&#34;)
+
+    LET _ &lt;= MaxFileSize &gt; 0 &amp;&amp; MaybeLOG(
+      Message=&#34;Limiting file acquisition to MaxFileSize %v bytes (%v)&#34;,
+      Args=[MaxFileSize, humanize(bytes=MaxFileSize)])
+
+    SELECT * FROM AllCollections
+    --WHERE Glob
+
+  notebook:
+  - type: none
+
+    name: quick_link
+    env:
+    - key: text
+      value: Triage Files
+    - key: icon
+      value: folder
+    - key: os_filter
+      value: linux
+    - key: weight
+      value: &#34;15&#34;
+
+- name: All Matches Metadata
+  query: |
+    LET AutoGlobs = SELECT * FROM AllCollections
+       WHERE Glob
+
+    // UAC globs may be directories in which case we fetch all the files in them.
+    LET AllGlobs = SELECT Type,
+        Size,
+        OSPath AS SourceFile,
+        Btime AS Created,
+        Ctime AS Changed,
+        Mtime AS Modified,
+        Atime AS LastAccessed,
+        Data,
+        get(item=GlobLookup, field=Globs[0]).Rule AS Rule,
+        PreferredAccessor AS Accessor,
+        dict(Globs=Globs) AS Data,
+        &#34;Glob&#34; AS Type
+    FROM foreach(row={
+        SELECT *
+        FROM glob(globs=AutoGlobs.Glob,
+                  accessor=PreferredAccessor,
+                  root=RootDirectory)
+    }, query={
+        SELECT * FROM if(condition=IsDir,
+        then={
+            SELECT *
+            FROM glob(globs=&#34;**&#34;, root=OSPath,
+                      accessor=PreferredAccessor)
+        }, else={
+            SELECT *, Globs
+            FROM stat(accessor=PreferredAccessor, filename=OSPath)
+        })
+    })
+
+    LET AllResults &lt;= SELECT Type,
+                             SourceFile,
+                             Size,
+                             Created,
+                             Changed,
+                             Modified,
+                             LastAccessed,
+                             Accessor,
+                             Data
+    FROM chain(async=WORKERS &gt; 0,
+      
+      Globs=AllGlobs
+    )
+    WHERE log(level=&#34;INFO&#34;, message=&#34;Found %v for rule %v&#34;, args=[
+              SourceFile, Rule], dedup=10)
+
+    SELECT * FROM AllResults
+
+
+
+- name: Uploads
+  notebook:
+    - type: vql
+      template: |
+       // This cell generates other cells to preview the collected
+       // data.  DO NOT recalculate this cell - each time new cells
+       // will be added. Instead delete the notebook and allow
+       // Velociraptor to recreate the entire notebook.
+       LET ArtifactsWithResults &lt;=
+         SELECT pathspec(accessor=&#34;fs&#34;, parse=Data.VFSPath)[4] AS Artifact ,
+           pathspec(accessor=&#34;fs&#34;, parse=Data.VFSPath)[-1][:-5] AS Source ,
+           stat(accessor=&#34;fs&#34;, filename=Data.VFSPath &#43; &#34;.index&#34;).Size / 8 AS Records
+         FROM enumerate_flow(client_id=ClientId, flow_id=FlowId)
+         WHERE Type =~ &#34;Result&#34; AND Records &gt; 0
+
+       LET _ &lt;= SELECT notebook_update_cell(notebook_id=NotebookId, type=&#34;vql&#34;,
+       input=format(format=&#39;&#39;&#39;
+       /*
+       # Results From %v
+       */
+       SELECT * FROM source(source=%q)
+       &#39;&#39;&#39;, args=[Source, Source]),
+       output=format(format=&#39;&#39;&#39;
+       &lt;i&gt;Recalculate&lt;/i&gt; to show Results from &lt;b&gt;%v&lt;/b&gt; with &lt;b&gt;%v&lt;/b&gt; rows
+       &#39;&#39;&#39;, args=[Source, Records])) AS NotebookModification
+       FROM ArtifactsWithResults
+
+       /*
+       # Results Overview
+       */
+       SELECT Source, Records FROM ArtifactsWithResults ORDER BY Source
+
+    - type: vql_suggestion
+      name: Post process collection
+      template: |
+        /*
+
+        # Post process this collection.
+
+        Uncomment the following and evaluate the cell to create new
+        collections based on the files collected from this artifact.
+
+        The below VQL will apply remapping so standard artifacts will
+        see the KapeFiles.Targets collection below as a virtual
+        Windows Client. The artifacts will be collected to a temporary
+        container and then re-imported as new collections into this
+        client.
+
+        NOTE: This is only a stop gap in case the proper artifacts
+        were not collected in the first place. Parsing artifacts
+        through a remapped collection is not as accurate as parsing
+        directly on the endpoint. See
+        https://docs.velociraptor.app/training/playbooks/preservation/
+        for more info.
+
+        */
+        LET _ &lt;= import(artifact=&#34;Windows.KapeFiles.Remapping&#34;)
+
+        LET tmp &lt;= tempfile()
+
+        LET Results = SELECT import_collection(filename=Container, client_id=ClientId) AS Import
+        FROM collect(artifacts=[
+                       &#34;Windows.Forensics.Usn&#34;,
+                       &#34;Windows.NTFS.MFT&#34;,
+                     ],
+                     args=dict(`Windows.Forensics.Usn`=dict(),
+                               `Windows.NTFS.MFT`=dict()),
+                     output=tmp,
+                     remapping=GetRemapping(FlowId=FlowId, ClientId=ClientId))
+
+        // SELECT * FROM Results
+
+  query: |
+    -- Upload the files. Split into workers so the files are uploaded
+    -- in parallel.
+    LET uploaded_files = SELECT *
+    FROM foreach(row={
+       SELECT *
+       FROM AllResults
+       WHERE Size &gt; 0
+       GROUP BY SourceFile
+       },
+          workers=WORKERS,
+
+          // Do the heavy lifting in a thread
+          query={
+            SELECT * FROM foreach(row={
+              SELECT GetDetails(OSPath=SourceFile) AS Details
+              FROM scope()
+            }, query={
+              SELECT timestamp(epoch=now()) AS CopiedOnTimestamp,
+                     Created,
+                     Changed,
+                     LastAccessed,
+                     Modified,
+                     SourceFile,
+                     Size,
+                     Details,
+                     if(condition=Details.ShouldUpload,
+                        then=upload(file=SourceFile,
+                                    accessor=Accessor,
+                                    mtime=Modified)) AS Upload
+              FROM scope()
+          })
+      })
+
+    -- Separate the hashes into their own column.
+    SELECT CopiedOnTimestamp,
+           SourceFile,
+           Upload.Path AS DestinationFile,
+           Size AS FileSize,
+           Details.Hash.SHA256 AS SourceFileSha256,
+           Created,
+           Changed,
+           Modified,
+           LastAccessed,
+           Details,
+           Upload
+    FROM uploaded_files
+
+
+column_types:
+- name: CopiedOnTimestamp
+  type: timestamp
+- name: Data
+  type: json/1
+- name: Details
+  type: json/1
+
+<script>hljs.highlightAll()</script>
+
+</code>
+</pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div></main></body></html>
