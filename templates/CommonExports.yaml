@@ -133,9 +133,12 @@ LET DoNotUpload <= dict(ShouldUpload=FALSE)
 
 // Determine if we should upload the file based on signature.
 LET ShouldUpload(Details) = if(
-  condition=OSPath =~ TrustedPathRegex AND
-    MaxFileSize > 0 AND Details.Stat.Size > MaxFileSize,
-  then= Details + DoNotUpload,
+  condition=OSPath =~ TrustedPathRegex OR
+    ( MaxFileSize > 0 AND Details.Stat.Size > MaxFileSize ),
+  then= log(dedup=-1,
+            message="Skipped upload of %v because it too large: %d",
+            args=[OSPath, Details.Stat.Size]) &&
+        ( Details + DoNotUpload ) ,
   else=if(
        // What to do about binaries? If they have an issuer name then
        // they are signed.
@@ -166,7 +169,15 @@ LET _GetDetails(OSPath) = MaybeBinary(
      Details=dict(filename=OSPath,
                   Stat=OSPath && stat(filename=OSPath))))
 
-// Cache the hashing for speedup.
+// Cache the hashing for speedup on newer binaries.
+LET GetDetails(OSPath) = if(condition=version(function="cache") >= 2,
+then = cache(period=100000,
+             lambda="OSPath=>_GetDetails(OSPath=OSPath)",
+             name="GetDetails", key=OSPath),
+
+// Older versions can work without a cache.
+else = _GetDetails(OSPath=OSPath))
+
 LET GetDetails(OSPath) = cache(
        period=100000,
        func= _GetDetails(OSPath=OSPath),
