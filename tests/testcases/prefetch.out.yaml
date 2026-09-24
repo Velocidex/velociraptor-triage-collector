@@ -69,6 +69,11 @@ Output: [
  },
  {
   "Target": "Amcache",
+  "Rule": "Amcache_databases",
+  "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\*.db"
+ },
+ {
+  "Target": "Amcache",
   "Rule": "Amcache",
   "Glob": "Windows.old\\Windows\\AppCompat\\Programs\\Amcache.hve"
  },
@@ -86,6 +91,11 @@ Output: [
   "Target": "Prefetch",
   "Rule": "Prefetch",
   "Glob": "Windows.old\\Windows\\prefetch\\*.pf"
+ },
+ {
+  "Target": "Amcache",
+  "Rule": "Amcache_databases",
+  "Glob": "Windows\\AppCompat\\Programs\\*.db"
  },
  {
   "Target": "Amcache",
