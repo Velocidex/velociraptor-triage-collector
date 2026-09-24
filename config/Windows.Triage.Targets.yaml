@@ -19,6 +19,17 @@ RegExToGlob:
   "*.+\\.(doc|docx|docm|dotx|dotm|docb|dot|wbk|odt|fodt|rtf|wp*|tmd)": "*.{doc,docx,docm,dotx,dotm,docb,dot,wbk,odt,fodt,rtf,wp*,tmd}"
   ".*\\.(jpg|mp4|pdf|webp)": "*.{jpg,mp4,pdf,webp}"
   "*.\\b[a-zA-Z0-9_-]{8}\\b.compiled": "*.compiled"
+  "(settings\\.conf|fslogger\\.xml)": "{settings.conf,fslogger.xml}"
+  "(Configurations\\.json|fslogger\\.xml|fsautoupdatelogger\\.xml)": "{Configurations.json,fslogger.xml,fsautoupdatelogger.xml}"
+  ".*\\.(gui\\.)?log": "*.log"
+  "(InvClient-Log\\.txt|invid|sm_rep\\.inv|sm_temp\\.inv|build\\.txt)": "{InvClient-Log.txt,invid*,sm_rep.inv,sm_temp.inv,build.txt}"
+  "(agent_state\\.json|\\.persisted_v4|task_.*\\.json)": "{agent_state.json,*.persisted_v4,task_*.json}"
+  "(agent\\.log|install\\.log)": "{agent.log,install.log}"
+  "(Local State|Preferences|chromium\\.log|quitAndInstall\\.json)": "{Local State,Preferences,chromium.log,quitAndInstall.json}"
+  "(app_state\\.json|app_config\\.json)": "{app_state.json,app_config.json}"
+  "(config\\.json|device\\.id)": "{config.json,device.id}"
+  "(LUCLIENT\\.(INI|MOD)|winchk\\.dat|luhboot\\.bat)": "{LUCLIENT.INI,LUCLIENT.MOD,winchk.dat,luhboot.bat}"
+  "Veyon(Server|Service)\\.log": "{Veyon{Server,Service}.log"
 
 Output:
   - output/Windows.Triage.Targets.zip
