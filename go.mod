@@ -5,10 +5,12 @@ go 1.24.0
 toolchain go1.24.7
 
 require (
+	github.com/Masterminds/sprig/v3 v3.3.0
 	github.com/Velocidex/ordereddict v0.0.0-20250811072607-2630ed0484d0
 	github.com/Velocidex/yaml/v2 v2.2.8
 	github.com/alecthomas/assert v1.0.0
 	github.com/alecthomas/kingpin/v2 v2.4.0
+	github.com/gobwas/glob v1.0.0
 	github.com/stretchr/testify v1.8.2
 )
 
@@ -16,7 +18,6 @@ require (
 	dario.cat/mergo v1.0.1 // indirect
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver/v3 v3.3.0 // indirect
-	github.com/Masterminds/sprig/v3 v3.3.0 // indirect
 	github.com/Velocidex/json v0.0.0-20220224052537-92f3c0326e5a // indirect
 	github.com/alecthomas/colour v0.1.0 // indirect
 	github.com/alecthomas/repr v0.1.1 // indirect
