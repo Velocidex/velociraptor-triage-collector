@@ -29,7 +29,7 @@ RegExToGlob:
   "(app_state\\.json|app_config\\.json)": "{app_state.json,app_config.json}"
   "(config\\.json|device\\.id)": "{config.json,device.id}"
   "(LUCLIENT\\.(INI|MOD)|winchk\\.dat|luhboot\\.bat)": "{LUCLIENT.INI,LUCLIENT.MOD,winchk.dat,luhboot.bat}"
-  "Veyon(Server|Service)\\.log": "{Veyon{Server,Service}.log"
+  "Veyon(Server|Service)\\.log": "Veyon{Server,Service}.log"
 
 Output:
   - output/Windows.Triage.Targets.zip
