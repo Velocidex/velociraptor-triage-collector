@@ -20,7 +20,7 @@ RegExToGlob:
   "*.+\\.(xls|xlsx|csv|tsv|xlt|xlm|xlsm|xltx|xltm|xlsb|xla|xlam|xll|xlw|ods|fodp|qpw)": "*.{xls,xlsx,csv,tsv,xlt,xlm,xlsm,xltx,xltm,xlsb,xla,xlam,xll,xlw,ods,fodp,qpw}"
   "*.+\\.(pdf|xps|oxps)": "*.{pdf,xps,oxps}"
   "*.+\\.(ai|bmp|bpg|cdr|cpc|eps|exr|flif|gif|heif|ilbm|ima|jp2|j2k|jpf|jpm|jpg2|j2c|jpc|jpx|mj2jpeg|jpg|jxl|kra|ora|pcx|pgf|pgm|png|pnm|ppm|psb|psd|psp|svg|tga|tiff|webp|xaml|xcf)": "*.{ai,bmp,bpg,cdr,cpc,eps,exr,flif,gif,heif,ilbm,ima,jp2,j2k,jpf,jpm,jpg2,j2c,jpc,jpx,mj2jpeg,jpg,jxl,kra,ora,pcx,pgf,pgm,png,pnm,ppm,psb,psd,psp,svg,tga,tiff,webp,xaml,xcf}"
-  "*.+\\.(db*|sqlite*|)": "*.{db,sqlite}*)"
+  "*.+\\.(db*|sqlite*|)": "*.{db,sqlite}*"
   "*.+\\.(3g2|3gp|amv|asf|avi|drc|flv|f4v|f4p|f4a|f4b|gif|gifv|m4v|mkv|mov|qt|mp4|m4p|mpg|mpeg|m2v|mp2|mpe|mpv|mts|m2ts|ts|mxf|nsv|ogv|ogg|rm|rmvb|roq|svi|viv|vob|webm|wmv|yuv)": "*.{3g2,3gp,amv,asf,avi,drc,flv,f4v,f4p,f4a,f4b,gif,gifv,m4v,mkv,mov,qt,mp4,m4p,mpg,mpeg,m2v,mp2,mpe,mpv,mts,m2ts,ts,mxf,nsv,ogv,ogg,rm,rmvb,roq,svi,viv,vob,webm,wmv,yuv}"
   "*.+\\.(doc|docx|docm|dotx|dotm|docb|dot|wbk|odt|fodt|rtf|wp*|tmd)": "*.{doc,docx,docm,dotx,dotm,docb,dot,wbk,odt,fodt,rtf,wp*,tmd}"
   ".*\\.(jpg|mp4|pdf|webp)": "*.{jpg,mp4,pdf,webp}"
@@ -35,7 +35,7 @@ RegExToGlob:
   "(app_state\\.json|app_config\\.json)": "{app_state.json,app_config.json}"
   "(config\\.json|device\\.id)": "{config.json,device.id}"
   "(LUCLIENT\\.(INI|MOD)|winchk\\.dat|luhboot\\.bat)": "{LUCLIENT.INI,LUCLIENT.MOD,winchk.dat,luhboot.bat}"
-  "Veyon(Server|Service)\\.log": "{Veyon{Server,Service}.log"
+  "Veyon(Server|Service)\\.log": "Veyon{Server,Service}.log"
 
 Output:
   - output/Windows.KapeFiles.Targets.yaml

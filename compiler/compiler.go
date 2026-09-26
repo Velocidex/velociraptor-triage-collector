@@ -4,8 +4,8 @@ import (
 	"archive/zip"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/fs"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -58,7 +58,7 @@ func (self *Compiler) LoadDirectory(
 			}
 			defer fd.Close()
 
-			data, err := ioutil.ReadAll(fd)
+			data, err := io.ReadAll(fd)
 			if err != nil {
 				return err
 			}
@@ -156,7 +156,7 @@ func LoadConfig(path string) (*api.Config, error) {
 	}
 	defer fd.Close()
 
-	data, err := ioutil.ReadAll(fd)
+	data, err := io.ReadAll(fd)
 	if err != nil {
 		return nil, err
 	}
@@ -177,6 +177,11 @@ func (self *Compiler) loadConfig(path string) error {
 		return err
 	}
 	self.config_obj = config_obj
+
+	err = self.CheckConfig()
+	if err != nil {
+		return err
+	}
 
 	target_regex := self.config_obj.TargetRegex
 	if target_regex == "" {
@@ -230,7 +235,7 @@ func (self *Compiler) loadConfig(path string) error {
 	}
 	defer fd.Close()
 
-	data, err := ioutil.ReadAll(fd)
+	data, err := io.ReadAll(fd)
 	if err != nil {
 		return err
 	}

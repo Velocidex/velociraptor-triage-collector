@@ -84,7 +84,7 @@
      "Name": "SQLite Files (.db* and .sqlite*)",
      "Category": "Databases",
      "Comment": "Covers all common file extensions for SQLite databases",
-     "Glob": "**\\*.{db,sqlite}*)"
+     "Glob": "**\\*.{db,sqlite}*"
     }
    ]
   },
@@ -6441,7 +6441,7 @@
     {
      "Name": "Veyon service logs",
      "Category": "ApplicationLogs",
-     "Glob": "Windows\\Temp\\{Veyon{Server,Service}.log"
+     "Glob": "Windows\\Temp\\Veyon{Server,Service}.log"
     },
     {
      "Name": "Veyon CLI log",
