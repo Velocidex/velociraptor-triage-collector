@@ -6335,7 +6335,7 @@
     {
      "Name": "VIZOR client configuration files",
      "Category": "RemoteAdmin",
-     "Glob": "{LUCLIENT.INI,LUCLIENT.MOD,winchk.dat,luhboot.bat}"
+     "Glob": "/{LUCLIENT.INI,LUCLIENT.MOD,winchk.dat,luhboot.bat}"
     }
    ]
   },
