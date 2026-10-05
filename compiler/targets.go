@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Velocidex/velociraptor-triage-collector/api"
+	"github.com/gobwas/glob"
 )
 
 var (
@@ -139,5 +140,19 @@ func (self *Compiler) ValidateRule(
 
 		*/
 	}
+
+	// Fix globs which start with { because these are rejected by
+	// older versions of Velociraptor.
+	if strings.HasPrefix(t.Glob, "{") {
+		t.Glob = "/" + t.Glob
+	}
+
+	// Check the glob is actually valid.
+	_, err = glob.Compile(t.Glob)
+	if err != nil {
+		return fmt.Errorf("Invalid glob for rule: %v->%v %w",
+			t.Name, t.Glob, err)
+	}
+
 	return nil
 }
