@@ -92,6 +92,15 @@ func (self *Compiler) LoadRule(data []byte, path string) error {
 		return err
 	}
 
+	// Filter out the targets we skip
+	var targets []*api.TargetRule
+	for _, t := range target_file.Targets {
+		if !InString(self.config_obj.SkipFiles, t.Name) {
+			targets = append(targets, t)
+		}
+	}
+	target_file.Targets = targets
+
 	if target_file.Name == "" {
 		target_file.Name = strings.Split(filepath.Base(path), ".")[0]
 	}

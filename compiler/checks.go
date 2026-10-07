@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/gobwas/glob"
+	"www.velocidex.com/golang/velociraptor/accessors"
+	"www.velocidex.com/golang/velociraptor/glob"
 )
 
 var (
@@ -22,7 +23,11 @@ func (self *Compiler) CheckConfig() error {
 				regex, glob_exp, err)
 		}
 
-		_, err = glob.Compile(glob_exp)
+		globber := glob.NewGlobber()
+
+		// Check the glob is actually valid.
+		err = globber.AddGlob(glob_exp,
+			accessors.MustNewWindowsOSPath(""))
 		if err != nil {
 			return fmt.Errorf("RegExToGlob: %v->%v %w",
 				regex, glob_exp, err)
