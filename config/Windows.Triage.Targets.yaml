@@ -40,4 +40,7 @@ Output:
 StateFile: docs/content/docs/Windows.Triage.Targets/rules/Windows.Triage.Targets.json
 PathSep: "\\"
 
+SkipFiles:
+  - "WDI Trace Logs 2"
+
 Debug: false

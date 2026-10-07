@@ -14458,16 +14458,6 @@
      "Glob": "Windows.old\\Windows\\System32\\WDI\\LogFiles\\*.etl*"
     },
     {
-     "Name": "WDI Trace Logs 2",
-     "Category": "EventTraceLogs",
-     "Glob": "Windows\\System32\\WDI\\{*\\**"
-    },
-    {
-     "Name": "WDI Trace Logs 2",
-     "Category": "EventTraceLogs",
-     "Glob": "Windows.old\\Windows\\System32\\WDI\\{*\\**"
-    },
-    {
      "Name": "WMI Trace Logs",
      "Category": "EventTraceLogs",
      "Glob": "Windows\\System32\\LogFiles\\WMI\\**"

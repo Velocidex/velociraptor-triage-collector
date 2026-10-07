@@ -42,5 +42,11 @@ Output:
 
 PathSep: "\\"
 
+# Skip rules that seem invalid.
+SkipFiles:
+  - "WDI Trace Logs 2"
+
+
+
 # Set to build in debug mode.
 Debug: false

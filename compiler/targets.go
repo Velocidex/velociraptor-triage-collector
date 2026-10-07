@@ -7,7 +7,8 @@ import (
 	"strings"
 
 	"github.com/Velocidex/velociraptor-triage-collector/api"
-	"github.com/gobwas/glob"
+	"www.velocidex.com/golang/velociraptor/accessors"
+	"www.velocidex.com/golang/velociraptor/glob"
 )
 
 var (
@@ -147,8 +148,11 @@ func (self *Compiler) ValidateRule(
 		t.Glob = "/" + t.Glob
 	}
 
+	globber := glob.NewGlobber()
+
 	// Check the glob is actually valid.
-	_, err = glob.Compile(t.Glob)
+	err = globber.AddGlob(t.Glob,
+		accessors.MustNewWindowsOSPath(""))
 	if err != nil {
 		return fmt.Errorf("Invalid glob for rule: %v->%v %w",
 			t.Name, t.Glob, err)
