@@ -1,4 +1,4 @@
-- name: All Matches Metadata
+- name: All_Matches_Metadata
   query: |
     LET GlobLookup <= memoize(query=AllCollections, key="Glob")
     LET NTFSGlobs = SELECT * FROM AllCollections
