@@ -25,7 +25,8 @@
                "ntfs" AS Accessor,
                dict(Globs=Globs) AS Data,
                "Glob" AS Type
-        FROM glob(globs=NTFSGlobs.Glob, accessor="ntfs", root=Device)
+        FROM glob(globs=NTFSGlobs.Glob, accessor="ntfs", root=Device,
+                  recursion_callback="x=>ShouldRecurse(Path=x.OSPath)")
       },
       GlobAuto={
         SELECT *,
@@ -35,10 +36,11 @@
                "Glob" AS Type
         FROM glob(globs=AutoGlobs.Glob,
                   accessor=PreferredAccessor,
-                  root=Device)
+                  root=Device,
+                  recursion_callback="x=>ShouldRecurse(Path=x.OSPath)")
       })
     })
-    WHERE NOT IsDir
+    WHERE NOT IsDir AND ShouldCollectPath(Path=OSPath)
 
     LET AllResults <= SELECT Type,
                              OSPath AS SourceFile,
@@ -70,7 +72,8 @@
       {{- end }}
       Globs=AllGlobs
     )
-    WHERE log(level="INFO", message="Found %v for rule %v", args=[
+    WHERE ShouldCollectPath(Path=SourceFile)
+      AND log(level="INFO", message="Found %v for rule %v", args=[
               SourceFile, Rule], dedup=10)
 
     SELECT * FROM AllResults

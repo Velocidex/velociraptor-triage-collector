@@ -11,6 +11,7 @@ artifacts := \
 templates := \
 	config/Windows.KapeFiles.Targets.yaml \
 	templates/Windows.Triage.Targets.yaml \
+	templates/Windows.AllMatchesMetadata.yaml \
 	templates/CommonExports.yaml \
 	templates/CommonSources.yaml \
 	templates/Linux.Triage.UAC.yaml

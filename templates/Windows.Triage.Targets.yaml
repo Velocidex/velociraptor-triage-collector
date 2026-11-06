@@ -53,6 +53,15 @@ description: |
   2. HashOnly: Do not collect any file - just display their hashes
   3. AllFiles: Collect all files regardless of their types.
 
+  ## Path exclusions
+
+  ExcludePathRegex excludes matching file paths from both static and
+  adaptive collection results before upload. ExcludeDirectoryRegex
+  prevents glob traversal into matching directories. Use both when
+  excluding an entire subtree: a directory traversal exclusion alone
+  does not suppress files explicitly referenced by other targets.
+  Both expressions are empty by default, preserving all selected targets.
+
   Commit {{ .Commit }} on {{ .Time }}
 
 reference:
@@ -112,6 +121,21 @@ parameters:
       The max size in bytes of the individual files to collect
       (Default 100Mb).
 
+  - name: ExcludePathRegex
+    type: regex
+    default: ""
+    description: |
+      Exclude matching file paths from static and adaptive results.
+      Empty disables path exclusions. Paths may contain VSS device prefixes.
+
+  - name: ExcludeDirectoryRegex
+    type: regex
+    default: ""
+    description: |
+      Do not recurse into matching directories during glob searches.
+      Empty disables directory exclusions. Also set ExcludePathRegex to
+      exclude files explicitly referenced by targets inside these directories.
+
   - name: MaxHashSize
     type: int
     default: "100000000"
@@ -156,6 +180,9 @@ parameters:
 
 export: |
 {{ Indent ( Template "templates/CommonExports.yaml" ) 2 }}
+
+    LET ShouldCollectPath(Path) = NOT ExcludePathRegex OR NOT Path =~ ExcludePathRegex
+    LET ShouldRecurse(Path) = NOT ExcludeDirectoryRegex OR NOT Path =~ ExcludeDirectoryRegex
 
     LET _ExpandedTransforms <= dict(
         `^\\\\SystemRoot\\\\`="%SystemRoot%\\",
