@@ -1,0 +1,209 @@
+Query: LET ExcludePathRegex <= ""
+Output: []
+
+Query: LET ExcludeDirectoryRegex <= ""
+Output: []
+
+Query: LET _ <= import(artifact="Windows.Triage.Targets")
+Output: []
+
+# Empty exclusions must preserve every selected path and directory.
+Query: SELECT Path, ShouldCollectPath(Path=Path) AS Collect, ShouldRecurse(Path=Path) AS Recurse FROM parse_json_array(data=Cases)
+Output: [
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSync\\cache.db",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "\\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy1\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSync\\cache.db",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:/Users/alice/AppData/Local/Microsoft/OneDrive/ListSync/cache.db",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\logs\\ListSync\\sync.log",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSyncBackup\\keep.db",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\ProgramData\\Microsoft\\Search\\Data\\Applications\\Windows\\Windows.edb",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Roaming\\Microsoft\\Search\\Data\\Applications\\S-1-5-21-123\\Windows.db-wal",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\ProgramData\\Microsoft\\Search\\Data\\Applications\\Windows\\GatherLogs\\keep.log",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\Documents\\Windows.edb",
+  "Collect": true,
+  "Recurse": true
+ }
+]
+
+Query: LET ExcludePathRegex <= '''(?i)[\\/]OneDrive[\\/]ListSync(?:[\\/]|$)|[\\/]Microsoft[\\/]Search[\\/]Data[\\/]Applications[\\/](?:Windows|S-1-[^\\/]+)[\\/]Windows\.(?:edb|db)(?:-(?:wal|shm|journal))?$'''
+Output: []
+
+Query: LET ExcludeDirectoryRegex <= '''(?i)[\\/]OneDrive[\\/]ListSync(?:[\\/]|$)'''
+Output: []
+
+# The same file policy is used before raw acquisition and for adaptive results.
+Query: SELECT Path, ShouldCollectPath(Path=Path) AS Collect, ShouldRecurse(Path=Path) AS Recurse FROM parse_json_array(data=Cases)
+Output: [
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSync\\cache.db",
+  "Collect": false,
+  "Recurse": false
+ },
+ {
+  "Path": "\\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy1\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSync\\cache.db",
+  "Collect": false,
+  "Recurse": false
+ },
+ {
+  "Path": "C:/Users/alice/AppData/Local/Microsoft/OneDrive/ListSync/cache.db",
+  "Collect": false,
+  "Recurse": false
+ },
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\logs\\ListSync\\sync.log",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSyncBackup\\keep.db",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\ProgramData\\Microsoft\\Search\\Data\\Applications\\Windows\\Windows.edb",
+  "Collect": false,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\AppData\\Roaming\\Microsoft\\Search\\Data\\Applications\\S-1-5-21-123\\Windows.db-wal",
+  "Collect": false,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\ProgramData\\Microsoft\\Search\\Data\\Applications\\Windows\\GatherLogs\\keep.log",
+  "Collect": true,
+  "Recurse": true
+ },
+ {
+  "Path": "C:\\Users\\alice\\Documents\\Windows.edb",
+  "Collect": true,
+  "Recurse": true
+ }
+]
+
+# A synthetic temporary tree exercises the actual recursion callback.
+Query: LET Root <= tempdir()
+Output: []
+
+Query: LET _ <= copy(filename="excluded", accessor="data", dest=Root + "/OneDrive/ListSync/cache.db", create_directories=TRUE)
+Output: []
+
+Query: LET _ <= copy(filename="retained", accessor="data", dest=Root + "/OneDrive/logs/ListSync/sync.log", create_directories=TRUE)
+Output: []
+
+Query: SELECT Name FROM glob(globs=Root + "/**", recursion_callback="x=>ShouldRecurse(Path=x.OSPath)") WHERE NOT IsDir ORDER BY Name
+Output: [
+ {
+  "Name": "sync.log"
+ }
+]
+
+Query: LET ExcludeDirectoryRegex <= ""
+Output: []
+
+Query: SELECT Name FROM glob(globs=Root + "/**", recursion_callback="x=>ShouldRecurse(Path=x.OSPath)") WHERE NOT IsDir ORDER BY Name
+Output: [
+ {
+  "Name": "cache.db"
+ },
+ {
+  "Name": "sync.log"
+ }
+]
+
+# Exercise the real Uploads source with mocked raw matches and service results.
+# All files belong to our disposable tree; the upload function is mocked too.
+Query: LET _ <= copy(filename="excluded", accessor="data", dest=Root + "/OneDrive/ListSync/adaptive.exe", create_directories=TRUE)
+Output: []
+
+Query: LET _ <= copy(filename="retained", accessor="data", dest=Root + "/OneDrive/logs/ListSync/adaptive.exe", create_directories=TRUE)
+Output: []
+
+Query: LET _ <= mock(plugin="glob", results={ SELECT * FROM foreach(row=[Root + "/OneDrive/ListSync/cache.db", Root + "/OneDrive/logs/ListSync/sync.log"], query={ SELECT *, split(string="fixture", sep_string=",") AS Globs FROM stat(filename=_value) }) })
+Output: []
+
+Query: LET _ <= mock(artifact=Artifact.Windows.System.Services, results=[dict(AbsoluteExePath=Root + "/OneDrive/ListSync/adaptive.exe"), dict(AbsoluteExePath=Root + "/OneDrive/logs/ListSync/adaptive.exe")])
+Output: []
+
+Query: LET _ <= mock(function="upload", results=dict(Path="mock-upload"))
+Output: []
+
+Query: SELECT basename(path=SourceFile) AS Name, DestinationFile FROM Artifact.Windows.Triage.Targets(Targets=["OneDrive_Metadata", "AdaptiveServices"], ExcludePathRegex=ExcludePathRegex, CollectionPolicy="AllFiles", WORKERS=0) WHERE _Source =~ "Uploads$" ORDER BY Name
+Output: [
+ {
+  "Name": "adaptive.exe",
+  "DestinationFile": "mock-upload"
+ },
+ {
+  "Name": "sync.log",
+  "DestinationFile": "mock-upload"
+ }
+]
+
+Query: SELECT mock_check(function="upload", expected_calls=2) AS UploadCalls FROM scope()
+Output: [
+ {
+  "UploadCalls": {
+   "Error": "OK"
+  }
+ }
+]
+
+# Clearing the file exclusion restores both raw and adaptive uploads.
+Query: SELECT basename(path=SourceFile) AS Name FROM Artifact.Windows.Triage.Targets(Targets=["OneDrive_Metadata", "AdaptiveServices"], ExcludePathRegex="", CollectionPolicy="AllFiles", WORKERS=0) WHERE _Source =~ "Uploads$" ORDER BY Name
+Output: [
+ {
+  "Name": "adaptive.exe"
+ },
+ {
+  "Name": "adaptive.exe"
+ },
+ {
+  "Name": "cache.db"
+ },
+ {
+  "Name": "sync.log"
+ }
+]
+
+Query: SELECT mock_check(function="upload", expected_calls=4) AS UploadCalls FROM scope()
+Output: [
+ {
+  "UploadCalls": {
+   "Error": "OK"
+  }
+ }
+]
+

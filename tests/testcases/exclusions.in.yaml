@@ -1,0 +1,41 @@
+Parameters:
+  Cases: |
+    [{"Path":"C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSync\\cache.db"},
+     {"Path":"\\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy1\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSync\\cache.db"},
+     {"Path":"C:/Users/alice/AppData/Local/Microsoft/OneDrive/ListSync/cache.db"},
+     {"Path":"C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\logs\\ListSync\\sync.log"},
+     {"Path":"C:\\Users\\alice\\AppData\\Local\\Microsoft\\OneDrive\\ListSyncBackup\\keep.db"},
+     {"Path":"C:\\ProgramData\\Microsoft\\Search\\Data\\Applications\\Windows\\Windows.edb"},
+     {"Path":"C:\\Users\\alice\\AppData\\Roaming\\Microsoft\\Search\\Data\\Applications\\S-1-5-21-123\\Windows.db-wal"},
+     {"Path":"C:\\ProgramData\\Microsoft\\Search\\Data\\Applications\\Windows\\GatherLogs\\keep.log"},
+     {"Path":"C:\\Users\\alice\\Documents\\Windows.edb"}]
+
+Queries:
+  - LET ExcludePathRegex <= ""
+  - LET ExcludeDirectoryRegex <= ""
+  - LET _ <= import(artifact="Windows.Triage.Targets")
+  # Empty exclusions must preserve every selected path and directory.
+  - SELECT Path, ShouldCollectPath(Path=Path) AS Collect, ShouldRecurse(Path=Path) AS Recurse FROM parse_json_array(data=Cases)
+  - LET ExcludePathRegex <= '''(?i)[\\/]OneDrive[\\/]ListSync(?:[\\/]|$)|[\\/]Microsoft[\\/]Search[\\/]Data[\\/]Applications[\\/](?:Windows|S-1-[^\\/]+)[\\/]Windows\.(?:edb|db)(?:-(?:wal|shm|journal))?$'''
+  - LET ExcludeDirectoryRegex <= '''(?i)[\\/]OneDrive[\\/]ListSync(?:[\\/]|$)'''
+  # The same file policy is used before raw acquisition and for adaptive results.
+  - SELECT Path, ShouldCollectPath(Path=Path) AS Collect, ShouldRecurse(Path=Path) AS Recurse FROM parse_json_array(data=Cases)
+  # A synthetic temporary tree exercises the actual recursion callback.
+  - LET Root <= tempdir()
+  - LET _ <= copy(filename="excluded", accessor="data", dest=Root + "/OneDrive/ListSync/cache.db", create_directories=TRUE)
+  - LET _ <= copy(filename="retained", accessor="data", dest=Root + "/OneDrive/logs/ListSync/sync.log", create_directories=TRUE)
+  - SELECT Name FROM glob(globs=Root + "/**", recursion_callback="x=>ShouldRecurse(Path=x.OSPath)") WHERE NOT IsDir ORDER BY Name
+  - LET ExcludeDirectoryRegex <= ""
+  - SELECT Name FROM glob(globs=Root + "/**", recursion_callback="x=>ShouldRecurse(Path=x.OSPath)") WHERE NOT IsDir ORDER BY Name
+  # Exercise the real Uploads source with mocked raw matches and service results.
+  # All files belong to our disposable tree; the upload function is mocked too.
+  - LET _ <= copy(filename="excluded", accessor="data", dest=Root + "/OneDrive/ListSync/adaptive.exe", create_directories=TRUE)
+  - LET _ <= copy(filename="retained", accessor="data", dest=Root + "/OneDrive/logs/ListSync/adaptive.exe", create_directories=TRUE)
+  - LET _ <= mock(plugin="glob", results={ SELECT * FROM foreach(row=[Root + "/OneDrive/ListSync/cache.db", Root + "/OneDrive/logs/ListSync/sync.log"], query={ SELECT *, split(string="fixture", sep_string=",") AS Globs FROM stat(filename=_value) }) })
+  - LET _ <= mock(artifact=Artifact.Windows.System.Services, results=[dict(AbsoluteExePath=Root + "/OneDrive/ListSync/adaptive.exe"), dict(AbsoluteExePath=Root + "/OneDrive/logs/ListSync/adaptive.exe")])
+  - LET _ <= mock(function="upload", results=dict(Path="mock-upload"))
+  - SELECT basename(path=SourceFile) AS Name, DestinationFile FROM Artifact.Windows.Triage.Targets(Targets=["OneDrive_Metadata", "AdaptiveServices"], ExcludePathRegex=ExcludePathRegex, CollectionPolicy="AllFiles", WORKERS=0) WHERE _Source =~ "Uploads$" ORDER BY Name
+  - SELECT mock_check(function="upload", expected_calls=2) AS UploadCalls FROM scope()
+  # Clearing the file exclusion restores both raw and adaptive uploads.
+  - SELECT basename(path=SourceFile) AS Name FROM Artifact.Windows.Triage.Targets(Targets=["OneDrive_Metadata", "AdaptiveServices"], ExcludePathRegex="", CollectionPolicy="AllFiles", WORKERS=0) WHERE _Source =~ "Uploads$" ORDER BY Name
+  - SELECT mock_check(function="upload", expected_calls=4) AS UploadCalls FROM scope()
